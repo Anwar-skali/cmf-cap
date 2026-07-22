@@ -1,0 +1,362 @@
+export enum UserRole {
+  ADMIN = 'admin',
+  CAPACITY_MANAGER = 'capacity_manager',
+  BUYER = 'buyer',
+  SQD = 'sqd',
+  VIEWER = 'viewer',
+}
+
+export interface User {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: UserRole;
+  avatar?: string;
+  organization?: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface RegisterRequest {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  firstName: string;
+  lastName: string;
+}
+
+export interface TokenResponse {
+  accessToken: string;
+  refreshToken: string;
+  expiresIn: number;
+}
+
+export interface AuthState {
+  user: User | null;
+  accessToken: string | null;
+  refreshToken: string | null;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+  error: string | null;
+}
+
+export type ProjectStatus = 'draft' | 'active' | 'on_hold' | 'completed' | 'cancelled';
+
+export interface Project {
+  id: string;
+  name: string;
+  code: string;
+  description?: string;
+  status: ProjectStatus;
+  priority: number;
+  startDate?: string;
+  endDate?: string;
+  budget?: number;
+  currency: string;
+  buyerId?: string;
+  sqdId?: string;
+  capacityManagerId?: string;
+  manager?: User;
+  clientName?: string;
+  notes?: string;
+  partsCount: number;
+  suppliersCount: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ProjectFilter {
+  search?: string;
+  status?: ProjectStatus;
+  managerId?: string;
+  dateFrom?: string;
+  dateTo?: string;
+  page?: number;
+  pageSize?: number;
+  sortBy?: string;
+  sortOrder?: 'asc' | 'desc';
+}
+
+export interface CreateProjectRequest {
+  name: string;
+  code?: string;
+  description?: string;
+  startDate?: string;
+  endDate?: string;
+  budget?: number;
+  currency?: string;
+  buyerId?: string;
+  sqdId?: string;
+  capacityManagerId?: string;
+  clientName?: string;
+  notes?: string;
+  priority?: number;
+}
+
+export type PartStatus = 'active' | 'inactive' | 'obsolete';
+
+export interface ProjectPart {
+  id: string;
+  projectId: string;
+  name: string;
+  partNumber: string;
+  description?: string;
+  status: PartStatus;
+  quantity: number;
+  unit: string;
+  material?: string;
+  weight?: number;
+  supplierId?: string;
+  supplier?: Supplier;
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateProjectPartRequest {
+  projectId: string;
+  name: string;
+  partNumber: string;
+  description?: string;
+  quantity: number;
+  unit: string;
+  material?: string;
+  weight?: number;
+  supplierId?: string;
+  notes?: string;
+}
+
+export type SupplierStatus = 'active' | 'inactive' | 'blacklisted';
+
+export interface Supplier {
+  id: string;
+  name: string;
+  code: string;
+  contactPerson: string;
+  email: string;
+  phone?: string;
+  address?: string;
+  website?: string;
+  status: SupplierStatus;
+  certifications?: string[];
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SupplierFilter {
+  search?: string;
+  status?: SupplierStatus;
+  page?: number;
+  pageSize?: number;
+  sortBy?: string;
+  sortOrder?: 'asc' | 'desc';
+}
+
+export interface CreateSupplierRequest {
+  name: string;
+  code: string;
+  contactPerson: string;
+  email: string;
+  phone?: string;
+  address?: string;
+  website?: string;
+  certifications?: string[];
+  notes?: string;
+}
+
+export type CapacityStatus = 'pending' | 'assessed' | 'confirmed' | 'rejected';
+
+export interface CapacityAssessment {
+  id: string;
+  assessmentDate?: string;
+  month: number;
+  year: number;
+  currentCapacity: number;
+  maximumCapacity: number;
+  utilizationRate?: number;
+  leadTimeDays?: number;
+  bottleneck?: string;
+  notes?: string;
+  status: CapacityStatus;
+  projectPartId: string;
+  supplierId: string;
+  assessedBy?: string;
+  projectName?: string;
+  supplierName?: string;
+  title?: string;
+  description?: string;
+  score?: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateCapacityAssessmentRequest {
+  projectId: string;
+  supplierId: string;
+  assessmentDate: string;
+  score?: number;
+  maxScore: number;
+  findings?: string;
+  recommendation?: string;
+  nextAssessmentDate?: string;
+}
+
+export type RiskSeverity = 'critical' | 'high' | 'medium' | 'low';
+export type RiskProbability = 'rare' | 'unlikely' | 'possible' | 'likely' | 'almost_certain';
+export type RiskStatus = 'open' | 'mitigating' | 'mitigated' | 'closed';
+
+export interface Risk {
+  id: string;
+  title: string;
+  description?: string;
+  riskType?: string;
+  severity: RiskSeverity;
+  probability: RiskProbability;
+  riskScore: number;
+  impact?: string;
+  mitigation?: string;
+  contingency?: string;
+  status: RiskStatus;
+  dueDate?: string;
+  resolvedAt?: string;
+  projectPartId: string;
+  assignedTo?: string;
+  identifiedBy?: string;
+  projectName?: string;
+  projectId?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateRiskRequest {
+  projectId: string;
+  title: string;
+  description: string;
+  severity: RiskSeverity;
+  probability: RiskProbability;
+  impact?: string;
+  mitigationPlan?: string;
+  ownerId: string;
+  targetDate?: string;
+  category?: string;
+}
+
+export type DocumentType = 'contract' | 'specification' | 'drawing' | 'report' | 'certificate' | 'other';
+
+export interface Document {
+  id: string;
+  title: string;
+  description?: string;
+  fileName: string;
+  filePath: string;
+  fileSize: number;
+  mimeType?: string;
+  documentType: DocumentType;
+  version: number;
+  isLatest: boolean;
+  projectId?: string;
+  projectPartId?: string;
+  uploadedBy?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateDocumentRequest {
+  projectId?: string;
+  partId?: string;
+  supplierId?: string;
+  name: string;
+  type: DocumentType;
+  description?: string;
+}
+
+export type NotificationType = 'info' | 'success' | 'warning' | 'error';
+
+export interface Notification {
+  id: string;
+  userId: string;
+  title: string;
+  message: string;
+  type: NotificationType;
+  isRead: boolean;
+  link?: string;
+  createdAt: string;
+}
+
+export type ActivityAction =
+  | 'created'
+  | 'updated'
+  | 'deleted'
+  | 'approved'
+  | 'rejected'
+  | 'submitted'
+  | 'reviewed'
+  | 'assigned'
+  | 'status_changed';
+
+export interface ActivityLog {
+  id: string;
+  userId: string;
+  user?: User;
+  action: ActivityAction;
+  entityType: string;
+  entityId: string;
+  entityName?: string;
+  details?: Record<string, unknown>;
+  createdAt: string;
+}
+
+export interface DashboardStats {
+  totalProjects: number;
+  activeProjects: number;
+  totalSuppliers: number;
+  activeSuppliers: number;
+  totalParts: number;
+  openRisks: number;
+  criticalRisks: number;
+  pendingAssessments: number;
+  recentActivities: ActivityLog[];
+}
+
+export interface CapacityCoverage {
+  supplierId: string;
+  supplierName: string;
+  totalAssessments: number;
+  averageScore: number;
+  lastAssessmentDate?: string;
+  status: CapacityStatus;
+}
+
+export interface MonthlyCapacity {
+  month: string;
+  year: number;
+  planned: number;
+  completed: number;
+  failed: number;
+}
+
+export interface RiskDistribution {
+  severity: RiskSeverity;
+  count: number;
+}
+
+export interface PaginatedResponse<T> {
+  items: T[];
+  total: number;
+  skip: number;
+  limit: number;
+}
+
+export interface ApiError {
+  message: string;
+  statusCode: number;
+  errors?: Record<string, string[]>;
+}
