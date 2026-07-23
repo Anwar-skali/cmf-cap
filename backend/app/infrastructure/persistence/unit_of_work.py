@@ -11,6 +11,9 @@ from app.infrastructure.persistence.repositories.capacity_assessment_repository 
 from app.infrastructure.persistence.repositories.document_repository import (
     DocumentRepository,
 )
+from app.infrastructure.persistence.repositories.import_history_repository import (
+    ImportHistoryRepository,
+)
 from app.infrastructure.persistence.repositories.notification_repository import (
     NotificationRepository,
 )
@@ -45,6 +48,7 @@ class UnitOfWork:
         self._document_repo: DocumentRepository | None = None
         self._notification_repo: NotificationRepository | None = None
         self._activity_log_repo: ActivityLogRepository | None = None
+        self._import_history_repo: ImportHistoryRepository | None = None
 
     @property
     def users(self) -> UserRepository:
@@ -101,6 +105,12 @@ class UnitOfWork:
         if self._activity_log_repo is None:
             self._activity_log_repo = ActivityLogRepository(self._session)
         return self._activity_log_repo
+
+    @property
+    def import_history(self) -> ImportHistoryRepository:
+        if self._import_history_repo is None:
+            self._import_history_repo = ImportHistoryRepository(self._session)
+        return self._import_history_repo
 
     @property
     def session(self) -> AsyncSession:

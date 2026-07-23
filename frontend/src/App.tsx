@@ -14,14 +14,18 @@ import ProjectPartsPage from '@/features/projects/ProjectPartsPage';
 import ProjectRisksPage from '@/features/projects/ProjectRisksPage';
 import ProjectDocumentsPage from '@/features/projects/ProjectDocumentsPage';
 import PartsPage from '@/features/parts/PartsPage';
+import PartNewPage from '@/features/parts/PartNewPage';
 import PartDetailPage from '@/features/parts/PartDetailPage';
+import PartEditPage from '@/features/parts/PartEditPage';
 import SuppliersPage from '@/features/suppliers/SuppliersPage';
 import SupplierNewPage from '@/features/suppliers/SupplierNewPage';
 import SupplierDetailPage from '@/features/suppliers/SupplierDetailPage';
 import SupplierEditPage from '@/features/suppliers/SupplierEditPage';
 import CapacityPage from '@/features/capacity/CapacityPage';
+import CapacityNewPage from '@/features/capacity/CapacityNewPage';
 import CapacityDetailPage from '@/features/capacity/CapacityDetailPage';
 import RisksPage from '@/features/risks/RisksPage';
+import RiskNewPage from '@/features/risks/RiskNewPage';
 import RiskDetailPage from '@/features/risks/RiskDetailPage';
 import DocumentsPage from '@/features/documents/DocumentsPage';
 import NotificationsPage from '@/features/notifications/NotificationsPage';
@@ -88,14 +92,18 @@ export default function App() {
         <Route path="/projects/:projectId/risks" element={<ProjectRisksPage />} />
         <Route path="/projects/:projectId/documents" element={<ProjectDocumentsPage />} />
         <Route path="/parts" element={<PartsPage />} />
+        <Route path="/parts/new" element={<PartNewPage />} />
         <Route path="/parts/:id" element={<PartDetailPage />} />
+        <Route path="/parts/:id/edit" element={<PartEditPage />} />
         <Route path="/suppliers" element={<SuppliersPage />} />
         <Route path="/suppliers/new" element={<SupplierNewPage />} />
         <Route path="/suppliers/:id" element={<SupplierDetailPage />} />
         <Route path="/suppliers/:id/edit" element={<SupplierEditPage />} />
         <Route path="/capacity" element={<CapacityPage />} />
+        <Route path="/capacity/new" element={<CapacityNewPage />} />
         <Route path="/capacity/:assessmentId" element={<CapacityDetailPage />} />
         <Route path="/risks" element={<RisksPage />} />
+        <Route path="/risks/new" element={<RiskNewPage />} />
         <Route path="/risks/:riskId" element={<RiskDetailPage />} />
         <Route path="/documents" element={<DocumentsPage />} />
         <Route path="/notifications" element={<NotificationsPage />} />

@@ -110,12 +110,32 @@ class ProjectPartService:
         limit: int = 100,
         sort_by: str | None = None,
         sort_desc: bool = False,
-        filters: dict | None = None,
-    ) -> list[ProjectPartResponse]:
-        parts = await self._uow.project_parts.get_multi(
-            skip=skip, limit=limit, sort_by=sort_by, sort_desc=sort_desc, filters=filters
+        search: str | None = None,
+        status: str | None = None,
+        project_id: uuid.UUID | None = None,
+    ) -> ProjectPartListResponse:
+        filters: dict[str, Any] = {}
+        if status:
+            filters["status"] = status
+        if project_id:
+            filters["project_id"] = project_id
+
+        if search:
+            parts = await self._uow.project_parts.search(search, project_id=project_id)
+            total = len(parts)
+            parts = parts[skip : skip + limit]
+        else:
+            parts = await self._uow.project_parts.get_multi(
+                skip=skip, limit=limit, sort_by=sort_by, sort_desc=sort_desc, filters=filters
+            )
+            total = await self._uow.project_parts.count(filters=filters)
+
+        return ProjectPartListResponse(
+            items=[self._to_response(p) for p in parts],
+            total=total,
+            skip=skip,
+            limit=limit,
         )
-        return [self._to_response(p) for p in parts]
 
     async def search(self, query: str, project_id: uuid.UUID | None = None) -> list[ProjectPartResponse]:
         parts = await self._uow.project_parts.search(query, project_id=project_id)

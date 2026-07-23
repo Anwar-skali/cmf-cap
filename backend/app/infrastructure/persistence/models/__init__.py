@@ -9,7 +9,7 @@ from app.infrastructure.persistence.models.base import (
 from app.infrastructure.persistence.models.capacity_assessment import (
     CapacityAssessment,
 )
-from app.infrastructure.persistence.models.document import Document
+from app.infrastructure.persistence.models.import_history import ImportHistory
 from app.infrastructure.persistence.models.notification import Notification
 from app.infrastructure.persistence.models.password_reset import (
     PasswordResetToken,
@@ -36,6 +36,7 @@ __all__ = [
     "Base",
     "CapacityAssessment",
     "Document",
+    "ImportHistory",
     "Notification",
     "PasswordResetToken",
     "Permission",

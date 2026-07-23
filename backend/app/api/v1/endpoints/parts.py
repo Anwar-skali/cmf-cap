@@ -7,6 +7,7 @@ from fastapi import APIRouter, Depends, Query
 
 from app.application.dto.project_parts import (
     CreateProjectPartRequest,
+    ProjectPartListResponse,
     ProjectPartResponse,
     UpdateProjectPartRequest,
 )
@@ -17,8 +18,11 @@ from app.infrastructure.persistence.models.user import User
 router = APIRouter(prefix="/api/v1/parts", tags=["Parts"])
 
 
-@router.get("", response_model=list[ProjectPartResponse], summary="List all parts")
+@router.get("", response_model=ProjectPartListResponse, summary="List all parts")
 async def list_parts(
+    search: str | None = Query(default=None),
+    status: str | None = Query(default=None),
+    project_id: uuid.UUID | None = Query(default=None),
     skip: int = Query(default=0, ge=0),
     limit: int = Query(default=100, ge=1, le=500),
     sort_by: str | None = Query(default=None),
@@ -27,7 +31,13 @@ async def list_parts(
     part_service: ProjectPartService = Depends(get_project_part_service),
 ) -> Any:
     return await part_service.get_all_parts(
-        skip=skip, limit=limit, sort_by=sort_by, sort_desc=sort_desc
+        skip=skip,
+        limit=limit,
+        sort_by=sort_by,
+        sort_desc=sort_desc,
+        search=search,
+        status=status,
+        project_id=project_id,
     )
 
 

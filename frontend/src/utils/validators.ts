@@ -73,6 +73,7 @@ export const createPartSchema = z.object({
     .min(1, 'Part number is required')
     .max(100, 'Part number is too long'),
   description: z.string().max(1000, 'Description is too long').optional(),
+  status: z.enum(['active', 'inactive', 'obsolete']).default('active'),
   quantity: z
     .number()
     .positive('Quantity must be positive')
@@ -101,44 +102,38 @@ export const createSupplierSchema = z.object({
 export const updateSupplierSchema = createSupplierSchema.partial();
 
 export const createCapacityAssessmentSchema = z.object({
-  projectId: z.string().min(1, 'Project is required'),
+  month: z.number({ required_error: 'Month is required' }).min(1).max(12),
+  year: z.number({ required_error: 'Year is required' }).min(2000).max(2100),
+  currentCapacity: z.number({ required_error: 'Current capacity is required' }).min(0),
+  maximumCapacity: z.number({ required_error: 'Maximum capacity is required' }).gt(0, 'Maximum capacity must be greater than zero'),
+  projectPartId: z.string().min(1, 'Part is required'),
   supplierId: z.string().min(1, 'Supplier is required'),
-  assessmentDate: z.string().min(1, 'Assessment date is required'),
-  score: z
-    .number()
-    .min(0, 'Score must be at least 0')
-    .max(100, 'Score must be at most 100')
-    .optional(),
-  maxScore: z
-    .number()
-    .positive('Max score must be positive')
-    .default(100),
-  findings: z.string().max(2000, 'Findings are too long').optional(),
-  recommendation: z.string().max(2000, 'Recommendation is too long').optional(),
-  nextAssessmentDate: z.string().optional(),
+  assessmentDate: z.string().optional(),
+  leadTimeDays: z.number().optional(),
+  bottleneck: z.string().optional(),
+  notes: z.string().optional(),
+  status: z.string().default('pending'),
 });
 
 export const createRiskSchema = z.object({
-  projectId: z.string().min(1, 'Project is required'),
   title: z
     .string()
     .min(1, 'Risk title is required')
     .max(200, 'Risk title is too long'),
-  description: z
-    .string()
-    .min(1, 'Risk description is required')
-    .max(2000, 'Description is too long'),
+  projectPartId: z.string().min(1, 'Part is required'),
+  description: z.string().optional(),
+  riskType: z.string().optional(),
   severity: z.enum(['critical', 'high', 'medium', 'low'], {
     errorMap: () => ({ message: 'Please select a severity level' }),
   }),
   probability: z.enum(['rare', 'unlikely', 'possible', 'likely', 'almost_certain'], {
     errorMap: () => ({ message: 'Please select a probability level' }),
   }),
-  impact: z.string().max(2000, 'Impact description is too long').optional(),
-  mitigationPlan: z.string().max(2000, 'Mitigation plan is too long').optional(),
-  ownerId: z.string().min(1, 'Risk owner is required'),
-  targetDate: z.string().optional(),
-  category: z.string().max(100, 'Category is too long').optional(),
+  impact: z.string().optional(),
+  mitigation: z.string().optional(),
+  contingency: z.string().optional(),
+  status: z.enum(['open', 'mitigating', 'mitigated', 'closed']).default('open'),
+  dueDate: z.string().optional(),
 });
 
 export type LoginFormData = z.infer<typeof loginSchema>;

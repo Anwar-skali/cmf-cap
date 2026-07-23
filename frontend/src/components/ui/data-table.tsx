@@ -1,4 +1,4 @@
-import { forwardRef, useState, useMemo, type ReactNode } from 'react';
+import { useState, useMemo, type ReactNode } from 'react';
 import {
   flexRender,
   getCoreRowModel,
@@ -160,10 +160,14 @@ function DataTableInternal<TData extends object>({
     );
   };
 
+  const hasNameColumn = columns.some((c: unknown) => {
+    const col = c as Record<string, unknown>;
+    return col.accessorKey === 'name' || col.id === 'name';
+  });
   return (
     <div className="space-y-4 animate-fade-in">
       <div className="flex items-center gap-2">
-        {searchable && !onSearch && (
+        {searchable && !onSearch && hasNameColumn && (
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <input
@@ -322,9 +326,7 @@ function DataTableInternal<TData extends object>({
   );
 }
 
-const DataTable = forwardRef(DataTableInternal) as <TData extends object>(
-  props: DataTableProps<TData> & { ref?: React.ForwardedRef<HTMLDivElement> },
-) => ReturnType<typeof DataTableInternal>;
+const DataTable = DataTableInternal;
 
 (DataTable as unknown as { displayName: string }).displayName = 'DataTable';
 

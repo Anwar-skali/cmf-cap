@@ -1,7 +1,7 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useState, useMemo } from 'react';
 import { createColumnHelper } from '@tanstack/react-table';
-import { Eye, Trash2 } from 'lucide-react';
+import { Eye, Pencil, Trash2, Plus } from 'lucide-react';
 import { usePartsQuery } from '@/hooks/queries/usePartsQuery';
 import { useDeletePartMutation } from '@/hooks/mutations/usePartMutations';
 import { DataTable, type ColumnDef } from '@/components/ui/data-table';
@@ -83,6 +83,13 @@ export default function PartsPage() {
               <Button
                 variant="ghost"
                 size="icon"
+                onClick={() => navigate(`/parts/${info.row.original.id}/edit`)}
+              >
+                <Pencil className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
                 onClick={() => setDeleteId(info.row.original.id)}
               >
                 <Trash2 className="h-4 w-4 text-destructive" />
@@ -98,7 +105,13 @@ export default function PartsPage() {
 
   return (
     <div>
-      <PageHeader title="Parts" description="Browse all parts" />
+      <PageHeader title="Parts" description="Browse and manage all inventory parts">
+        <Button asChild>
+          <Link to="/parts/new">
+            <Plus className="mr-2 h-4 w-4" /> New Part
+          </Link>
+        </Button>
+      </PageHeader>
       <DataTable
         columns={columns}
         data={parts}

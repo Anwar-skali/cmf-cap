@@ -7,8 +7,10 @@ from typing import Any
 from pydantic import BaseModel, Field
 
 
+import uuid
+
 class CreateProjectPartRequest(BaseModel):
-    project_id: Any | None = None
+    project_id: uuid.UUID
     part_number: str = Field(..., min_length=1, max_length=100)
     name: str = Field(..., min_length=1, max_length=255)
     description: str | None = None
@@ -33,7 +35,7 @@ class UpdateProjectPartRequest(BaseModel):
 
 
 class ProjectPartResponse(BaseModel):
-    id: Any
+    id: uuid.UUID
     part_number: str
     name: str
     description: str | None = None
@@ -43,7 +45,7 @@ class ProjectPartResponse(BaseModel):
     weight: Decimal | None = None
     material: str | None = None
     notes: str | None = None
-    project_id: Any
+    project_id: uuid.UUID
     created_at: datetime | None = None
     updated_at: datetime | None = None
 
@@ -60,7 +62,7 @@ class ProjectPartListResponse(BaseModel):
 class ProjectPartFilter(BaseModel):
     search: str | None = None
     status: str | None = None
-    project_id: Any | None = None
+    project_id: uuid.UUID | None = None
     material: str | None = None
     skip: int = Field(default=0, ge=0)
     limit: int = Field(default=20, ge=1, le=100)

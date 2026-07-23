@@ -1,11 +1,11 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useProjectsQuery } from '@/hooks/queries/useProjectsQuery';
 import { DataTable } from '@/components/ui/data-table';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Search, ChevronRight, Building2, Filter } from 'lucide-react';
+import { Plus, Search, ChevronRight, Building2, Filter, FileSpreadsheet } from 'lucide-react';
 import type { ColumnDef } from '@tanstack/react-table';
 import type { Project } from '@/types';
 import { getStatusVariant } from '@/lib/utils';
@@ -72,11 +72,18 @@ export default function ProjectsPage() {
           <h1 className="text-3xl font-bold tracking-tight">Projects</h1>
           <p className="text-muted-foreground text-balance">Manage your CMF projects</p>
         </div>
-        <Button asChild>
-          <Link to="/projects/new">
-            <Plus className="mr-2 h-4 w-4" /> New Project
-          </Link>
-        </Button>
+        <div className="flex items-center gap-3">
+          <Button variant="outline" asChild>
+            <Link to="/documents">
+              <FileSpreadsheet className="mr-2 h-4 w-4 text-emerald-600" /> Import Excel
+            </Link>
+          </Button>
+          <Button asChild>
+            <Link to="/projects/new">
+              <Plus className="mr-2 h-4 w-4" /> New Project
+            </Link>
+          </Button>
+        </div>
       </div>
 
       <div className="flex items-center gap-3">

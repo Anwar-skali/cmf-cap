@@ -199,14 +199,18 @@ export interface CapacityAssessment {
 }
 
 export interface CreateCapacityAssessmentRequest {
-  projectId: string;
+  month: number;
+  year: number;
+  currentCapacity: number;
+  maximumCapacity: number;
+  projectPartId: string;
   supplierId: string;
-  assessmentDate: string;
-  score?: number;
-  maxScore: number;
-  findings?: string;
-  recommendation?: string;
-  nextAssessmentDate?: string;
+  assessmentDate?: string;
+  leadTimeDays?: number;
+  bottleneck?: string;
+  notes?: string;
+  status?: string;
+  assessedBy?: string;
 }
 
 export type RiskSeverity = 'critical' | 'high' | 'medium' | 'low';
@@ -237,16 +241,19 @@ export interface Risk {
 }
 
 export interface CreateRiskRequest {
-  projectId: string;
   title: string;
-  description: string;
+  projectPartId: string;
+  description?: string;
+  riskType?: string;
   severity: RiskSeverity;
   probability: RiskProbability;
   impact?: string;
-  mitigationPlan?: string;
-  ownerId: string;
-  targetDate?: string;
-  category?: string;
+  mitigation?: string;
+  contingency?: string;
+  status?: RiskStatus;
+  dueDate?: string;
+  assignedTo?: string;
+  identifiedBy?: string;
 }
 
 export type DocumentType = 'contract' | 'specification' | 'drawing' | 'report' | 'certificate' | 'other';

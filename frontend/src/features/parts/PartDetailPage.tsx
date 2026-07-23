@@ -1,6 +1,6 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useState } from 'react';
-import { Trash2, ArrowLeft, Package } from 'lucide-react';
+import { Trash2, ArrowLeft, Package, Pencil } from 'lucide-react';
 import { usePartQuery } from '@/hooks/queries/usePartsQuery';
 import { useDeletePartMutation } from '@/hooks/mutations/usePartMutations';
 import { PageHeader } from '@/components/ui/page-header';
@@ -46,6 +46,12 @@ export default function PartDetailPage() {
         <Button variant="outline" onClick={() => navigate('/parts')}>
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Parts
+        </Button>
+        <Button variant="outline" asChild>
+          <Link to={`/parts/${id}/edit`}>
+            <Pencil className="mr-2 h-4 w-4" />
+            Edit
+          </Link>
         </Button>
         <Button variant="destructive" onClick={() => setShowDelete(true)}>
           <Trash2 className="mr-2 h-4 w-4" />

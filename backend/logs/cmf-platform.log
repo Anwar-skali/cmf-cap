@@ -5215,3 +5215,1378 @@ TypeError: can't compare offset-naive and offset-aware datetimes
 2026-07-22 11:07:26,370 - app.main - INFO - GET /api/v1/auth/me
 2026-07-22 11:07:26,465 - app.main - INFO - GET /api/v1/auth/me -> 200
 2026-07-22 11:07:26,572 - app.main - INFO - GET /api/v1/documents
+2026-07-22 11:07:26,673 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-22 11:13:45,105 - app.main - INFO - Shutting down CMF Platform API
+2026-07-22 11:19:37,085 - app.main - INFO - Starting CMF Platform API
+2026-07-22 11:19:37,098 - app.main - INFO - Database tables created (SQLite)
+2026-07-22 11:20:23,010 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 11:20:23,341 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 11:20:23,362 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 11:20:23,410 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 11:20:23,467 - app.main - INFO - GET /api/v1/risks
+2026-07-22 11:20:23,529 - app.main - INFO - GET /api/v1/risks -> 200
+2026-07-22 11:20:28,358 - app.main - INFO - GET /api/v1/capacity
+2026-07-22 11:20:28,414 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-07-22 11:20:31,482 - app.main - INFO - GET /api/v1/capacity/new
+2026-07-22 11:20:31,534 - app.main - WARNING - Validation error: [{'type': 'uuid_parsing', 'loc': ('path', 'id'), 'msg': 'Input should be a valid UUID, invalid character: found `n` at 1', 'input': 'new', 'ctx': {'error': 'invalid character: found `n` at 1'}}]
+2026-07-22 11:20:31,539 - app.main - INFO - GET /api/v1/capacity/new -> 422
+2026-07-22 11:20:32,580 - app.main - INFO - GET /api/v1/capacity/new
+2026-07-22 11:20:32,637 - app.main - WARNING - Validation error: [{'type': 'uuid_parsing', 'loc': ('path', 'id'), 'msg': 'Input should be a valid UUID, invalid character: found `n` at 1', 'input': 'new', 'ctx': {'error': 'invalid character: found `n` at 1'}}]
+2026-07-22 11:20:32,641 - app.main - INFO - GET /api/v1/capacity/new -> 422
+2026-07-22 11:20:37,348 - app.main - INFO - GET /api/v1/risks/new
+2026-07-22 11:20:37,398 - app.main - WARNING - Validation error: [{'type': 'uuid_parsing', 'loc': ('path', 'id'), 'msg': 'Input should be a valid UUID, invalid character: found `n` at 1', 'input': 'new', 'ctx': {'error': 'invalid character: found `n` at 1'}}]
+2026-07-22 11:20:37,402 - app.main - INFO - GET /api/v1/risks/new -> 422
+2026-07-22 11:20:38,440 - app.main - INFO - GET /api/v1/risks/new
+2026-07-22 11:20:38,498 - app.main - WARNING - Validation error: [{'type': 'uuid_parsing', 'loc': ('path', 'id'), 'msg': 'Input should be a valid UUID, invalid character: found `n` at 1', 'input': 'new', 'ctx': {'error': 'invalid character: found `n` at 1'}}]
+2026-07-22 11:20:38,501 - app.main - INFO - GET /api/v1/risks/new -> 422
+2026-07-22 11:23:43,410 - app.main - INFO - GET /api/v1/risks
+2026-07-22 11:23:43,416 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-07-22 11:23:43,420 - app.main - INFO - GET /api/v1/risks -> 401
+2026-07-22 11:23:43,442 - app.main - INFO - POST /api/v1/auth/refresh
+2026-07-22 11:23:43,533 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-07-22 11:23:43,558 - app.main - INFO - GET /api/v1/risks
+2026-07-22 11:23:43,597 - app.main - INFO - GET /api/v1/risks -> 200
+2026-07-22 11:24:45,376 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 11:24:45,446 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 11:24:45,461 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 11:24:45,521 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 11:24:45,918 - app.main - INFO - GET /api/v1/risks
+2026-07-22 11:24:45,960 - app.main - INFO - GET /api/v1/risks -> 200
+2026-07-22 11:24:59,740 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 11:24:59,814 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 11:24:59,833 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 11:24:59,901 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 11:25:00,189 - app.main - INFO - GET /api/v1/risks
+2026-07-22 11:25:00,236 - app.main - INFO - GET /api/v1/risks -> 200
+2026-07-22 11:32:44,648 - app.main - INFO - GET /api/v1/risks
+2026-07-22 11:32:44,746 - app.main - INFO - GET /api/v1/risks -> 200
+2026-07-22 11:32:47,866 - app.main - INFO - GET /api/v1/capacity
+2026-07-22 11:32:47,956 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-07-22 11:32:57,373 - app.main - INFO - Shutting down CMF Platform API
+2026-07-22 11:33:02,639 - app.main - INFO - Starting CMF Platform API
+2026-07-22 11:33:02,656 - app.main - INFO - Database tables created (SQLite)
+2026-07-22 11:33:06,864 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 11:33:07,295 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 11:33:07,321 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 11:33:07,423 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 11:33:07,515 - app.main - INFO - GET /api/v1/capacity
+2026-07-22 11:33:07,555 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-07-22 11:33:10,584 - app.main - INFO - GET /api/v1/risks
+2026-07-22 11:33:10,654 - app.main - INFO - GET /api/v1/risks -> 200
+2026-07-22 11:33:11,606 - app.main - INFO - GET /api/v1/projects
+2026-07-22 11:33:11,801 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-22 11:33:15,938 - app.main - INFO - GET /api/v1/notifications
+2026-07-22 11:33:16,066 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-07-22 11:33:24,443 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-07-22 11:33:24,648 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-07-22 11:33:53,098 - app.main - INFO - GET /api/v1/documents
+2026-07-22 11:33:53,181 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-22 11:33:58,637 - app.main - INFO - GET /api/v1/notifications
+2026-07-22 11:33:58,740 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-07-22 12:20:10,539 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 12:20:10,544 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-07-22 12:20:10,547 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-07-22 12:20:10,559 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 12:20:10,564 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-07-22 12:20:10,567 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-07-22 12:20:10,582 - app.main - INFO - POST /api/v1/auth/refresh
+2026-07-22 12:20:10,690 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-07-22 12:20:10,759 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 12:20:10,816 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 12:20:10,828 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 12:20:10,882 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 12:20:11,485 - app.main - INFO - GET /api/v1/notifications
+2026-07-22 12:20:11,536 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-07-22 13:03:08,241 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:03:08,248 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-07-22 13:03:08,253 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-07-22 13:03:08,295 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:03:08,302 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-07-22 13:03:08,306 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-07-22 13:03:08,336 - app.main - INFO - POST /api/v1/auth/refresh
+2026-07-22 13:03:08,438 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-07-22 13:03:08,637 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:03:08,706 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 13:03:08,731 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:03:08,803 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 13:03:09,350 - app.main - INFO - GET /api/v1/notifications
+2026-07-22 13:03:09,398 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-07-22 13:03:22,481 - app.main - INFO - GET /api/v1/projects
+2026-07-22 13:03:22,541 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-22 13:03:47,938 - app.main - INFO - POST /api/v1/projects
+2026-07-22 13:03:48,186 - app.main - INFO - POST /api/v1/projects -> 200
+2026-07-22 13:03:48,448 - app.main - INFO - GET /api/v1/projects/e7a1ff11-dd82-4dbb-a773-85652258dffe
+2026-07-22 13:03:48,541 - app.main - INFO - GET /api/v1/projects/e7a1ff11-dd82-4dbb-a773-85652258dffe -> 200
+2026-07-22 13:03:52,479 - app.main - INFO - GET /api/v1/parts
+2026-07-22 13:03:52,572 - app.main - INFO - GET /api/v1/parts -> 200
+2026-07-22 13:04:02,071 - app.main - INFO - GET /api/v1/risks
+2026-07-22 13:04:02,170 - app.main - INFO - GET /api/v1/risks -> 200
+2026-07-22 13:04:04,365 - app.main - INFO - GET /api/v1/capacity
+2026-07-22 13:04:04,410 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-07-22 13:04:14,104 - app.main - INFO - GET /api/v1/suppliers
+2026-07-22 13:04:14,212 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-22 13:04:15,378 - app.main - INFO - GET /api/v1/documents
+2026-07-22 13:04:15,481 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-22 13:06:03,640 - app.main - INFO - POST /api/v1/auth/login
+2026-07-22 13:06:04,342 - app.main - INFO - POST /api/v1/auth/login -> 200
+2026-07-22 13:06:04,448 - app.main - INFO - GET /api/v1/documents
+2026-07-22 13:06:04,482 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-22 13:07:43,017 - app.main - INFO - GET /api/v1/documents
+2026-07-22 13:07:43,090 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-22 13:09:18,537 - app.main - INFO - GET /api/v1/risks
+2026-07-22 13:09:18,848 - app.main - INFO - GET /api/v1/risks -> 200
+2026-07-22 13:10:10,638 - app.main - INFO - GET /api/v1/capacity
+2026-07-22 13:10:10,682 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-07-22 13:10:44,654 - app.main - INFO - GET /api/v1/documents
+2026-07-22 13:10:44,748 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-22 13:10:51,894 - app.main - INFO - POST /api/v1/documents/upload
+2026-07-22 13:10:52,066 - app.main - INFO - POST /api/v1/documents/upload -> 200
+2026-07-22 13:10:52,122 - app.main - INFO - GET /api/v1/documents
+2026-07-22 13:10:52,324 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-22 13:11:09,042 - app.main - INFO - GET /api/v1/projects
+2026-07-22 13:11:09,114 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-22 13:11:10,880 - app.main - INFO - GET /api/v1/parts
+2026-07-22 13:11:10,929 - app.main - INFO - GET /api/v1/parts -> 200
+2026-07-22 13:11:11,861 - app.main - INFO - GET /api/v1/suppliers
+2026-07-22 13:11:12,105 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-22 13:11:13,688 - app.main - INFO - GET /api/v1/capacity
+2026-07-22 13:11:13,776 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-07-22 13:11:14,702 - app.main - INFO - GET /api/v1/risks
+2026-07-22 13:11:14,821 - app.main - INFO - GET /api/v1/risks -> 200
+2026-07-22 13:11:23,882 - app.main - INFO - GET /api/v1/documents
+2026-07-22 13:11:24,051 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-22 13:13:10,100 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:13:10,212 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 13:13:10,231 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:13:10,301 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 13:13:10,351 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-07-22 13:13:10,487 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-07-22 13:13:18,558 - app.main - INFO - GET /api/v1/documents
+2026-07-22 13:13:18,648 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-22 13:13:21,390 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:13:21,457 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 13:13:21,473 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:13:21,546 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 13:13:21,563 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-07-22 13:13:21,718 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-07-22 13:15:25,877 - app.main - INFO - Shutting down CMF Platform API
+2026-07-22 13:15:31,377 - app.main - INFO - Starting CMF Platform API
+2026-07-22 13:15:31,391 - app.main - INFO - Database tables created (SQLite)
+2026-07-22 13:15:42,262 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:15:42,514 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 13:15:42,541 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:15:42,598 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 13:15:42,712 - app.main - INFO - GET /api/v1/documents
+2026-07-22 13:15:42,797 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-22 13:16:00,452 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:16:00,513 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 13:16:00,528 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:16:00,589 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 13:16:00,657 - app.main - INFO - GET /api/v1/documents
+2026-07-22 13:16:00,755 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-22 13:16:17,599 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:16:17,663 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 13:16:17,682 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:16:17,754 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 13:16:17,846 - app.main - INFO - GET /api/v1/documents
+2026-07-22 13:16:17,967 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-22 13:16:18,583 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:16:18,631 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 13:16:18,645 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:16:18,699 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 13:16:18,876 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-07-22 13:16:19,069 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-07-22 13:16:21,845 - app.main - INFO - GET /api/v1/capacity
+2026-07-22 13:16:21,928 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-07-22 13:16:23,657 - app.main - INFO - GET /api/v1/projects
+2026-07-22 13:16:23,661 - app.main - INFO - GET /api/v1/suppliers
+2026-07-22 13:16:23,837 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-22 13:16:23,863 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-22 13:16:49,103 - app.main - INFO - POST /api/v1/capacity
+2026-07-22 13:16:49,186 - app.main - WARNING - Validation error: [{'type': 'missing', 'loc': ('body', 'month'), 'msg': 'Field required', 'input': {'project_id': 'bdaf88f1-c49a-4d89-8f5f-8a4b9066b17f', 'supplier_id': 'ae1a2fb7-17d9-427e-b0ed-9ded5599a402', 'assessment_date': '2026-07-22', 'score': 100, 'max_score': 100, 'findings': 'test', 'recommendation': 'test', 'next_assessment_date': '2026-02-12'}}, {'type': 'missing', 'loc': ('body', 'year'), 'msg': 'Field required', 'input': {'project_id': 'bdaf88f1-c49a-4d89-8f5f-8a4b9066b17f', 'supplier_id': 'ae1a2fb7-17d9-427e-b0ed-9ded5599a402', 'assessment_date': '2026-07-22', 'score': 100, 'max_score': 100, 'findings': 'test', 'recommendation': 'test', 'next_assessment_date': '2026-02-12'}}, {'type': 'missing', 'loc': ('body', 'current_capacity'), 'msg': 'Field required', 'input': {'project_id': 'bdaf88f1-c49a-4d89-8f5f-8a4b9066b17f', 'supplier_id': 'ae1a2fb7-17d9-427e-b0ed-9ded5599a402', 'assessment_date': '2026-07-22', 'score': 100, 'max_score': 100, 'findings': 'test', 'recommendation': 'test', 'next_assessment_date': '2026-02-12'}}, {'type': 'missing', 'loc': ('body', 'maximum_capacity'), 'msg': 'Field required', 'input': {'project_id': 'bdaf88f1-c49a-4d89-8f5f-8a4b9066b17f', 'supplier_id': 'ae1a2fb7-17d9-427e-b0ed-9ded5599a402', 'assessment_date': '2026-07-22', 'score': 100, 'max_score': 100, 'findings': 'test', 'recommendation': 'test', 'next_assessment_date': '2026-02-12'}}, {'type': 'missing', 'loc': ('body', 'project_part_id'), 'msg': 'Field required', 'input': {'project_id': 'bdaf88f1-c49a-4d89-8f5f-8a4b9066b17f', 'supplier_id': 'ae1a2fb7-17d9-427e-b0ed-9ded5599a402', 'assessment_date': '2026-07-22', 'score': 100, 'max_score': 100, 'findings': 'test', 'recommendation': 'test', 'next_assessment_date': '2026-02-12'}}]
+2026-07-22 13:16:49,192 - app.main - INFO - POST /api/v1/capacity -> 422
+2026-07-22 13:18:15,891 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:18:16,161 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 13:18:16,201 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:18:16,298 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 13:18:16,481 - app.main - INFO - GET /api/v1/projects
+2026-07-22 13:18:16,493 - app.main - INFO - GET /api/v1/suppliers
+2026-07-22 13:18:16,595 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-22 13:18:16,620 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-22 13:18:38,609 - app.main - INFO - GET /api/v1/parts
+2026-07-22 13:18:38,650 - app.main - INFO - GET /api/v1/parts -> 200
+2026-07-22 13:19:35,692 - app.main - INFO - GET /api/v1/parts
+2026-07-22 13:19:35,744 - app.main - INFO - GET /api/v1/parts -> 200
+2026-07-22 13:19:48,737 - app.main - INFO - GET /api/v1/capacity
+2026-07-22 13:19:48,817 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-07-22 13:21:25,633 - app.main - INFO - GET /api/v1/parts
+2026-07-22 13:21:25,670 - app.main - INFO - GET /api/v1/parts -> 200
+2026-07-22 13:27:26,567 - app.main - INFO - GET /api/v1/projects
+2026-07-22 13:27:26,575 - app.main - INFO - GET /api/v1/suppliers
+2026-07-22 13:27:26,743 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-22 13:27:26,763 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-22 13:27:48,962 - app.main - INFO - POST /api/v1/parts
+2026-07-22 13:27:49,063 - app.main - ERROR - Unhandled exception: (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: SELECT projects.id, projects.code, projects.name, projects.description, projects.status, projects.priority, projects.start_date, projects.end_date, projects.client_name, projects.budget, projects.currency, projects.notes, projects.buyer_id, projects.sqd_id, projects.capacity_manager_id, projects.created_at, projects.updated_at, projects.deleted_at 
+FROM projects 
+WHERE projects.id = ? AND projects.deleted_at IS NULL]
+[parameters: [{}]]
+Traceback (most recent call last):
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1817, in _execute_context
+    context = constructor(
+              ^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 1494, in _init_compiled
+    l_param: List[Any] = [
+                         ^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 1496, in <listcomp>
+    flattened_processors[key](compiled_params[key])
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\sql\sqltypes.py", line 3734, in process
+    value = value.hex
+            ^^^^^^^^^
+AttributeError: 'str' object has no attribute 'hex'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\main.py", line 134, in rate_limit_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\main.py", line 109, in logging_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\main.py", line 98, in request_id_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\main.py", line 71, in strip_trailing_slash_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 222, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\api\deps.py", line 42, in get_db
+    yield session
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\api\v1\endpoints\parts.py", line 40, in create_part
+    return await part_service.create_part(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\application\services\project_part_service.py", line 25, in create_part
+    project = await self._uow.projects.get(project_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\infrastructure\persistence\repositories\base.py", line 27, in get
+    result = await self._session.execute(stmt)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 448, in execute
+    result = await greenlet_spawn(
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 190, in greenlet_spawn
+    result = context.switch(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2373, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2271, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1823, in _execute_context
+    self._handle_dbapi_exception(
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1817, in _execute_context
+    context = constructor(
+              ^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 1494, in _init_compiled
+    l_param: List[Any] = [
+                         ^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 1496, in <listcomp>
+    flattened_processors[key](compiled_params[key])
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\sql\sqltypes.py", line 3734, in process
+    value = value.hex
+            ^^^^^^^^^
+sqlalchemy.exc.StatementError: (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: SELECT projects.id, projects.code, projects.name, projects.description, projects.status, projects.priority, projects.start_date, projects.end_date, projects.client_name, projects.budget, projects.currency, projects.notes, projects.buyer_id, projects.sqd_id, projects.capacity_manager_id, projects.created_at, projects.updated_at, projects.deleted_at 
+FROM projects 
+WHERE projects.id = ? AND projects.deleted_at IS NULL]
+[parameters: [{}]]
+2026-07-22 13:29:25,751 - app.main - INFO - GET /api/v1/projects
+2026-07-22 13:29:25,757 - app.main - INFO - GET /api/v1/suppliers
+2026-07-22 13:29:25,877 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-22 13:29:25,894 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-22 13:41:46,296 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:41:46,308 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-07-22 13:41:46,320 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-07-22 13:41:46,400 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:41:46,412 - app.main - INFO - POST /api/v1/auth/refresh
+2026-07-22 13:41:46,415 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-07-22 13:41:46,421 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-07-22 13:41:46,534 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-07-22 13:41:46,575 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:41:46,691 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 13:41:46,721 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:41:46,871 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 13:41:47,013 - app.main - INFO - GET /api/v1/projects
+2026-07-22 13:41:47,016 - app.main - INFO - GET /api/v1/suppliers
+2026-07-22 13:41:47,159 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-22 13:41:47,200 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-22 13:41:59,053 - app.main - INFO - POST /api/v1/parts
+2026-07-22 13:41:59,090 - app.main - ERROR - Unhandled exception: (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: SELECT projects.id, projects.code, projects.name, projects.description, projects.status, projects.priority, projects.start_date, projects.end_date, projects.client_name, projects.budget, projects.currency, projects.notes, projects.buyer_id, projects.sqd_id, projects.capacity_manager_id, projects.created_at, projects.updated_at, projects.deleted_at 
+FROM projects 
+WHERE projects.id = ? AND projects.deleted_at IS NULL]
+[parameters: [{}]]
+Traceback (most recent call last):
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1817, in _execute_context
+    context = constructor(
+              ^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 1494, in _init_compiled
+    l_param: List[Any] = [
+                         ^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 1496, in <listcomp>
+    flattened_processors[key](compiled_params[key])
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\sql\sqltypes.py", line 3734, in process
+    value = value.hex
+            ^^^^^^^^^
+AttributeError: 'str' object has no attribute 'hex'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\main.py", line 134, in rate_limit_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\main.py", line 109, in logging_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\main.py", line 98, in request_id_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\main.py", line 71, in strip_trailing_slash_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 222, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\api\deps.py", line 42, in get_db
+    yield session
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\api\v1\endpoints\parts.py", line 40, in create_part
+    return await part_service.create_part(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\application\services\project_part_service.py", line 25, in create_part
+    project = await self._uow.projects.get(project_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\infrastructure\persistence\repositories\base.py", line 27, in get
+    result = await self._session.execute(stmt)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 448, in execute
+    result = await greenlet_spawn(
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 190, in greenlet_spawn
+    result = context.switch(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2373, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2271, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1823, in _execute_context
+    self._handle_dbapi_exception(
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1817, in _execute_context
+    context = constructor(
+              ^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 1494, in _init_compiled
+    l_param: List[Any] = [
+                         ^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 1496, in <listcomp>
+    flattened_processors[key](compiled_params[key])
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\sql\sqltypes.py", line 3734, in process
+    value = value.hex
+            ^^^^^^^^^
+sqlalchemy.exc.StatementError: (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: SELECT projects.id, projects.code, projects.name, projects.description, projects.status, projects.priority, projects.start_date, projects.end_date, projects.client_name, projects.budget, projects.currency, projects.notes, projects.buyer_id, projects.sqd_id, projects.capacity_manager_id, projects.created_at, projects.updated_at, projects.deleted_at 
+FROM projects 
+WHERE projects.id = ? AND projects.deleted_at IS NULL]
+[parameters: [{}]]
+2026-07-22 13:41:59,716 - app.main - INFO - POST /api/v1/parts
+2026-07-22 13:41:59,758 - app.main - ERROR - Unhandled exception: (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: SELECT projects.id, projects.code, projects.name, projects.description, projects.status, projects.priority, projects.start_date, projects.end_date, projects.client_name, projects.budget, projects.currency, projects.notes, projects.buyer_id, projects.sqd_id, projects.capacity_manager_id, projects.created_at, projects.updated_at, projects.deleted_at 
+FROM projects 
+WHERE projects.id = ? AND projects.deleted_at IS NULL]
+[parameters: [{}]]
+Traceback (most recent call last):
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1817, in _execute_context
+    context = constructor(
+              ^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 1494, in _init_compiled
+    l_param: List[Any] = [
+                         ^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 1496, in <listcomp>
+    flattened_processors[key](compiled_params[key])
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\sql\sqltypes.py", line 3734, in process
+    value = value.hex
+            ^^^^^^^^^
+AttributeError: 'str' object has no attribute 'hex'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\main.py", line 134, in rate_limit_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\main.py", line 109, in logging_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\main.py", line 98, in request_id_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\main.py", line 71, in strip_trailing_slash_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 222, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\api\deps.py", line 42, in get_db
+    yield session
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\api\v1\endpoints\parts.py", line 40, in create_part
+    return await part_service.create_part(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\application\services\project_part_service.py", line 25, in create_part
+    project = await self._uow.projects.get(project_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\infrastructure\persistence\repositories\base.py", line 27, in get
+    result = await self._session.execute(stmt)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 448, in execute
+    result = await greenlet_spawn(
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 190, in greenlet_spawn
+    result = context.switch(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2373, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2271, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1823, in _execute_context
+    self._handle_dbapi_exception(
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1817, in _execute_context
+    context = constructor(
+              ^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 1494, in _init_compiled
+    l_param: List[Any] = [
+                         ^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 1496, in <listcomp>
+    flattened_processors[key](compiled_params[key])
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\sql\sqltypes.py", line 3734, in process
+    value = value.hex
+            ^^^^^^^^^
+sqlalchemy.exc.StatementError: (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: SELECT projects.id, projects.code, projects.name, projects.description, projects.status, projects.priority, projects.start_date, projects.end_date, projects.client_name, projects.budget, projects.currency, projects.notes, projects.buyer_id, projects.sqd_id, projects.capacity_manager_id, projects.created_at, projects.updated_at, projects.deleted_at 
+FROM projects 
+WHERE projects.id = ? AND projects.deleted_at IS NULL]
+[parameters: [{}]]
+2026-07-22 13:42:14,295 - app.main - INFO - POST /api/v1/parts
+2026-07-22 13:42:14,383 - app.main - ERROR - Unhandled exception: (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: SELECT projects.id, projects.code, projects.name, projects.description, projects.status, projects.priority, projects.start_date, projects.end_date, projects.client_name, projects.budget, projects.currency, projects.notes, projects.buyer_id, projects.sqd_id, projects.capacity_manager_id, projects.created_at, projects.updated_at, projects.deleted_at 
+FROM projects 
+WHERE projects.id = ? AND projects.deleted_at IS NULL]
+[parameters: [{}]]
+Traceback (most recent call last):
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1817, in _execute_context
+    context = constructor(
+              ^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 1494, in _init_compiled
+    l_param: List[Any] = [
+                         ^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 1496, in <listcomp>
+    flattened_processors[key](compiled_params[key])
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\sql\sqltypes.py", line 3734, in process
+    value = value.hex
+            ^^^^^^^^^
+AttributeError: 'str' object has no attribute 'hex'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\main.py", line 134, in rate_limit_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\main.py", line 109, in logging_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\main.py", line 98, in request_id_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\main.py", line 71, in strip_trailing_slash_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 222, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\api\deps.py", line 42, in get_db
+    yield session
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\api\v1\endpoints\parts.py", line 40, in create_part
+    return await part_service.create_part(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\application\services\project_part_service.py", line 25, in create_part
+    project = await self._uow.projects.get(project_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\infrastructure\persistence\repositories\base.py", line 27, in get
+    result = await self._session.execute(stmt)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 448, in execute
+    result = await greenlet_spawn(
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 190, in greenlet_spawn
+    result = context.switch(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2373, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2271, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1823, in _execute_context
+    self._handle_dbapi_exception(
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1817, in _execute_context
+    context = constructor(
+              ^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 1494, in _init_compiled
+    l_param: List[Any] = [
+                         ^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 1496, in <listcomp>
+    flattened_processors[key](compiled_params[key])
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\sql\sqltypes.py", line 3734, in process
+    value = value.hex
+            ^^^^^^^^^
+sqlalchemy.exc.StatementError: (builtins.AttributeError) 'str' object has no attribute 'hex'
+[SQL: SELECT projects.id, projects.code, projects.name, projects.description, projects.status, projects.priority, projects.start_date, projects.end_date, projects.client_name, projects.budget, projects.currency, projects.notes, projects.buyer_id, projects.sqd_id, projects.capacity_manager_id, projects.created_at, projects.updated_at, projects.deleted_at 
+FROM projects 
+WHERE projects.id = ? AND projects.deleted_at IS NULL]
+[parameters: [{}]]
+2026-07-22 13:44:14,345 - app.main - INFO - Shutting down CMF Platform API
+2026-07-22 13:44:20,108 - app.main - INFO - Starting CMF Platform API
+2026-07-22 13:44:20,133 - app.main - INFO - Database tables created (SQLite)
+2026-07-22 13:44:38,358 - app.main - INFO - Shutting down CMF Platform API
+2026-07-22 13:44:45,076 - app.main - INFO - Starting CMF Platform API
+2026-07-22 13:44:45,094 - app.main - INFO - Database tables created (SQLite)
+2026-07-22 13:44:45,212 - app.main - INFO - Shutting down CMF Platform API
+2026-07-22 13:44:52,215 - app.main - INFO - Starting CMF Platform API
+2026-07-22 13:44:52,230 - app.main - INFO - Database tables created (SQLite)
+2026-07-22 13:45:19,563 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:45:19,875 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 13:45:19,894 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:45:19,973 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 13:45:20,141 - app.main - INFO - GET /api/v1/projects
+2026-07-22 13:45:20,146 - app.main - INFO - GET /api/v1/suppliers
+2026-07-22 13:45:20,410 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-22 13:45:20,439 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-22 13:50:13,255 - app.main - INFO - POST /api/v1/parts
+2026-07-22 13:50:13,502 - app.main - INFO - POST /api/v1/parts -> 200
+2026-07-22 13:50:13,840 - app.main - INFO - GET /api/v1/parts
+2026-07-22 13:50:13,976 - app.main - INFO - GET /api/v1/parts -> 200
+2026-07-22 13:50:16,129 - app.main - INFO - GET /api/v1/risks
+2026-07-22 13:50:16,181 - app.main - INFO - GET /api/v1/risks -> 200
+2026-07-22 13:50:20,947 - app.main - INFO - GET /api/v1/documents
+2026-07-22 13:50:21,098 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-22 13:51:25,605 - app.main - INFO - Shutting down CMF Platform API
+2026-07-22 13:51:32,015 - app.main - INFO - Starting CMF Platform API
+2026-07-22 13:51:32,037 - app.main - INFO - Database tables created (SQLite)
+2026-07-22 13:51:32,139 - app.main - INFO - Shutting down CMF Platform API
+2026-07-22 13:51:40,111 - app.main - INFO - Starting CMF Platform API
+2026-07-22 13:51:40,148 - app.main - INFO - Database tables created (SQLite)
+2026-07-22 13:51:40,274 - app.main - INFO - Shutting down CMF Platform API
+2026-07-22 13:51:47,631 - app.main - INFO - Starting CMF Platform API
+2026-07-22 13:51:47,660 - app.main - INFO - Database tables created (SQLite)
+2026-07-22 13:51:47,776 - app.main - INFO - Shutting down CMF Platform API
+2026-07-22 13:51:54,544 - app.main - INFO - Starting CMF Platform API
+2026-07-22 13:51:54,569 - app.main - INFO - Database tables created (SQLite)
+2026-07-22 13:51:55,778 - app.main - INFO - Shutting down CMF Platform API
+2026-07-22 13:52:07,244 - app.main - INFO - Starting CMF Platform API
+2026-07-22 13:52:07,281 - app.main - INFO - Database tables created (SQLite)
+2026-07-22 13:52:08,792 - app.main - INFO - Shutting down CMF Platform API
+2026-07-22 13:52:16,696 - app.main - INFO - Starting CMF Platform API
+2026-07-22 13:52:16,712 - app.main - INFO - Database tables created (SQLite)
+2026-07-22 13:52:16,941 - app.main - INFO - Shutting down CMF Platform API
+2026-07-22 13:52:24,800 - app.main - INFO - Starting CMF Platform API
+2026-07-22 13:52:24,826 - app.main - INFO - Database tables created (SQLite)
+2026-07-22 13:52:27,231 - app.main - INFO - Shutting down CMF Platform API
+2026-07-22 13:52:38,932 - app.main - INFO - Starting CMF Platform API
+2026-07-22 13:52:38,953 - app.main - INFO - Database tables created (SQLite)
+2026-07-22 13:52:38,975 - app.main - INFO - GET /api/v1/notifications
+2026-07-22 13:52:39,364 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-07-22 13:53:32,262 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:53:32,369 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 13:53:32,392 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:53:32,493 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 13:53:32,570 - app.main - INFO - GET /api/v1/notifications
+2026-07-22 13:53:32,652 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-07-22 13:55:25,733 - app.main - INFO - GET /api/v1/documents
+2026-07-22 13:55:25,792 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-22 13:55:34,616 - app.main - INFO - GET /api/v1/import/template/projects
+2026-07-22 13:55:34,630 - app.main - WARNING - UnauthorizedException: Not authenticated
+2026-07-22 13:55:34,642 - app.main - INFO - GET /api/v1/import/template/projects -> 401
+2026-07-22 13:55:45,931 - app.main - INFO - POST /api/v1/documents/upload
+2026-07-22 13:55:46,026 - app.main - INFO - POST /api/v1/documents/upload -> 200
+2026-07-22 13:55:46,051 - app.main - INFO - GET /api/v1/documents
+2026-07-22 13:55:46,112 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-22 13:55:55,275 - app.main - INFO - GET /api/v1/import/history
+2026-07-22 13:55:55,383 - app.main - INFO - GET /api/v1/import/history -> 200
+2026-07-22 13:55:55,420 - app.main - INFO - GET /api/v1/import/history
+2026-07-22 13:55:55,507 - app.main - INFO - GET /api/v1/import/history -> 200
+2026-07-22 13:56:36,419 - app.main - INFO - POST /api/v1/import/preview
+2026-07-22 13:56:36,427 - app.main - INFO - POST /api/v1/import/preview -> 400
+2026-07-22 13:56:39,280 - app.main - INFO - GET /api/v1/import/history
+2026-07-22 13:56:39,358 - app.main - INFO - GET /api/v1/import/history -> 200
+2026-07-22 13:56:39,392 - app.main - INFO - GET /api/v1/import/history
+2026-07-22 13:56:39,479 - app.main - INFO - GET /api/v1/import/history -> 200
+2026-07-22 13:56:43,482 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:56:43,548 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 13:56:43,565 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 13:56:43,637 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 13:56:43,669 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-07-22 13:56:43,972 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-07-22 13:56:50,966 - app.main - INFO - GET /api/v1/documents
+2026-07-22 13:56:51,042 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-22 13:56:59,286 - app.main - INFO - GET /api/v1/import/template/projects
+2026-07-22 13:56:59,295 - app.main - WARNING - UnauthorizedException: Not authenticated
+2026-07-22 13:56:59,304 - app.main - INFO - GET /api/v1/import/template/projects -> 401
+2026-07-22 14:03:32,965 - app.main - INFO - GET /api/v1/documents
+2026-07-22 14:03:33,040 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-22 14:06:45,377 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 14:06:45,442 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 14:06:45,457 - app.main - INFO - GET /api/v1/auth/me
+2026-07-22 14:06:45,524 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-22 14:06:45,594 - app.main - INFO - GET /api/v1/documents
+2026-07-22 14:06:45,657 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-22 14:06:57,244 - app.main - INFO - POST /api/v1/documents/upload
+2026-07-22 14:06:57,317 - app.main - INFO - POST /api/v1/documents/upload -> 200
+2026-07-22 14:06:57,334 - app.main - INFO - GET /api/v1/documents
+2026-07-22 14:06:57,393 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-22 14:07:34,816 - app.main - INFO - GET /api/v1/import/history
+2026-07-22 14:07:34,911 - app.main - INFO - GET /api/v1/import/history -> 200
+2026-07-22 14:07:34,939 - app.main - INFO - GET /api/v1/import/history
+2026-07-22 14:07:35,027 - app.main - INFO - GET /api/v1/import/history -> 200
+2026-07-22 14:09:26,006 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-07-22 14:09:26,176 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-07-22 14:09:30,995 - app.main - INFO - GET /api/v1/projects
+2026-07-22 14:09:31,383 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-22 14:09:44,608 - app.main - INFO - GET /api/v1/parts
+2026-07-22 14:09:44,765 - app.main - INFO - GET /api/v1/parts -> 200
+2026-07-22 14:10:24,571 - app.main - INFO - Shutting down CMF Platform API
+2026-07-23 10:39:15,314 - app.main - INFO - Starting CMF Platform API
+2026-07-23 10:39:15,333 - app.main - INFO - Database tables created (SQLite)
+2026-07-23 10:39:43,475 - app.main - INFO - GET /api/v1/auth/me
+2026-07-23 10:39:43,546 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-07-23 10:39:43,553 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-07-23 10:39:43,606 - app.main - INFO - GET /api/v1/auth/me
+2026-07-23 10:39:43,619 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-07-23 10:39:43,628 - app.main - INFO - POST /api/v1/auth/refresh
+2026-07-23 10:39:43,635 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-07-23 10:39:44,271 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-07-23 10:39:44,318 - app.main - INFO - GET /api/v1/auth/me
+2026-07-23 10:39:44,468 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-23 10:39:44,505 - app.main - INFO - GET /api/v1/auth/me
+2026-07-23 10:39:44,644 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-23 10:39:45,245 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-07-23 10:39:45,719 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-07-23 10:39:52,432 - app.main - INFO - GET /api/v1/projects
+2026-07-23 10:39:52,774 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-23 10:40:35,729 - app.main - INFO - POST /api/v1/projects
+2026-07-23 10:40:36,028 - app.main - INFO - POST /api/v1/projects -> 200
+2026-07-23 10:40:36,386 - app.main - INFO - GET /api/v1/projects/4ce4b1bb-4370-4cf2-8e8a-ba1079c1d24f
+2026-07-23 10:40:36,550 - app.main - INFO - GET /api/v1/projects/4ce4b1bb-4370-4cf2-8e8a-ba1079c1d24f -> 200
+2026-07-23 10:40:44,540 - app.main - INFO - GET /api/v1/parts
+2026-07-23 10:40:44,621 - app.main - INFO - GET /api/v1/parts -> 200
+2026-07-23 10:40:56,040 - app.main - INFO - GET /api/v1/projects
+2026-07-23 10:40:56,059 - app.main - INFO - GET /api/v1/suppliers
+2026-07-23 10:40:56,312 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-23 10:40:56,450 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-23 10:41:21,679 - app.main - INFO - POST /api/v1/parts
+2026-07-23 10:41:21,977 - app.main - INFO - POST /api/v1/parts -> 200
+2026-07-23 10:41:22,416 - app.main - INFO - GET /api/v1/parts
+2026-07-23 10:41:22,525 - app.main - INFO - GET /api/v1/parts -> 200
+2026-07-23 10:41:27,246 - app.main - INFO - GET /api/v1/suppliers
+2026-07-23 10:41:27,367 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-23 10:41:42,518 - app.main - INFO - GET /api/v1/projects
+2026-07-23 10:41:42,898 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-23 10:41:44,976 - app.main - INFO - GET /api/v1/capacity
+2026-07-23 10:41:45,056 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-07-23 10:42:00,666 - app.main - INFO - GET /api/v1/risks
+2026-07-23 10:42:00,827 - app.main - INFO - GET /api/v1/risks -> 200
+2026-07-23 10:42:01,977 - app.main - INFO - GET /api/v1/documents
+2026-07-23 10:42:02,230 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-23 10:43:16,260 - app.main - INFO - GET /api/v1/import/template/projects
+2026-07-23 10:43:16,566 - app.main - INFO - GET /api/v1/import/template/projects -> 200
+2026-07-23 10:46:01,081 - app.main - INFO - POST /api/v1/import/preview
+2026-07-23 10:46:01,200 - app.main - INFO - POST /api/v1/import/preview -> 200
+2026-07-23 10:46:34,194 - app.main - INFO - GET /api/v1/risks
+2026-07-23 10:46:34,306 - app.main - INFO - GET /api/v1/risks -> 200
+2026-07-23 10:46:37,326 - app.main - INFO - GET /api/v1/documents
+2026-07-23 10:46:37,517 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-23 10:46:53,594 - app.main - INFO - POST /api/v1/import/preview
+2026-07-23 10:46:53,844 - app.main - INFO - POST /api/v1/import/preview -> 200
+2026-07-23 10:48:22,295 - app.main - INFO - POST /api/v1/import/execute
+2026-07-23 10:48:22,586 - app.main - INFO - POST /api/v1/import/execute -> 400
+2026-07-23 10:48:25,622 - app.main - INFO - POST /api/v1/import/execute
+2026-07-23 10:48:25,991 - app.main - INFO - POST /api/v1/import/execute -> 400
+2026-07-23 10:55:21,478 - app.main - INFO - GET /api/v1/auth/me
+2026-07-23 10:55:21,596 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-23 10:55:21,629 - app.main - INFO - GET /api/v1/auth/me
+2026-07-23 10:55:21,756 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-23 10:55:21,887 - app.main - INFO - GET /api/v1/documents
+2026-07-23 10:55:21,968 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-23 10:57:30,182 - app.main - INFO - GET /api/v1/auth/me
+2026-07-23 10:57:30,262 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-23 10:57:30,280 - app.main - INFO - GET /api/v1/auth/me
+2026-07-23 10:57:30,348 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-23 10:57:30,406 - app.main - INFO - GET /api/v1/documents
+2026-07-23 10:57:30,483 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-23 10:57:37,463 - app.main - INFO - POST /api/v1/import/preview
+2026-07-23 10:57:37,695 - app.main - INFO - POST /api/v1/import/preview -> 200
+2026-07-23 10:57:49,309 - app.main - INFO - POST /api/v1/import/execute
+2026-07-23 10:57:49,742 - app.main - INFO - POST /api/v1/import/execute -> 200
+2026-07-23 10:58:05,524 - app.main - INFO - GET /api/v1/projects
+2026-07-23 10:58:05,830 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-23 10:58:10,612 - app.main - INFO - GET /api/v1/documents
+2026-07-23 10:58:10,762 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-23 10:58:18,871 - app.main - INFO - POST /api/v1/import/preview
+2026-07-23 10:58:19,089 - app.main - INFO - POST /api/v1/import/preview -> 200
+2026-07-23 10:59:49,396 - app.main - INFO - POST /api/v1/import/execute
+2026-07-23 10:59:49,719 - app.main - INFO - POST /api/v1/import/execute -> 400
+2026-07-23 10:59:52,863 - app.main - INFO - POST /api/v1/import/execute
+2026-07-23 10:59:53,141 - app.main - INFO - POST /api/v1/import/execute -> 400
+2026-07-23 11:00:40,557 - app.main - INFO - POST /api/v1/import/preview
+2026-07-23 11:00:40,763 - app.main - INFO - POST /api/v1/import/preview -> 200
+2026-07-23 11:02:27,437 - app.main - INFO - POST /api/v1/import/preview
+2026-07-23 11:02:27,691 - app.main - INFO - POST /api/v1/import/preview -> 200
+2026-07-23 11:02:36,601 - app.main - INFO - POST /api/v1/import/execute
+2026-07-23 11:02:37,015 - app.main - INFO - POST /api/v1/import/execute -> 400
+2026-07-23 11:02:42,148 - app.main - INFO - POST /api/v1/auth/logout
+2026-07-23 11:02:42,331 - app.main - INFO - POST /api/v1/auth/logout -> 200
+2026-07-23 11:02:46,375 - app.main - INFO - Shutting down CMF Platform API
+2026-07-23 11:02:53,703 - app.main - INFO - Starting CMF Platform API
+2026-07-23 11:02:53,721 - app.main - INFO - Database tables created (SQLite)
+2026-07-23 11:03:16,832 - app.main - INFO - POST /api/v1/auth/login
+2026-07-23 11:03:19,081 - app.main - INFO - POST /api/v1/auth/login -> 200
+2026-07-23 11:03:19,119 - app.main - INFO - GET /api/v1/auth/me
+2026-07-23 11:03:19,249 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-23 11:03:19,430 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-07-23 11:03:19,977 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-07-23 11:03:23,011 - app.main - INFO - GET /api/v1/documents
+2026-07-23 11:03:23,198 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-23 11:03:30,525 - app.main - INFO - POST /api/v1/import/preview
+2026-07-23 11:03:30,829 - app.main - INFO - POST /api/v1/import/preview -> 200
+2026-07-23 11:03:40,651 - app.main - INFO - POST /api/v1/import/execute
+2026-07-23 11:03:40,921 - app.main - INFO - POST /api/v1/import/execute -> 400
+2026-07-23 11:06:51,000 - app.main - INFO - Shutting down CMF Platform API
+2026-07-23 11:06:58,623 - app.main - INFO - Starting CMF Platform API
+2026-07-23 11:06:58,638 - app.main - INFO - Database tables created (SQLite)
+2026-07-23 11:13:07,715 - app.main - INFO - Shutting down CMF Platform API
+2026-07-23 11:13:16,442 - app.main - INFO - Starting CMF Platform API
+2026-07-23 11:13:16,456 - app.main - INFO - Database tables created (SQLite)
+2026-07-23 11:16:25,435 - app.main - INFO - GET /api/v1/auth/me
+2026-07-23 11:16:26,272 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-23 11:16:26,315 - app.main - INFO - GET /api/v1/auth/me
+2026-07-23 11:16:26,483 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-23 11:16:26,780 - app.main - INFO - GET /api/v1/documents
+2026-07-23 11:16:27,109 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-23 11:16:34,988 - app.main - INFO - GET /api/v1/auth/me
+2026-07-23 11:16:35,088 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-23 11:16:35,107 - app.main - INFO - GET /api/v1/auth/me
+2026-07-23 11:16:35,191 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-23 11:16:35,425 - app.main - INFO - GET /api/v1/documents
+2026-07-23 11:16:35,610 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-23 11:16:43,901 - app.main - INFO - POST /api/v1/import/preview
+2026-07-23 11:16:44,062 - app.main - INFO - POST /api/v1/import/preview -> 200
+2026-07-23 11:16:56,805 - app.main - INFO - POST /api/v1/import/execute
+2026-07-23 11:16:57,182 - root - ERROR - Exception during execute_import: This Session's transaction has been rolled back due to a previous exception during flush. To begin a new transaction with this Session, first issue Session.rollback(). Original exception was: (builtins.TypeError) SQLite DateTime type only accepts Python datetime and date objects as input.
+[SQL: INSERT INTO projects (id, code, name, description, status, priority, start_date, end_date, client_name, budget, currency, notes, buyer_id, sqd_id, capacity_manager_id, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: [{'end_date': '2026-05-08', 'name': 'EV Project 1', 'start_date': '2026-01-08', 'code': 'CMF-1001', 'description': 'Automotive capacity project 1', 'bu ... (4 characters truncated) ... ': 105000.0, 'status': 'draft', 'capacity_manager_id': None, 'client_name': None, 'deleted_at': None, 'sqd_id': None, 'buyer_id': None, 'notes': None}]] (Background on this error at: https://sqlalche.me/e/20/7s2a)
+Traceback (most recent call last):
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\api\v1\endpoints\import_endpoints.py", line 136, in execute_import
+    result = await service.execute_import(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\application\services\import_engine_service.py", line 353, in execute_import
+    await uow.activity_logs.create(
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\infrastructure\persistence\repositories\base.py", line 55, in create
+    await self._session.flush()
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 786, in flush
+    await greenlet_spawn(self.sync_session.flush, objects=objects)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 190, in greenlet_spawn
+    result = context.switch(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4353, in flush
+    self._flush(objects)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4445, in _flush
+    flush_context.transaction = transaction = self._autobegin_t()._begin()
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 2, in _begin
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 101, in _go
+    self._raise_for_prerequisite_state(fn.__name__, current_state)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 975, in _raise_for_prerequisite_state
+    raise sa_exc.PendingRollbackError(
+sqlalchemy.exc.PendingRollbackError: This Session's transaction has been rolled back due to a previous exception during flush. To begin a new transaction with this Session, first issue Session.rollback(). Original exception was: (builtins.TypeError) SQLite DateTime type only accepts Python datetime and date objects as input.
+[SQL: INSERT INTO projects (id, code, name, description, status, priority, start_date, end_date, client_name, budget, currency, notes, buyer_id, sqd_id, capacity_manager_id, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: [{'end_date': '2026-05-08', 'name': 'EV Project 1', 'start_date': '2026-01-08', 'code': 'CMF-1001', 'description': 'Automotive capacity project 1', 'bu ... (4 characters truncated) ... ': 105000.0, 'status': 'draft', 'capacity_manager_id': None, 'client_name': None, 'deleted_at': None, 'sqd_id': None, 'buyer_id': None, 'notes': None}]] (Background on this error at: https://sqlalche.me/e/20/7s2a)
+2026-07-23 11:16:57,224 - app.main - INFO - POST /api/v1/import/execute -> 400
+2026-07-23 11:17:45,670 - app.main - INFO - Shutting down CMF Platform API
+2026-07-23 11:17:53,709 - app.main - INFO - Starting CMF Platform API
+2026-07-23 11:17:53,722 - app.main - INFO - Database tables created (SQLite)
+2026-07-23 11:20:31,727 - app.main - INFO - POST /api/v1/import/execute
+2026-07-23 11:20:34,267 - app.main - INFO - POST /api/v1/import/execute -> 200
+2026-07-23 11:20:47,337 - app.main - INFO - GET /api/v1/projects
+2026-07-23 11:20:47,686 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-23 11:21:00,051 - app.main - INFO - GET /api/v1/projects/1dd477ee-5e80-413a-99bd-6759e0615a10
+2026-07-23 11:21:00,137 - app.main - INFO - GET /api/v1/projects/1dd477ee-5e80-413a-99bd-6759e0615a10 -> 200
+2026-07-23 11:21:03,132 - app.main - INFO - GET /api/v1/parts
+2026-07-23 11:21:03,389 - app.main - INFO - GET /api/v1/parts -> 200
+2026-07-23 11:21:18,358 - app.main - INFO - GET /api/v1/projects
+2026-07-23 11:21:18,654 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-23 11:21:24,007 - app.main - INFO - GET /api/v1/projects/b5b45978-4fa5-49bb-9375-9a0bc94fc645
+2026-07-23 11:21:24,065 - app.main - INFO - GET /api/v1/projects/b5b45978-4fa5-49bb-9375-9a0bc94fc645 -> 200
+2026-07-23 11:22:34,525 - app.main - INFO - GET /api/v1/projects
+2026-07-23 11:22:34,891 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-23 11:22:49,598 - app.main - INFO - GET /api/v1/projects/b10810f3-500c-42e8-9ac9-c10bbfc8a073
+2026-07-23 11:22:49,766 - app.main - INFO - GET /api/v1/projects/b10810f3-500c-42e8-9ac9-c10bbfc8a073 -> 200
+2026-07-23 11:23:02,958 - app.main - INFO - GET /api/v1/documents
+2026-07-23 11:23:03,130 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-23 11:23:10,365 - app.main - INFO - GET /api/v1/import/template/suppliers
+2026-07-23 11:23:10,655 - app.main - INFO - GET /api/v1/import/template/suppliers -> 200
+2026-07-23 11:23:24,788 - app.main - INFO - GET /api/v1/import/template/parts
+2026-07-23 11:23:24,994 - app.main - INFO - GET /api/v1/import/template/parts -> 200
+2026-07-23 11:23:55,731 - app.main - INFO - GET /api/v1/parts
+2026-07-23 11:23:55,903 - app.main - INFO - GET /api/v1/parts -> 200
+2026-07-23 11:25:20,043 - app.main - INFO - GET /api/v1/documents
+2026-07-23 11:25:20,205 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-23 11:25:31,942 - app.main - INFO - POST /api/v1/import/preview
+2026-07-23 11:25:32,490 - app.main - INFO - POST /api/v1/import/preview -> 200
+2026-07-23 11:26:50,225 - app.main - INFO - POST /api/v1/import/preview
+2026-07-23 11:26:50,491 - app.main - INFO - POST /api/v1/import/preview -> 200
+2026-07-23 11:27:04,111 - app.main - INFO - POST /api/v1/import/execute
+2026-07-23 11:27:10,682 - app.main - INFO - POST /api/v1/import/execute -> 200
+2026-07-23 11:27:16,816 - app.main - INFO - GET /api/v1/parts
+2026-07-23 11:27:16,921 - app.main - INFO - GET /api/v1/parts -> 200
+2026-07-23 11:27:21,967 - app.main - INFO - GET /api/v1/projects
+2026-07-23 11:27:22,225 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-23 11:27:26,515 - app.main - INFO - GET /api/v1/projects/1dd477ee-5e80-413a-99bd-6759e0615a10
+2026-07-23 11:27:26,649 - app.main - INFO - GET /api/v1/projects/1dd477ee-5e80-413a-99bd-6759e0615a10 -> 200
+2026-07-23 11:27:44,246 - app.main - INFO - GET /api/v1/parts/d3109c03-39bf-4d7c-b73f-af0250ef8193
+2026-07-23 11:27:44,405 - app.main - INFO - GET /api/v1/parts/d3109c03-39bf-4d7c-b73f-af0250ef8193 -> 200
+2026-07-23 11:27:55,338 - app.main - INFO - GET /api/v1/parts
+2026-07-23 11:27:55,552 - app.main - INFO - GET /api/v1/parts -> 200
+2026-07-23 11:28:00,581 - app.main - INFO - GET /api/v1/parts/aa1301be-2797-4c50-8819-298fe87d7950
+2026-07-23 11:28:00,755 - app.main - INFO - GET /api/v1/parts/aa1301be-2797-4c50-8819-298fe87d7950 -> 200
+2026-07-23 11:28:03,846 - app.main - INFO - GET /api/v1/projects
+2026-07-23 11:28:04,132 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-23 11:28:13,551 - app.main - INFO - GET /api/v1/projects/73a0fc4e-0ee3-429e-9af8-3615663193eb
+2026-07-23 11:28:13,715 - app.main - INFO - GET /api/v1/projects/73a0fc4e-0ee3-429e-9af8-3615663193eb -> 200
+2026-07-23 11:28:59,388 - app.main - INFO - GET /api/v1/projects
+2026-07-23 11:28:59,739 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-23 11:29:02,443 - app.main - INFO - GET /api/v1/projects/61ce6eb4-df0f-496c-afaa-f730a4bcc435
+2026-07-23 11:29:02,544 - app.main - INFO - GET /api/v1/projects/61ce6eb4-df0f-496c-afaa-f730a4bcc435 -> 200
+2026-07-23 11:31:11,584 - app.main - INFO - Shutting down CMF Platform API
+2026-07-23 11:31:20,579 - app.main - INFO - Starting CMF Platform API
+2026-07-23 11:31:20,603 - app.main - INFO - Database tables created (SQLite)
+2026-07-23 11:31:28,500 - app.main - INFO - Shutting down CMF Platform API
+2026-07-23 11:31:36,829 - app.main - INFO - Starting CMF Platform API
+2026-07-23 11:31:36,843 - app.main - INFO - Database tables created (SQLite)
+2026-07-23 11:31:39,700 - app.main - INFO - Shutting down CMF Platform API
+2026-07-23 11:31:46,117 - app.main - INFO - Starting CMF Platform API
+2026-07-23 11:31:46,131 - app.main - INFO - Database tables created (SQLite)
+2026-07-23 11:32:45,380 - app.main - INFO - GET /api/v1/documents
+2026-07-23 11:32:45,889 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-23 11:32:49,787 - app.main - INFO - GET /api/v1/import/template/parts
+2026-07-23 11:32:50,092 - app.main - INFO - GET /api/v1/import/template/parts -> 200
+2026-07-23 11:38:02,046 - app.main - INFO - POST /api/v1/import/preview
+2026-07-23 11:38:02,075 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-07-23 11:38:02,090 - app.main - INFO - POST /api/v1/import/preview -> 401
+2026-07-23 11:38:02,138 - app.main - INFO - POST /api/v1/auth/refresh
+2026-07-23 11:38:02,390 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-07-23 11:38:02,438 - app.main - INFO - POST /api/v1/import/preview
+2026-07-23 11:38:02,850 - app.main - INFO - POST /api/v1/import/preview -> 200
+2026-07-23 11:38:16,191 - app.main - INFO - POST /api/v1/import/execute
+2026-07-23 11:38:20,367 - app.main - INFO - GET /api/v1/projects/61ce6eb4-df0f-496c-afaa-f730a4bcc435
+2026-07-23 11:38:20,654 - app.main - INFO - GET /api/v1/projects/61ce6eb4-df0f-496c-afaa-f730a4bcc435 -> 200
+2026-07-23 11:38:23,658 - app.main - INFO - GET /api/v1/documents
+2026-07-23 11:38:23,824 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-23 11:38:25,165 - app.main - INFO - POST /api/v1/import/execute -> 200
+2026-07-23 11:38:37,462 - app.main - INFO - POST /api/v1/import/preview
+2026-07-23 11:38:37,880 - app.main - INFO - POST /api/v1/import/preview -> 200
+2026-07-23 11:38:47,207 - app.main - INFO - POST /api/v1/import/execute
+2026-07-23 11:38:47,953 - root - ERROR - Exception during execute_import: This Session's transaction has been rolled back due to a previous exception during flush. To begin a new transaction with this Session, first issue Session.rollback(). Original exception was: (sqlite3.IntegrityError) UNIQUE constraint failed: project_parts.project_id, project_parts.part_number
+[SQL: INSERT INTO project_parts (id, part_number, name, description, status, quantity, unit, weight, material, notes, project_id, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('e5c34eec4a674adfba550b6628426b80', 'PN-001-01', 'Battery Module', None, 'obsolete', 1, 'pcs', None, None, None, 'a38ebaa237a8407191547e60263baf82', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj) (Background on this error at: https://sqlalche.me/e/20/7s2a)
+Traceback (most recent call last):
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\api\v1\endpoints\import_endpoints.py", line 136, in execute_import
+    result = await service.execute_import(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\application\services\import_engine_service.py", line 353, in execute_import
+    await uow.activity_logs.create(
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\app\infrastructure\persistence\repositories\base.py", line 55, in create
+    await self._session.flush()
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 786, in flush
+    await greenlet_spawn(self.sync_session.flush, objects=objects)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 190, in greenlet_spawn
+    result = context.switch(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4353, in flush
+    self._flush(objects)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4445, in _flush
+    flush_context.transaction = transaction = self._autobegin_t()._begin()
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 2, in _begin
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\state_changes.py", line 101, in _go
+    self._raise_for_prerequisite_state(fn.__name__, current_state)
+  File "C:\Users\hp\Downloads\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 975, in _raise_for_prerequisite_state
+    raise sa_exc.PendingRollbackError(
+sqlalchemy.exc.PendingRollbackError: This Session's transaction has been rolled back due to a previous exception during flush. To begin a new transaction with this Session, first issue Session.rollback(). Original exception was: (sqlite3.IntegrityError) UNIQUE constraint failed: project_parts.project_id, project_parts.part_number
+[SQL: INSERT INTO project_parts (id, part_number, name, description, status, quantity, unit, weight, material, notes, project_id, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('e5c34eec4a674adfba550b6628426b80', 'PN-001-01', 'Battery Module', None, 'obsolete', 1, 'pcs', None, None, None, 'a38ebaa237a8407191547e60263baf82', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj) (Background on this error at: https://sqlalche.me/e/20/7s2a)
+2026-07-23 11:38:47,995 - app.main - INFO - POST /api/v1/import/execute -> 400
+2026-07-23 11:38:51,698 - app.main - INFO - GET /api/v1/parts
+2026-07-23 11:38:51,904 - app.main - INFO - GET /api/v1/parts -> 200
+2026-07-23 11:38:57,060 - app.main - INFO - GET /api/v1/projects
+2026-07-23 11:38:58,389 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-23 11:39:01,000 - app.main - INFO - GET /api/v1/projects/c2ccfea5-8d4a-44f5-9270-b0b05857285d
+2026-07-23 11:39:01,103 - app.main - INFO - GET /api/v1/projects/c2ccfea5-8d4a-44f5-9270-b0b05857285d -> 200
+2026-07-23 11:39:13,869 - app.main - INFO - GET /api/v1/documents
+2026-07-23 11:39:14,075 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-23 11:39:31,041 - app.main - INFO - GET /api/v1/projects
+2026-07-23 11:39:31,057 - app.main - INFO - GET /api/v1/suppliers
+2026-07-23 11:39:31,278 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-23 11:39:32,362 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-23 11:39:58,180 - app.main - INFO - POST /api/v1/parts
+2026-07-23 11:39:58,362 - app.main - INFO - POST /api/v1/parts -> 200
+2026-07-23 11:39:58,615 - app.main - INFO - GET /api/v1/parts
+2026-07-23 11:39:58,728 - app.main - INFO - GET /api/v1/parts -> 200
+2026-07-23 11:40:03,228 - app.main - INFO - GET /api/v1/projects
+2026-07-23 11:40:04,346 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-23 11:40:18,056 - app.main - INFO - GET /api/v1/projects/293e6f56-6f44-4dbe-a432-d6dbf983fb41
+2026-07-23 11:40:18,331 - app.main - INFO - GET /api/v1/projects/293e6f56-6f44-4dbe-a432-d6dbf983fb41 -> 200
+2026-07-23 11:40:40,238 - app.main - INFO - GET /api/v1/projects
+2026-07-23 11:40:42,131 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-23 11:40:43,502 - app.main - INFO - GET /api/v1/projects/c501f571-2009-4962-bd31-064e0f9de195
+2026-07-23 11:40:43,805 - app.main - INFO - GET /api/v1/projects/c501f571-2009-4962-bd31-064e0f9de195 -> 200
+2026-07-23 11:40:45,837 - app.main - INFO - GET /api/v1/parts
+2026-07-23 11:40:45,935 - app.main - INFO - GET /api/v1/parts -> 200
+2026-07-23 11:40:53,040 - app.main - INFO - GET /api/v1/projects/329445dd-d2fb-4237-aca3-c0d53b0bc937
+2026-07-23 11:40:53,328 - app.main - INFO - GET /api/v1/projects/329445dd-d2fb-4237-aca3-c0d53b0bc937 -> 200
+2026-07-23 11:41:00,802 - app.main - INFO - GET /api/v1/risks
+2026-07-23 11:41:00,941 - app.main - INFO - GET /api/v1/risks -> 200
+2026-07-23 11:41:02,239 - app.main - INFO - GET /api/v1/capacity
+2026-07-23 11:41:02,309 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-07-23 11:41:13,531 - app.main - INFO - GET /api/v1/notifications
+2026-07-23 11:41:13,665 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-07-23 11:46:04,525 - app.main - INFO - GET /api/v1/capacity
+2026-07-23 11:46:04,770 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-07-23 11:46:06,126 - app.main - INFO - GET /api/v1/risks
+2026-07-23 11:46:06,417 - app.main - INFO - GET /api/v1/risks -> 200
+2026-07-23 11:46:10,628 - app.main - INFO - GET /api/v1/suppliers
+2026-07-23 11:46:10,876 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-23 11:46:11,275 - app.main - INFO - GET /api/v1/parts
+2026-07-23 11:46:11,674 - app.main - INFO - GET /api/v1/parts -> 200
+2026-07-23 11:46:36,084 - app.main - INFO - GET /api/v1/auth/me
+2026-07-23 11:46:36,174 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-23 11:46:36,192 - app.main - INFO - GET /api/v1/auth/me
+2026-07-23 11:46:36,266 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-23 11:46:36,366 - app.main - INFO - GET /api/v1/capacity
+2026-07-23 11:46:36,432 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-07-23 11:46:56,899 - app.main - INFO - GET /api/v1/projects
+2026-07-23 11:46:56,908 - app.main - INFO - GET /api/v1/suppliers
+2026-07-23 11:46:56,911 - app.main - INFO - GET /api/v1/risks
+2026-07-23 11:46:57,116 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-23 11:46:57,129 - app.main - INFO - GET /api/v1/risks -> 200
+2026-07-23 11:46:57,801 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-23 11:48:39,108 - app.main - INFO - GET /api/v1/projects

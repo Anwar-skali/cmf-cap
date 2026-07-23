@@ -35,6 +35,7 @@ function parseApiError(errorBody: unknown): {
 class ApiClient {
   private baseURL: string;
   private refreshPromise: Promise<boolean> | null = null;
+  private isRefreshing = false;
 
   constructor(baseURL: string) {
     this.baseURL = baseURL;
@@ -52,6 +53,7 @@ class ApiClient {
     const refreshToken = this.getRefreshToken();
     if (!refreshToken) return false;
 
+    this.isRefreshing = true;
     try {
       const response = await fetch(`${this.baseURL}/auth/refresh`, {
         method: 'POST',
@@ -59,16 +61,26 @@ class ApiClient {
         body: JSON.stringify(toSnakeCase({ refreshToken })),
       });
 
-      if (!response.ok) return false;
+      if (!response.ok) {
+        this.isRefreshing = false;
+        return false;
+      }
 
       const data = toCamelCase<TokenData>(await response.json());
       localStorage.setItem(TOKEN_KEY, data.accessToken);
       localStorage.setItem(REFRESH_TOKEN_KEY, data.refreshToken);
+      this.isRefreshing = false;
       return true;
     } catch {
-      localStorage.removeItem(TOKEN_KEY);
-      localStorage.removeItem(REFRESH_TOKEN_KEY);
+      this.isRefreshing = false;
       return false;
+    }
+  }
+
+  private async ensureValidToken(): Promise<void> {
+    // If another call is already refreshing, wait for it
+    if (this.refreshPromise) {
+      await this.refreshPromise;
     }
   }
 
@@ -109,22 +121,32 @@ class ApiClient {
 
     let response = await fetch(fullUrl, config);
 
-    if (response.status === 401 && this.getRefreshToken()) {
-      if (!this.refreshPromise) {
-        this.refreshPromise = this.refreshTokens();
-      }
-
-      const refreshed = await this.refreshPromise;
-      this.refreshPromise = null;
-
-      if (refreshed) {
-        headers['Authorization'] = `Bearer ${this.getToken()}`;
-        config.headers = headers;
-        if (body !== undefined) {
-          config.body = JSON.stringify(toSnakeCase(body));
+    if (response.status === 401) {
+      const hasRefreshToken = this.getRefreshToken();
+      if (hasRefreshToken) {
+        if (!this.refreshPromise) {
+          this.refreshPromise = this.refreshTokens();
         }
-        response = await fetch(fullUrl, config);
-      } else {
+
+        const refreshed = await this.refreshPromise;
+        this.refreshPromise = null;
+
+        if (refreshed) {
+          const newToken = this.getToken();
+          if (newToken) {
+            headers['Authorization'] = `Bearer ${newToken}`;
+            config.headers = headers;
+            if (body !== undefined) {
+              config.body = JSON.stringify(toSnakeCase(body));
+            }
+            response = await fetch(fullUrl, config);
+          }
+        } else {
+          window.dispatchEvent(new CustomEvent('auth:logout'));
+          throw new ApiError('Session expired. Please log in again.', 401);
+        }
+      } else if (!this.isRefreshing) {
+        // No refresh token and not currently refreshing — session is gone
         window.dispatchEvent(new CustomEvent('auth:logout'));
         throw new ApiError('Session expired. Please log in again.', 401);
       }
@@ -169,33 +191,60 @@ class ApiClient {
   }
 
   async upload<T>(url: string, formData: FormData): Promise<T> {
-    const headers: Record<string, string> = {};
-    const token = this.getToken();
-    if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
-    }
+    // Wait for any in-progress token refresh before starting
+    await this.ensureValidToken();
+
+    const makeHeaders = (): Record<string, string> => {
+      const h: Record<string, string> = {};
+      const t = this.getToken();
+      if (t) {
+        h['Authorization'] = `Bearer ${t}`;
+      }
+      return h;
+    };
+
+    // Clone FormData entries so we can rebuild it for retries
+    // (File streams may be consumed after the first fetch)
+    const entries: [string, FormDataEntryValue][] = [];
+    formData.forEach((value, key) => {
+      entries.push([key, value]);
+    });
+
+    const rebuildFormData = (): FormData => {
+      const fd = new FormData();
+      for (const [key, value] of entries) {
+        fd.append(key, value);
+      }
+      return fd;
+    };
 
     let response = await fetch(`${this.baseURL}${url}`, {
       method: 'POST',
-      headers,
+      headers: makeHeaders(),
       body: formData,
     });
 
-    if (response.status === 401 && this.getRefreshToken()) {
-      if (!this.refreshPromise) {
-        this.refreshPromise = this.refreshTokens();
-      }
-      const refreshed = await this.refreshPromise;
-      this.refreshPromise = null;
+    if (response.status === 401) {
+      const hasRefreshToken = this.getRefreshToken();
+      if (hasRefreshToken) {
+        if (!this.refreshPromise) {
+          this.refreshPromise = this.refreshTokens();
+        }
+        const refreshed = await this.refreshPromise;
+        this.refreshPromise = null;
 
-      if (refreshed) {
-        headers['Authorization'] = `Bearer ${this.getToken()}`;
-        response = await fetch(`${this.baseURL}${url}`, {
-          method: 'POST',
-          headers,
-          body: formData,
-        });
-      } else {
+        if (refreshed) {
+          // Rebuild FormData for the retry to avoid consumed stream issues
+          response = await fetch(`${this.baseURL}${url}`, {
+            method: 'POST',
+            headers: makeHeaders(),
+            body: rebuildFormData(),
+          });
+        } else {
+          window.dispatchEvent(new CustomEvent('auth:logout'));
+          throw new ApiError('Session expired. Please log in again.', 401);
+        }
+      } else if (!this.isRefreshing) {
         window.dispatchEvent(new CustomEvent('auth:logout'));
         throw new ApiError('Session expired. Please log in again.', 401);
       }

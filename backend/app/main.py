@@ -241,6 +241,7 @@ def _include_routers(app: FastAPI) -> None:
     from app.api.v1.endpoints.notifications import router as notifications_router
     from app.api.v1.endpoints.activity import router as activity_router
     from app.api.v1.endpoints.dashboard import router as dashboard_router
+    from app.api.v1.endpoints.import_endpoints import router as import_router
 
     app.include_router(auth_router)
     app.include_router(users_router)
@@ -254,6 +255,7 @@ def _include_routers(app: FastAPI) -> None:
     app.include_router(notifications_router)
     app.include_router(activity_router)
     app.include_router(dashboard_router)
+    app.include_router(import_router)
 
     @app.get("/api/v1/health", tags=["Health"])
     async def health_check() -> dict[str, Any]:
