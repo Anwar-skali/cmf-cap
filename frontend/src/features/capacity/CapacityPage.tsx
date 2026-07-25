@@ -1,20 +1,23 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCapacityAssessmentsQuery } from '@/hooks/queries/useCapacityQuery';
+import { usePermissions } from '@/hooks/usePermissions';
 import { DataTable } from '@/components/ui/data-table';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { PageHeader } from '@/components/ui/page-header';
-import { Plus, Search, ChevronRight, BarChart3, Filter } from 'lucide-react';
+import { Plus, Search, ChevronRight, BarChart3, Filter, Lock } from 'lucide-react';
 import type { ColumnDef } from '@tanstack/react-table';
 import type { CapacityAssessment } from '@/types';
 import { getStatusVariant } from '@/lib/utils';
 
 export default function CapacityPage() {
   const [search, setSearch] = useState('');
+  const { canCreateCapacityAssessment, roleMeta } = usePermissions();
 
   const { data: assessments, isLoading, error, refetch } = useCapacityAssessmentsQuery();
+
 
   const filtered = assessments?.items?.filter(
     (a) =>
@@ -64,11 +67,18 @@ export default function CapacityPage() {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <PageHeader title="Capacity Assessments" description="Manage organizational capacity assessments">
-        <Button asChild>
-          <Link to="/capacity/new"><Plus className="mr-2 h-4 w-4" /> New Assessment</Link>
-        </Button>
+      <PageHeader title="Capacity Assessments" description="Manage organizational capacity assessments & bottleneck analysis">
+        {canCreateCapacityAssessment ? (
+          <Button asChild className="bg-amber-600 hover:bg-amber-700 text-white">
+            <Link to="/capacity/new"><Plus className="mr-2 h-4 w-4" /> New Assessment</Link>
+          </Button>
+        ) : (
+          <Badge variant="outline" className="px-3 py-1.5 text-xs text-muted-foreground bg-muted/50 border gap-1.5">
+            <Lock className="h-3.5 w-3.5" /> Creation restricted to Capacity Managers
+          </Badge>
+        )}
       </PageHeader>
+
 
       <div className="flex items-center gap-3">
         <div className="relative flex-1 max-w-sm">

@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { ThemeProvider } from '@/context/ThemeContext';
 import { useAuth } from '@/hooks/useAuth';
 import { AppLayout } from '@/components/layout/app-layout';
 import LoginPage from '@/features/auth/LoginPage';
@@ -50,7 +51,11 @@ function ProtectedRoute() {
     return <Navigate to="/login" replace />;
   }
 
-  return <AppLayout />;
+  return (
+    <ThemeProvider>
+      <AppLayout />
+    </ThemeProvider>
+  );
 }
 
 function PublicRoute() {

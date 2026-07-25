@@ -9,6 +9,10 @@ export const registerSchema = z.object({
   firstName: z.string().min(1, 'First name is required').max(100),
   lastName: z.string().min(1, 'Last name is required').max(100),
   email: z.string().email('Please enter a valid email address'),
+  role: z.enum(['buyer', 'capacity_manager', 'sqd'], {
+    required_error: 'Please select a role',
+    invalid_type_error: 'Please select a valid role',
+  }),
   password: z
     .string()
     .min(8, 'Password must be at least 8 characters')

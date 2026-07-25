@@ -30,6 +30,7 @@ export interface RegisterRequest {
   confirmPassword: string;
   firstName: string;
   lastName: string;
+  role?: 'buyer' | 'capacity_manager' | 'sqd';
 }
 
 export interface TokenResponse {

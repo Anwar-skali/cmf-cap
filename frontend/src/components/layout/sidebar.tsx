@@ -19,12 +19,14 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { usePermissions } from '@/hooks/usePermissions';
 import { navGroups, type NavItem } from '@/config/navigation';
 
 function Sidebar() {
   const { isCollapsed, toggle } = useSidebarStore();
   const { state } = useAuthStore();
-  const isAdmin = state.user?.role === 'admin';
+  const { roleMeta, isAdmin } = usePermissions();
+  const RoleIcon = roleMeta.icon;
 
   return (
     <aside
@@ -106,9 +108,10 @@ function Sidebar() {
               <p className="truncate text-sm font-medium">
                 {state.user?.firstName} {state.user?.lastName}
               </p>
-              <p className="truncate text-xs text-sidebar-foreground/50 capitalize">
-                {state.user?.role}
-              </p>
+              <Badge variant="outline" className={cn('mt-0.5 px-1.5 py-0 text-[10px] font-semibold border', roleMeta.badgeClass)}>
+                <RoleIcon className="mr-1 h-2.5 w-2.5 inline-block" />
+                {roleMeta.shortTitle}
+              </Badge>
             </div>
             <NavLink
               to="/profile"

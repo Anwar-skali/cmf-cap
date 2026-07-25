@@ -68,7 +68,7 @@
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 }
-
+.glass { @apply bg-white/30 backdrop-blur-lg border border-white/20; }
 @layer utilities {
   .text-balance {
     text-wrap: balance;

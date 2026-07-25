@@ -1,20 +1,23 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useRisksQuery } from '@/hooks/queries/useRisksQuery';
+import { usePermissions } from '@/hooks/usePermissions';
 import { DataTable } from '@/components/ui/data-table';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { PageHeader } from '@/components/ui/page-header';
-import { Plus, Search, ChevronRight, AlertTriangle, Filter } from 'lucide-react';
+import { Plus, Search, ChevronRight, AlertTriangle, Filter, ShieldCheck } from 'lucide-react';
 import type { ColumnDef } from '@tanstack/react-table';
 import type { Risk } from '@/types';
 import { getRiskLevelVariant, getStatusVariant } from '@/lib/utils';
 
 export default function RisksPage() {
   const [search, setSearch] = useState('');
+  const { isSQD } = usePermissions();
 
   const { data: risks, isLoading, error, refetch } = useRisksQuery();
+
 
   const filtered = risks?.items?.filter(
     (r) =>
@@ -68,11 +71,15 @@ export default function RisksPage() {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <PageHeader title="Risks" description="Track and manage project risks">
-        <Button asChild>
-          <Link to="/risks/new"><Plus className="mr-2 h-4 w-4" /> New Risk</Link>
+      <PageHeader title="Quality & Project Risks" description="Track non-conformities, defect severity, and mitigation plans">
+        <Button asChild className={isSQD ? "bg-emerald-600 hover:bg-emerald-700 text-white" : ""}>
+          <Link to="/risks/new">
+            {isSQD ? <ShieldCheck className="mr-2 h-4 w-4" /> : <Plus className="mr-2 h-4 w-4" />}
+            Log New Risk
+          </Link>
         </Button>
       </PageHeader>
+
 
       <div className="flex items-center gap-3">
         <div className="relative flex-1 max-w-sm">

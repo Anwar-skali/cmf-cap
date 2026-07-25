@@ -71,12 +71,16 @@ class ResetPasswordRequest(BaseModel):
         return v
 
 
+ALLOWED_REGISTER_ROLES = {"buyer", "capacity_manager", "sqd"}
+
+
 class RegisterRequest(BaseModel):
     email: EmailStr
     password: str = Field(..., min_length=8)
     confirm_password: str = Field(..., min_length=1)
     first_name: str = Field(..., min_length=1, max_length=100)
     last_name: str = Field(..., min_length=1, max_length=100)
+    role: str = Field(default="buyer")
 
     @model_validator(mode="after")
     def passwords_match(self) -> RegisterRequest:
@@ -93,6 +97,15 @@ class RegisterRequest(BaseModel):
             raise ValueError("password must contain at least one lowercase letter")
         if not any(c.isdigit() for c in v):
             raise ValueError("password must contain at least one digit")
+        return v
+
+    @field_validator("role")
+    @classmethod
+    def role_must_be_allowed(cls, v: str) -> str:
+        if v not in ALLOWED_REGISTER_ROLES:
+            raise ValueError(
+                f"role must be one of: {', '.join(sorted(ALLOWED_REGISTER_ROLES))}"
+            )
         return v
 
     @field_validator("first_name", "last_name")

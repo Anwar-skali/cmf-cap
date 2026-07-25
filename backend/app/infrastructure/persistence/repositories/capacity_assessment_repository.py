@@ -3,7 +3,7 @@ from __future__ import annotations
 import uuid
 from typing import Any
 
-from sqlalchemy import func, select
+from sqlalchemy import select
 
 from app.infrastructure.persistence.models.capacity_assessment import (
     CapacityAssessment,
@@ -47,21 +47,29 @@ class CapacityAssessmentRepository(BaseRepository[CapacityAssessment]):
         return list(result.scalars().all())
 
     async def get_coverage_stats(self) -> dict[str, Any]:
-        base = CapacityAssessment.deleted_at.is_(None)
         total = await self.count(filters={})
         pending = await self.count(filters={"status": "pending"})
         assessed = await self.count(filters={"status": "assessed"})
         confirmed = await self.count(filters={"status": "confirmed"})
-        avg_util = await self._session.execute(
-            select(func.avg(
-                CapacityAssessment.current_capacity /
-                CapacityAssessment.maximum_capacity * 100
-            )).where(base)
+        # Use case() to avoid division by zero (compatible with all SQLAlchemy versions)
+        from sqlalchemy import func as sa_func, case
+        safe_util = case(
+            (CapacityAssessment.maximum_capacity > 0,
+             CapacityAssessment.current_capacity * 100.0 / CapacityAssessment.maximum_capacity),
+            else_=None,
+        )
+        avg_util_result = await self._session.execute(
+            select(sa_func.avg(safe_util)).where(
+                CapacityAssessment.deleted_at.is_(None),
+                CapacityAssessment.maximum_capacity.isnot(None),
+                CapacityAssessment.current_capacity.isnot(None),
+            )
         )
         return {
             "total": total,
             "pending": pending,
             "assessed": assessed,
             "confirmed": confirmed,
-            "average_utilization": float(avg_util.scalar() or 0),
+            "average_utilization": float(avg_util_result.scalar() or 0),
         }
+

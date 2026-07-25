@@ -265,10 +265,11 @@ class AuthService:
         admin_count = await self._uow.users.count(
             filters={"role": UserRole.ADMIN.value}
         )
+        # First registered user always becomes admin; otherwise use the chosen role
         role = (
             UserRole.ADMIN.value
             if admin_count == 0
-            else UserRole.VIEWER.value
+            else data.role
         )
 
         user_data = {

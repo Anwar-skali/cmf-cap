@@ -1,9 +1,10 @@
 from __future__ import annotations
 
+import uuid
 from datetime import datetime
 from typing import Any
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 
 class CreateRiskRequest(BaseModel):
@@ -17,9 +18,23 @@ class CreateRiskRequest(BaseModel):
     contingency: str | None = None
     status: str = "open"
     due_date: datetime | None = None
-    project_part_id: Any
-    assigned_to: Any | None = None
-    identified_by: Any | None = None
+    project_part_id: uuid.UUID
+    assigned_to: uuid.UUID | None = None
+    identified_by: uuid.UUID | None = None
+
+    @field_validator("project_part_id", mode="before")
+    @classmethod
+    def coerce_project_part_id(cls, v: Any) -> Any:
+        if isinstance(v, str):
+            return uuid.UUID(v)
+        return v
+
+    @field_validator("assigned_to", "identified_by", mode="before")
+    @classmethod
+    def coerce_optional_uuid(cls, v: Any) -> Any:
+        if isinstance(v, str) and v:
+            return uuid.UUID(v)
+        return v
 
 
 class UpdateRiskRequest(BaseModel):

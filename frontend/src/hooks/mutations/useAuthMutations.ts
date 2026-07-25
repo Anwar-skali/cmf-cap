@@ -3,6 +3,8 @@ import * as authApi from '@/api/endpoints/auth';
 import { useToast } from '@/hooks/useToast';
 import { useAuthStore } from '@/stores/authStore';
 
+import { RegisterRequest } from '@/types';
+
 export function useLoginMutation() {
   const { login } = useAuthStore();
   const toast = useToast();
@@ -20,14 +22,8 @@ export function useRegisterMutation() {
   const toast = useToast();
 
   return useMutation({
-    mutationFn: (data: {
-      email: string;
-      password: string;
-      confirmPassword: string;
-      firstName: string;
-      lastName: string;
-      role?: string;
-    }) => register(data),
+    mutationFn: (data: RegisterRequest) => register(data),
+
     onSuccess: () => {
       toast.success('Registration successful');
     },

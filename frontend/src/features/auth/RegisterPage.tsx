@@ -2,14 +2,39 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Eye, EyeOff, Lock, Mail, ArrowRight } from 'lucide-react';
+import { Eye, EyeOff, Lock, Mail, ArrowRight, UserCog } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { useAuth } from '@/hooks/useAuth';
 import { registerSchema, type RegisterFormData } from '@/utils/validators';
 import { AuthLogo } from '@/components/brand/logo';
+
+const ROLE_OPTIONS = [
+  {
+    value: 'buyer',
+    label: 'Buyer',
+    description: 'Manages procurement and supplier relationships',
+  },
+  {
+    value: 'capacity_manager',
+    label: 'Capacity Manager',
+    description: 'Oversees capacity assessments and approvals',
+  },
+  {
+    value: 'sqd',
+    label: 'SQD',
+    description: 'Supplier Quality Development specialist',
+  },
+] as const;
 
 export default function RegisterPage() {
   const { register: registerUser, isLoading, error } = useAuth();
@@ -17,6 +42,14 @@ export default function RegisterPage() {
 
   const form = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      role: 'buyer',
+      password: '',
+      confirmPassword: '',
+    },
   });
 
   async function onSubmit(data: RegisterFormData) {
@@ -26,6 +59,7 @@ export default function RegisterPage() {
       email: data.email,
       password: data.password,
       confirmPassword: data.confirmPassword,
+      role: data.role,
     });
   }
 
@@ -75,6 +109,36 @@ export default function RegisterPage() {
                   <FormMessage />
                 </FormItem>
               )} />
+              <FormField
+                control={form.control}
+                name="role"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex items-center gap-1.5">
+                      <UserCog className="h-3.5 w-3.5 text-muted-foreground" />
+                      Role
+                    </FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your role" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {ROLE_OPTIONS.map((opt) => (
+                          <SelectItem key={opt.value} value={opt.value}>
+                            <div className="flex flex-col">
+                              <span className="font-medium">{opt.label}</span>
+                              <span className="text-xs text-muted-foreground">{opt.description}</span>
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <FormField control={form.control} name="password" render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
@@ -132,3 +196,4 @@ export default function RegisterPage() {
     </div>
   );
 }
+
