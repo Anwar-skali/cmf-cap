@@ -22,11 +22,14 @@ class CapacityAssessmentService:
         self._uow = uow
 
     async def create_assessment(self, data: CreateCapacityAssessmentRequest, user_id: uuid.UUID | None = None) -> CapacityAssessmentResponse:
-        part = await self._uow.project_parts.get(data.project_part_id)
+        part_id = uuid.UUID(str(data.project_part_id)) if not isinstance(data.project_part_id, uuid.UUID) else data.project_part_id
+        sup_id = uuid.UUID(str(data.supplier_id)) if not isinstance(data.supplier_id, uuid.UUID) else data.supplier_id
+
+        part = await self._uow.project_parts.get(part_id)
         if part is None:
             raise NotFoundException("Project part not found")
 
-        supplier = await self._uow.suppliers.get(data.supplier_id)
+        supplier = await self._uow.suppliers.get(sup_id)
         if supplier is None:
             raise NotFoundException("Supplier not found")
 
@@ -34,6 +37,8 @@ class CapacityAssessmentService:
             raise BadRequestException("Maximum capacity must be greater than zero")
 
         assessment_data = data.model_dump(exclude_unset=True)
+        assessment_data["project_part_id"] = part_id
+        assessment_data["supplier_id"] = sup_id
         if user_id is not None:
             assessment_data["assessed_by"] = user_id
 
@@ -45,10 +50,11 @@ class CapacityAssessmentService:
             "resource_type": "capacity_assessment",
             "resource_id": str(assessment.id),
             "details": {
-                "project_part_id": str(data.project_part_id),
-                "supplier_id": str(data.supplier_id),
+                "project_part_id": str(part_id),
+                "supplier_id": str(sup_id),
             },
         })
+
 
         await self._uow.commit()
         return self._to_response(assessment)

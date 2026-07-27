@@ -20,8 +20,17 @@ class BaseRepository(Generic[ModelT]):
         self._session = session
         self._model = model
 
-    async def get(self, id: uuid.UUID) -> ModelT | None:
-        stmt = select(self._model).where(self._model.id == id)
+    def _normalize_id(self, id: uuid.UUID | str) -> uuid.UUID:
+        if isinstance(id, str):
+            try:
+                return uuid.UUID(id)
+            except ValueError:
+                pass
+        return id  # type: ignore
+
+    async def get(self, id: uuid.UUID | str) -> ModelT | None:
+        norm_id = self._normalize_id(id)
+        stmt = select(self._model).where(self._model.id == norm_id)
         if issubclass(self._model, SoftDeleteMixin):
             stmt = stmt.where(self._model.deleted_at.is_(None))
         result = await self._session.execute(stmt)
@@ -58,16 +67,17 @@ class BaseRepository(Generic[ModelT]):
 
     async def update(
         self,
-        id: uuid.UUID,
+        id: uuid.UUID | str,
         data: dict[str, Any] | BaseModel,
     ) -> ModelT | None:
+        norm_id = self._normalize_id(id)
         if isinstance(data, BaseModel):
             data = data.model_dump(exclude_unset=True, exclude_none=True)
         elif isinstance(data, dict):
             data = {k: v for k, v in data.items() if v is not None}
         stmt = (
             update(self._model)
-            .where(self._model.id == id)
+            .where(self._model.id == norm_id)
             .values(**data)
             .returning(self._model)
         )
@@ -77,8 +87,9 @@ class BaseRepository(Generic[ModelT]):
         await self._session.flush()
         return result.scalars().first()
 
-    async def delete(self, id: uuid.UUID) -> bool:
-        obj = await self.get(id)
+    async def delete(self, id: uuid.UUID | str) -> bool:
+        norm_id = self._normalize_id(id)
+        obj = await self.get(norm_id)
         if obj is None:
             return False
         if isinstance(obj, SoftDeleteMixin):
@@ -92,8 +103,9 @@ class BaseRepository(Generic[ModelT]):
         await self._session.flush()
         return True
 
-    async def hard_delete(self, id: uuid.UUID) -> bool:
-        stmt = sa_delete(self._model).where(self._model.id == id)
+    async def hard_delete(self, id: uuid.UUID | str) -> bool:
+        norm_id = self._normalize_id(id)
+        stmt = sa_delete(self._model).where(self._model.id == norm_id)
         result = await self._session.execute(stmt)
         await self._session.flush()
         return result.rowcount > 0
@@ -107,9 +119,11 @@ class BaseRepository(Generic[ModelT]):
         result = await self._session.execute(stmt)
         return result.scalar() or 0
 
-    async def exists(self, id: uuid.UUID) -> bool:
-        count = await self.count(filters={"id": id})
+    async def exists(self, id: uuid.UUID | str) -> bool:
+        norm_id = self._normalize_id(id)
+        count = await self.count(filters={"id": norm_id})
         return count > 0
+
 
     def _apply_filters(
         self,
