@@ -68,18 +68,12 @@ export default function ProjectEditPage() {
 
   const handleSave = async (sectionValues: Record<string, any>) => {
     try {
-      // Merge existing project.data with incoming section values so that
-      // saving as Capacity Manager does NOT erase the Buyer or SQD fields.
-      const mergedData = {
-        ...(project.data || {}),
-        ...sectionValues,
-      };
       const name =
-        mergedData.part_name || mergedData.project_name || mergedData.name || project.name;
+        sectionValues.part_name || sectionValues.project_name || project.data?.part_name || project.name;
 
       const payload = {
         name,
-        data: mergedData,
+        data: sectionValues,
       };
 
       updateMutation.mutate(

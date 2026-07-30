@@ -80,18 +80,22 @@ def _get_role_fields(template_code: str | None, role: str) -> set:
     return _TEMPLATE_ROLE_FIELDS.get(code, _TEMPLATE_ROLE_FIELDS["K9"]).get(role, set())
 
 
+def _has_any_field(data_dict: dict[str, Any], fields: set[str]) -> bool:
+    for f in fields:
+        val = data_dict.get(f)
+        if val is not None and str(val).strip() != "" and val != []:
+            return True
+    return False
+
+
 def calculate_workflow_step(data_dict: dict[str, Any], template_code: str | None = None) -> int:
     """Calculate the current workflow step for any CMF template."""
     code = (template_code or "K9").upper()
     if code == "K0":
-        has_sqd = any(data_dict.get(f) for f in (
-            "cat_rating", "cat_real_date", "sqvl", "sqme_manufacturing", "last_cat"
-        ))
-        has_capacity = any(data_dict.get(f) for f in (
-            "contracted_capacity", "weekly_capacity_requested_gst",
-            "quantity_parts_per_vehicle", "scr_tko_link"
-        ))
-        if has_sqd and data_dict.get("cat_rating") == "GREEN":
+        has_capacity = _has_any_field(data_dict, K0_CAPACITY_FIELDS)
+        has_sqd = _has_any_field(data_dict, K0_SQD_FIELDS)
+        cat_rating = str(data_dict.get("cat_rating", "")).upper()
+        if has_sqd and cat_rating == "GREEN":
             return 4
         if has_sqd:
             return 3
@@ -99,13 +103,10 @@ def calculate_workflow_step(data_dict: dict[str, Any], template_code: str | None
             return 2
         return 1
     # Default K9 logic
-    has_sqd = any(data_dict.get(f) for f in (
-        "cat_evaluation", "weekly_capacity_measured", "technical_manager", "sqe", "sqm"
-    ))
-    has_capacity = any(data_dict.get(f) for f in (
-        "capacity", "contracted_capacity", "gst_no", "fete", "capacity_standard"
-    ))
-    if has_sqd and data_dict.get("cat_evaluation") == "GREEN":
+    has_capacity = _has_any_field(data_dict, K9_CAPACITY_FIELDS)
+    has_sqd = _has_any_field(data_dict, K9_SQD_FIELDS)
+    cat_eval = str(data_dict.get("cat_evaluation", "")).upper()
+    if has_sqd and cat_eval == "GREEN":
         return 4
     if has_sqd:
         return 3
@@ -214,21 +215,30 @@ class ProjectService:
                 _tmpl_obj = await self._uow.templates.get(project.template_id)
                 if _tmpl_obj:
                     _tmpl_code = _tmpl_obj.code
+            elif project.data and isinstance(project.data, dict):
+                _tmpl_code = project.data.get("template_code")
 
             buyer_fields = _get_role_fields(_tmpl_code, "buyer")
             capacity_fields = _get_role_fields(_tmpl_code, "capacity_manager")
             sqd_fields = _get_role_fields(_tmpl_code, "sqd")
 
+            # Check only keys in incoming_data that are NEW or MODIFIED compared to existing project.data
+            existing_data = project.data or {}
+            actually_modified_keys = {
+                k for k, v in incoming_data.items()
+                if k not in existing_data or existing_data.get(k) != v
+            }
+
             if role_str == "buyer":
-                prohibited = set(incoming_data.keys()) & (capacity_fields | sqd_fields)
+                prohibited = actually_modified_keys & (capacity_fields | sqd_fields)
                 if prohibited:
                     raise ForbiddenException(f"Buyer role cannot edit Capacity or SQD fields: {', '.join(prohibited)}")
             elif role_str == "capacity_manager":
-                prohibited = set(incoming_data.keys()) & (buyer_fields | sqd_fields)
+                prohibited = actually_modified_keys & (buyer_fields | sqd_fields)
                 if prohibited:
                     raise ForbiddenException(f"Capacity Manager role cannot edit Buyer or SQD fields: {', '.join(prohibited)}")
             elif role_str == "sqd":
-                prohibited = set(incoming_data.keys()) & (buyer_fields | capacity_fields)
+                prohibited = actually_modified_keys & (buyer_fields | capacity_fields)
                 if prohibited:
                     raise ForbiddenException(f"SQD role cannot edit Buyer or Capacity fields: {', '.join(prohibited)}")
 
@@ -241,12 +251,17 @@ class ProjectService:
         # Merge data and recalculate workflow step
         if "data" in update_data and isinstance(update_data["data"], dict):
             current_inner = dict(project.data or {})
-            current_inner.update(update_data["data"])
+            for k, v in update_data["data"].items():
+                if v is not None or k not in current_inner:
+                    current_inner[k] = v
             _tmpl_code2: str | None = None
             if project.template_id:
                 _tmpl_obj2 = await self._uow.templates.get(project.template_id)
                 if _tmpl_obj2:
                     _tmpl_code2 = _tmpl_obj2.code
+            elif current_inner.get("template_code"):
+                _tmpl_code2 = current_inner.get("template_code")
+
             current_inner["workflow_step"] = calculate_workflow_step(current_inner, _tmpl_code2)
             if current_inner.get("workflow_step") == 4:
                 update_data["status"] = ProjectStatus.COMPLETED.value
@@ -361,6 +376,17 @@ class ProjectService:
 
     async def _build_response(self, project: Any) -> ProjectResponse:
         parts = await self._uow.project_parts.get_by_project(project.id)
+        inner_data = dict(project.data or {})
+        _tmpl_code: str | None = None
+        if project.template_id:
+            _tmpl_obj = await self._uow.templates.get(project.template_id)
+            if _tmpl_obj:
+                _tmpl_code = _tmpl_obj.code
+        elif inner_data.get("template_code"):
+            _tmpl_code = inner_data.get("template_code")
+
+        inner_data["workflow_step"] = calculate_workflow_step(inner_data, _tmpl_code)
+
         return ProjectResponse(
             id=project.id,
             code=project.code,
@@ -379,7 +405,7 @@ class ProjectService:
             capacity_manager_id=project.capacity_manager_id,
             template_id=project.template_id,
             template_version=project.template_version,
-            data=project.data or {},
+            data=inner_data,
             parts_count=len(parts),
             suppliers_count=len(project.suppliers) if hasattr(project, 'suppliers') else 0,
             created_at=project.created_at,

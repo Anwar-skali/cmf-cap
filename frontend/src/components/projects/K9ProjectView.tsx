@@ -88,28 +88,52 @@ export const K9ProjectView: React.FC<K9ProjectViewProps> = ({
 
   const calculateWorkflowStep = (): number => {
     const data = formValues;
+    const isValSet = (v: any) => v !== undefined && v !== null && String(v).trim() !== '';
+
     if (isK0) {
-      const hasSqd = Boolean(
-        data.cat_rating || data.cat_real_date || data.sqvl || data.sqme_manufacturing || data.last_cat
-      );
-      const hasCap = Boolean(
-        data.contracted_capacity || data.weekly_capacity_requested_gst ||
-        data.quantity_parts_per_vehicle || data.scr_tko_link
-      );
-      if (hasSqd && data.cat_rating === 'GREEN') return 4;
+      const hasSqd = [
+        'sqvl', 'sqme_manufacturing', 'apqp_grid', 'run_assessment',
+        'cat_forecast_date', 'cat_forecast_calendar_week', 'cat_real_date',
+        'cat_real_calendar_week', 'last_cat', 'requested_supplier_weekly_capacity',
+        'cat_run_observation', 'number_production_days', 'number_production_shifts',
+        'cat_rating', 'cat_link', 'cat_comment'
+      ].some(f => isValSet(data[f]));
+
+      const hasCap = [
+        'quantity_parts_per_vehicle', 'weekly_capacity_requested_gst',
+        'capacity_step_requested_gst', 'calculation_date_gst', 'weekly_capacity_requested_tko',
+        'capacity_step_requested_tko', 'scr_date_tko', 'scr_tko_link',
+        'weekly_capacity_latest_ltos', 'capacity_step_latest_ltos', 'date_latest_ltos',
+        'calculation_link', 'contracted_capacity', 'contracted_capacity_step',
+        'capacity_sizing_ok', 'new_scr_calculation_done', 'contracted_capacity_ok',
+        'capacity_comments', 'capacity_workshop_date', 'capacity_workshop_comment'
+      ].some(f => isValSet(data[f]));
+
+      if (hasSqd && String(data.cat_rating).toUpperCase() === 'GREEN') return 4;
       if (hasSqd) return 3;
       if (hasCap) return 2;
       return 1;
     }
-    const hasSqd = Boolean(data.cat_evaluation || data.weekly_capacity_measured || data.technical_manager);
-    const hasCap = Boolean(data.capacity || data.contracted_capacity || data.gst_no || data.fete);
-    if (hasSqd && data.cat_evaluation === 'GREEN') return 4;
+
+    const hasSqd = [
+      'technical_manager', 'k9_sck', 'cat1_forecast_date_cw', 'cat2_forecast_date',
+      'cat3_forecast_date', 'cat1_2_3_type', 'weekly_capacity_measured',
+      'estimated_target', 'cat_evaluation', 'shared_folder_link', 'comments',
+      'sqe', 'sqm', 'team', 'family_multiplier'
+    ].some(f => isValSet(data[f]));
+
+    const hasCap = [
+      'capacity', 'scr_link_docinfo', 'gst_no', 'contracted_capacity',
+      'fete', 'tko_fete_link_sharepoint', 'capacity_standard', 'fete_tko_letter_doc'
+    ].some(f => isValSet(data[f]));
+
+    if (hasSqd && String(data.cat_evaluation).toUpperCase() === 'GREEN') return 4;
     if (hasSqd) return 3;
     if (hasCap) return 2;
     return 1;
   };
 
-  const currentStep = calculateWorkflowStep();
+  const currentStep = project.data?.workflow_step ?? calculateWorkflowStep();
 
   const buyerSection = template.sections?.find((s) => s.id === 'sec_buyer' || s.name.toLowerCase().includes('buyer'));
   const capacitySection = template.sections?.find(
@@ -134,10 +158,6 @@ export const K9ProjectView: React.FC<K9ProjectViewProps> = ({
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Collect only the fields that belong to the currently active section.
-    // The backend enforces role-based edit permissions and merges the incoming
-    // data with the existing project data, so we must not send fields from
-    // other sections (buyer/sqd) when saving as capacity_manager, etc.
     let sectionToSave: TemplateSection | undefined;
     if (activeTab === 'buyer') sectionToSave = buyerSection;
     if (activeTab === 'capacity_manager') sectionToSave = capacitySection;
@@ -146,9 +166,10 @@ export const K9ProjectView: React.FC<K9ProjectViewProps> = ({
     const fieldsToSubmit: Record<string, any> = {};
     sectionToSave?.groups?.forEach((group) => {
       group.fields?.forEach((field) => {
-        // Always include the field – even if not yet in formValues – so the
-        // backend receives the current value (or null if never set).
-        fieldsToSubmit[field.internalName] = formValues[field.internalName] ?? null;
+        const val = formValues[field.internalName];
+        if (val !== undefined) {
+          fieldsToSubmit[field.internalName] = val;
+        }
       });
     });
 

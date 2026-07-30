@@ -19,7 +19,9 @@ export function useProjectQuery(id: string) {
     queryKey: queryKeys.projects.detail(id),
     queryFn: () => projectsApi.getProject(id),
     enabled: !!id,
-    staleTime: 30_000,
+    staleTime: 0,
     gcTime: 60_000,
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
   });
 }

@@ -59,19 +59,13 @@ export default function ProjectDetailPage() {
   };
 
   const handleSaveK9 = async (sectionValues: Record<string, any>) => {
-    // Merge existing project.data with incoming section values so that
-    // saving as Capacity Manager does NOT erase the Buyer or SQD fields.
-    const mergedData = {
-      ...(project.data || {}),
-      ...sectionValues,
-    };
     const name =
-      mergedData.part_name ||
-      mergedData.project_name ||
-      mergedData.name ||
+      sectionValues.part_name ||
+      sectionValues.project_name ||
+      project.data?.part_name ||
       project.name;
     updateMutation.mutate(
-      { id: projectId!, data: { name, data: mergedData } as any },
+      { id: projectId!, data: { name, data: sectionValues } as any },
       {
         onSuccess: () => {
           toast.success(`CMF ${templateCode} Project section saved successfully!`);
