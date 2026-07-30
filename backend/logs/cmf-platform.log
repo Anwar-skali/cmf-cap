@@ -15868,3 +15868,145 @@ sqlalchemy.exc.StatementError: (builtins.AttributeError) 'str' object has no att
 2026-07-30 10:49:45,849 - app.main - INFO - GET /api/v1/suppliers -> 200
 2026-07-30 10:50:33,781 - app.main - INFO - GET /api/v1/projects
 2026-07-30 10:50:33,976 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-30 10:52:27,418 - app.main - INFO - GET /api/v1/projects
+2026-07-30 10:52:27,632 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-30 10:52:31,399 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b
+2026-07-30 10:52:31,529 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b -> 200
+2026-07-30 10:52:31,962 - app.main - INFO - GET /api/v1/suppliers
+2026-07-30 10:52:31,966 - app.main - INFO - GET /api/v1/users
+2026-07-30 10:52:32,314 - app.main - INFO - GET /api/v1/users -> 200
+2026-07-30 10:52:32,402 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-30 10:53:09,211 - app.main - INFO - PUT /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b
+2026-07-30 10:53:09,470 - app.main - INFO - PUT /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b -> 200
+2026-07-30 10:53:09,577 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b
+2026-07-30 10:53:09,712 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b -> 200
+2026-07-30 10:53:09,745 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b
+2026-07-30 10:53:09,902 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b -> 200
+2026-07-30 10:53:12,266 - app.main - INFO - GET /api/v1/projects
+2026-07-30 10:53:12,461 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-30 10:53:14,343 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b
+2026-07-30 10:53:14,457 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b -> 200
+2026-07-30 10:53:17,662 - app.main - INFO - GET /api/v1/suppliers
+2026-07-30 10:53:17,757 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-30 10:53:41,286 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b
+2026-07-30 10:53:41,412 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b -> 200
+2026-07-30 10:53:52,424 - app.main - INFO - GET /api/v1/users
+2026-07-30 10:53:52,645 - app.main - INFO - GET /api/v1/users -> 200
+2026-07-30 10:54:02,642 - app.main - INFO - PUT /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b
+2026-07-30 10:54:02,894 - app.main - INFO - PUT /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b -> 200
+2026-07-30 10:54:02,940 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b
+2026-07-30 10:54:03,080 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b -> 200
+2026-07-30 10:54:03,127 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b
+2026-07-30 10:54:03,217 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b -> 200
+2026-07-30 10:54:05,650 - app.main - INFO - GET /api/v1/projects
+2026-07-30 10:54:05,743 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-30 10:54:08,703 - app.main - INFO - GET /api/v1/suppliers
+2026-07-30 10:54:08,705 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b
+2026-07-30 10:54:08,823 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b -> 200
+2026-07-30 10:54:08,849 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-30 10:54:19,401 - app.main - INFO - GET /api/v1/projects
+2026-07-30 10:54:19,567 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-30 10:54:21,978 - app.main - INFO - GET /api/v1/auth/me
+2026-07-30 10:54:22,043 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-30 10:54:22,059 - app.main - INFO - GET /api/v1/auth/me
+2026-07-30 10:54:22,129 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-30 10:54:22,182 - app.main - INFO - GET /api/v1/projects
+2026-07-30 10:54:22,186 - app.main - INFO - GET /api/v1/templates
+2026-07-30 10:54:22,315 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-30 10:54:22,338 - app.main - INFO - GET /api/v1/templates
+2026-07-30 10:54:22,407 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-30 10:54:22,450 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-30 10:54:29,622 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b
+2026-07-30 10:54:29,739 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b -> 200
+2026-07-30 10:54:30,104 - app.main - INFO - GET /api/v1/suppliers
+2026-07-30 10:54:30,124 - app.main - INFO - GET /api/v1/users
+2026-07-30 10:54:30,273 - app.main - INFO - GET /api/v1/users -> 200
+2026-07-30 10:54:30,315 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-30 10:55:16,374 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b
+2026-07-30 10:55:16,487 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b -> 200
+2026-07-30 11:02:44,030 - app.main - INFO - Shutting down CMF Platform API
+2026-07-30 11:02:50,593 - app.main - INFO - Starting CMF Platform API
+2026-07-30 11:02:50,617 - app.main - INFO - Database tables created (SQLite)
+2026-07-30 11:05:45,072 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b
+2026-07-30 11:05:45,491 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b -> 200
+2026-07-30 11:05:48,009 - app.main - INFO - GET /api/v1/auth/me
+2026-07-30 11:05:48,068 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-30 11:05:48,083 - app.main - INFO - GET /api/v1/auth/me
+2026-07-30 11:05:48,141 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-30 11:05:48,237 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b
+2026-07-30 11:05:48,243 - app.main - INFO - GET /api/v1/templates
+2026-07-30 11:05:48,368 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-30 11:05:48,382 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b -> 200
+2026-07-30 11:05:48,387 - app.main - INFO - GET /api/v1/templates
+2026-07-30 11:05:48,453 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-30 11:05:48,662 - app.main - INFO - GET /api/v1/suppliers
+2026-07-30 11:05:48,677 - app.main - INFO - GET /api/v1/users
+2026-07-30 11:05:49,062 - app.main - INFO - GET /api/v1/users -> 200
+2026-07-30 11:05:49,109 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-30 11:05:56,480 - app.main - INFO - GET /api/v1/projects
+2026-07-30 11:05:56,694 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-30 11:06:03,698 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b
+2026-07-30 11:06:03,767 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b -> 200
+2026-07-30 11:06:17,104 - app.main - INFO - GET /api/v1/projects
+2026-07-30 11:06:17,303 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-30 11:06:18,113 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b
+2026-07-30 11:06:18,248 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b -> 200
+2026-07-30 11:06:36,284 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b
+2026-07-30 11:06:36,617 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b -> 200
+2026-07-30 11:06:46,565 - app.main - INFO - PUT /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b
+2026-07-30 11:06:46,948 - app.main - INFO - PUT /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b -> 200
+2026-07-30 11:06:46,971 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b
+2026-07-30 11:06:47,028 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b -> 200
+2026-07-30 11:06:47,042 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b
+2026-07-30 11:06:47,095 - app.main - INFO - GET /api/v1/projects/2a7374e1-2a85-49d8-84e6-ae4268aeb01b -> 200
+2026-07-30 11:06:53,811 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-07-30 11:06:53,838 - app.main - INFO - GET /api/v1/projects
+2026-07-30 11:06:54,287 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-30 11:06:55,117 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-07-30 11:07:07,077 - app.main - INFO - GET /api/v1/projects
+2026-07-30 11:07:07,179 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-30 11:07:10,446 - app.main - INFO - GET /api/v1/projects
+2026-07-30 11:07:10,692 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-30 11:07:44,209 - app.main - INFO - GET /api/v1/projects
+2026-07-30 11:07:44,431 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-30 11:07:58,131 - app.main - INFO - GET /api/v1/suppliers
+2026-07-30 11:07:58,136 - app.main - INFO - GET /api/v1/users
+2026-07-30 11:07:58,476 - app.main - INFO - GET /api/v1/users -> 200
+2026-07-30 11:07:58,525 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-30 11:08:02,873 - app.main - INFO - POST /api/v1/auth/logout
+2026-07-30 11:08:03,040 - app.main - INFO - POST /api/v1/auth/logout -> 200
+2026-07-30 11:08:20,263 - app.main - INFO - POST /api/v1/auth/login
+2026-07-30 11:08:21,225 - app.main - WARNING - UnauthorizedException: Invalid email or password
+2026-07-30 11:08:21,228 - app.main - INFO - POST /api/v1/auth/login -> 401
+2026-07-30 11:09:10,012 - app.main - INFO - POST /api/v1/auth/login
+2026-07-30 11:09:11,115 - app.main - INFO - POST /api/v1/auth/login -> 200
+2026-07-30 11:09:11,153 - app.main - INFO - GET /api/v1/auth/me
+2026-07-30 11:09:11,259 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-30 11:09:11,475 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-07-30 11:09:11,489 - app.main - INFO - GET /api/v1/templates
+2026-07-30 11:09:11,493 - app.main - INFO - GET /api/v1/projects
+2026-07-30 11:09:11,745 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-30 11:09:11,770 - app.main - INFO - GET /api/v1/templates
+2026-07-30 11:09:11,896 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-30 11:09:11,918 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-30 11:09:12,298 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-07-30 11:09:20,913 - app.main - INFO - GET /api/v1/projects
+2026-07-30 11:09:21,131 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-30 11:09:29,581 - app.main - INFO - GET /api/v1/suppliers
+2026-07-30 11:09:29,593 - app.main - INFO - GET /api/v1/users
+2026-07-30 11:09:29,899 - app.main - INFO - GET /api/v1/users -> 200
+2026-07-30 11:09:29,942 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-30 11:12:28,727 - app.main - INFO - POST /api/v1/projects
+2026-07-30 11:12:28,814 - app.main - INFO - POST /api/v1/projects -> 200
+2026-07-30 11:12:29,489 - app.main - INFO - GET /api/v1/projects/92a4cd75-1e14-466b-a2b3-0216105242ce
+2026-07-30 11:12:29,602 - app.main - INFO - GET /api/v1/projects/92a4cd75-1e14-466b-a2b3-0216105242ce -> 200
+2026-07-30 11:12:29,946 - app.main - INFO - GET /api/v1/suppliers
+2026-07-30 11:12:29,951 - app.main - INFO - GET /api/v1/users
+2026-07-30 11:12:30,226 - app.main - INFO - GET /api/v1/users -> 200
+2026-07-30 11:12:30,291 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-30 11:16:09,042 - app.main - INFO - GET /api/v1/projects/92a4cd75-1e14-466b-a2b3-0216105242ce
+2026-07-30 11:16:09,114 - app.main - INFO - GET /api/v1/projects/92a4cd75-1e14-466b-a2b3-0216105242ce -> 200
+2026-07-30 11:16:23,990 - app.main - INFO - GET /api/v1/suppliers
+2026-07-30 11:16:24,010 - app.main - INFO - GET /api/v1/users
+2026-07-30 11:16:24,278 - app.main - INFO - GET /api/v1/users -> 200
+2026-07-30 11:16:24,315 - app.main - INFO - GET /api/v1/suppliers -> 200

@@ -88,14 +88,24 @@ def _has_any_field(data_dict: dict[str, Any], fields: set[str]) -> bool:
     return False
 
 
+def _is_green_evaluation(val: Any) -> bool:
+    """Return True if the SQD evaluation/rating is GREEN, satisfactory, or unset (defaulting to GREEN)."""
+    if val is None or str(val).strip() == "":
+        return True
+    s = str(val).upper().strip()
+    if "RED" in s or "ORANGE" in s:
+        return False
+    return True
+
+
 def calculate_workflow_step(data_dict: dict[str, Any], template_code: str | None = None) -> int:
     """Calculate the current workflow step for any CMF template."""
     code = (template_code or "K9").upper()
     if code == "K0":
         has_capacity = _has_any_field(data_dict, K0_CAPACITY_FIELDS)
         has_sqd = _has_any_field(data_dict, K0_SQD_FIELDS)
-        cat_rating = str(data_dict.get("cat_rating", "")).upper()
-        if has_sqd and cat_rating == "GREEN":
+        cat_rating = data_dict.get("cat_rating")
+        if has_sqd and _is_green_evaluation(cat_rating):
             return 4
         if has_sqd:
             return 3
@@ -105,8 +115,8 @@ def calculate_workflow_step(data_dict: dict[str, Any], template_code: str | None
     # Default K9 logic
     has_capacity = _has_any_field(data_dict, K9_CAPACITY_FIELDS)
     has_sqd = _has_any_field(data_dict, K9_SQD_FIELDS)
-    cat_eval = str(data_dict.get("cat_evaluation", "")).upper()
-    if has_sqd and cat_eval == "GREEN":
+    cat_eval = data_dict.get("cat_evaluation")
+    if has_sqd and _is_green_evaluation(cat_eval):
         return 4
     if has_sqd:
         return 3

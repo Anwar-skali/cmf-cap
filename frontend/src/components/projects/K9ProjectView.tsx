@@ -49,12 +49,14 @@ export const K9ProjectView: React.FC<K9ProjectViewProps> = ({
     const base = project.data || {};
     if (isK0) {
       return {
+        cat_rating: 'GREEN',
         part_name: base.part_name ?? project.name,
         part_number: base.part_number ?? project.code,
         ...base,
       };
     }
     return {
+      cat_evaluation: 'GREEN',
       unique_id: base.unique_id ?? project.code,
       part_name: base.part_name ?? project.name,
       ...base,
@@ -90,6 +92,13 @@ export const K9ProjectView: React.FC<K9ProjectViewProps> = ({
     const data = formValues;
     const isValSet = (v: any) => v !== undefined && v !== null && String(v).trim() !== '';
 
+    const isGreenEval = (val: any) => {
+      if (val === undefined || val === null || String(val).trim() === '') return true;
+      const s = String(val).toUpperCase().trim();
+      if (s.includes('RED') || s.includes('ORANGE')) return false;
+      return true;
+    };
+
     if (isK0) {
       const hasSqd = [
         'sqvl', 'sqme_manufacturing', 'apqp_grid', 'run_assessment',
@@ -109,7 +118,7 @@ export const K9ProjectView: React.FC<K9ProjectViewProps> = ({
         'capacity_comments', 'capacity_workshop_date', 'capacity_workshop_comment'
       ].some(f => isValSet(data[f]));
 
-      if (hasSqd && String(data.cat_rating).toUpperCase() === 'GREEN') return 4;
+      if (hasSqd && isGreenEval(data.cat_rating)) return 4;
       if (hasSqd) return 3;
       if (hasCap) return 2;
       return 1;
@@ -127,7 +136,7 @@ export const K9ProjectView: React.FC<K9ProjectViewProps> = ({
       'fete', 'tko_fete_link_sharepoint', 'capacity_standard', 'fete_tko_letter_doc'
     ].some(f => isValSet(data[f]));
 
-    if (hasSqd && String(data.cat_evaluation).toUpperCase() === 'GREEN') return 4;
+    if (hasSqd && isGreenEval(data.cat_evaluation)) return 4;
     if (hasSqd) return 3;
     if (hasCap) return 2;
     return 1;
