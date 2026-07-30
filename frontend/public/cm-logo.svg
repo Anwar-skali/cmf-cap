@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <!-- Capgemini Iconic Blue Spade Logo -->
+  <path fill="#0070AD" d="M250,90 C340,165 420,230 420,310 C420,385 360,420 280,420 C230,420 205,405 180,380 C120,440 70,420 70,350 C70,260 160,175 250,90 Z" />
+  <!-- White Fluid Ribbon Curve (The Signature Capgemini Ribbon Swoosh) -->
+  <path fill="none" stroke="#FFFFFF" stroke-width="24" stroke-linecap="round" d="M195,400 C270,340 395,300 390,260 C385,225 330,220 270,250 C210,280 180,340 240,370 C280,390 320,375 350,355" />
+</svg>

@@ -17,7 +17,7 @@ function AppLayout({ children }: AppLayoutProps) {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   return (
-    <div className="relative min-h-screen bg-background">
+    <div className="relative min-h-screen bg-background text-foreground">
       {isMobile ? (
         <MobileSidebar
           open={mobileSidebarOpen}

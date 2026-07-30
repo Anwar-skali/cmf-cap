@@ -76,7 +76,7 @@ async def create_project(
     current_user: User = Depends(get_current_active_user),
     project_service: ProjectService = Depends(get_project_service),
 ) -> Any:
-    return await project_service.create_project(data, user_id=current_user.id)
+    return await project_service.create_project(data, user_id=current_user.id, user_role=current_user.role)
 
 
 @router.get(
@@ -103,7 +103,7 @@ async def update_project(
     current_user: User = Depends(get_current_active_user),
     project_service: ProjectService = Depends(get_project_service),
 ) -> Any:
-    return await project_service.update_project(id, data, user_id=current_user.id)
+    return await project_service.update_project(id, data, user_id=current_user.id, user_role=current_user.role)
 
 
 @router.delete(

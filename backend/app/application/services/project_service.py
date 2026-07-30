@@ -12,8 +12,110 @@ from app.application.dto.projects import (
     UpdateProjectRequest,
 )
 from app.application.interfaces.services import ICacheService, IUnitOfWork
-from app.core.exceptions import ConflictException, NotFoundException
+from app.core.exceptions import ConflictException, ForbiddenException, NotFoundException
 from app.domain.enums import ActivityAction, ProjectStatus
+
+# K9 field sets
+K9_BUYER_FIELDS = {
+    "unique_id", "apqp", "part_name", "use_case", "part_info", "part_number",
+    "supplier_info", "supplier_name", "manufacturing_cofor", "production_location",
+    "stakeholder", "buyer", "project_name", "project_code"
+}
+K9_CAPACITY_FIELDS = {
+    "capacity", "scr_link_docinfo", "gst_no", "contracted_capacity",
+    "fete", "tko_fete_link_sharepoint", "capacity_standard", "fete_tko_letter_doc"
+}
+K9_SQD_FIELDS = {
+    "technical_manager", "k9_sck", "cat1_forecast_date_cw", "cat2_forecast_date",
+    "cat3_forecast_date", "cat1_2_3_type", "weekly_capacity_measured",
+    "estimated_target", "cat_evaluation", "shared_folder_link", "comments",
+    "sqe", "sqm", "team", "family_multiplier"
+}
+
+# K0 field sets
+K0_BUYER_FIELDS = {
+    "line_item", "components_package_rfq", "tazebao_id_dev_system_no",
+    "gst_source_package_number", "part_number", "part_name", "comments",
+    "make_or_buy", "other_platform_impacted", "development_type",
+    "status_resourcing", "original_vehicle_co_parts", "supplier_name_co_parts",
+    "new_supplier_yn", "nominated_supplier", "manufacturing_cofor",
+    "supplier_location", "ppm", "commodity_buyer", "program_buyer",
+    "gm_commodity", "pur_manager", "ga", "pur_area", "lead_engineer_hordain",
+    "e_port", "tofas", "eko", "lfp_66_kwh", "nmc_82_kwh",
+    "project_name", "project_code"
+}
+K0_CAPACITY_FIELDS = {
+    "quantity_parts_per_vehicle",
+    "weekly_capacity_requested_gst", "capacity_step_requested_gst", "calculation_date_gst",
+    "weekly_capacity_requested_tko", "capacity_step_requested_tko", "scr_date_tko", "scr_tko_link",
+    "weekly_capacity_latest_ltos", "capacity_step_latest_ltos", "date_latest_ltos", "calculation_link",
+    "contracted_capacity", "contracted_capacity_step", "capacity_sizing_ok",
+    "new_scr_calculation_done", "contracted_capacity_ok",
+    "capacity_comments", "capacity_workshop_date", "capacity_workshop_comment"
+}
+K0_SQD_FIELDS = {
+    "sqvl", "sqme_manufacturing",
+    "apqp_grid", "run_assessment",
+    "cat_forecast_date", "cat_forecast_calendar_week",
+    "cat_real_date", "cat_real_calendar_week",
+    "last_cat", "requested_supplier_weekly_capacity",
+    "cat_run_observation", "number_production_days", "number_production_shifts",
+    "cat_rating", "cat_link", "cat_comment"
+}
+
+# Aliases for legacy callers
+BUYER_FIELDS = K9_BUYER_FIELDS
+CAPACITY_FIELDS = K9_CAPACITY_FIELDS
+SQD_FIELDS = K9_SQD_FIELDS
+
+_TEMPLATE_ROLE_FIELDS: dict[str, dict[str, set]] = {
+    "K9": {"buyer": K9_BUYER_FIELDS, "capacity_manager": K9_CAPACITY_FIELDS, "sqd": K9_SQD_FIELDS},
+    "K0": {"buyer": K0_BUYER_FIELDS, "capacity_manager": K0_CAPACITY_FIELDS, "sqd": K0_SQD_FIELDS},
+}
+
+
+def _get_role_fields(template_code: str | None, role: str) -> set:
+    """Return the editable field set for the given role and template code."""
+    code = (template_code or "K9").upper()
+    return _TEMPLATE_ROLE_FIELDS.get(code, _TEMPLATE_ROLE_FIELDS["K9"]).get(role, set())
+
+
+def calculate_workflow_step(data_dict: dict[str, Any], template_code: str | None = None) -> int:
+    """Calculate the current workflow step for any CMF template."""
+    code = (template_code or "K9").upper()
+    if code == "K0":
+        has_sqd = any(data_dict.get(f) for f in (
+            "cat_rating", "cat_real_date", "sqvl", "sqme_manufacturing", "last_cat"
+        ))
+        has_capacity = any(data_dict.get(f) for f in (
+            "contracted_capacity", "weekly_capacity_requested_gst",
+            "quantity_parts_per_vehicle", "scr_tko_link"
+        ))
+        if has_sqd and data_dict.get("cat_rating") == "GREEN":
+            return 4
+        if has_sqd:
+            return 3
+        if has_capacity:
+            return 2
+        return 1
+    # Default K9 logic
+    has_sqd = any(data_dict.get(f) for f in (
+        "cat_evaluation", "weekly_capacity_measured", "technical_manager", "sqe", "sqm"
+    ))
+    has_capacity = any(data_dict.get(f) for f in (
+        "capacity", "contracted_capacity", "gst_no", "fete", "capacity_standard"
+    ))
+    if has_sqd and data_dict.get("cat_evaluation") == "GREEN":
+        return 4
+    if has_sqd:
+        return 3
+    if has_capacity:
+        return 2
+    return 1
+
+
+# Keep legacy name working
+calculate_k9_workflow_step = calculate_workflow_step
 
 
 class ProjectService:
@@ -21,7 +123,15 @@ class ProjectService:
         self._uow = uow
         self._cache = cache_service
 
-    async def create_project(self, data: CreateProjectRequest, user_id: uuid.UUID | None = None) -> ProjectResponse:
+    async def create_project(
+        self,
+        data: CreateProjectRequest,
+        user_id: uuid.UUID | None = None,
+        user_role: str | None = None,
+    ) -> ProjectResponse:
+        if user_role and str(user_role).lower() not in ("buyer", "admin"):
+            raise ForbiddenException("Only Buyers or Administrators can create CMF projects.")
+
         if data.code:
             existing = await self._uow.projects.get_by_code(data.code)
             if existing is not None:
@@ -32,6 +142,28 @@ class ProjectService:
 
         project_data = data.model_dump(exclude_unset=True, exclude={"code"})
         project_data["code"] = code
+
+        # Convert string UUIDs to uuid.UUID objects for SQLAlchemy
+        for uuid_field in ("template_id", "buyer_id", "sqd_id", "capacity_manager_id"):
+            val = project_data.get(uuid_field)
+            if isinstance(val, str):
+                project_data[uuid_field] = uuid.UUID(val)
+
+        if not project_data.get("template_id"):
+            k9 = await self._uow.templates.get_by_code("K9")
+            if k9:
+                project_data["template_id"] = k9.id
+                project_data["template_version"] = k9.version
+
+        # Ensure initial workflow step is set
+        inner_data = project_data.get("data") or {}
+        # Resolve template code for workflow calculation
+        _tmpl_obj = None
+        if project_data.get("template_id"):
+            _tmpl_obj = await self._uow.templates.get(project_data["template_id"])
+        _tmpl_code = _tmpl_obj.code if _tmpl_obj else None
+        inner_data["workflow_step"] = calculate_workflow_step(inner_data, _tmpl_code)
+        project_data["data"] = inner_data
 
         project = await self._uow.projects.create(project_data)
 
@@ -56,7 +188,13 @@ class ProjectService:
             raise NotFoundException("Project not found")
         return await self._build_response(project)
 
-    async def update_project(self, id: uuid.UUID, data: UpdateProjectRequest, user_id: uuid.UUID | None = None) -> ProjectResponse:
+    async def update_project(
+        self,
+        id: uuid.UUID,
+        data: UpdateProjectRequest,
+        user_id: uuid.UUID | None = None,
+        user_role: str | None = None,
+    ) -> ProjectResponse:
         project = await self._uow.projects.get(id)
         if project is None:
             raise NotFoundException("Project not found")
@@ -64,6 +202,55 @@ class ProjectService:
         update_data = data.model_dump(exclude_unset=True, exclude_none=True)
         if not update_data:
             return await self._build_response(project)
+
+        # Enforce role-level edit boundaries if role is specified and not admin
+        if user_role and str(user_role).lower() != "admin":
+            role_str = str(user_role).lower()
+            incoming_data = update_data.get("data") or {}
+
+            # Determine template code from the project's template
+            _tmpl_code: str | None = None
+            if project.template_id:
+                _tmpl_obj = await self._uow.templates.get(project.template_id)
+                if _tmpl_obj:
+                    _tmpl_code = _tmpl_obj.code
+
+            buyer_fields = _get_role_fields(_tmpl_code, "buyer")
+            capacity_fields = _get_role_fields(_tmpl_code, "capacity_manager")
+            sqd_fields = _get_role_fields(_tmpl_code, "sqd")
+
+            if role_str == "buyer":
+                prohibited = set(incoming_data.keys()) & (capacity_fields | sqd_fields)
+                if prohibited:
+                    raise ForbiddenException(f"Buyer role cannot edit Capacity or SQD fields: {', '.join(prohibited)}")
+            elif role_str == "capacity_manager":
+                prohibited = set(incoming_data.keys()) & (buyer_fields | sqd_fields)
+                if prohibited:
+                    raise ForbiddenException(f"Capacity Manager role cannot edit Buyer or SQD fields: {', '.join(prohibited)}")
+            elif role_str == "sqd":
+                prohibited = set(incoming_data.keys()) & (buyer_fields | capacity_fields)
+                if prohibited:
+                    raise ForbiddenException(f"SQD role cannot edit Buyer or Capacity fields: {', '.join(prohibited)}")
+
+        # Convert string UUIDs to uuid.UUID objects for SQLAlchemy
+        for uuid_field in ("template_id", "buyer_id", "sqd_id", "capacity_manager_id"):
+            val = update_data.get(uuid_field)
+            if isinstance(val, str):
+                update_data[uuid_field] = uuid.UUID(val)
+
+        # Merge data and recalculate workflow step
+        if "data" in update_data and isinstance(update_data["data"], dict):
+            current_inner = dict(project.data or {})
+            current_inner.update(update_data["data"])
+            _tmpl_code2: str | None = None
+            if project.template_id:
+                _tmpl_obj2 = await self._uow.templates.get(project.template_id)
+                if _tmpl_obj2:
+                    _tmpl_code2 = _tmpl_obj2.code
+            current_inner["workflow_step"] = calculate_workflow_step(current_inner, _tmpl_code2)
+            if current_inner.get("workflow_step") == 4:
+                update_data["status"] = ProjectStatus.COMPLETED.value
+            update_data["data"] = current_inner
 
         project = await self._uow.projects.update(id, update_data)
         if project is None:
@@ -190,6 +377,9 @@ class ProjectService:
             buyer_id=project.buyer_id,
             sqd_id=project.sqd_id,
             capacity_manager_id=project.capacity_manager_id,
+            template_id=project.template_id,
+            template_version=project.template_version,
+            data=project.data or {},
             parts_count=len(parts),
             suppliers_count=len(project.suppliers) if hasattr(project, 'suppliers') else 0,
             created_at=project.created_at,

@@ -35,18 +35,20 @@ async def list_users(
     role: str | None = Query(None),
     is_active: bool | None = Query(None),
     skip: int = Query(0, ge=0),
-    limit: int = Query(20, ge=1, le=100),
+    limit: int = Query(20, ge=1, le=500),
+    page_size: int | None = Query(None, ge=1, le=500),
     sort_by: str | None = Query("created_at"),
     sort_desc: bool = Query(True),
-    current_user: User = Depends(get_current_admin),
+    current_user: User = Depends(get_current_active_user),
     user_service: UserService = Depends(get_user_service),
 ) -> Any:
+    effective_limit = page_size if page_size is not None else limit
     filter_data = UserFilter(
         search=search,
         role=role,
         is_active=is_active,
         skip=skip,
-        limit=limit,
+        limit=effective_limit,
         sort_by=sort_by,
         sort_desc=sort_desc,
     )

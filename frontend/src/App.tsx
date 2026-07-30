@@ -35,14 +35,19 @@ import ProfilePage from '@/features/profile/ProfilePage';
 import SettingsPage from '@/features/settings/SettingsPage';
 import AdminPage from '@/features/admin/AdminPage';
 import ReportsPage from '@/features/reports/ReportsPage';
+import TemplateStudioPage from '@/features/templates/TemplateStudioPage';
+
+import { TemplateProvider } from '@/context/TemplateContext';
+
+import { LanguageProvider } from '@/context/LanguageContext';
 
 function ProtectedRoute() {
   const { isAuthenticated, isLoading } = useAuth();
 
   if (isLoading) {
     return (
-      <div className="flex h-screen items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+      <div className="flex h-screen items-center justify-center bg-[#0B1220]">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#2563EB] border-t-transparent" />
       </div>
     );
   }
@@ -52,9 +57,13 @@ function ProtectedRoute() {
   }
 
   return (
-    <ThemeProvider>
-      <AppLayout />
-    </ThemeProvider>
+    <LanguageProvider>
+      <ThemeProvider>
+        <TemplateProvider>
+          <AppLayout />
+        </TemplateProvider>
+      </ThemeProvider>
+    </LanguageProvider>
   );
 }
 
@@ -116,6 +125,7 @@ export default function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/admin" element={<AdminPage />} />
+        <Route path="/templates" element={<TemplateStudioPage />} />
         <Route path="/reports" element={<ReportsPage />} />
       </Route>
 

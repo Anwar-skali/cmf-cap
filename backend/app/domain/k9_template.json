@@ -1,0 +1,614 @@
+{
+  "code": "K9",
+  "name": "CMF K9 Project Template",
+  "version": "2.0",
+  "status": "PUBLISHED",
+  "description": "CMF K9 automotive project template structured into three role-based business modules: Buyer, Capacity Manager, and SQD.",
+  "sections": [
+    {
+      "id": "sec_buyer",
+      "name": "Buyer",
+      "order": 1,
+      "description": "Purchasing and project baseline information created by the Buyer role.",
+      "permissions": {
+        "rolesAllowedToEdit": ["buyer", "admin"],
+        "rolesAllowedToView": ["buyer", "capacity_manager", "sqd", "admin", "viewer"]
+      },
+      "groups": [
+        {
+          "id": "grp_buyer_project_info",
+          "name": "Project Information",
+          "order": 1,
+          "description": "Core project baseline details",
+          "fields": [
+            {
+              "id": "fld_unique_id",
+              "internalName": "unique_id",
+              "label": "Unique_ID",
+              "type": "text",
+              "required": true,
+              "placeholder": "e.g. K9-2026-001",
+              "helpText": "Unique identifier of the K9 project",
+              "order": 1,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
+            },
+            {
+              "id": "fld_apqp",
+              "internalName": "apqp",
+              "label": "APQP",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. APQP-Phase-2",
+              "helpText": "Advanced Product Quality Planning status or phase",
+              "order": 2,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
+            },
+            {
+              "id": "fld_part_name",
+              "internalName": "part_name",
+              "label": "Part Name",
+              "type": "text",
+              "required": true,
+              "placeholder": "e.g. Front Bumper LH",
+              "helpText": "Name of the vehicle part component",
+              "order": 3,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
+            },
+            {
+              "id": "fld_use_case",
+              "internalName": "use_case",
+              "label": "Use Case",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. Mass Production EV Line",
+              "helpText": "Application or vehicle application use case",
+              "order": 4,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
+            },
+            {
+              "id": "fld_part_info",
+              "internalName": "part_info",
+              "label": "Part Information",
+              "type": "textarea",
+              "required": false,
+              "placeholder": "Technical specifications and part notes...",
+              "helpText": "Detailed description of the component part",
+              "order": 5,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
+            },
+            {
+              "id": "fld_part_number",
+              "internalName": "part_number",
+              "label": "Part Number",
+              "type": "text",
+              "required": true,
+              "placeholder": "e.g. PN-994821",
+              "helpText": "Part reference number",
+              "order": 6,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
+            }
+          ]
+        },
+        {
+          "id": "grp_buyer_supplier",
+          "name": "Supplier",
+          "order": 2,
+          "description": "Supplier identification and location details",
+          "fields": [
+            {
+              "id": "fld_supplier_info",
+              "internalName": "supplier_info",
+              "label": "Supplier Information",
+              "type": "textarea",
+              "required": false,
+              "placeholder": "Vendor overview and details...",
+              "helpText": "General supplier profile or overview",
+              "order": 1,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
+            },
+            {
+              "id": "fld_supplier_name",
+              "internalName": "supplier_name",
+              "label": "Supplier Name",
+              "type": "supplier",
+              "required": true,
+              "placeholder": "e.g. Plastic Omnium",
+              "helpText": "Selected supplier name",
+              "order": 2,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
+            },
+            {
+              "id": "fld_manufacturing_cofor",
+              "internalName": "manufacturing_cofor",
+              "label": "Manufacturing COFOR",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. COFOR-12948",
+              "helpText": "Supplier COFOR manufacturing code",
+              "order": 3,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
+            },
+            {
+              "id": "fld_production_location",
+              "internalName": "production_location",
+              "label": "Production Location",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. Vigo, Spain",
+              "helpText": "Manufacturing plant production location",
+              "order": 4,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
+            }
+          ]
+        },
+        {
+          "id": "grp_buyer_stakeholder",
+          "name": "Stakeholder",
+          "order": 3,
+          "description": "Buyer and stakeholder contact assignments",
+          "fields": [
+            {
+              "id": "fld_stakeholder",
+              "internalName": "stakeholder",
+              "label": "Stakeholder",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. Vehicle Platform Team Lead",
+              "helpText": "Internal stakeholder group or person",
+              "order": 1,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
+            },
+            {
+              "id": "fld_buyer",
+              "internalName": "buyer",
+              "label": "Buyer",
+              "type": "user",
+              "required": true,
+              "helpText": "Responsible purchasing buyer contact",
+              "order": 2,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sec_capacity_manager",
+      "name": "Capacity Manager",
+      "order": 2,
+      "description": "Capacity planning and investment tracking completed by the Capacity Manager role.",
+      "permissions": {
+        "rolesAllowedToEdit": ["capacity_manager", "admin"],
+        "rolesAllowedToView": ["buyer", "capacity_manager", "sqd", "admin", "viewer"]
+      },
+      "groups": [
+        {
+          "id": "grp_cap_scr",
+          "name": "SCR",
+          "order": 1,
+          "description": "Strategic Capacity Requirement details",
+          "fields": [
+            {
+              "id": "fld_capacity",
+              "internalName": "capacity",
+              "label": "Capacity",
+              "type": "integer",
+              "required": false,
+              "placeholder": "e.g. 5000",
+              "helpText": "Planned capacity target",
+              "order": 1,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
+            },
+            {
+              "id": "fld_scr_link_docinfo",
+              "internalName": "scr_link_docinfo",
+              "label": "SCR Link to DocInfo",
+              "type": "text",
+              "required": false,
+              "placeholder": "https://docinfo.stellantis.com/doc/12345",
+              "helpText": "URL link to DocInfo SCR reference",
+              "order": 2,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
+            }
+          ]
+        },
+        {
+          "id": "grp_cap_planning",
+          "name": "Capacity Planning",
+          "order": 2,
+          "description": "Contractual and GST capacity planning metrics",
+          "fields": [
+            {
+              "id": "fld_gst_no",
+              "internalName": "gst_no",
+              "label": "GST No.",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. GST-99382",
+              "helpText": "GST identification or contract reference",
+              "order": 1,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
+            },
+            {
+              "id": "fld_contracted_capacity",
+              "internalName": "contracted_capacity",
+              "label": "Contracted Capacity",
+              "type": "integer",
+              "required": false,
+              "placeholder": "e.g. 4500",
+              "helpText": "Contractually agreed weekly capacity",
+              "order": 2,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
+            }
+          ]
+        },
+        {
+          "id": "grp_cap_fete_tko",
+          "name": "FETE / TKO",
+          "order": 3,
+          "description": "FETE and TKO milestone standards and documentation",
+          "fields": [
+            {
+              "id": "fld_fete",
+              "internalName": "fete",
+              "label": "FETE",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. FETE-2026-Q2",
+              "helpText": "FETE milestone identifier or status",
+              "order": 1,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
+            },
+            {
+              "id": "fld_tko_fete_link_sharepoint",
+              "internalName": "tko_fete_link_sharepoint",
+              "label": "TKO or FETE Link to SharePoint",
+              "type": "text",
+              "required": false,
+              "placeholder": "https://sharepoint.com/sites/k9/fete-doc",
+              "helpText": "SharePoint link for FETE or TKO documentation",
+              "order": 2,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
+            },
+            {
+              "id": "fld_capacity_standard",
+              "internalName": "capacity_standard",
+              "label": "Capacity Standard (parts/week)",
+              "type": "integer",
+              "required": false,
+              "placeholder": "e.g. 1200",
+              "helpText": "Standard required capacity per week",
+              "order": 3,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
+            },
+            {
+              "id": "fld_fete_tko_letter_doc",
+              "internalName": "fete_tko_letter_doc",
+              "label": "FETE or TKO Letter Document",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. DOC-FETE-LETTER-001.pdf",
+              "helpText": "FETE or TKO validation letter reference or filename",
+              "order": 4,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sec_sqd",
+      "name": "SQD",
+      "order": 3,
+      "description": "Supplier Quality Development evaluation, CAT ratings, and technical assessments.",
+      "permissions": {
+        "rolesAllowedToEdit": ["sqd", "admin"],
+        "rolesAllowedToView": ["buyer", "capacity_manager", "sqd", "admin", "viewer"]
+      },
+      "groups": [
+        {
+          "id": "grp_sqd_management",
+          "name": "Management",
+          "order": 1,
+          "description": "Technical leadership and governance",
+          "fields": [
+            {
+              "id": "fld_technical_manager",
+              "internalName": "technical_manager",
+              "label": "Technical Manager",
+              "type": "user",
+              "required": false,
+              "helpText": "Assigned Technical Manager",
+              "order": 1,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
+            }
+          ]
+        },
+        {
+          "id": "grp_sqd_planning",
+          "name": "Planning",
+          "order": 2,
+          "description": "CAT milestone schedule and forecast dates",
+          "fields": [
+            {
+              "id": "fld_k9_sck",
+              "internalName": "k9_sck",
+              "label": "K9 SCK",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. SCK-K9-01",
+              "helpText": "K9 Supplier Capacity Checklist reference",
+              "order": 1,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
+            },
+            {
+              "id": "fld_cat1_forecast_date_cw",
+              "internalName": "cat1_forecast_date_cw",
+              "label": "CAT1 Forecasted Date (CW)",
+              "type": "week",
+              "required": false,
+              "placeholder": "e.g. 2026-W18",
+              "helpText": "CAT1 audit forecasted calendar week",
+              "order": 2,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
+            },
+            {
+              "id": "fld_cat2_forecast_date",
+              "internalName": "cat2_forecast_date",
+              "label": "CAT2 Forecasted Date",
+              "type": "date",
+              "required": false,
+              "helpText": "CAT2 audit forecasted date",
+              "order": 3,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
+            },
+            {
+              "id": "fld_cat3_forecast_date",
+              "internalName": "cat3_forecast_date",
+              "label": "CAT3 Forecasted Date",
+              "type": "date",
+              "required": false,
+              "helpText": "CAT3 audit forecasted date",
+              "order": 4,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
+            },
+            {
+              "id": "fld_cat1_2_3_type",
+              "internalName": "cat1_2_3_type",
+              "label": "CAT1/2/3 Type",
+              "type": "dropdown",
+              "required": false,
+              "helpText": "Classification of CAT audit type",
+              "order": 5,
+              "visible": true,
+              "editable": true,
+              "options": [
+                { "value": "CAT1", "label": "CAT1 - Initial Assessment", "order": 1 },
+                { "value": "CAT2", "label": "CAT2 - Intermediate Audit", "order": 2 },
+                { "value": "CAT3", "label": "CAT3 - Final Sign-off", "order": 3 }
+              ],
+              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
+            }
+          ]
+        },
+        {
+          "id": "grp_sqd_capacity_measurement",
+          "name": "Capacity Measurement",
+          "order": 3,
+          "description": "Measured capacity ratings and CAT evaluation status",
+          "fields": [
+            {
+              "id": "fld_weekly_capacity_measured",
+              "internalName": "weekly_capacity_measured",
+              "label": "Weekly Capacity Measured",
+              "type": "integer",
+              "required": false,
+              "placeholder": "e.g. 4200",
+              "helpText": "Actual measured capacity per week during audit",
+              "order": 1,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
+            },
+            {
+              "id": "fld_estimated_target",
+              "internalName": "estimated_target",
+              "label": "Estimated Target",
+              "type": "integer",
+              "required": false,
+              "placeholder": "e.g. 4800",
+              "helpText": "Ramp-up target estimation",
+              "order": 2,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
+            },
+            {
+              "id": "fld_cat_evaluation",
+              "internalName": "cat_evaluation",
+              "label": "CAT1/2/3 Evaluation",
+              "type": "dropdown",
+              "required": false,
+              "helpText": "SQD audit evaluation status",
+              "order": 3,
+              "visible": true,
+              "editable": true,
+              "defaultValue": "GREEN",
+              "options": [
+                { "value": "GREEN", "label": "GREEN - Satisfactory", "order": 1 },
+                { "value": "ORANGE", "label": "ORANGE - Minor Risks / Action Required", "order": 2 },
+                { "value": "RED", "label": "RED - Critical Non-Compliance", "order": 3 }
+              ],
+              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
+            }
+          ]
+        },
+        {
+          "id": "grp_sqd_documentation",
+          "name": "Documentation",
+          "order": 4,
+          "description": "Quality folder repositories and links",
+          "fields": [
+            {
+              "id": "fld_shared_folder_link",
+              "internalName": "shared_folder_link",
+              "label": "Shared Folder Link",
+              "type": "text",
+              "required": false,
+              "placeholder": "https://sharepoint.com/sites/sqd/k9-quality-folder",
+              "helpText": "Link to SQD shared audit folder",
+              "order": 1,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
+            }
+          ]
+        },
+        {
+          "id": "grp_sqd_comments",
+          "name": "Comments",
+          "order": 5,
+          "description": "SQD auditor notes and observations",
+          "fields": [
+            {
+              "id": "fld_comments",
+              "internalName": "comments",
+              "label": "Comments",
+              "type": "textarea",
+              "required": false,
+              "placeholder": "Enter SQD audit comments and findings...",
+              "helpText": "Observations and quality recommendations",
+              "order": 1,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
+            }
+          ]
+        },
+        {
+          "id": "grp_sqd_team",
+          "name": "SQD Team",
+          "order": 6,
+          "description": "SQD team assignments and family multiplier",
+          "fields": [
+            {
+              "id": "fld_sqe",
+              "internalName": "sqe",
+              "label": "SQE",
+              "type": "user",
+              "required": false,
+              "helpText": "Supplier Quality Engineer",
+              "order": 1,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
+            },
+            {
+              "id": "fld_sqm",
+              "internalName": "sqm",
+              "label": "SQM",
+              "type": "user",
+              "required": false,
+              "helpText": "Supplier Quality Manager",
+              "order": 2,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
+            },
+            {
+              "id": "fld_team",
+              "internalName": "team",
+              "label": "Team",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. Body & Exterior SQD Team",
+              "helpText": "Responsible SQD team unit",
+              "order": 3,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
+            },
+            {
+              "id": "fld_family_multiplier",
+              "internalName": "family_multiplier",
+              "label": "Family Multiplier",
+              "type": "decimal",
+              "required": false,
+              "placeholder": "e.g. 1.15",
+              "helpText": "Component family multiplier factor",
+              "order": 4,
+              "visible": true,
+              "editable": true,
+              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "dashboardConfig": {
+    "kpis": [
+      { "id": "kpi_cat_eval", "title": "CAT Evaluation Status", "field": "cat_evaluation", "aggregation": "count", "format": "number" },
+      { "id": "kpi_capacity_measured", "title": "Avg Measured Capacity", "field": "weekly_capacity_measured", "aggregation": "avg", "format": "number" }
+    ],
+    "charts": [
+      { "id": "chart_cat_eval", "title": "CAT Audit Status", "type": "pie", "groupBy": "cat_evaluation", "metrics": [{ "field": "cat_evaluation", "aggregation": "count", "label": "Count", "color": "#22c55e" }] }
+    ]
+  },
+  "searchConfig": {
+    "defaultSortBy": "unique_id",
+    "defaultSortDesc": false,
+    "defaultPageSize": 20,
+    "quickFilterFields": ["unique_id", "part_name", "supplier_name", "cat_evaluation"]
+  }
+}

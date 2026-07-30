@@ -242,9 +242,11 @@ def _include_routers(app: FastAPI) -> None:
     from app.api.v1.endpoints.activity import router as activity_router
     from app.api.v1.endpoints.dashboard import router as dashboard_router
     from app.api.v1.endpoints.import_endpoints import router as import_router
+    from app.api.v1.endpoints.templates import router as templates_router
 
     app.include_router(auth_router)
     app.include_router(users_router)
+    app.include_router(templates_router)
     app.include_router(projects_router)
     app.include_router(project_parts_router)
     app.include_router(parts_router)

@@ -71,21 +71,28 @@ class BaseRepository(Generic[ModelT]):
         data: dict[str, Any] | BaseModel,
     ) -> ModelT | None:
         norm_id = self._normalize_id(id)
+        obj = await self.get(norm_id)
+        if obj is None:
+            return None
+
         if isinstance(data, BaseModel):
-            data = data.model_dump(exclude_unset=True, exclude_none=True)
+            data_dict = data.model_dump(exclude_unset=True, exclude_none=True)
         elif isinstance(data, dict):
-            data = {k: v for k, v in data.items() if v is not None}
-        stmt = (
-            update(self._model)
-            .where(self._model.id == norm_id)
-            .values(**data)
-            .returning(self._model)
-        )
-        if issubclass(self._model, SoftDeleteMixin):
-            stmt = stmt.where(self._model.deleted_at.is_(None))
-        result = await self._session.execute(stmt)
+            data_dict = {k: v for k, v in data.items() if v is not None}
+        else:
+            data_dict = {}
+
+        for key, value in data_dict.items():
+            if hasattr(obj, key):
+                setattr(obj, key, value)
+
+        if "data" in data_dict and hasattr(obj, "data"):
+            from sqlalchemy.orm.attributes import flag_modified
+            flag_modified(obj, "data")
+
         await self._session.flush()
-        return result.scalars().first()
+        await self._session.refresh(obj)
+        return obj
 
     async def delete(self, id: uuid.UUID | str) -> bool:
         norm_id = self._normalize_id(id)

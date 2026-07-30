@@ -19,15 +19,15 @@ export function Logo({ className, showText = true, size = 'md' }: LogoProps) {
   return (
     <div className={cn('flex items-center gap-2.5', className)}>
       <img
-        src="/stellantis-logo.svg"
-        alt="Stellantis"
+        src="/capgemini-logo.svg"
+        alt="Capgemini Logo"
         className={cn('shrink-0 rounded-lg object-contain shadow-soft', sizes.img)}
       />
       {showText && (
         <div className="min-w-0">
           <p className={cn('truncate font-semibold leading-tight', sizes.text)}>{APP_NAME}</p>
           <p className="truncate text-[10px] uppercase tracking-wider text-muted-foreground">
-            Stellantis CMF
+            CMF Platform
           </p>
         </div>
       )}
@@ -39,13 +39,13 @@ export function AuthLogo({ className }: { className?: string }) {
   return (
     <div className={cn('flex flex-col items-center gap-3 text-center', className)}>
       <img
-        src="/stellantis-logo.svg"
-        alt="Stellantis"
+        src="/capgemini-logo.svg"
+        alt="Capgemini Logo"
         className="h-16 w-16 rounded-2xl object-contain shadow-soft-lg"
       />
       <div>
         <h2 className="text-lg font-bold tracking-tight">{APP_NAME}</h2>
-        <p className="text-xs uppercase tracking-widest text-muted-foreground">Stellantis CMF</p>
+        <p className="text-xs uppercase tracking-widest text-muted-foreground">CMF Platform</p>
       </div>
     </div>
   );

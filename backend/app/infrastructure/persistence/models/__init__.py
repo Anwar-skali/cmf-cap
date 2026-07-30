@@ -27,6 +27,8 @@ from app.infrastructure.persistence.models.supplier import (
     ProjectSupplier,
     Supplier,
 )
+from app.infrastructure.persistence.models.template import Template
+from app.infrastructure.persistence.models.template_version import TemplateVersion
 from app.infrastructure.persistence.models.user import User
 
 __all__ = [
@@ -49,6 +51,8 @@ __all__ = [
     "Session",
     "SoftDeleteMixin",
     "Supplier",
+    "Template",
+    "TemplateVersion",
     "TimestampMixin",
     "User",
 ]

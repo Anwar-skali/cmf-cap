@@ -7,8 +7,10 @@ export function useProjectsQuery(filter?: ProjectFilter) {
   return useQuery({
     queryKey: queryKeys.projects.list(filter as Record<string, unknown>),
     queryFn: () => projectsApi.getProjects(filter),
-    staleTime: 30_000,
+    staleTime: 0,        // always refetch when navigating back to the list
     gcTime: 60_000,
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
   });
 }
 

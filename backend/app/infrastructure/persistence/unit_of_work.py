@@ -29,6 +29,9 @@ from app.infrastructure.persistence.repositories.risk_repository import (
 from app.infrastructure.persistence.repositories.supplier_repository import (
     SupplierRepository,
 )
+from app.infrastructure.persistence.repositories.template_repository import (
+    TemplateRepository,
+)
 from app.infrastructure.persistence.repositories.user_repository import (
     UserRepository,
 )
@@ -39,16 +42,21 @@ class UnitOfWork:
         self._session = session
         self._user_repo: UserRepository | None = None
         self._project_repo: ProjectRepository | None = None
+        self._template_repo: TemplateRepository | None = None
         self._project_part_repo: ProjectPartRepository | None = None
         self._supplier_repo: SupplierRepository | None = None
-        self._capacity_assessment_repo: CapacityAssessmentRepository | None = (
-            None
-        )
+        self._capacity_assessment_repo: CapacityAssessmentRepository | None = None
         self._risk_repo: RiskRepository | None = None
         self._document_repo: DocumentRepository | None = None
         self._notification_repo: NotificationRepository | None = None
         self._activity_log_repo: ActivityLogRepository | None = None
         self._import_history_repo: ImportHistoryRepository | None = None
+
+    @property
+    def templates(self) -> TemplateRepository:
+        if self._template_repo is None:
+            self._template_repo = TemplateRepository(self._session)
+        return self._template_repo
 
     @property
     def users(self) -> UserRepository:

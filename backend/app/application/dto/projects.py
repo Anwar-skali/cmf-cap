@@ -21,6 +21,9 @@ class CreateProjectRequest(BaseModel):
     currency: str = Field(default="EUR", max_length=3)
     priority: int = Field(default=0, ge=0, le=100)
     notes: str | None = None
+    template_id: Any | None = None
+    template_version: str | None = None
+    data: dict[str, Any] = Field(default_factory=dict)
 
     @field_validator("code")
     @classmethod
@@ -50,6 +53,9 @@ class UpdateProjectRequest(BaseModel):
     currency: str | None = Field(None, max_length=3)
     priority: int | None = Field(None, ge=0, le=100)
     notes: str | None = None
+    template_id: Any | None = None
+    template_version: str | None = None
+    data: dict[str, Any] | None = None
 
     @field_validator("currency")
     @classmethod
@@ -75,6 +81,9 @@ class ProjectResponse(BaseModel):
     buyer_id: Any | None = None
     sqd_id: Any | None = None
     capacity_manager_id: Any | None = None
+    template_id: Any | None = None
+    template_version: str | None = None
+    data: dict[str, Any] = Field(default_factory=dict)
     parts_count: int = 0
     suppliers_count: int = 0
     created_at: datetime | None = None

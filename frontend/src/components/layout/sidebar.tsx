@@ -1,14 +1,24 @@
+import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
   User,
   ChevronLeft,
   ChevronRight,
+  LayoutDashboard,
+  FolderKanban,
+  Package,
+  Truck,
+  Gauge,
+  AlertTriangle,
+  FileText,
+  BarChart3,
+  Bell,
+  Shield,
+  Layers,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useSidebarStore } from '@/stores/sidebarStore';
 import { useAuthStore } from '@/stores/authStore';
-import { Logo } from '@/components/brand/logo';
-import { APP_NAME } from '@/lib/constants';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -20,57 +30,106 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { usePermissions } from '@/hooks/usePermissions';
-import { navGroups, type NavItem } from '@/config/navigation';
+import { useLanguage } from '@/context/LanguageContext';
 
-function Sidebar() {
+export function Sidebar() {
   const { isCollapsed, toggle } = useSidebarStore();
   const { state } = useAuthStore();
   const { roleMeta, isAdmin } = usePermissions();
+  const { t } = useLanguage();
   const RoleIcon = roleMeta.icon;
+
+  const navGroups = [
+    {
+      items: [
+        { label: t('nav.dashboard', 'Dashboard'), icon: LayoutDashboard, path: '/dashboard' },
+      ],
+    },
+    {
+      label: t('dashboard.overview', 'Management'),
+      items: [
+        { label: t('nav.projects', 'Projects'), icon: FolderKanban, path: '/projects' },
+        { label: t('nav.parts', 'Parts'), icon: Package, path: '/parts' },
+        { label: 'Suppliers', icon: Truck, path: '/suppliers' },
+      ],
+    },
+    {
+      label: 'Analysis',
+      items: [
+        { label: t('nav.capacity', 'Capacity'), icon: Gauge, path: '/capacity' },
+        { label: 'Risks', icon: AlertTriangle, path: '/risks' },
+      ],
+    },
+    {
+      label: 'Studio & System',
+      items: [
+        { label: t('nav.templates', 'Template Studio'), icon: Layers, path: '/templates' },
+        { label: 'Documents', icon: FileText, path: '/documents' },
+        { label: 'Reports', icon: BarChart3, path: '/reports' },
+      ],
+    },
+    {
+      items: [
+        { label: t('header.notifications', 'Notifications'), icon: Bell, path: '/notifications', badge: 3 },
+        { label: t('nav.admin', 'Admin'), icon: Shield, path: '/admin', adminOnly: true },
+      ],
+    },
+  ];
 
   return (
     <aside
       className={cn(
-        'fixed left-0 top-0 z-40 flex h-screen flex-col border-r bg-sidebar text-sidebar-foreground transition-all duration-300',
+        'fixed left-0 top-0 z-40 flex h-screen flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground transition-all duration-300',
         isCollapsed ? 'w-16' : 'w-64',
       )}
     >
+      {/* Brand Header */}
       <div
         className={cn(
-          'flex h-16 items-center border-b border-sidebar-border/50 px-4',
+          'flex h-16 items-center border-b border-sidebar-border px-4',
           isCollapsed ? 'justify-center' : 'justify-between',
         )}
       >
         {!isCollapsed && (
           <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-primary/80 text-xs font-bold text-primary-foreground shadow-soft">
-              CM
+            <img
+              src="/capgemini-logo.svg"
+              alt="Capgemini"
+              className="h-9 w-9 rounded-xl object-contain drop-shadow-md shrink-0"
+            />
+            <div>
+              <span className="text-sm font-bold tracking-tight text-sidebar-foreground flex items-center gap-1.5">
+                Capgemini <span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">CMF</span>
+              </span>
+              <p className="text-[10px] text-muted-foreground">Capacity Platform</p>
             </div>
-            <span className="text-sm font-semibold tracking-tight">{APP_NAME}</span>
           </div>
         )}
         {isCollapsed && (
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-primary/80 text-xs font-bold text-primary-foreground shadow-soft">
-            CM
-          </div>
+          <img
+            src="/capgemini-logo.svg"
+            alt="Capgemini"
+            className="h-9 w-9 rounded-xl object-contain drop-shadow-md"
+          />
         )}
       </div>
 
-      <ScrollArea className="flex-1 px-2 py-4">
+      {/* Navigation List */}
+      <ScrollArea className="flex-1 px-2.5 py-4">
         <TooltipProvider delayDuration={0}>
           <nav className="space-y-4">
             {navGroups.map((group, groupIndex) => (
               <div key={groupIndex}>
                 {group.label && !isCollapsed && (
-                  <p className="mb-2 px-3 text-xs font-medium uppercase tracking-wider text-sidebar-foreground/40">
+                  <p className="mb-2 px-3 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
                     {group.label}
                   </p>
                 )}
-                <ul className="space-y-0.5">
+                <ul className="space-y-1">
                   {group.items
                     .filter((item) => !item.adminOnly || isAdmin)
                     .map((item) => (
-                      <NavItem
+                      <NavItemComp
                         key={item.path}
                         item={item}
                         collapsed={isCollapsed}
@@ -78,7 +137,7 @@ function Sidebar() {
                     ))}
                 </ul>
                 {groupIndex < navGroups.length - 1 && (
-                  <Separator className="my-3 bg-sidebar-border/30" />
+                  <Separator className="my-3 bg-sidebar-border/50" />
                 )}
               </div>
             ))}
@@ -86,10 +145,11 @@ function Sidebar() {
         </TooltipProvider>
       </ScrollArea>
 
-      <div className="border-t border-sidebar-border/50 p-3">
+      {/* User Footer Profile Card */}
+      <div className="border-t border-sidebar-border p-3 bg-muted/20">
         {isCollapsed ? (
           <div className="flex justify-center">
-            <Avatar className="h-8 w-8 cursor-pointer ring-2 ring-sidebar-border/30">
+            <Avatar className="h-8 w-8 cursor-pointer ring-2 ring-sidebar-border">
               {state.user?.avatar ? (
                 <AvatarImage src={state.user.avatar} alt="User" />
               ) : null}
@@ -98,24 +158,24 @@ function Sidebar() {
           </div>
         ) : (
           <div className="flex items-center gap-3">
-            <Avatar className="h-9 w-9 ring-2 ring-sidebar-border/30">
+            <Avatar className="h-9 w-9 ring-2 ring-sidebar-border">
               {state.user?.avatar ? (
                 <AvatarImage src={state.user.avatar} alt="User" />
               ) : null}
               <AvatarFallback initials={`${state.user?.firstName?.[0] ?? ''}${state.user?.lastName?.[0] ?? ''}`} />
             </Avatar>
             <div className="flex-1 overflow-hidden">
-              <p className="truncate text-sm font-medium">
+              <p className="truncate text-xs font-bold text-sidebar-foreground">
                 {state.user?.firstName} {state.user?.lastName}
               </p>
-              <Badge variant="outline" className={cn('mt-0.5 px-1.5 py-0 text-[10px] font-semibold border', roleMeta.badgeClass)}>
+              <Badge variant="outline" className={cn('mt-0.5 px-1.5 py-0 text-[10px] font-semibold border border-sidebar-border', roleMeta.badgeClass)}>
                 <RoleIcon className="mr-1 h-2.5 w-2.5 inline-block" />
                 {roleMeta.shortTitle}
               </Badge>
             </div>
             <NavLink
               to="/profile"
-              className="rounded-lg p-1.5 transition-colors hover:bg-sidebar-accent/50"
+              className="rounded-lg p-1.5 text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
             >
               <User className="h-4 w-4" />
             </NavLink>
@@ -123,9 +183,10 @@ function Sidebar() {
         )}
       </div>
 
+      {/* Collapse Toggle Arrow */}
       <button
         onClick={toggle}
-        className="absolute -right-3 top-20 flex h-6 w-6 items-center justify-center rounded-full border bg-background shadow-soft-md transition-all duration-200 hover:scale-105 hover:shadow-soft-lg active:scale-95"
+        className="absolute -right-3 top-20 flex h-6 w-6 items-center justify-center rounded-full border border-sidebar-border bg-card text-foreground shadow-md transition-all duration-200 hover:scale-110 hover:border-primary hover:bg-primary hover:text-primary-foreground"
       >
         {isCollapsed ? (
           <ChevronRight className="h-3 w-3" />
@@ -137,7 +198,7 @@ function Sidebar() {
   );
 }
 
-function NavItem({ item, collapsed }: { item: NavItem; collapsed: boolean }) {
+function NavItemComp({ item, collapsed }: { item: any; collapsed: boolean }) {
   const { pathname } = useLocation();
   const isActive = pathname.startsWith(item.path) && (item.path === '/dashboard' ? pathname === '/dashboard' : true);
 
@@ -145,14 +206,14 @@ function NavItem({ item, collapsed }: { item: NavItem; collapsed: boolean }) {
     <NavLink
       to={item.path}
       className={cn(
-        'group flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200',
+        'group flex items-center gap-3 rounded-xl px-3 py-2.5 text-xs font-semibold transition-all duration-200',
         isActive
-          ? 'bg-sidebar-accent text-sidebar-accent-foreground'
-          : 'text-sidebar-foreground/60 hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground',
+          ? 'bg-primary text-primary-foreground shadow-sm font-bold'
+          : 'text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
         collapsed && 'justify-center px-2',
       )}
     >
-      <item.icon className="h-5 w-5 shrink-0 transition-transform duration-200 group-hover:scale-110" />
+      <item.icon className={cn('h-4 w-4 shrink-0 transition-transform duration-200 group-hover:scale-110', isActive ? 'text-primary-foreground' : 'text-muted-foreground group-hover:text-foreground')} />
       {!collapsed && (
         <>
           <span className="flex-1 truncate">{item.label}</span>
@@ -173,7 +234,7 @@ function NavItem({ item, collapsed }: { item: NavItem; collapsed: boolean }) {
           <TooltipTrigger asChild>
             {linkContent}
           </TooltipTrigger>
-          <TooltipContent side="right" className="flex items-center gap-2">
+          <TooltipContent side="right" className="flex items-center gap-2 bg-popover text-popover-foreground border-border">
             {item.label}
             {item.badge !== undefined && (
               <Badge variant="destructive" className="h-5 px-1.5 text-[10px]">
@@ -188,5 +249,3 @@ function NavItem({ item, collapsed }: { item: NavItem; collapsed: boolean }) {
 
   return <li>{linkContent}</li>;
 }
-
-export { Sidebar };

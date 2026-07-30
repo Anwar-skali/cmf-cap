@@ -49,7 +49,7 @@ class UserFilter(BaseModel):
     role: str | None = None
     is_active: bool | None = None
     skip: int = Field(default=0, ge=0)
-    limit: int = Field(default=20, ge=1, le=100)
+    limit: int = Field(default=20, ge=1, le=500)
     sort_by: str | None = "created_at"
     sort_desc: bool = True
 

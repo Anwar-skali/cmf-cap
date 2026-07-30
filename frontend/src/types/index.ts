@@ -64,6 +64,9 @@ export interface Project {
   buyerId?: string;
   sqdId?: string;
   capacityManagerId?: string;
+  templateId?: string;
+  templateVersion?: string;
+  data?: Record<string, any>;
   manager?: User;
   clientName?: string;
   notes?: string;
@@ -99,6 +102,9 @@ export interface CreateProjectRequest {
   clientName?: string;
   notes?: string;
   priority?: number;
+  templateId?: string;
+  templateVersion?: string;
+  data?: Record<string, any>;
 }
 
 export type PartStatus = 'active' | 'inactive' | 'obsolete';

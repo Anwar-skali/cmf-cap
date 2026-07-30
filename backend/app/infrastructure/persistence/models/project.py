@@ -6,6 +6,7 @@ from decimal import Decimal
 
 from sqlalchemy import (
     Date,
+    JSON,
     DateTime,
     ForeignKey,
     Index,
@@ -65,6 +66,15 @@ class Project(Base, TimestampMixin, SoftDeleteMixin):
     )
     capacity_manager_id: Mapped[uuid.UUID | None] = mapped_column(
         Uuid, ForeignKey("users.id"), nullable=True
+    )
+    template_id: Mapped[uuid.UUID | None] = mapped_column(
+        Uuid, ForeignKey("templates.id"), nullable=True
+    )
+    template_version: Mapped[str | None] = mapped_column(
+        String(20), nullable=True
+    )
+    data: Mapped[dict | None] = mapped_column(
+        JSON, nullable=True, default=dict
     )
 
     parts = relationship(
