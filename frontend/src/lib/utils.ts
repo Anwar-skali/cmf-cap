@@ -79,8 +79,9 @@ export function toCamelCase<T>(obj: unknown, _depth = 0, _parentKey = ''): T {
     const result: Record<string, unknown> = {};
     for (const [key, value] of Object.entries(obj)) {
       const camelKey = snakeToCamel(key);
-      // 'data' is a dynamic domain blob — preserve its inner keys as-is
-      if (camelKey === 'data' && isObject(value)) {
+      // 'data', 'mapping', and 'columnMapping' are domain blobs keyed by
+      // arbitrary snake_case field identifiers — preserve their inner keys as-is
+      if ((camelKey === 'data' || camelKey === 'mapping' || camelKey === 'columnMapping') && isObject(value)) {
         result[camelKey] = value;
       } else {
         result[camelKey] = toCamelCase(value, _depth + 1, camelKey);

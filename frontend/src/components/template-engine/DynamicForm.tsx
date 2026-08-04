@@ -276,34 +276,40 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({
           return (
             <div
               key={section.id}
-              className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-card shadow-sm overflow-hidden transition-all duration-200"
+              className="rounded-2xl border border-slate-300 dark:border-slate-700 bg-card shadow-xs overflow-hidden transition-all duration-200"
             >
               {/* Section Header Bar */}
               <button
                 type="button"
                 onClick={() => toggleSection(section.id)}
-                className="w-full flex items-center justify-between p-4 bg-slate-50/70 dark:bg-slate-900/60 hover:bg-slate-100/80 dark:hover:bg-slate-800/80 transition-colors text-left focus:outline-none cursor-pointer"
+                className="w-full flex items-center justify-between p-4 sm:p-5 bg-card hover:bg-slate-50/80 dark:hover:bg-slate-800/60 transition-colors text-left focus:outline-none cursor-pointer group"
               >
-                <div className="flex items-center gap-3">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600/10 text-blue-600 font-extrabold text-xs">
-                    {idx + 1}
+                <div className="flex items-center gap-3.5">
+                  <div
+                    className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border transition-colors ${
+                      isOpen
+                        ? 'border-blue-600 bg-blue-600 text-white'
+                        : 'border-slate-400 dark:border-slate-600 bg-background text-muted-foreground group-hover:border-blue-500'
+                    }`}
+                  >
+                    <span className="text-xs font-bold">{idx + 1}</span>
                   </div>
                   <div>
-                    <h3 className="text-base font-bold text-foreground flex items-center gap-2">
+                    <h3 className="text-base font-bold text-foreground group-hover:text-blue-600 transition-colors flex items-center gap-2.5">
                       <span>{section.name}</span>
-                      <span className="text-[11px] font-normal px-2.5 py-0.5 rounded-full bg-slate-200/70 dark:bg-slate-800 text-muted-foreground">
+                      <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800/50">
                         {fieldCount} fields
                       </span>
                     </h3>
                     {section.description && (
-                      <p className="text-xs text-muted-foreground mt-0.5">{section.description}</p>
+                      <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">{section.description}</p>
                     )}
                   </div>
                 </div>
                 {isOpen ? (
-                  <ChevronDown className="h-5 w-5 text-muted-foreground" />
+                  <ChevronDown className="h-5 w-5 text-muted-foreground group-hover:text-blue-600 transition-colors" />
                 ) : (
-                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                  <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-blue-600 transition-colors" />
                 )}
               </button>
 
@@ -315,19 +321,34 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.25 }}
-                    className="p-5 space-y-6 border-t border-slate-200 dark:border-slate-800"
+                    className="p-5 space-y-6 border-t border-slate-200 dark:border-slate-800 bg-slate-50/20 dark:bg-slate-950/20"
                   >
                     {section.groups?.map((group) => (
-                      <div key={group.id} className="rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-background p-4 space-y-4 shadow-2xs">
-                        <div className="border-b border-border/40 pb-2">
-                          <h4 className="text-sm font-bold text-foreground">{group.name}</h4>
-                          {group.description && (
-                            <p className="text-[11px] text-muted-foreground">{group.description}</p>
-                          )}
+                      <div
+                        key={group.id}
+                        className="rounded-xl border border-slate-300 dark:border-slate-700 bg-card p-5 space-y-4 transition-all duration-200 hover:border-blue-400/80 hover:shadow-xs"
+                      >
+                        <div className="border-b border-slate-200 dark:border-slate-800 pb-2.5 flex items-center justify-between">
+                          <div className="flex items-center gap-2.5">
+                            <div className="h-2 w-2 rounded-full bg-blue-600 shrink-0" />
+                            <div>
+                              <h4 className="text-sm font-bold text-foreground hover:text-blue-600 transition-colors">
+                                {group.name}
+                              </h4>
+                              {group.description && (
+                                <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">
+                                  {group.description}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                          <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-0.5 rounded-full border border-slate-200 dark:border-slate-700">
+                            {group.fields?.length || 0} fields
+                          </span>
                         </div>
 
                         {/* Grid Layout for Fields */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                           {group.fields?.map((field) => {
                             if (!isFieldVisible(field, formValues)) return null;
 

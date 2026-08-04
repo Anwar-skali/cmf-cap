@@ -9,6 +9,7 @@ from typing import Any
 import time
 
 from fastapi import FastAPI, Request
+from fastapi.encoders import jsonable_encoder
 from fastapi.exception_handlers import request_validation_exception_handler
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
@@ -161,9 +162,10 @@ def _configure_exception_handlers(app: FastAPI) -> None:
     async def validation_error_handler(
         request: Request, exc: RequestValidationError
     ) -> JSONResponse:
+        sanitized_errors = jsonable_encoder(exc.errors())
         logger.warning(
             "Validation error: %s",
-            exc.errors(),
+            sanitized_errors,
             extra={"request_id": request.headers.get("X-Request-ID", "")},
         )
         return JSONResponse(
@@ -172,7 +174,7 @@ def _configure_exception_handlers(app: FastAPI) -> None:
                 "error": {
                     "code": "VALIDATION_ERROR",
                     "message": "Request validation failed",
-                    "details": {"fields": exc.errors()},
+                    "details": {"fields": sanitized_errors},
                 }
             },
         )

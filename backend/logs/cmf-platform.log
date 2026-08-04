@@ -16010,3 +16010,1936 @@ sqlalchemy.exc.StatementError: (builtins.AttributeError) 'str' object has no att
 2026-07-30 11:16:24,010 - app.main - INFO - GET /api/v1/users
 2026-07-30 11:16:24,278 - app.main - INFO - GET /api/v1/users -> 200
 2026-07-30 11:16:24,315 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-30 11:19:29,009 - app.main - INFO - GET /api/v1/suppliers
+2026-07-30 11:19:29,018 - app.main - INFO - GET /api/v1/users
+2026-07-30 11:19:29,311 - app.main - INFO - GET /api/v1/users -> 200
+2026-07-30 11:19:29,365 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-30 11:28:25,864 - app.main - INFO - GET /api/v1/suppliers
+2026-07-30 11:28:25,885 - app.main - INFO - GET /api/v1/users
+2026-07-30 11:28:26,183 - app.main - INFO - GET /api/v1/users -> 200
+2026-07-30 11:28:26,467 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-30 11:28:35,122 - app.main - INFO - GET /api/v1/documents
+2026-07-30 11:28:35,352 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-30 11:28:40,415 - app.main - INFO - GET /api/v1/projects
+2026-07-30 11:28:40,419 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-07-30 11:28:40,686 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-30 11:28:41,138 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-07-30 11:29:36,797 - app.main - INFO - GET /api/v1/projects
+2026-07-30 11:29:36,930 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-30 11:29:51,624 - app.main - INFO - Shutting down CMF Platform API
+2026-07-31 09:08:57,343 - app.main - INFO - Starting CMF Platform API
+2026-07-31 09:08:57,362 - app.main - INFO - Database tables created (SQLite)
+2026-07-31 09:09:13,333 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 09:09:13,362 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-07-31 09:09:13,366 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-07-31 09:09:13,393 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 09:09:13,396 - app.main - INFO - POST /api/v1/auth/refresh
+2026-07-31 09:09:13,400 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-07-31 09:09:13,410 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-07-31 09:09:13,852 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-07-31 09:09:13,882 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 09:09:13,984 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-31 09:09:14,007 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 09:09:14,118 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-31 09:09:14,242 - app.main - INFO - GET /api/v1/templates
+2026-07-31 09:09:14,314 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-31 09:09:14,330 - app.main - INFO - GET /api/v1/templates
+2026-07-31 09:09:14,390 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-31 09:09:14,556 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-07-31 09:09:14,558 - app.main - INFO - GET /api/v1/projects
+2026-07-31 09:09:14,790 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-31 09:09:15,290 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-07-31 09:09:23,837 - app.main - INFO - GET /api/v1/projects
+2026-07-31 09:09:23,971 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-31 09:09:55,721 - app.main - INFO - GET /api/v1/suppliers
+2026-07-31 09:09:55,730 - app.main - INFO - GET /api/v1/users
+2026-07-31 09:09:55,887 - app.main - INFO - GET /api/v1/users -> 200
+2026-07-31 09:09:55,919 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-31 09:11:07,718 - app.main - INFO - POST /api/v1/projects
+2026-07-31 09:11:07,907 - app.main - INFO - POST /api/v1/projects -> 200
+2026-07-31 09:11:08,085 - app.main - INFO - GET /api/v1/projects/8be5696d-981d-4a75-82f5-90c7a5ff8113
+2026-07-31 09:11:08,171 - app.main - INFO - GET /api/v1/projects/8be5696d-981d-4a75-82f5-90c7a5ff8113 -> 200
+2026-07-31 09:11:08,410 - app.main - INFO - GET /api/v1/suppliers
+2026-07-31 09:11:08,420 - app.main - INFO - GET /api/v1/users
+2026-07-31 09:11:08,584 - app.main - INFO - GET /api/v1/users -> 200
+2026-07-31 09:11:08,618 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-31 09:11:25,481 - app.main - INFO - POST /api/v1/auth/logout
+2026-07-31 09:11:25,637 - app.main - INFO - POST /api/v1/auth/logout -> 200
+2026-07-31 09:11:58,160 - app.main - INFO - POST /api/v1/auth/login
+2026-07-31 09:11:59,005 - app.main - INFO - POST /api/v1/auth/login -> 200
+2026-07-31 09:11:59,027 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 09:11:59,080 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-31 09:11:59,185 - app.main - INFO - GET /api/v1/projects
+2026-07-31 09:11:59,188 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-07-31 09:11:59,192 - app.main - INFO - GET /api/v1/templates
+2026-07-31 09:11:59,374 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-31 09:11:59,426 - app.main - INFO - GET /api/v1/templates
+2026-07-31 09:11:59,639 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-31 09:11:59,680 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-31 09:12:00,052 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-07-31 09:13:30,878 - app.main - INFO - GET /api/v1/projects
+2026-07-31 09:13:30,992 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-31 09:13:35,964 - app.main - INFO - GET /api/v1/suppliers
+2026-07-31 09:13:35,974 - app.main - INFO - GET /api/v1/users
+2026-07-31 09:13:36,165 - app.main - INFO - GET /api/v1/users -> 200
+2026-07-31 09:13:36,211 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-31 09:13:41,257 - app.main - INFO - GET /api/v1/projects
+2026-07-31 09:13:41,383 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-31 09:13:45,716 - app.main - INFO - GET /api/v1/projects/8be5696d-981d-4a75-82f5-90c7a5ff8113
+2026-07-31 09:13:45,840 - app.main - INFO - GET /api/v1/projects/8be5696d-981d-4a75-82f5-90c7a5ff8113 -> 200
+2026-07-31 09:15:43,657 - app.main - INFO - PUT /api/v1/projects/8be5696d-981d-4a75-82f5-90c7a5ff8113
+2026-07-31 09:15:43,848 - app.main - INFO - PUT /api/v1/projects/8be5696d-981d-4a75-82f5-90c7a5ff8113 -> 200
+2026-07-31 09:15:43,866 - app.main - INFO - GET /api/v1/projects/8be5696d-981d-4a75-82f5-90c7a5ff8113
+2026-07-31 09:15:43,926 - app.main - INFO - GET /api/v1/projects/8be5696d-981d-4a75-82f5-90c7a5ff8113 -> 200
+2026-07-31 09:15:43,980 - app.main - INFO - GET /api/v1/projects/8be5696d-981d-4a75-82f5-90c7a5ff8113
+2026-07-31 09:15:44,056 - app.main - INFO - GET /api/v1/projects/8be5696d-981d-4a75-82f5-90c7a5ff8113 -> 200
+2026-07-31 09:15:48,971 - app.main - INFO - GET /api/v1/suppliers
+2026-07-31 09:15:48,975 - app.main - INFO - GET /api/v1/users
+2026-07-31 09:15:48,986 - app.main - INFO - GET /api/v1/projects/8be5696d-981d-4a75-82f5-90c7a5ff8113
+2026-07-31 09:15:49,119 - app.main - INFO - GET /api/v1/projects/8be5696d-981d-4a75-82f5-90c7a5ff8113 -> 200
+2026-07-31 09:15:49,208 - app.main - INFO - GET /api/v1/users -> 200
+2026-07-31 09:15:49,263 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-31 09:15:52,593 - app.main - INFO - GET /api/v1/documents
+2026-07-31 09:15:52,647 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-31 09:15:55,064 - app.main - INFO - GET /api/v1/projects
+2026-07-31 09:15:55,325 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-31 09:15:58,483 - app.main - INFO - GET /api/v1/projects/8be5696d-981d-4a75-82f5-90c7a5ff8113
+2026-07-31 09:15:58,524 - app.main - INFO - GET /api/v1/projects/8be5696d-981d-4a75-82f5-90c7a5ff8113 -> 200
+2026-07-31 09:16:23,581 - app.main - INFO - GET /api/v1/suppliers
+2026-07-31 09:16:23,661 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-31 09:16:51,629 - app.main - INFO - GET /api/v1/users
+2026-07-31 09:16:51,739 - app.main - INFO - GET /api/v1/users -> 200
+2026-07-31 09:16:59,903 - app.main - INFO - POST /api/v1/auth/logout
+2026-07-31 09:17:00,048 - app.main - INFO - POST /api/v1/auth/logout -> 200
+2026-07-31 09:17:12,984 - app.main - INFO - POST /api/v1/auth/login
+2026-07-31 09:17:13,677 - app.main - INFO - POST /api/v1/auth/login -> 200
+2026-07-31 09:17:13,690 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 09:17:13,737 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-31 09:17:13,810 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-07-31 09:17:13,814 - app.main - INFO - GET /api/v1/templates
+2026-07-31 09:17:13,816 - app.main - INFO - GET /api/v1/projects
+2026-07-31 09:17:13,947 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-31 09:17:13,967 - app.main - INFO - GET /api/v1/templates
+2026-07-31 09:17:14,112 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-31 09:17:14,131 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-31 09:17:14,303 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-07-31 09:21:34,741 - app.main - INFO - GET /api/v1/projects
+2026-07-31 09:21:35,001 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-31 09:23:39,080 - app.main - INFO - GET /api/v1/projects
+2026-07-31 09:23:39,337 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-31 09:31:03,779 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 09:31:03,850 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-31 09:31:03,865 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 09:31:03,937 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-31 09:31:04,484 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-07-31 09:31:04,672 - app.main - INFO - GET /api/v1/projects
+2026-07-31 09:31:06,691 - app.main - INFO - GET /api/v1/templates
+2026-07-31 09:31:07,247 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-31 09:31:07,267 - app.main - INFO - GET /api/v1/templates
+2026-07-31 09:31:07,482 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-31 09:31:07,544 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-31 09:31:08,260 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-07-31 09:34:55,295 - app.main - INFO - GET /api/v1/projects
+2026-07-31 09:34:55,508 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-31 09:35:02,826 - app.main - INFO - Shutting down CMF Platform API
+2026-07-31 11:31:25,031 - app.main - INFO - Starting CMF Platform API
+2026-07-31 11:31:25,045 - app.main - INFO - Database tables created (SQLite)
+2026-07-31 11:32:10,435 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 11:32:10,455 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-07-31 11:32:10,459 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-07-31 11:32:10,480 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 11:32:10,485 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-07-31 11:32:10,490 - app.main - INFO - POST /api/v1/auth/refresh
+2026-07-31 11:32:10,493 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-07-31 11:32:10,884 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-07-31 11:32:10,907 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 11:32:10,980 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-31 11:32:10,998 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 11:32:11,077 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-31 11:32:11,232 - app.main - INFO - GET /api/v1/import/import-templates
+2026-07-31 11:32:11,243 - app.main - INFO - GET /api/v1/documents
+2026-07-31 11:32:11,245 - app.main - INFO - GET /api/v1/templates
+2026-07-31 11:32:11,351 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-07-31 11:32:11,370 - app.main - INFO - GET /api/v1/import/import-templates
+2026-07-31 11:32:11,402 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-31 11:32:11,425 - app.main - INFO - GET /api/v1/templates
+2026-07-31 11:32:11,473 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-31 11:32:11,669 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-07-31 11:32:11,692 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-31 11:32:33,504 - app.main - INFO - GET /api/v1/import/history
+2026-07-31 11:32:33,588 - app.main - INFO - GET /api/v1/import/history -> 200
+2026-07-31 11:32:33,619 - app.main - INFO - GET /api/v1/import/history
+2026-07-31 11:32:33,691 - app.main - INFO - GET /api/v1/import/history -> 200
+2026-07-31 11:32:34,452 - app.main - INFO - GET /api/v1/import/import-templates
+2026-07-31 11:32:34,542 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-07-31 11:32:34,572 - app.main - INFO - GET /api/v1/import/import-templates
+2026-07-31 11:32:34,688 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-07-31 11:33:21,226 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-07-31 11:33:21,270 - app.main - INFO - POST /api/v1/import/ollama-map -> 400
+2026-07-31 11:34:28,127 - app.main - INFO - Shutting down CMF Platform API
+2026-07-31 11:34:33,315 - app.main - INFO - Starting CMF Platform API
+2026-07-31 11:34:33,328 - app.main - INFO - Database tables created (SQLite)
+2026-07-31 11:37:53,309 - app.main - INFO - POST /api/v1/auth/logout
+2026-07-31 11:37:53,900 - app.main - INFO - POST /api/v1/auth/logout -> 200
+2026-07-31 11:37:58,609 - app.main - INFO - Shutting down CMF Platform API
+2026-07-31 11:38:06,262 - app.main - INFO - Starting CMF Platform API
+2026-07-31 11:38:06,279 - app.main - INFO - Database tables created (SQLite)
+2026-07-31 11:38:11,554 - app.main - INFO - POST /api/v1/auth/login
+2026-07-31 11:38:12,500 - app.main - INFO - POST /api/v1/auth/login -> 200
+2026-07-31 11:38:12,518 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 11:38:12,567 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-31 11:38:12,672 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-07-31 11:38:12,676 - app.main - INFO - GET /api/v1/projects
+2026-07-31 11:38:12,679 - app.main - INFO - GET /api/v1/templates
+2026-07-31 11:38:12,900 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-31 11:38:12,948 - app.main - INFO - GET /api/v1/templates
+2026-07-31 11:38:13,472 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-31 11:38:13,566 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-31 11:38:14,080 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-07-31 11:38:24,451 - app.main - INFO - GET /api/v1/import/import-templates
+2026-07-31 11:38:24,464 - app.main - INFO - GET /api/v1/documents
+2026-07-31 11:38:24,628 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-07-31 11:38:24,649 - app.main - INFO - GET /api/v1/import/import-templates
+2026-07-31 11:38:24,714 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-31 11:38:24,745 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-07-31 11:38:51,162 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-07-31 11:39:33,857 - app.application.services.ollama_mapping_service - WARNING - Ollama local service unavailable at http://localhost:11434: . Using fallback matching engine.
+2026-07-31 11:39:33,872 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-07-31 11:40:33,796 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 11:40:33,845 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-31 11:40:33,862 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 11:40:33,918 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-31 11:40:34,001 - app.main - INFO - GET /api/v1/import/import-templates
+2026-07-31 11:40:34,007 - app.main - INFO - GET /api/v1/documents
+2026-07-31 11:40:34,012 - app.main - INFO - GET /api/v1/templates
+2026-07-31 11:40:34,080 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-07-31 11:40:34,081 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-31 11:40:34,097 - app.main - INFO - GET /api/v1/import/import-templates
+2026-07-31 11:40:34,102 - app.main - INFO - GET /api/v1/templates
+2026-07-31 11:40:34,115 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-31 11:40:34,159 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-07-31 11:40:34,164 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-31 11:43:23,306 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 11:43:23,367 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-31 11:43:23,382 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 11:43:23,458 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-31 11:43:23,565 - app.main - INFO - GET /api/v1/import/import-templates
+2026-07-31 11:43:23,581 - app.main - INFO - GET /api/v1/documents
+2026-07-31 11:43:23,588 - app.main - INFO - GET /api/v1/templates
+2026-07-31 11:43:23,674 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-07-31 11:43:23,773 - app.main - INFO - GET /api/v1/import/import-templates
+2026-07-31 11:43:23,815 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-31 11:43:23,889 - app.main - INFO - GET /api/v1/templates
+2026-07-31 11:43:23,900 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-31 11:43:23,977 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-07-31 11:43:24,047 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-31 11:43:38,073 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-07-31 11:44:20,065 - app.application.services.ollama_mapping_service - WARNING - Ollama local service unavailable at http://localhost:11434: . Using fallback matching engine.
+2026-07-31 11:44:20,085 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-07-31 11:47:16,963 - app.main - INFO - POST /api/v1/import/preview
+2026-07-31 11:47:17,026 - app.main - INFO - POST /api/v1/import/preview -> 400
+2026-07-31 11:49:11,770 - app.main - INFO - Shutting down CMF Platform API
+2026-07-31 11:49:19,496 - app.main - INFO - Starting CMF Platform API
+2026-07-31 11:49:19,507 - app.main - INFO - Database tables created (SQLite)
+2026-07-31 11:49:19,648 - app.main - INFO - Shutting down CMF Platform API
+2026-07-31 11:49:25,212 - app.main - INFO - Starting CMF Platform API
+2026-07-31 11:49:25,230 - app.main - INFO - Database tables created (SQLite)
+2026-07-31 11:50:12,599 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-07-31 11:50:12,604 - app.main - INFO - GET /api/v1/projects
+2026-07-31 11:50:13,591 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-31 11:50:14,235 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-07-31 11:50:20,638 - app.main - INFO - GET /api/v1/import/import-templates
+2026-07-31 11:50:20,641 - app.main - INFO - GET /api/v1/documents
+2026-07-31 11:50:20,734 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-07-31 11:50:20,758 - app.main - INFO - GET /api/v1/import/import-templates
+2026-07-31 11:50:20,856 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-31 11:50:20,933 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-07-31 11:50:43,931 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-07-31 11:51:25,970 - app.application.services.ollama_mapping_service - WARNING - Ollama local service unavailable at http://localhost:11434: . Using fallback matching engine.
+2026-07-31 11:51:25,984 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-07-31 11:51:56,294 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-07-31 11:51:56,296 - app.main - INFO - GET /api/v1/projects
+2026-07-31 11:51:56,532 - app.main - INFO - GET /api/v1/projects -> 200
+2026-07-31 11:51:56,694 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-07-31 11:52:01,183 - app.main - INFO - GET /api/v1/suppliers
+2026-07-31 11:52:01,184 - app.main - INFO - GET /api/v1/users
+2026-07-31 11:52:01,271 - app.main - INFO - GET /api/v1/users -> 200
+2026-07-31 11:52:01,320 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-07-31 11:52:46,587 - app.main - INFO - GET /api/v1/import/import-templates
+2026-07-31 11:52:46,591 - app.main - INFO - GET /api/v1/documents
+2026-07-31 11:52:46,701 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-07-31 11:52:46,729 - app.main - INFO - GET /api/v1/import/import-templates
+2026-07-31 11:52:46,750 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-31 11:52:46,821 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-07-31 11:55:42,082 - app.main - INFO - Shutting down CMF Platform API
+2026-07-31 11:55:45,705 - app.main - INFO - Starting CMF Platform API
+2026-07-31 11:55:45,712 - app.main - INFO - Database tables created (SQLite)
+2026-07-31 11:55:54,897 - app.main - INFO - Shutting down CMF Platform API
+2026-07-31 11:55:57,940 - app.main - INFO - Starting CMF Platform API
+2026-07-31 11:55:57,947 - app.main - INFO - Database tables created (SQLite)
+2026-07-31 11:57:34,288 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 11:57:34,541 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-31 11:57:34,556 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 11:57:34,611 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-31 11:57:34,724 - app.main - INFO - GET /api/v1/import/import-templates
+2026-07-31 11:57:34,732 - app.main - INFO - GET /api/v1/documents
+2026-07-31 11:57:34,734 - app.main - INFO - GET /api/v1/templates
+2026-07-31 11:57:34,823 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-07-31 11:57:34,839 - app.main - INFO - GET /api/v1/import/import-templates
+2026-07-31 11:57:34,851 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-31 11:57:34,958 - app.main - INFO - GET /api/v1/templates
+2026-07-31 11:57:35,023 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-31 11:57:35,063 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-07-31 11:57:35,080 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-31 11:57:48,139 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-07-31 11:58:29,450 - app.application.services.ollama_mapping_service - WARNING - Ollama local service unavailable at http://localhost:11434: . Using fallback matching engine.
+2026-07-31 11:58:29,468 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-07-31 12:03:27,226 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 12:03:27,288 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-31 12:03:27,301 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 12:03:27,360 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-31 12:03:27,448 - app.main - INFO - GET /api/v1/import/import-templates
+2026-07-31 12:03:27,463 - app.main - INFO - GET /api/v1/documents
+2026-07-31 12:03:27,467 - app.main - INFO - GET /api/v1/templates
+2026-07-31 12:03:27,726 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-07-31 12:03:27,778 - app.main - INFO - GET /api/v1/import/import-templates
+2026-07-31 12:03:27,790 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-31 12:03:27,817 - app.main - INFO - GET /api/v1/templates
+2026-07-31 12:03:27,836 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-31 12:03:27,908 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-07-31 12:03:27,927 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-31 12:10:11,119 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 12:10:11,126 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-07-31 12:10:11,130 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-07-31 12:10:11,139 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 12:10:11,142 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-07-31 12:10:11,144 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-07-31 12:10:11,226 - app.main - INFO - POST /api/v1/auth/refresh
+2026-07-31 12:10:11,299 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-07-31 12:10:11,317 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 12:10:11,357 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-31 12:10:11,367 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 12:10:11,409 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-31 12:10:12,510 - app.main - INFO - GET /api/v1/import/import-templates
+2026-07-31 12:10:12,522 - app.main - INFO - GET /api/v1/documents
+2026-07-31 12:10:12,540 - app.main - INFO - GET /api/v1/templates
+2026-07-31 12:10:12,631 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-07-31 12:10:12,644 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-31 12:10:12,673 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-31 12:10:12,758 - app.main - INFO - GET /api/v1/import/import-templates
+2026-07-31 12:10:12,768 - app.main - INFO - GET /api/v1/templates
+2026-07-31 12:10:12,857 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-07-31 12:10:12,863 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-31 13:08:28,996 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 13:08:29,017 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-07-31 13:08:29,025 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-07-31 13:08:29,067 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 13:08:29,086 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-07-31 13:08:29,091 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-07-31 13:08:29,105 - app.main - INFO - POST /api/v1/auth/refresh
+2026-07-31 13:08:29,179 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-07-31 13:08:29,194 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 13:08:29,237 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-31 13:08:29,251 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 13:08:29,344 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-31 13:08:29,609 - app.main - INFO - GET /api/v1/import/import-templates
+2026-07-31 13:08:29,631 - app.main - INFO - GET /api/v1/documents
+2026-07-31 13:08:29,633 - app.main - INFO - GET /api/v1/templates
+2026-07-31 13:08:29,974 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-07-31 13:08:29,986 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-31 13:08:30,000 - app.main - INFO - GET /api/v1/import/import-templates
+2026-07-31 13:08:30,029 - app.main - INFO - GET /api/v1/templates
+2026-07-31 13:08:30,082 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-31 13:08:30,148 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-07-31 13:08:30,169 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-31 13:24:07,656 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 13:24:07,784 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-31 13:24:07,801 - app.main - INFO - GET /api/v1/auth/me
+2026-07-31 13:24:07,852 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-07-31 13:24:08,025 - app.main - INFO - GET /api/v1/import/import-templates
+2026-07-31 13:24:08,037 - app.main - INFO - GET /api/v1/documents
+2026-07-31 13:24:08,040 - app.main - INFO - GET /api/v1/templates
+2026-07-31 13:24:08,188 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-07-31 13:24:08,261 - app.main - INFO - GET /api/v1/import/import-templates
+2026-07-31 13:24:08,298 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-31 13:24:08,319 - app.main - INFO - GET /api/v1/templates
+2026-07-31 13:24:08,361 - app.main - INFO - GET /api/v1/documents -> 200
+2026-07-31 13:24:08,410 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-07-31 13:24:08,450 - app.main - INFO - GET /api/v1/templates -> 200
+2026-07-31 14:03:14,840 - app.main - INFO - Shutting down CMF Platform API
+2026-08-02 14:46:25,540 - app.main - INFO - Starting CMF Platform API
+2026-08-02 14:46:25,599 - app.main - INFO - Database tables created (SQLite)
+2026-08-02 14:50:07,434 - app.main - INFO - GET /api/v1/auth/me
+2026-08-02 14:50:07,531 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-02 14:50:07,537 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-02 14:50:07,564 - app.main - INFO - GET /api/v1/auth/me
+2026-08-02 14:50:07,572 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-02 14:50:07,579 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-02 14:50:07,582 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-02 14:50:08,032 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-02 14:50:08,061 - app.main - INFO - GET /api/v1/auth/me
+2026-08-02 14:50:08,121 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-02 14:50:08,138 - app.main - INFO - GET /api/v1/auth/me
+2026-08-02 14:50:08,197 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-02 14:50:08,420 - app.main - INFO - GET /api/v1/templates
+2026-08-02 14:50:08,592 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-02 14:50:08,622 - app.main - INFO - GET /api/v1/templates
+2026-08-02 14:50:08,680 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-02 14:50:09,196 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-02 14:50:09,210 - app.main - INFO - GET /api/v1/projects
+2026-08-02 14:50:09,729 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-02 14:50:10,225 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-02 14:50:17,991 - app.main - INFO - GET /api/v1/projects
+2026-08-02 14:50:18,131 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-02 14:50:37,064 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-02 14:50:37,069 - app.main - INFO - GET /api/v1/documents
+2026-08-02 14:50:37,211 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-02 14:50:37,252 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-02 14:50:37,261 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-02 14:50:37,335 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-02 14:51:01,289 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-02 14:51:57,134 - app.application.services.ollama_mapping_service - WARNING - Ollama local service unavailable at http://localhost:11434: . Using fallback matching engine.
+2026-08-02 14:51:57,166 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-02 14:53:47,595 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-02 14:53:47,597 - app.main - INFO - GET /api/v1/documents
+2026-08-02 14:53:47,749 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-02 14:53:47,785 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-02 14:53:47,806 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-02 14:53:47,862 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-02 14:53:56,793 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-02 14:54:40,602 - app.application.services.ollama_mapping_service - WARNING - Ollama local service unavailable at http://localhost:11434: . Using fallback matching engine.
+2026-08-02 14:54:40,623 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-02 14:55:12,784 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-02 14:55:12,789 - app.main - INFO - GET /api/v1/documents
+2026-08-02 14:55:12,898 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-02 14:55:12,927 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-02 14:55:12,991 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-02 14:55:13,030 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-02 14:55:21,844 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-02 14:56:04,052 - app.application.services.ollama_mapping_service - WARNING - Ollama local service unavailable at http://localhost:11434: . Using fallback matching engine.
+2026-08-02 14:56:04,090 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-02 15:01:32,831 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-02 15:01:32,834 - app.main - INFO - GET /api/v1/documents
+2026-08-02 15:01:32,954 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-02 15:01:32,981 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-02 15:01:33,032 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-02 15:01:33,068 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-02 15:01:45,992 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-02 15:02:50,360 - app.application.services.ollama_mapping_service - WARNING - Ollama local service unavailable at http://localhost:11434: . Using fallback matching engine.
+2026-08-02 15:02:50,375 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-02 15:08:54,947 - app.main - INFO - Shutting down CMF Platform API
+2026-08-02 15:09:08,042 - app.main - INFO - Starting CMF Platform API
+2026-08-02 15:09:08,164 - app.main - INFO - Database tables created (SQLite)
+2026-08-02 15:12:01,723 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-02 15:12:01,726 - app.main - INFO - GET /api/v1/documents
+2026-08-02 15:12:02,088 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-02 15:12:02,113 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-02 15:12:02,179 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-02 15:12:02,222 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-02 15:12:09,699 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-02 15:12:38,216 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-02 15:13:38,243 - app.application.services.ollama_mapping_service - WARNING - Ollama local service unavailable at http://localhost:11434: . Using fallback matching engine.
+2026-08-02 15:13:38,256 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-02 15:15:26,094 - app.main - INFO - GET /api/v1/health
+2026-08-02 15:15:26,099 - app.main - INFO - GET /api/v1/health -> 200
+2026-08-02 15:17:14,117 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-02 15:17:14,137 - app.main - WARNING - UnauthorizedException: Not authenticated
+2026-08-02 15:17:14,142 - app.main - INFO - POST /api/v1/import/ollama-map -> 401
+2026-08-02 15:17:19,684 - app.main - INFO - POST /api/v1/auth/login
+2026-08-02 15:17:19,706 - app.main - WARNING - Validation error: [{'type': 'model_attributes_type', 'loc': ('body',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': b'username=admin%40cmf.com&password=Admin123%21'}]
+2026-08-02 15:17:19,713 - app.main - ERROR - Unhandled exception: Object of type bytes is not JSON serializable
+  + Exception Group Traceback (most recent call last):
+  |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 77, in collapse_excgroups
+  |     yield
+  |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 186, in __call__
+  |     async with anyio.create_task_group() as task_group:
+  |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 815, in __aexit__
+  |     raise BaseExceptionGroup(
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    |     await self.app(scope, receive, _send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    |     with collapse_excgroups():
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    |     self.gen.throw(typ, value, traceback)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    |     raise exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 134, in rate_limit_middleware
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    |     raise app_exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    |     with collapse_excgroups():
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    |     self.gen.throw(typ, value, traceback)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    |     raise exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 109, in logging_middleware
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    |     raise app_exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    |     with collapse_excgroups():
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    |     self.gen.throw(typ, value, traceback)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    |     raise exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 98, in request_id_middleware
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    |     raise app_exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    |     await self.app(scope, receive, send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    |     with collapse_excgroups():
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    |     self.gen.throw(typ, value, traceback)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    |     raise exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 71, in strip_trailing_slash_middleware
+    |     return await call_next(request)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    |     raise app_exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    |     raise exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 735, in app
+    |     await route.handle(scope, receive, send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    |     await self.app(scope, receive, send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 73, in wrapped_app
+    |     response = await handler(conn, exc)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 169, in validation_error_handler
+    |     return JSONResponse(
+    |            ^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\responses.py", line 178, in __init__
+    |     super().__init__(content, status_code, headers, media_type, background)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\responses.py", line 41, in __init__
+    |     self.body = self.render(content)
+    |                 ^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\responses.py", line 181, in render
+    |     return json.dumps(
+    |            ^^^^^^^^^^^
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\json\__init__.py", line 238, in dumps
+    |     **kw).encode(obj)
+    |           ^^^^^^^^^^^
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 200, in encode
+    |     chunks = self.iterencode(o, _one_shot=True)
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 258, in iterencode
+    |     return _iterencode(o, 0)
+    |            ^^^^^^^^^^^^^^^^^
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 180, in default
+    |     raise TypeError(f'Object of type {o.__class__.__name__} '
+    | TypeError: Object of type bytes is not JSON serializable
+    +------------------------------------
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 134, in rate_limit_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 109, in logging_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 98, in request_id_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 71, in strip_trailing_slash_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 73, in wrapped_app
+    response = await handler(conn, exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 169, in validation_error_handler
+    return JSONResponse(
+           ^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\responses.py", line 178, in __init__
+    super().__init__(content, status_code, headers, media_type, background)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\responses.py", line 41, in __init__
+    self.body = self.render(content)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\responses.py", line 181, in render
+    return json.dumps(
+           ^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type bytes is not JSON serializable
+2026-08-02 15:17:23,744 - app.main - INFO - POST /api/v1/auth/login
+2026-08-02 15:17:23,750 - app.main - WARNING - Validation error: [{'type': 'model_attributes_type', 'loc': ('body',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': b'username=admin%40cmf.com&password=Admin123%21'}]
+2026-08-02 15:17:23,753 - app.main - ERROR - Unhandled exception: Object of type bytes is not JSON serializable
+  + Exception Group Traceback (most recent call last):
+  |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 77, in collapse_excgroups
+  |     yield
+  |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 186, in __call__
+  |     async with anyio.create_task_group() as task_group:
+  |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 815, in __aexit__
+  |     raise BaseExceptionGroup(
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    |     await self.app(scope, receive, _send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    |     with collapse_excgroups():
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    |     self.gen.throw(typ, value, traceback)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    |     raise exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 134, in rate_limit_middleware
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    |     raise app_exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    |     with collapse_excgroups():
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    |     self.gen.throw(typ, value, traceback)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    |     raise exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 109, in logging_middleware
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    |     raise app_exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    |     with collapse_excgroups():
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    |     self.gen.throw(typ, value, traceback)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    |     raise exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 98, in request_id_middleware
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    |     raise app_exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    |     await self.app(scope, receive, send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    |     with collapse_excgroups():
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    |     self.gen.throw(typ, value, traceback)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    |     raise exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 71, in strip_trailing_slash_middleware
+    |     return await call_next(request)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    |     raise app_exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    |     raise exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 735, in app
+    |     await route.handle(scope, receive, send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    |     await self.app(scope, receive, send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 73, in wrapped_app
+    |     response = await handler(conn, exc)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 169, in validation_error_handler
+    |     return JSONResponse(
+    |            ^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\responses.py", line 178, in __init__
+    |     super().__init__(content, status_code, headers, media_type, background)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\responses.py", line 41, in __init__
+    |     self.body = self.render(content)
+    |                 ^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\responses.py", line 181, in render
+    |     return json.dumps(
+    |            ^^^^^^^^^^^
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\json\__init__.py", line 238, in dumps
+    |     **kw).encode(obj)
+    |           ^^^^^^^^^^^
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 200, in encode
+    |     chunks = self.iterencode(o, _one_shot=True)
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 258, in iterencode
+    |     return _iterencode(o, 0)
+    |            ^^^^^^^^^^^^^^^^^
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 180, in default
+    |     raise TypeError(f'Object of type {o.__class__.__name__} '
+    | TypeError: Object of type bytes is not JSON serializable
+    +------------------------------------
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 134, in rate_limit_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 109, in logging_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 98, in request_id_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 71, in strip_trailing_slash_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 73, in wrapped_app
+    response = await handler(conn, exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 169, in validation_error_handler
+    return JSONResponse(
+           ^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\responses.py", line 178, in __init__
+    super().__init__(content, status_code, headers, media_type, background)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\responses.py", line 41, in __init__
+    self.body = self.render(content)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\responses.py", line 181, in render
+    return json.dumps(
+           ^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type bytes is not JSON serializable
+2026-08-02 15:18:04,464 - app.main - INFO - POST /api/v1/auth/login
+2026-08-02 15:18:04,471 - app.main - WARNING - Validation error: [{'type': 'model_attributes_type', 'loc': ('body',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': b'username=admin%40cmf.com&password=Admin123%21'}]
+2026-08-02 15:18:04,474 - app.main - ERROR - Unhandled exception: Object of type bytes is not JSON serializable
+  + Exception Group Traceback (most recent call last):
+  |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 77, in collapse_excgroups
+  |     yield
+  |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 186, in __call__
+  |     async with anyio.create_task_group() as task_group:
+  |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 815, in __aexit__
+  |     raise BaseExceptionGroup(
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    |     await self.app(scope, receive, _send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    |     with collapse_excgroups():
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    |     self.gen.throw(typ, value, traceback)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    |     raise exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 134, in rate_limit_middleware
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    |     raise app_exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    |     with collapse_excgroups():
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    |     self.gen.throw(typ, value, traceback)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    |     raise exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 109, in logging_middleware
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    |     raise app_exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    |     with collapse_excgroups():
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    |     self.gen.throw(typ, value, traceback)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    |     raise exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 98, in request_id_middleware
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    |     raise app_exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    |     await self.app(scope, receive, send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    |     with collapse_excgroups():
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    |     self.gen.throw(typ, value, traceback)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    |     raise exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 71, in strip_trailing_slash_middleware
+    |     return await call_next(request)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    |     raise app_exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    |     raise exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 735, in app
+    |     await route.handle(scope, receive, send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    |     await self.app(scope, receive, send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 73, in wrapped_app
+    |     response = await handler(conn, exc)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 169, in validation_error_handler
+    |     return JSONResponse(
+    |            ^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\responses.py", line 178, in __init__
+    |     super().__init__(content, status_code, headers, media_type, background)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\responses.py", line 41, in __init__
+    |     self.body = self.render(content)
+    |                 ^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\responses.py", line 181, in render
+    |     return json.dumps(
+    |            ^^^^^^^^^^^
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\json\__init__.py", line 238, in dumps
+    |     **kw).encode(obj)
+    |           ^^^^^^^^^^^
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 200, in encode
+    |     chunks = self.iterencode(o, _one_shot=True)
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 258, in iterencode
+    |     return _iterencode(o, 0)
+    |            ^^^^^^^^^^^^^^^^^
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 180, in default
+    |     raise TypeError(f'Object of type {o.__class__.__name__} '
+    | TypeError: Object of type bytes is not JSON serializable
+    +------------------------------------
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 134, in rate_limit_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 109, in logging_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 98, in request_id_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 71, in strip_trailing_slash_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 73, in wrapped_app
+    response = await handler(conn, exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 169, in validation_error_handler
+    return JSONResponse(
+           ^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\responses.py", line 178, in __init__
+    super().__init__(content, status_code, headers, media_type, background)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\responses.py", line 41, in __init__
+    self.body = self.render(content)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\responses.py", line 181, in render
+    return json.dumps(
+           ^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type bytes is not JSON serializable
+2026-08-02 15:18:58,370 - app.main - INFO - Shutting down CMF Platform API
+2026-08-02 15:19:01,720 - app.main - INFO - Starting CMF Platform API
+2026-08-02 15:19:01,728 - app.main - INFO - Database tables created (SQLite)
+2026-08-02 15:19:02,269 - app.main - INFO - Shutting down CMF Platform API
+2026-08-02 15:19:05,098 - app.main - INFO - Starting CMF Platform API
+2026-08-02 15:19:05,106 - app.main - INFO - Database tables created (SQLite)
+2026-08-02 15:25:40,545 - app.main - INFO - Shutting down CMF Platform API
+2026-08-02 15:26:21,160 - app.main - INFO - Starting CMF Platform API
+2026-08-02 15:26:21,179 - app.main - INFO - Database tables created (SQLite)
+2026-08-02 15:26:36,699 - app.main - INFO - GET /api/v1/health
+2026-08-02 15:26:36,705 - app.main - INFO - GET /api/v1/health -> 200
+2026-08-02 15:26:57,131 - app.main - INFO - GET /api/v1/auth/me
+2026-08-02 15:26:57,172 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-02 15:26:57,178 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-02 15:26:57,194 - app.main - INFO - GET /api/v1/auth/me
+2026-08-02 15:26:57,211 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-02 15:26:57,219 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-02 15:26:57,242 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-02 15:26:57,544 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-02 15:26:57,569 - app.main - INFO - GET /api/v1/auth/me
+2026-08-02 15:26:57,629 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-02 15:26:57,642 - app.main - INFO - GET /api/v1/auth/me
+2026-08-02 15:26:57,694 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-02 15:26:57,896 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-02 15:26:57,922 - app.main - INFO - GET /api/v1/documents
+2026-08-02 15:26:57,935 - app.main - INFO - GET /api/v1/templates
+2026-08-02 15:26:58,073 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-02 15:26:58,134 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-02 15:26:58,187 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-02 15:26:58,208 - app.main - INFO - GET /api/v1/templates
+2026-08-02 15:26:58,243 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-02 15:26:58,268 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-02 15:26:58,293 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-02 15:43:01,794 - app.main - INFO - GET /api/v1/auth/me
+2026-08-02 15:43:01,862 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-02 15:53:30,785 - app.main - INFO - GET /api/v1/auth/me
+2026-08-02 15:53:33,358 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-02 15:53:41,361 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-02 15:53:41,371 - app.main - WARNING - UnauthorizedException: Not authenticated
+2026-08-02 15:53:41,376 - app.main - INFO - GET /api/v1/documents
+2026-08-02 15:53:41,379 - app.main - INFO - GET /api/v1/templates
+2026-08-02 15:53:41,381 - app.main - WARNING - UnauthorizedException: Not authenticated
+2026-08-02 15:53:41,385 - app.main - INFO - GET /api/v1/import/import-templates -> 401
+2026-08-02 15:53:41,393 - app.main - WARNING - UnauthorizedException: Not authenticated
+2026-08-02 15:53:41,399 - app.main - INFO - GET /api/v1/documents -> 401
+2026-08-02 15:53:41,414 - app.main - INFO - GET /api/v1/templates -> 401
+2026-08-02 15:53:41,430 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-02 15:53:41,443 - app.main - WARNING - UnauthorizedException: Not authenticated
+2026-08-02 15:53:41,453 - app.main - INFO - GET /api/v1/import/import-templates -> 401
+2026-08-02 20:05:37,311 - app.main - INFO - Shutting down CMF Platform API
+2026-08-02 20:05:42,757 - app.main - INFO - Starting CMF Platform API
+2026-08-02 20:05:42,765 - app.main - INFO - Database tables created (SQLite)
+2026-08-02 20:07:09,402 - app.main - INFO - POST /api/v1/auth/login
+2026-08-02 20:07:10,347 - app.main - INFO - POST /api/v1/auth/login -> 200
+2026-08-02 20:07:10,368 - app.main - INFO - GET /api/v1/auth/me
+2026-08-02 20:07:10,407 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-02 20:07:10,477 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-02 20:07:10,479 - app.main - INFO - GET /api/v1/projects
+2026-08-02 20:07:10,485 - app.main - INFO - GET /api/v1/templates
+2026-08-02 20:07:10,589 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-02 20:07:10,615 - app.main - INFO - GET /api/v1/templates
+2026-08-02 20:07:10,846 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-02 20:07:10,884 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-02 20:07:11,130 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-02 20:07:39,115 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-02 20:07:39,117 - app.main - INFO - GET /api/v1/documents
+2026-08-02 20:07:39,201 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-02 20:07:39,232 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-02 20:07:39,255 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-02 20:07:39,310 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-02 20:08:04,646 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-02 20:08:29,776 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-02 20:09:29,802 - app.application.services.ollama_mapping_service - WARNING - Ollama local service unavailable at http://localhost:11434: . Using fallback matching engine.
+2026-08-02 20:09:29,811 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-02 20:10:42,284 - app.main - INFO - Shutting down CMF Platform API
+2026-08-02 20:10:47,207 - app.main - INFO - Starting CMF Platform API
+2026-08-02 20:10:47,222 - app.main - INFO - Database tables created (SQLite)
+2026-08-02 20:15:21,925 - app.main - INFO - GET /api/v1/auth/me
+2026-08-02 20:15:22,149 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-02 20:15:22,164 - app.main - INFO - GET /api/v1/auth/me
+2026-08-02 20:15:22,231 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-02 20:15:22,306 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-02 20:15:22,309 - app.main - INFO - GET /api/v1/documents
+2026-08-02 20:15:22,312 - app.main - INFO - GET /api/v1/templates
+2026-08-02 20:15:22,523 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-02 20:15:22,546 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-02 20:15:22,561 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-02 20:15:22,593 - app.main - INFO - GET /api/v1/templates
+2026-08-02 20:15:22,614 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-02 20:15:22,662 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-02 20:15:22,692 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-02 20:18:38,533 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-02 20:19:16,565 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-02 20:20:16,582 - app.application.services.ollama_mapping_service - WARNING - Ollama local service unavailable at http://localhost:11434: . Using fallback matching engine.
+2026-08-02 20:20:16,595 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-02 20:21:10,265 - app.main - INFO - Shutting down CMF Platform API
+2026-08-02 20:21:19,871 - app.main - INFO - Starting CMF Platform API
+2026-08-02 20:21:19,954 - app.main - INFO - Database tables created (SQLite)
+2026-08-02 20:21:28,911 - app.main - INFO - GET /api/v1/documents
+2026-08-02 20:21:29,205 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-02 20:31:14,891 - app.main - INFO - GET /api/v1/auth/me
+2026-08-02 20:31:14,990 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-02 20:31:15,013 - app.main - INFO - GET /api/v1/auth/me
+2026-08-02 20:31:15,074 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-02 20:31:15,479 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-02 20:31:15,497 - app.main - INFO - GET /api/v1/documents
+2026-08-02 20:31:15,508 - app.main - INFO - GET /api/v1/templates
+2026-08-02 20:31:15,600 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-02 20:31:15,624 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-02 20:31:15,707 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-02 20:31:15,728 - app.main - INFO - GET /api/v1/templates
+2026-08-02 20:31:15,745 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-02 20:31:15,803 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-02 20:31:15,933 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-02 20:38:03,842 - app.main - INFO - GET /api/v1/projects
+2026-08-02 20:38:03,856 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-02 20:38:03,863 - app.main - INFO - GET /api/v1/projects -> 401
+2026-08-02 20:38:03,933 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-02 20:38:04,138 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-02 20:38:04,178 - app.main - INFO - GET /api/v1/projects
+2026-08-02 20:38:04,430 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-02 20:38:11,491 - app.main - INFO - GET /api/v1/suppliers
+2026-08-02 20:38:11,502 - app.main - INFO - GET /api/v1/users
+2026-08-02 20:38:11,739 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-02 20:38:11,793 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-02 20:38:34,473 - app.main - INFO - POST /api/v1/projects
+2026-08-02 20:38:34,682 - app.main - INFO - POST /api/v1/projects -> 200
+2026-08-02 20:38:34,941 - app.main - INFO - GET /api/v1/projects/880751d5-4d73-408f-87d6-e273487644f5
+2026-08-02 20:38:35,050 - app.main - INFO - GET /api/v1/projects/880751d5-4d73-408f-87d6-e273487644f5 -> 200
+2026-08-02 20:38:39,138 - app.main - INFO - GET /api/v1/projects
+2026-08-02 20:38:39,243 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-02 20:38:42,805 - app.main - INFO - GET /api/v1/suppliers
+2026-08-02 20:38:42,808 - app.main - INFO - GET /api/v1/projects/880751d5-4d73-408f-87d6-e273487644f5
+2026-08-02 20:38:42,901 - app.main - INFO - GET /api/v1/projects/880751d5-4d73-408f-87d6-e273487644f5 -> 200
+2026-08-02 20:38:42,939 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-02 20:38:55,018 - app.main - INFO - GET /api/v1/projects
+2026-08-02 20:38:55,135 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-02 20:40:14,792 - app.main - INFO - GET /api/v1/projects
+2026-08-02 20:40:15,027 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-02 20:40:17,895 - app.main - INFO - GET /api/v1/projects/880751d5-4d73-408f-87d6-e273487644f5
+2026-08-02 20:40:17,996 - app.main - INFO - GET /api/v1/projects/880751d5-4d73-408f-87d6-e273487644f5 -> 200
+2026-08-02 20:40:18,278 - app.main - INFO - GET /api/v1/suppliers
+2026-08-02 20:40:18,292 - app.main - INFO - GET /api/v1/users
+2026-08-02 20:40:18,613 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-02 20:40:18,650 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-02 20:40:28,156 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-02 20:40:28,170 - app.main - INFO - GET /api/v1/documents
+2026-08-02 20:40:28,402 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-02 20:40:28,441 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-02 20:40:28,471 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-02 20:40:28,521 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-02 20:40:41,314 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-02 20:41:08,062 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-02 20:42:08,096 - app.application.services.ollama_mapping_service - WARNING - Ollama local service unavailable at http://localhost:11434: . Using fallback matching engine.
+2026-08-02 20:42:08,112 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-02 20:42:19,317 - app.main - INFO - POST /api/v1/import/preview
+2026-08-02 20:42:19,397 - app.main - INFO - POST /api/v1/import/preview -> 400
+2026-08-02 20:42:40,623 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-02 20:42:40,626 - app.main - INFO - GET /api/v1/projects
+2026-08-02 20:42:40,806 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-02 20:42:41,092 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-02 21:04:09,776 - app.main - INFO - GET /api/v1/auth/me
+2026-08-02 21:04:09,817 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-02 21:04:09,826 - app.main - INFO - GET /api/v1/auth/me
+2026-08-02 21:04:09,870 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-02 21:04:10,118 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-02 21:04:10,126 - app.main - INFO - GET /api/v1/projects
+2026-08-02 21:04:10,135 - app.main - INFO - GET /api/v1/templates
+2026-08-02 21:04:10,268 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-02 21:04:10,275 - app.main - INFO - GET /api/v1/templates
+2026-08-02 21:04:10,392 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-02 21:04:10,403 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-02 21:04:10,577 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-02 21:38:40,381 - app.main - INFO - GET /api/v1/projects
+2026-08-02 21:38:40,413 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-02 21:38:40,424 - app.main - INFO - GET /api/v1/projects -> 401
+2026-08-02 21:38:40,462 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-02 21:38:40,600 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-02 21:56:23,868 - app.main - INFO - Shutting down CMF Platform API
+2026-08-03 09:31:40,825 - app.main - INFO - Starting CMF Platform API
+2026-08-03 09:31:40,842 - app.main - INFO - Database tables created (SQLite)
+2026-08-03 09:31:57,293 - app.main - INFO - POST /api/v1/auth/login
+2026-08-03 09:31:58,352 - app.main - INFO - POST /api/v1/auth/login -> 200
+2026-08-03 09:31:58,381 - app.main - INFO - GET /api/v1/auth/me
+2026-08-03 09:31:58,445 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-03 09:31:58,576 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-03 09:31:58,582 - app.main - INFO - GET /api/v1/projects
+2026-08-03 09:31:58,589 - app.main - INFO - GET /api/v1/templates
+2026-08-03 09:31:58,795 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-03 09:31:58,820 - app.main - INFO - GET /api/v1/templates
+2026-08-03 09:31:59,066 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-03 09:31:59,132 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 09:31:59,698 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-03 09:32:05,505 - app.main - INFO - GET /api/v1/capacity
+2026-08-03 09:32:05,619 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-08-03 09:32:08,676 - app.main - INFO - GET /api/v1/risks
+2026-08-03 09:32:08,924 - app.main - INFO - GET /api/v1/risks -> 200
+2026-08-03 09:32:10,757 - app.main - INFO - GET /api/v1/parts
+2026-08-03 09:32:10,968 - app.main - INFO - GET /api/v1/parts -> 200
+2026-08-03 09:33:15,826 - app.main - INFO - POST /api/v1/risks
+2026-08-03 09:33:15,980 - app.main - INFO - POST /api/v1/risks -> 200
+2026-08-03 09:33:16,231 - app.main - INFO - GET /api/v1/risks
+2026-08-03 09:33:16,525 - app.main - INFO - GET /api/v1/risks -> 200
+2026-08-03 09:33:18,869 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-03 09:33:18,872 - app.main - INFO - GET /api/v1/projects
+2026-08-03 09:33:19,251 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 09:33:19,675 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-03 09:33:28,902 - app.main - INFO - GET /api/v1/projects
+2026-08-03 09:33:29,127 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 09:33:36,578 - app.main - INFO - GET /api/v1/parts
+2026-08-03 09:33:36,706 - app.main - INFO - GET /api/v1/parts -> 200
+2026-08-03 09:33:45,170 - app.main - INFO - GET /api/v1/projects
+2026-08-03 09:33:45,410 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 09:33:55,103 - app.main - INFO - GET /api/v1/projects
+2026-08-03 09:33:55,346 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 09:33:57,601 - app.main - INFO - GET /api/v1/projects
+2026-08-03 09:33:57,752 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 09:34:06,520 - app.main - INFO - POST /api/v1/auth/logout
+2026-08-03 09:34:06,691 - app.main - INFO - POST /api/v1/auth/logout -> 200
+2026-08-03 09:34:13,984 - app.main - INFO - POST /api/v1/auth/login
+2026-08-03 09:34:14,739 - app.main - INFO - POST /api/v1/auth/login -> 200
+2026-08-03 09:34:14,754 - app.main - INFO - GET /api/v1/auth/me
+2026-08-03 09:34:14,793 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-03 09:34:14,871 - app.main - INFO - GET /api/v1/projects
+2026-08-03 09:34:14,873 - app.main - INFO - GET /api/v1/templates
+2026-08-03 09:34:14,966 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-03 09:34:14,987 - app.main - INFO - GET /api/v1/templates
+2026-08-03 09:34:15,067 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-03 09:34:15,099 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 09:34:26,710 - app.main - INFO - GET /api/v1/capacity
+2026-08-03 09:34:26,941 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-08-03 09:34:29,682 - app.main - INFO - GET /api/v1/suppliers
+2026-08-03 09:34:29,687 - app.main - INFO - GET /api/v1/parts
+2026-08-03 09:34:29,944 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-03 09:34:29,963 - app.main - INFO - GET /api/v1/parts -> 200
+2026-08-03 09:34:45,622 - app.main - INFO - POST /api/v1/capacity
+2026-08-03 09:34:45,764 - app.main - INFO - POST /api/v1/capacity -> 200
+2026-08-03 09:34:45,923 - app.main - INFO - GET /api/v1/capacity
+2026-08-03 09:34:46,038 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-08-03 09:35:04,173 - app.main - INFO - POST /api/v1/auth/logout
+2026-08-03 09:35:04,401 - app.main - INFO - POST /api/v1/auth/logout -> 200
+2026-08-03 09:35:11,773 - app.main - INFO - POST /api/v1/auth/login
+2026-08-03 09:35:12,440 - app.main - WARNING - UnauthorizedException: Invalid email or password
+2026-08-03 09:35:12,443 - app.main - INFO - POST /api/v1/auth/login -> 401
+2026-08-03 09:35:22,017 - app.main - INFO - POST /api/v1/auth/login
+2026-08-03 09:35:22,800 - app.main - INFO - POST /api/v1/auth/login -> 200
+2026-08-03 09:35:22,828 - app.main - INFO - GET /api/v1/auth/me
+2026-08-03 09:35:22,899 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-03 09:35:23,002 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-03 09:35:23,011 - app.main - INFO - GET /api/v1/projects
+2026-08-03 09:35:23,012 - app.main - INFO - GET /api/v1/templates
+2026-08-03 09:35:23,110 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-03 09:35:23,131 - app.main - INFO - GET /api/v1/templates
+2026-08-03 09:35:23,234 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-03 09:35:23,288 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 09:35:23,642 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-03 09:35:27,682 - app.main - INFO - GET /api/v1/capacity
+2026-08-03 09:35:27,796 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-08-03 09:35:38,703 - app.main - INFO - GET /api/v1/projects
+2026-08-03 09:35:38,916 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 09:35:39,796 - app.main - INFO - GET /api/v1/projects
+2026-08-03 09:35:39,918 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 09:35:52,643 - app.main - INFO - GET /api/v1/projects
+2026-08-03 09:35:52,774 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 09:35:56,022 - app.main - INFO - GET /api/v1/projects/880751d5-4d73-408f-87d6-e273487644f5
+2026-08-03 09:35:56,139 - app.main - INFO - GET /api/v1/projects/880751d5-4d73-408f-87d6-e273487644f5 -> 200
+2026-08-03 09:35:56,289 - app.main - INFO - GET /api/v1/users
+2026-08-03 09:35:56,367 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-03 09:35:58,978 - app.main - INFO - POST /api/v1/auth/logout
+2026-08-03 09:35:59,101 - app.main - INFO - POST /api/v1/auth/logout -> 200
+2026-08-03 09:36:06,431 - app.main - INFO - POST /api/v1/auth/login
+2026-08-03 09:36:07,121 - app.main - INFO - POST /api/v1/auth/login -> 200
+2026-08-03 09:36:07,137 - app.main - INFO - GET /api/v1/auth/me
+2026-08-03 09:36:07,184 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-03 09:36:07,267 - app.main - INFO - GET /api/v1/projects
+2026-08-03 09:36:07,270 - app.main - INFO - GET /api/v1/templates
+2026-08-03 09:36:07,360 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-03 09:36:07,382 - app.main - INFO - GET /api/v1/templates
+2026-08-03 09:36:07,469 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-03 09:36:07,514 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 09:36:12,856 - app.main - INFO - GET /api/v1/suppliers
+2026-08-03 09:36:12,953 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-03 09:37:18,918 - app.main - INFO - POST /api/v1/projects
+2026-08-03 09:37:19,054 - app.main - INFO - POST /api/v1/projects -> 200
+2026-08-03 09:37:19,221 - app.main - INFO - GET /api/v1/projects/11251f87-f30a-4888-acbe-27ea1d7d2ca3
+2026-08-03 09:37:19,275 - app.main - INFO - GET /api/v1/projects/11251f87-f30a-4888-acbe-27ea1d7d2ca3 -> 200
+2026-08-03 09:37:19,398 - app.main - INFO - GET /api/v1/suppliers
+2026-08-03 09:37:19,401 - app.main - INFO - GET /api/v1/users
+2026-08-03 09:37:19,576 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-03 09:37:19,591 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-03 09:37:38,905 - app.main - INFO - GET /api/v1/projects/11251f87-f30a-4888-acbe-27ea1d7d2ca3
+2026-08-03 09:37:38,971 - app.main - INFO - GET /api/v1/projects/11251f87-f30a-4888-acbe-27ea1d7d2ca3 -> 200
+2026-08-03 09:38:27,587 - app.main - INFO - GET /api/v1/projects
+2026-08-03 09:38:27,917 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 09:38:29,408 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-03 09:38:29,414 - app.main - INFO - GET /api/v1/projects
+2026-08-03 09:38:29,850 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 09:38:30,286 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-03 09:38:44,706 - app.main - INFO - GET /api/v1/projects
+2026-08-03 09:38:44,828 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 09:39:05,807 - app.main - INFO - GET /api/v1/projects
+2026-08-03 09:39:06,068 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 09:39:11,214 - app.main - INFO - GET /api/v1/parts
+2026-08-03 09:39:11,342 - app.main - INFO - GET /api/v1/parts -> 200
+2026-08-03 09:41:09,835 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-03 09:41:09,842 - app.main - INFO - GET /api/v1/projects
+2026-08-03 09:41:10,319 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 09:41:10,798 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-03 09:41:13,110 - app.main - INFO - POST /api/v1/auth/logout
+2026-08-03 09:41:13,238 - app.main - INFO - POST /api/v1/auth/logout -> 200
+2026-08-03 10:06:04,822 - app.main - INFO - POST /api/v1/auth/login
+2026-08-03 10:06:05,515 - app.main - INFO - POST /api/v1/auth/login -> 200
+2026-08-03 10:06:05,536 - app.main - INFO - GET /api/v1/auth/me
+2026-08-03 10:06:05,587 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-03 10:06:05,669 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-03 10:06:05,677 - app.main - INFO - GET /api/v1/projects
+2026-08-03 10:06:05,679 - app.main - INFO - GET /api/v1/templates
+2026-08-03 10:06:05,812 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-03 10:06:05,837 - app.main - INFO - GET /api/v1/templates
+2026-08-03 10:06:05,962 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-03 10:06:06,081 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 10:06:06,536 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-03 10:23:52,356 - app.main - INFO - Shutting down CMF Platform API
+2026-08-03 10:24:11,069 - app.main - INFO - Starting CMF Platform API
+2026-08-03 10:24:11,103 - app.main - INFO - Database tables created (SQLite)
+2026-08-03 10:24:11,122 - app.main - INFO - GET /api/v1/auth/me
+2026-08-03 10:24:11,476 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-03 10:24:11,491 - app.main - INFO - GET /api/v1/auth/me
+2026-08-03 10:24:11,560 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-03 10:24:11,725 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-03 10:24:11,741 - app.main - INFO - GET /api/v1/projects
+2026-08-03 10:24:11,762 - app.main - INFO - GET /api/v1/templates
+2026-08-03 10:24:12,010 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-03 10:24:12,030 - app.main - INFO - GET /api/v1/templates
+2026-08-03 10:24:12,354 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-03 10:24:12,484 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 10:24:12,942 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-03 10:28:00,412 - app.main - INFO - GET /api/v1/projects
+2026-08-03 10:28:00,650 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 10:29:08,048 - app.main - INFO - Shutting down CMF Platform API
+2026-08-03 10:29:29,808 - app.main - INFO - Starting CMF Platform API
+2026-08-03 10:29:29,824 - app.main - INFO - Database tables created (SQLite)
+2026-08-03 10:29:29,846 - app.main - INFO - GET /api/v1/auth/me
+2026-08-03 10:29:30,108 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-03 10:29:30,123 - app.main - INFO - GET /api/v1/auth/me
+2026-08-03 10:29:30,216 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-03 10:29:30,307 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-03 10:29:30,318 - app.main - INFO - GET /api/v1/projects
+2026-08-03 10:29:30,319 - app.main - INFO - GET /api/v1/templates
+2026-08-03 10:29:30,484 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-03 10:29:30,511 - app.main - INFO - GET /api/v1/templates
+2026-08-03 10:29:30,853 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-03 10:29:30,946 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 10:29:31,226 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-03 10:47:29,438 - app.main - INFO - GET /api/v1/auth/me
+2026-08-03 10:47:29,444 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-03 10:47:29,448 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-03 10:47:29,470 - app.main - INFO - GET /api/v1/auth/me
+2026-08-03 10:47:29,475 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-03 10:47:29,478 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-03 10:47:29,505 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-03 10:47:29,655 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-03 10:47:29,684 - app.main - INFO - GET /api/v1/auth/me
+2026-08-03 10:47:29,757 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-03 10:47:29,769 - app.main - INFO - GET /api/v1/auth/me
+2026-08-03 10:47:29,829 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-03 10:47:29,957 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-03 10:47:29,969 - app.main - INFO - GET /api/v1/projects
+2026-08-03 10:47:29,970 - app.main - INFO - GET /api/v1/templates
+2026-08-03 10:47:30,139 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-03 10:47:30,156 - app.main - INFO - GET /api/v1/templates
+2026-08-03 10:47:30,272 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-03 10:47:30,304 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 10:47:30,593 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-03 10:58:03,297 - app.main - INFO - Shutting down CMF Platform API
+2026-08-03 10:58:28,669 - app.main - INFO - Starting CMF Platform API
+2026-08-03 10:58:28,691 - app.main - INFO - Database tables created (SQLite)
+2026-08-03 10:58:29,069 - app.main - INFO - GET /api/v1/auth/me
+2026-08-03 10:58:29,440 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-03 10:58:29,453 - app.main - INFO - GET /api/v1/auth/me
+2026-08-03 10:58:29,517 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-03 10:58:29,961 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-03 10:58:29,971 - app.main - INFO - GET /api/v1/projects
+2026-08-03 10:58:29,982 - app.main - INFO - GET /api/v1/templates
+2026-08-03 10:58:30,189 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-03 10:58:30,218 - app.main - INFO - GET /api/v1/templates
+2026-08-03 10:58:30,493 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-03 10:58:30,564 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 10:58:30,973 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-03 11:02:45,786 - app.main - INFO - GET /api/v1/projects
+2026-08-03 11:02:45,969 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 11:03:43,673 - app.main - INFO - GET /api/v1/suppliers
+2026-08-03 11:03:43,771 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-03 11:03:49,069 - app.main - INFO - GET /api/v1/suppliers/5b4948ba-398a-4dee-9092-51f93d226acd
+2026-08-03 11:03:49,149 - app.main - INFO - GET /api/v1/suppliers/5b4948ba-398a-4dee-9092-51f93d226acd -> 200
+2026-08-03 11:04:02,033 - app.main - INFO - GET /api/v1/projects
+2026-08-03 11:04:02,194 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 11:04:03,598 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-03 11:04:03,601 - app.main - INFO - GET /api/v1/projects
+2026-08-03 11:04:03,881 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 11:04:04,242 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-03 11:04:05,136 - app.main - INFO - GET /api/v1/projects
+2026-08-03 11:04:05,302 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 11:04:17,082 - app.main - INFO - GET /api/v1/notifications
+2026-08-03 11:04:17,215 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-03 11:04:19,733 - app.main - INFO - GET /api/v1/projects
+2026-08-03 11:04:19,936 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 11:04:21,713 - app.main - INFO - GET /api/v1/projects
+2026-08-03 11:04:21,836 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 11:42:35,659 - app.main - INFO - GET /api/v1/projects
+2026-08-03 11:42:35,681 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-03 11:42:35,689 - app.main - INFO - GET /api/v1/projects -> 401
+2026-08-03 11:42:35,723 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-03 11:42:35,915 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-03 11:42:35,942 - app.main - INFO - GET /api/v1/projects
+2026-08-03 11:42:36,132 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-03 12:17:04,283 - app.main - INFO - GET /api/v1/auth/me
+2026-08-03 12:17:04,295 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-03 12:17:04,301 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-03 12:17:04,323 - app.main - INFO - GET /api/v1/auth/me
+2026-08-03 12:17:04,334 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-03 12:17:04,337 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-03 12:17:04,374 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-03 12:17:04,518 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-03 12:17:04,546 - app.main - INFO - GET /api/v1/auth/me
+2026-08-03 12:17:04,623 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-03 12:17:04,641 - app.main - INFO - GET /api/v1/auth/me
+2026-08-03 12:17:04,716 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-03 12:17:05,033 - app.main - INFO - GET /api/v1/templates
+2026-08-03 12:17:05,107 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-03 12:17:05,123 - app.main - INFO - GET /api/v1/templates
+2026-08-03 12:17:05,190 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-03 12:31:33,712 - app.main - INFO - GET /api/v1/auth/me
+2026-08-03 12:31:33,810 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-03 12:31:33,827 - app.main - INFO - GET /api/v1/auth/me
+2026-08-03 12:31:33,923 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-03 12:31:34,521 - app.main - INFO - GET /api/v1/templates
+2026-08-03 12:31:34,590 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-03 12:31:34,608 - app.main - INFO - GET /api/v1/templates
+2026-08-03 12:31:34,671 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-03 12:44:36,434 - app.main - INFO - GET /api/v1/auth/me
+2026-08-03 12:44:36,583 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-03 12:44:36,614 - app.main - INFO - GET /api/v1/auth/me
+2026-08-03 12:44:36,718 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-03 12:44:37,026 - app.main - INFO - GET /api/v1/templates
+2026-08-03 12:44:37,099 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-03 12:44:37,117 - app.main - INFO - GET /api/v1/templates
+2026-08-03 12:44:37,177 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-03 12:48:36,577 - app.main - INFO - Shutting down CMF Platform API
+2026-08-04 09:41:40,072 - app.main - INFO - Starting CMF Platform API
+2026-08-04 09:41:40,082 - app.main - INFO - Database tables created (SQLite)
+2026-08-04 09:42:07,835 - app.main - INFO - GET /api/v1/auth/me
+2026-08-04 09:42:07,861 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-04 09:42:07,866 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-04 09:42:07,888 - app.main - INFO - GET /api/v1/auth/me
+2026-08-04 09:42:07,891 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-04 09:42:07,897 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-04 09:42:07,903 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-04 09:42:08,155 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-04 09:42:08,175 - app.main - INFO - GET /api/v1/auth/me
+2026-08-04 09:42:08,225 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-04 09:42:08,240 - app.main - INFO - GET /api/v1/auth/me
+2026-08-04 09:42:08,292 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-04 09:42:08,365 - app.main - INFO - GET /api/v1/templates
+2026-08-04 09:42:08,491 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-04 09:42:08,509 - app.main - INFO - GET /api/v1/templates
+2026-08-04 09:42:08,563 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-04 09:42:08,699 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-04 09:42:08,702 - app.main - INFO - GET /api/v1/projects
+2026-08-04 09:42:09,164 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-04 09:42:09,819 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-04 09:42:19,148 - app.main - INFO - GET /api/v1/capacity
+2026-08-04 09:42:19,259 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-08-04 09:42:23,902 - app.main - INFO - GET /api/v1/risks
+2026-08-04 09:42:24,063 - app.main - INFO - GET /api/v1/risks -> 200
+2026-08-04 09:42:26,968 - app.main - INFO - POST /api/v1/auth/logout
+2026-08-04 09:42:27,109 - app.main - INFO - POST /api/v1/auth/logout -> 200
+2026-08-04 09:42:38,789 - app.main - INFO - POST /api/v1/auth/login
+2026-08-04 09:42:39,581 - app.main - INFO - POST /api/v1/auth/login -> 200
+2026-08-04 09:42:39,598 - app.main - INFO - GET /api/v1/auth/me
+2026-08-04 09:42:39,641 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-04 09:42:39,741 - app.main - INFO - GET /api/v1/projects
+2026-08-04 09:42:39,744 - app.main - INFO - GET /api/v1/templates
+2026-08-04 09:42:39,814 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-04 09:42:39,833 - app.main - INFO - GET /api/v1/templates
+2026-08-04 09:42:39,946 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-04 09:42:39,979 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-04 09:43:06,290 - app.main - INFO - GET /api/v1/capacity
+2026-08-04 09:43:06,401 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-08-04 09:43:08,623 - app.main - INFO - GET /api/v1/parts
+2026-08-04 09:43:08,629 - app.main - INFO - GET /api/v1/suppliers
+2026-08-04 09:43:09,067 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-04 09:43:09,148 - app.main - INFO - GET /api/v1/parts -> 200
+2026-08-04 09:43:24,042 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-04 09:43:24,045 - app.main - INFO - GET /api/v1/projects
+2026-08-04 09:43:24,269 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-04 09:43:24,491 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-04 09:43:40,252 - app.main - INFO - GET /api/v1/notifications
+2026-08-04 09:43:40,371 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-04 09:43:42,443 - app.main - INFO - GET /api/v1/projects
+2026-08-04 09:43:42,567 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-04 09:43:56,682 - app.main - INFO - GET /api/v1/projects
+2026-08-04 09:43:56,798 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-04 09:43:59,863 - app.main - INFO - GET /api/v1/projects
+2026-08-04 09:44:00,109 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-04 09:47:24,223 - app.main - INFO - GET /api/v1/capacity
+2026-08-04 09:47:24,482 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-08-04 09:47:27,446 - app.main - INFO - GET /api/v1/risks
+2026-08-04 09:47:27,564 - app.main - INFO - GET /api/v1/risks -> 200
+2026-08-04 09:47:34,176 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-04 09:47:34,178 - app.main - INFO - GET /api/v1/documents
+2026-08-04 09:47:34,254 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-04 09:47:34,277 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-04 09:47:34,332 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-04 09:47:34,362 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-04 09:47:38,123 - app.main - INFO - GET /api/v1/parts
+2026-08-04 09:47:38,420 - app.main - INFO - GET /api/v1/parts -> 200
+2026-08-04 09:47:39,364 - app.main - INFO - GET /api/v1/projects
+2026-08-04 09:47:39,836 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-04 09:47:43,926 - app.main - INFO - GET /api/v1/suppliers
+2026-08-04 09:47:43,929 - app.main - INFO - GET /api/v1/users
+2026-08-04 09:47:44,130 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-04 09:47:44,194 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-04 09:48:05,674 - app.main - INFO - POST /api/v1/auth/logout
+2026-08-04 09:48:05,814 - app.main - INFO - POST /api/v1/auth/logout -> 200
+2026-08-04 09:48:27,283 - app.main - INFO - POST /api/v1/auth/login
+2026-08-04 09:48:28,032 - app.main - INFO - POST /api/v1/auth/login -> 200
+2026-08-04 09:48:28,048 - app.main - INFO - GET /api/v1/auth/me
+2026-08-04 09:48:28,100 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-04 09:48:28,183 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-04 09:48:28,186 - app.main - INFO - GET /api/v1/projects
+2026-08-04 09:48:28,188 - app.main - INFO - GET /api/v1/templates
+2026-08-04 09:48:28,337 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-04 09:48:28,358 - app.main - INFO - GET /api/v1/templates
+2026-08-04 09:48:28,489 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-04 09:48:28,517 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-04 09:48:28,830 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-04 09:50:14,288 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-04 09:50:14,292 - app.main - INFO - GET /api/v1/documents
+2026-08-04 09:50:14,409 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-04 09:50:14,431 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-04 09:50:14,461 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-04 09:50:14,518 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-04 09:51:06,627 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-04 09:51:31,131 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-04 09:52:31,160 - app.application.services.ollama_mapping_service - WARNING - Ollama local service unavailable at http://localhost:11434: . Using fallback matching engine.
+2026-08-04 09:52:31,169 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-04 10:37:57,474 - app.main - INFO - GET /api/v1/auth/me
+2026-08-04 10:37:57,478 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-04 10:37:57,481 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-04 10:37:57,491 - app.main - INFO - GET /api/v1/auth/me
+2026-08-04 10:37:57,494 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-04 10:37:57,495 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-04 10:37:57,538 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-04 10:37:57,603 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-04 10:37:57,637 - app.main - INFO - GET /api/v1/auth/me
+2026-08-04 10:37:57,675 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-04 10:37:57,685 - app.main - INFO - GET /api/v1/auth/me
+2026-08-04 10:37:57,729 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-04 10:37:57,832 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-04 10:37:57,840 - app.main - INFO - GET /api/v1/documents
+2026-08-04 10:37:57,842 - app.main - INFO - GET /api/v1/templates
+2026-08-04 10:37:57,946 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-04 10:37:57,970 - app.main - INFO - GET /api/v1/templates
+2026-08-04 10:37:57,989 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-04 10:37:57,992 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-04 10:37:58,007 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-04 10:37:58,081 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-04 10:37:58,103 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-04 10:38:32,536 - app.main - INFO - GET /api/v1/auth/me
+2026-08-04 10:38:32,594 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-04 10:38:32,617 - app.main - INFO - GET /api/v1/auth/me
+2026-08-04 10:38:32,668 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-04 10:38:32,721 - app.main - INFO - GET /api/v1/templates
+2026-08-04 10:38:32,772 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-04 10:38:32,783 - app.main - INFO - GET /api/v1/templates
+2026-08-04 10:38:32,816 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-04 10:38:33,024 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-04 10:38:33,026 - app.main - INFO - GET /api/v1/projects
+2026-08-04 10:38:33,382 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-04 10:38:33,670 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-04 10:38:35,871 - app.main - INFO - GET /api/v1/projects
+2026-08-04 10:38:35,979 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-04 10:38:42,991 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-04 10:38:42,992 - app.main - INFO - GET /api/v1/documents
+2026-08-04 10:38:43,062 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-04 10:38:43,075 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-04 10:38:43,080 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-04 10:38:43,121 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-04 10:38:55,589 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-04 10:39:16,631 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-04 10:40:16,660 - app.application.services.ollama_mapping_service - WARNING - Ollama local service unavailable at http://localhost:11434: . Using fallback matching engine.
+2026-08-04 10:40:16,669 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-04 10:47:30,359 - app.main - INFO - Shutting down CMF Platform API
+2026-08-04 10:47:40,354 - app.main - INFO - Starting CMF Platform API
+2026-08-04 10:47:40,377 - app.main - INFO - Database tables created (SQLite)
+2026-08-04 10:48:14,971 - app.main - INFO - Shutting down CMF Platform API
+2026-08-04 10:48:21,213 - app.main - INFO - Starting CMF Platform API
+2026-08-04 10:48:21,233 - app.main - INFO - Database tables created (SQLite)
+2026-08-04 10:49:10,887 - app.main - INFO - Shutting down CMF Platform API
+2026-08-04 10:49:18,277 - app.main - INFO - Starting CMF Platform API
+2026-08-04 10:49:18,291 - app.main - INFO - Database tables created (SQLite)
+2026-08-04 10:49:23,562 - app.main - INFO - Shutting down CMF Platform API
+2026-08-04 10:49:29,887 - app.main - INFO - Starting CMF Platform API
+2026-08-04 10:49:29,903 - app.main - INFO - Database tables created (SQLite)
+2026-08-04 10:49:40,764 - app.main - INFO - GET /api/v1/documents
+2026-08-04 10:49:41,268 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-04 10:51:13,202 - app.main - INFO - Shutting down CMF Platform API
+2026-08-04 10:51:18,232 - app.main - INFO - Starting CMF Platform API
+2026-08-04 10:51:18,245 - app.main - INFO - Database tables created (SQLite)
+2026-08-04 10:57:29,578 - app.main - INFO - GET /api/v1/auth/me
+2026-08-04 10:57:30,017 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-04 10:57:30,033 - app.main - INFO - GET /api/v1/auth/me
+2026-08-04 10:57:30,090 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-04 10:57:30,322 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-04 10:57:30,347 - app.main - INFO - GET /api/v1/documents
+2026-08-04 10:57:30,366 - app.main - INFO - GET /api/v1/templates
+2026-08-04 10:57:30,568 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 2 published templates in 104.11 ms
+2026-08-04 10:57:30,600 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-04 10:57:30,637 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-04 10:57:30,722 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-04 10:57:30,753 - app.main - INFO - GET /api/v1/templates
+2026-08-04 10:57:30,764 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-04 10:57:30,807 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 2 published templates in 31.85 ms
+2026-08-04 10:57:30,815 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-04 10:57:30,853 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-04 10:57:53,529 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-04 10:57:54,558 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-04 10:57:54,972 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-04 10:58:55,009 - app.application.services.ollama_mapping_service - WARNING - Ollama request failed after 60430.01 ms: . Using fallback matching engine.
+2026-08-04 10:58:55,013 - app.application.services.ollama_mapping_service - INFO - Completed column mapping for template 'K9' (35 fields, 20 headers) in 61171.28 ms. Ollama Reachable: True, Active: False (Ollama Time: 60430.01 ms)
+2026-08-04 10:58:55,017 - app.api.v1.endpoints.import_endpoints - INFO - AI Semantic Mapping Complete for Template 'K9' in 61409.43 ms (Headers: 0.06 ms, Template Load: 234.76 ms, Ollama Call: 60430.01 ms)
+2026-08-04 10:58:55,020 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-04 11:01:50,609 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-04 11:01:50,611 - app.main - INFO - GET /api/v1/projects
+2026-08-04 11:01:50,927 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-04 11:01:51,331 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-04 11:01:54,621 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-04 11:01:54,623 - app.main - INFO - GET /api/v1/documents
+2026-08-04 11:01:54,703 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 2 published templates in 38.88 ms
+2026-08-04 11:01:54,706 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-04 11:01:54,722 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-04 11:01:54,745 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-04 11:01:54,779 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 2 published templates in 14.54 ms
+2026-08-04 11:01:54,784 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-04 11:02:02,011 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-04 11:02:02,362 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-04 11:02:02,671 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-04 11:03:02,683 - app.application.services.ollama_mapping_service - WARNING - Ollama request failed after 60311.30 ms: . Using fallback matching engine.
+2026-08-04 11:03:02,686 - app.application.services.ollama_mapping_service - INFO - Completed column mapping for template 'K9' (35 fields, 22 headers) in 60626.86 ms. Ollama Reachable: True, Active: False (Ollama Time: 60311.30 ms)
+2026-08-04 11:03:02,687 - app.api.v1.endpoints.import_endpoints - INFO - AI Semantic Mapping Complete for Template 'K9' in 60643.22 ms (Headers: 0.03 ms, Template Load: 15.19 ms, Ollama Call: 60311.30 ms)
+2026-08-04 11:03:02,695 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-04 11:03:31,427 - app.main - INFO - POST /api/v1/import/preview
+2026-08-04 11:03:31,498 - app.api.v1.endpoints.import_endpoints - INFO - Excel preview & validation for 'K9_Clean_Test_Template_v2.xlsx' completed in 44.51 ms (Total Rows: 0, Valid: 0, Errors: 0)
+2026-08-04 11:03:31,503 - app.main - INFO - POST /api/v1/import/preview -> 200
+2026-08-04 11:03:36,518 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-04 11:03:36,521 - app.main - INFO - GET /api/v1/projects
+2026-08-04 11:03:36,791 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-04 11:03:37,008 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-04 11:03:37,467 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-04 11:03:37,469 - app.main - INFO - GET /api/v1/documents
+2026-08-04 11:03:37,605 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 2 published templates in 40.73 ms
+2026-08-04 11:03:37,612 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-04 11:03:37,633 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-04 11:03:37,657 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-04 11:03:37,707 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 2 published templates in 16.15 ms
+2026-08-04 11:03:37,712 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-04 11:03:40,753 - app.main - INFO - GET /api/v1/projects
+2026-08-04 11:03:40,903 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-04 11:03:45,078 - app.main - INFO - GET /api/v1/projects/11251f87-f30a-4888-acbe-27ea1d7d2ca3
+2026-08-04 11:03:45,119 - app.main - INFO - GET /api/v1/projects/11251f87-f30a-4888-acbe-27ea1d7d2ca3 -> 200
+2026-08-04 11:03:45,163 - app.main - INFO - GET /api/v1/users
+2026-08-04 11:03:45,166 - app.main - INFO - GET /api/v1/suppliers
+2026-08-04 11:03:45,239 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-04 11:03:45,274 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-04 11:03:52,307 - app.main - INFO - GET /api/v1/projects/11251f87-f30a-4888-acbe-27ea1d7d2ca3
+2026-08-04 11:03:52,377 - app.main - INFO - GET /api/v1/projects/11251f87-f30a-4888-acbe-27ea1d7d2ca3 -> 200
+2026-08-04 11:04:13,579 - app.main - INFO - GET /api/v1/projects/11251f87-f30a-4888-acbe-27ea1d7d2ca3
+2026-08-04 11:04:13,632 - app.main - INFO - GET /api/v1/projects/11251f87-f30a-4888-acbe-27ea1d7d2ca3 -> 200
+2026-08-04 11:04:18,992 - app.main - INFO - GET /api/v1/projects/11251f87-f30a-4888-acbe-27ea1d7d2ca3
+2026-08-04 11:04:19,035 - app.main - INFO - GET /api/v1/projects/11251f87-f30a-4888-acbe-27ea1d7d2ca3 -> 200
+2026-08-04 11:04:21,828 - app.main - INFO - GET /api/v1/projects
+2026-08-04 11:04:21,942 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-04 11:04:29,064 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-04 11:04:29,066 - app.main - INFO - GET /api/v1/documents
+2026-08-04 11:04:29,154 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 2 published templates in 42.26 ms
+2026-08-04 11:04:29,165 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-04 11:04:29,186 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-04 11:04:29,190 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-04 11:04:29,256 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 2 published templates in 17.21 ms
+2026-08-04 11:04:29,262 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-04 11:04:36,503 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-04 11:04:36,811 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-04 11:04:37,137 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-04 11:05:37,179 - app.application.services.ollama_mapping_service - WARNING - Ollama request failed after 60355.18 ms: . Using fallback matching engine.
+2026-08-04 11:05:37,185 - app.application.services.ollama_mapping_service - INFO - Completed column mapping for template 'K9' (35 fields, 22 headers) in 60650.39 ms. Ollama Reachable: True, Active: False (Ollama Time: 60355.18 ms)
+2026-08-04 11:05:37,186 - app.api.v1.endpoints.import_endpoints - INFO - AI Semantic Mapping Complete for Template 'K9' in 60661.26 ms (Headers: 0.01 ms, Template Load: 8.95 ms, Ollama Call: 60355.18 ms)
+2026-08-04 11:05:37,195 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-04 11:05:50,850 - app.main - INFO - POST /api/v1/import/preview
+2026-08-04 11:05:50,951 - app.api.v1.endpoints.import_endpoints - INFO - Excel preview & validation for 'K9_Clean_Test_Template_v2.xlsx' completed in 34.67 ms (Total Rows: 0, Valid: 0, Errors: 0)
+2026-08-04 11:05:50,959 - app.main - INFO - POST /api/v1/import/preview -> 200
+2026-08-04 11:06:19,828 - app.main - INFO - POST /api/v1/import/execute
+2026-08-04 11:06:20,110 - app.api.v1.endpoints.import_endpoints - INFO - Excel import execution completed in 149.35 ms (Imported: 0, Updated: 0, Skipped: 0)
+2026-08-04 11:06:20,113 - app.main - INFO - POST /api/v1/import/execute -> 200
+2026-08-04 11:06:20,129 - app.main - INFO - POST /api/v1/import/save-mapping-memory
+2026-08-04 11:06:20,154 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:unique_id -> unique_id
+2026-08-04 11:06:20,155 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:apqp status -> apqp
+2026-08-04 11:06:20,156 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:part name -> part_name
+2026-08-04 11:06:20,156 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:part number -> part_number
+2026-08-04 11:06:20,158 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:supplier -> supplier_info
+2026-08-04 11:06:20,159 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:supplier name -> supplier_name
+2026-08-04 11:06:20,160 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:location -> production_location
+2026-08-04 11:06:20,160 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:buyer -> buyer
+2026-08-04 11:06:20,161 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:weekly capacity -> capacity
+2026-08-04 11:06:20,162 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:contracted capacity -> contracted_capacity
+2026-08-04 11:06:20,162 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:comments -> comments
+2026-08-04 11:06:20,164 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:sqe -> sqe
+2026-08-04 11:06:20,164 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:sqm -> sqm
+2026-08-04 11:06:20,167 - app.main - INFO - POST /api/v1/import/save-mapping-memory -> 200
+2026-08-04 11:06:26,384 - app.main - INFO - GET /api/v1/projects
+2026-08-04 11:06:26,502 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-04 11:06:30,061 - app.main - INFO - GET /api/v1/projects/02538987-be73-403d-bb40-84a52deb6722
+2026-08-04 11:06:30,120 - app.main - INFO - GET /api/v1/projects/02538987-be73-403d-bb40-84a52deb6722 -> 200
+2026-08-04 11:06:30,204 - app.main - INFO - GET /api/v1/suppliers
+2026-08-04 11:06:30,207 - app.main - INFO - GET /api/v1/users
+2026-08-04 11:06:30,400 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-04 11:06:30,439 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-04 11:07:04,870 - app.main - INFO - GET /api/v1/projects
+2026-08-04 11:07:05,018 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-04 11:07:06,083 - app.main - INFO - GET /api/v1/suppliers
+2026-08-04 11:07:06,090 - app.main - INFO - GET /api/v1/projects/02538987-be73-403d-bb40-84a52deb6722
+2026-08-04 11:07:06,165 - app.main - INFO - GET /api/v1/projects/02538987-be73-403d-bb40-84a52deb6722 -> 200
+2026-08-04 11:07:06,217 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-04 11:07:13,419 - app.main - INFO - GET /api/v1/projects
+2026-08-04 11:07:13,534 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-04 11:07:16,881 - app.main - INFO - GET /api/v1/projects/02538987-be73-403d-bb40-84a52deb6722
+2026-08-04 11:07:16,941 - app.main - INFO - GET /api/v1/projects/02538987-be73-403d-bb40-84a52deb6722 -> 200
+2026-08-04 11:07:31,932 - app.main - INFO - GET /api/v1/projects
+2026-08-04 11:07:32,038 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-04 11:07:34,707 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-04 11:07:34,709 - app.main - INFO - GET /api/v1/documents
+2026-08-04 11:07:34,845 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 2 published templates in 80.53 ms
+2026-08-04 11:07:34,856 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-04 11:07:34,873 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-04 11:07:34,886 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-04 11:07:34,924 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 2 published templates in 14.35 ms
+2026-08-04 11:07:34,927 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-04 11:07:56,912 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-04 11:07:57,417 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-04 11:07:57,745 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-04 11:08:57,783 - app.application.services.ollama_mapping_service - WARNING - Ollama request failed after 60352.88 ms: . Using fallback matching engine.
+2026-08-04 11:08:57,789 - app.application.services.ollama_mapping_service - INFO - Completed column mapping for template 'K9' (35 fields, 64 headers) in 60826.45 ms. Ollama Reachable: True, Active: False (Ollama Time: 60352.88 ms)
+2026-08-04 11:08:57,789 - app.api.v1.endpoints.import_endpoints - INFO - AI Semantic Mapping Complete for Template 'K9' in 60842.67 ms (Headers: 0.06 ms, Template Load: 14.98 ms, Ollama Call: 60352.88 ms)
+2026-08-04 11:08:57,793 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-04 11:09:22,410 - app.main - INFO - POST /api/v1/import/preview
+2026-08-04 11:09:22,495 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-04 11:09:22,496 - app.main - INFO - POST /api/v1/import/preview -> 401
+2026-08-04 11:09:22,510 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-04 11:09:22,583 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-04 11:09:22,604 - app.main - INFO - POST /api/v1/import/preview
+2026-08-04 11:09:45,934 - app.api.v1.endpoints.import_endpoints - INFO - Excel preview & validation for 'CMF_K9_SCV.xlsm' completed in 23275.97 ms (Total Rows: 0, Valid: 0, Errors: 0)
+2026-08-04 11:09:45,953 - app.main - INFO - POST /api/v1/import/preview -> 200
+2026-08-04 11:09:47,511 - app.main - INFO - GET /api/v1/projects
+2026-08-04 11:09:47,622 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-04 11:09:55,688 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-04 11:09:55,690 - app.main - INFO - GET /api/v1/documents
+2026-08-04 11:09:55,772 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 2 published templates in 21.37 ms
+2026-08-04 11:09:55,776 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-04 11:09:55,797 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-04 11:09:55,811 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-04 11:09:55,852 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 2 published templates in 13.33 ms
+2026-08-04 11:09:55,855 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-04 11:10:04,036 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-04 11:10:04,385 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-04 11:10:04,718 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-04 11:11:04,745 - app.application.services.ollama_mapping_service - WARNING - Ollama request failed after 60351.04 ms: . Using fallback matching engine.
+2026-08-04 11:11:04,755 - app.application.services.ollama_mapping_service - INFO - Completed column mapping for template 'K0' (66 fields, 64 headers) in 60670.10 ms. Ollama Reachable: True, Active: False (Ollama Time: 60351.04 ms)
+2026-08-04 11:11:04,758 - app.api.v1.endpoints.import_endpoints - INFO - AI Semantic Mapping Complete for Template 'K0' in 60688.66 ms (Headers: 0.06 ms, Template Load: 14.92 ms, Ollama Call: 60351.04 ms)
+2026-08-04 11:11:04,765 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-04 11:11:19,860 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-04 11:11:19,862 - app.main - INFO - GET /api/v1/documents
+2026-08-04 11:11:19,986 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 2 published templates in 43.80 ms
+2026-08-04 11:11:19,989 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-04 11:11:20,023 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-04 11:11:20,050 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-04 11:11:20,095 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 2 published templates in 16.25 ms
+2026-08-04 11:11:20,098 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-04 11:11:28,065 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-04 11:11:28,379 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-04 11:11:28,677 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-04 11:12:28,696 - app.application.services.ollama_mapping_service - WARNING - Ollama request failed after 60308.92 ms: . Using fallback matching engine.
+2026-08-04 11:12:28,701 - app.application.services.ollama_mapping_service - INFO - Completed column mapping for template 'K9' (35 fields, 64 headers) in 60597.81 ms. Ollama Reachable: True, Active: False (Ollama Time: 60308.92 ms)
+2026-08-04 11:12:28,702 - app.api.v1.endpoints.import_endpoints - INFO - AI Semantic Mapping Complete for Template 'K9' in 60611.26 ms (Headers: 0.05 ms, Template Load: 12.13 ms, Ollama Call: 60308.92 ms)
+2026-08-04 11:12:28,706 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-04 11:12:39,293 - app.main - INFO - POST /api/v1/import/preview
+2026-08-04 11:13:02,870 - app.api.v1.endpoints.import_endpoints - INFO - Excel preview & validation for 'CMF_K9_SCV.xlsm' completed in 23523.21 ms (Total Rows: 0, Valid: 0, Errors: 0)

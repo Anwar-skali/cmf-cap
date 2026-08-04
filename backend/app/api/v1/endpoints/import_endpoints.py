@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import io
 import json
+import logging
+import time
 import uuid
 from typing import Any
 
@@ -12,9 +14,15 @@ from pydantic import BaseModel
 
 from app.api.deps import get_current_active_user, get_unit_of_work
 from app.application.services.import_engine_service import ImportEngineService
+from app.application.services.template_context_service import TemplateContextService
+from app.application.services.excel_header_extractor import ExcelHeaderExtractor
+from app.application.services.ollama_mapping_service import OllamaMappingService
+from app.application.services.mapping_cache_service import MappingCacheService
 from app.domain.import_schema import ENTITY_IMPORT_SCHEMAS
 from app.infrastructure.persistence.models.user import User
 from app.infrastructure.persistence.unit_of_work import UnitOfWork
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api/v1/import", tags=["Excel Import Engine"])
 
@@ -50,6 +58,191 @@ async def get_import_schemas(
     ]
 
 
+@router.get("/import-templates", summary="Get available project templates for import selection")
+async def get_import_templates(
+    current_user: User = Depends(get_current_active_user),
+    uow: UnitOfWork = Depends(get_unit_of_work),
+) -> list[dict[str, Any]]:
+    """
+    Returns all published project templates (K0, K9, etc.) suitable for selection
+    at the start of the AI-powered import workflow.
+    """
+    from app.application.services.template_service import TemplateService
+    start_t = time.perf_counter()
+    svc = TemplateService(uow)
+    result = await svc.get_templates()
+    duration_ms = round((time.perf_counter() - start_t) * 1000, 2)
+    logger.info("Loaded %d published templates in %.2f ms", len(result.items), duration_ms)
+    return [
+        {
+            "id": str(t.id),
+            "code": t.code,
+            "name": t.name,
+            "description": t.description or "",
+            "version": t.version,
+            "status": t.status,
+        }
+        for t in result.items
+        if t.status == "PUBLISHED"
+    ]
+
+
+@router.post("/extract-headers", summary="Extract only column headers from an Excel file")
+async def extract_excel_headers(
+    file: UploadFile = File(...),
+    current_user: User = Depends(get_current_active_user),
+) -> dict[str, Any]:
+    """
+    Parses the uploaded Excel file and returns ONLY column headers.
+    No row data is read or retained. Safe for LLM usage.
+    """
+    start_t = time.perf_counter()
+    if not file.filename.endswith((".xlsx", ".xls", ".xlsm")):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid file format. Please upload an Excel file (.xlsx, .xls, .xlsm).",
+        )
+    contents = await file.read()
+    try:
+        headers = ExcelHeaderExtractor.extract_headers_from_bytes(contents)
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    
+    duration_ms = round((time.perf_counter() - start_t) * 1000, 2)
+    logger.info("Excel header extraction for '%s' completed in %.2f ms (%d headers)", file.filename, duration_ms, len(headers))
+    return {
+        "file_name": file.filename,
+        "header_count": len(headers),
+        "headers": headers,
+        "extraction_duration_ms": duration_ms,
+    }
+
+
+@router.post("/ollama-map", summary="AI semantic column mapping via local Ollama RAG")
+async def ollama_semantic_map(
+    template_identifier: str = Form(...),
+    headers_json: str = Form("[]"),
+    file: UploadFile | None = File(None),
+    current_user: User = Depends(get_current_active_user),
+    uow: UnitOfWork = Depends(get_unit_of_work),
+) -> dict[str, Any]:
+    """
+    Performs RAG-powered semantic mapping between Excel headers and template database fields.
+
+    Accepts:
+      - template_identifier: template code (e.g. 'K9') or UUID or entity_type (e.g. 'projects')
+      - headers_json: JSON-serialized list of Excel column header strings
+      - file (optional): if provided, extract headers from file instead of headers_json
+
+    Returns a mapping dict with confidence scores and source attribution.
+    """
+    total_start = time.perf_counter()
+    header_start = time.perf_counter()
+
+    # Resolve headers (prefer headers_json if provided to avoid re-reading file bytes)
+    excel_headers: list[str] = []
+    if headers_json and headers_json.strip() != "[]":
+        try:
+            excel_headers = json.loads(headers_json)
+            if not isinstance(excel_headers, list):
+                excel_headers = []
+        except Exception:
+            excel_headers = []
+
+    if not excel_headers and file is not None and file.filename:
+        contents = await file.read()
+        try:
+            excel_headers = ExcelHeaderExtractor.extract_headers_from_bytes(contents)
+        except Exception as e:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+
+    header_resolution_ms = round((time.perf_counter() - header_start) * 1000, 2)
+
+    if not excel_headers:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No Excel headers provided or found.")
+
+    # Build template context for RAG
+    tmpl_start = time.perf_counter()
+    ctx_svc = TemplateContextService(uow)
+    try:
+        template_context = await ctx_svc.get_template_context(template_identifier)
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Failed to resolve template: {e}")
+
+    template_loading_ms = round((time.perf_counter() - tmpl_start) * 1000, 2)
+
+    if not template_context.fields:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Template '{template_identifier}' has no field definitions to map against.",
+        )
+
+    # Run Ollama RAG mapping (with graceful fuzzy fallback)
+    ollama_svc = OllamaMappingService()
+    try:
+        result = await ollama_svc.generate_mapping(template_context, excel_headers)
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Mapping service error: {e}")
+
+    total_duration_ms = round((time.perf_counter() - total_start) * 1000, 2)
+
+    logger.info(
+        "AI Semantic Mapping Complete for Template '%s' in %.2f ms (Headers: %.2f ms, Template Load: %.2f ms, Ollama Call: %.2f ms)",
+        template_context.template_code,
+        total_duration_ms,
+        header_resolution_ms,
+        template_loading_ms,
+        result.get("ollama_response_time_ms", 0.0),
+    )
+
+    return {
+        "template_code": template_context.template_code,
+        "template_name": template_context.template_name,
+        "excel_headers": excel_headers,
+        "mapping": result["mapping"],
+        "prompt_used": result.get("prompt_used", ""),
+        "ollama_active": result.get("ollama_active", False),
+        "ollama_reachable": result.get("ollama_reachable", False),
+        "model": result.get("model", ""),
+        "execution_times": {
+            "header_resolution_ms": header_resolution_ms,
+            "template_loading_ms": template_loading_ms,
+            "ollama_response_time_ms": result.get("ollama_response_time_ms", 0.0),
+            "total_mapping_ms": total_duration_ms,
+        },
+        "field_definitions": [
+            {
+                "key": f.key,
+                "label": f.label,
+                "description": f.description,
+                "required": f.required,
+                "type": f.type,
+                "aliases": f.aliases,
+            }
+            for f in template_context.fields
+        ],
+    }
+
+
+@router.post("/save-mapping-memory", summary="Persist user-confirmed mapping memory")
+async def save_mapping_memory(
+    template_code: str = Form(...),
+    mapping_json: str = Form(...),
+    current_user: User = Depends(get_current_active_user),
+) -> dict[str, Any]:
+    """
+    Saves user-confirmed header-to-field mappings into mapping memory cache.
+    mapping_json format: {\"db_field_key\": \"Excel Header Name\", ...}
+    """
+    try:
+        mapping = json.loads(mapping_json)
+    except Exception:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid mapping_json payload.")
+
+    MappingCacheService.save_mapping_memory(template_code, mapping)
+    return {"success": True, "saved_count": len(mapping)}
+
+
 @router.get("/template/{entity_type}", summary="Download sample Excel template")
 async def download_template(
     entity_type: str,
@@ -81,10 +274,11 @@ async def preview_import(
     current_user: User = Depends(get_current_active_user),
     uow: UnitOfWork = Depends(get_unit_of_work),
 ) -> dict[str, Any]:
-    if not file.filename.endswith((".xlsx", ".xls")):
+    start_t = time.perf_counter()
+    if not file.filename.endswith((".xlsx", ".xls", ".xlsm")):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Invalid file format. Please upload an Excel file (.xlsx or .xls).",
+            detail="Invalid file format. Please upload an Excel file (.xlsx, .xls, .xlsm).",
         )
 
     contents = await file.read()
@@ -104,6 +298,16 @@ async def preview_import(
             entity_type=entity_type,
             custom_mapping=custom_mapping,
         )
+        duration_ms = round((time.perf_counter() - start_t) * 1000, 2)
+        report["preview_validation_ms"] = duration_ms
+        logger.info(
+            "Excel preview & validation for '%s' completed in %.2f ms (Total Rows: %d, Valid: %d, Errors: %d)",
+            file.filename,
+            duration_ms,
+            report.get("totalRows", 0),
+            report.get("validRowsCount", 0),
+            len(report.get("validationErrors", [])),
+        )
         return report
     except Exception as e:
         raise HTTPException(
@@ -121,6 +325,7 @@ async def execute_import(
     current_user: User = Depends(get_current_active_user),
     uow: UnitOfWork = Depends(get_unit_of_work),
 ) -> dict[str, Any]:
+    start_t = time.perf_counter()
     contents = await file.read()
     service = ImportEngineService(uow)
 
@@ -143,10 +348,17 @@ async def execute_import(
             user_id=current_user.id,
             user_email=current_user.email,
         )
+        duration_ms = round((time.perf_counter() - start_t) * 1000, 2)
+        logger.info(
+            "Excel import execution completed in %.2f ms (Imported: %d, Updated: %d, Skipped: %d)",
+            duration_ms,
+            result.get("importedCount", 0),
+            result.get("updatedCount", 0),
+            result.get("skippedCount", 0),
+        )
         return result
     except Exception as e:
-        import logging
-        logging.error("Exception during execute_import: %s", str(e), exc_info=True)
+        logger.error("Exception during execute_import: %s", str(e), exc_info=True)
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)
         )

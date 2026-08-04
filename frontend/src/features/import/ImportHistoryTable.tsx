@@ -66,8 +66,8 @@ export function ImportHistoryTable() {
                 </TableCell>
               </TableRow>
             ) : (
-              history.map((record) => (
-                <TableRow key={record.id}>
+              history.map((record, idx) => (
+                <TableRow key={`${record.id}-${idx}`}>
                   <TableCell className="text-xs font-medium">
                     {record.createdAt ? new Date(record.createdAt).toLocaleString() : '-'}
                   </TableCell>

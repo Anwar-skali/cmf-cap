@@ -104,7 +104,7 @@ export const TemplateManager: React.FC = () => {
   const handleCreateTemplate = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const code = newTemplateCode.toUpperCase().strip ? newTemplateCode.toUpperCase().trim() : newTemplateCode;
+      const code = newTemplateCode.toUpperCase().trim();
       const initialSchema = {
         code,
         name: newTemplateName,

@@ -29,20 +29,36 @@ class ImportEngineService:
         if not sheets:
             raise ValueError("The Excel file contains no worksheets.")
 
-        first_sheet = workbook[sheets[0]]
-        rows = list(first_sheet.iter_rows(values_only=True))
+        # Locate main data sheet and true header row among top 20 rows across all sheets
+        best_sheet_name = sheets[0]
+        best_rows: list[tuple[Any, ...]] = []
+        header_idx = 0
+        max_count = 0
 
-        if not rows:
+        for sheet_name in sheets:
+            ws = workbook[sheet_name]
+            sheet_rows = list(ws.iter_rows(values_only=True))
+            if not sheet_rows:
+                continue
+
+            for idx, r in enumerate(sheet_rows[:20]):
+                non_empty_count = len([c for c in r if c is not None and str(c).strip() != ""])
+                if non_empty_count > max_count:
+                    max_count = non_empty_count
+                    best_sheet_name = sheet_name
+                    best_rows = sheet_rows
+                    header_idx = idx
+
+        if not best_rows:
             return {"sheets": sheets, "headers": [], "rows": [], "total_rows": 0}
 
-        headers = [str(cell).strip() if cell is not None else "" for cell in rows[0]]
-        # Filter out empty trailing columns in header
+        header_row = best_rows[header_idx]
+        headers = [str(cell).strip() if cell is not None else "" for cell in header_row]
         while headers and headers[-1] == "":
             headers.pop()
 
         data_rows = []
-        for row in rows[1:]:
-            # Convert row tuple to list truncated/padded to match headers length
+        for row in best_rows[header_idx + 1:]:
             row_vals = list(row[: len(headers)])
             if len(row_vals) < len(headers):
                 row_vals.extend([None] * (len(headers) - len(row_vals)))
@@ -53,6 +69,7 @@ class ImportEngineService:
 
         return {
             "sheets": sheets,
+            "selected_sheet": best_sheet_name,
             "headers": headers,
             "rows": data_rows,
             "total_rows": len(data_rows),
@@ -89,6 +106,41 @@ class ImportEngineService:
 
         return mapping
 
+    async def _get_schema(self, entity_type: str) -> EntityImportSchema:
+        lower_type = entity_type.lower().strip()
+        if lower_type in ENTITY_IMPORT_SCHEMAS:
+            return ENTITY_IMPORT_SCHEMAS[lower_type]
+
+        # Resolve dynamic template (K9, K0, or custom template)
+        from app.application.services.template_context_service import TemplateContextService
+
+        ctx_svc = TemplateContextService(self._uow)
+        ctx = await ctx_svc.get_template_context(entity_type)
+        if not ctx.fields:
+            raise ValueError(f"Unsupported entity or template type: '{entity_type}'")
+
+        columns = []
+        for f in ctx.fields:
+            is_unique = f.key in ["unique_id", "code", "part_number", "id"]
+            columns.append(
+                ImportColumnSpec(
+                    key=f.key,
+                    label=f.label,
+                    required=f.required,
+                    type=f.type if f.type in ["string", "integer", "number", "date", "enum", "textarea", "text"] else "string",
+                    aliases=f.aliases,
+                    description=f.description,
+                    unique_key=is_unique,
+                )
+            )
+
+        return EntityImportSchema(
+            entity_type=ctx.template_code,
+            display_name=ctx.template_name,
+            columns=columns,
+            sample_rows=[],
+        )
+
     async def preview_and_validate(
         self,
         file_bytes: bytes,
@@ -100,10 +152,7 @@ class ImportEngineService:
         Parses the Excel file, validates header schema and row values,
         checks for duplicates, and produces a complete validation preview report.
         """
-        if entity_type not in ENTITY_IMPORT_SCHEMAS:
-            raise ValueError(f"Unsupported entity type: '{entity_type}'")
-
-        schema = ENTITY_IMPORT_SCHEMAS[entity_type]
+        schema = await self._get_schema(entity_type)
         parsed = self.parse_excel_file(file_bytes)
         headers = parsed["headers"]
         data_rows = parsed["rows"]
@@ -291,7 +340,7 @@ class ImportEngineService:
         parsed = self.parse_excel_file(file_bytes)
         data_rows = parsed["rows"]
         headers = parsed["headers"]
-        schema = ENTITY_IMPORT_SCHEMAS[entity_type]
+        schema = await self._get_schema(entity_type)
 
         imported_count = 0
         updated_count = 0
@@ -456,10 +505,7 @@ class ImportEngineService:
         self, entity_type: str, unique_key: str
     ) -> set[str]:
         keys: set[str] = set()
-        if entity_type == "projects":
-            projects = await self._uow.projects.get_multi(limit=5000)
-            keys = {p.code for p in projects if p.code}
-        elif entity_type == "suppliers":
+        if entity_type == "suppliers":
             suppliers = await self._uow.suppliers.get_multi(limit=5000)
             keys = {s.name for s in suppliers if s.name}
         elif entity_type == "parts":
@@ -468,6 +514,17 @@ class ImportEngineService:
         elif entity_type == "risks":
             risks = await self._uow.risks.get_multi(limit=5000)
             keys = {r.title for r in risks if r.title}
+        else:
+            projects = await self._uow.projects.get_multi(limit=5000)
+            keys = set()
+            for p in projects:
+                if p.code:
+                    keys.add(p.code)
+                if p.data and isinstance(p.data, dict):
+                    if p.data.get("unique_id"):
+                        keys.add(str(p.data.get("unique_id")))
+                    if p.data.get("code"):
+                        keys.add(str(p.data.get("code")))
         return keys
 
     async def _import_single_record(
@@ -481,20 +538,18 @@ class ImportEngineService:
         Inserts or updates a record depending on mode and existing presence.
         Returns tuple: (success: bool, is_update: bool)
         """
-        if entity_type == "projects":
-            code = record.get("code")
-            existing = await uow.projects.get_by_code(code) if code else None
-            if existing:
-                if mode == "upsert":
-                    await uow.projects.update(existing.id, record)
-                    return True, True
-                else:
-                    return False, False  # Skip in insert-only mode
-            else:
-                await uow.projects.create(record)
-                return True, False
-
-        elif entity_type == "suppliers":
+    async def _import_single_record(
+        self,
+        uow: UnitOfWork,
+        entity_type: str,
+        record: dict[str, Any],
+        mode: str,
+    ) -> tuple[bool, bool]:
+        """
+        Inserts or updates a record depending on mode and existing presence.
+        Returns tuple: (success: bool, is_update: bool)
+        """
+        if entity_type == "suppliers":
             name = record.get("name")
             existing = await uow.suppliers.get_by_name(name) if name else None
             if existing:
@@ -520,7 +575,6 @@ class ImportEngineService:
                 else:
                     return False, False  # Skip if invalid project code
             else:
-                # Fallback to first project if code was somehow omitted but not caught by validation
                 first_project = (await uow.projects.get_multi(limit=1))
                 if first_project:
                     project_id = first_project[0].id
@@ -529,9 +583,8 @@ class ImportEngineService:
                     return False, False
 
             existing = await uow.project_parts.get_by_part_number(part_number) if part_number else None
-            # If it already exists, verify it belongs to this project (optional, but good practice)
             if existing and existing.project_id != project_id:
-                existing = None # Treat as new part if it's in a different project
+                existing = None
 
             if existing:
                 if mode == "upsert":
@@ -557,7 +610,44 @@ class ImportEngineService:
                 await uow.risks.create(record)
                 return True, False
 
-        return False, False
+        else:
+            # Default to Project / Project Template
+            code = (
+                record.get("code")
+                or record.get("unique_id")
+                or record.get("part_number")
+                or f"PRJ-{uuid.uuid4().hex[:8].upper()}"
+            )
+            name = (
+                record.get("name")
+                or record.get("part_name")
+                or record.get("project_name")
+                or f"Project {code}"
+            )
+
+            tmpl = await uow.templates.get_by_code(entity_type.upper())
+
+            project_payload: dict[str, Any] = {
+                "code": str(code),
+                "name": str(name),
+                "description": record.get("description") or record.get("part_info"),
+                "notes": record.get("notes"),
+                "data": record,
+            }
+            if tmpl:
+                project_payload["template_id"] = tmpl.id
+                project_payload["template_version"] = tmpl.version
+
+            existing = await uow.projects.get_by_code(str(code))
+            if existing:
+                if mode == "upsert":
+                    await uow.projects.update(existing.id, project_payload)
+                    return True, True
+                else:
+                    return False, False
+            else:
+                await uow.projects.create(project_payload)
+                return True, False
 
     def _validate_and_coerce_type(
         self, val: Any, spec: ImportColumnSpec

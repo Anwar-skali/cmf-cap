@@ -201,23 +201,26 @@ export const K9ProjectView: React.FC<K9ProjectViewProps> = ({
         {section.groups?.map((group) => (
           <div
             key={group.id}
-            className="rounded-2xl border border-border bg-card p-5 shadow-xs space-y-4 transition-all duration-200"
+            className="rounded-xl border border-slate-300 dark:border-slate-700 bg-card p-5 space-y-4 transition-all duration-200 hover:border-blue-400/80 hover:shadow-xs group"
           >
-            <div className="border-b border-border/60 pb-2.5 flex items-center justify-between">
-              <div>
-                <h3 className="text-xs font-bold tracking-wider uppercase text-foreground flex items-center gap-2">
-                  <span>{group.name}</span>
-                </h3>
-                {group.description && (
-                  <p className="text-xs text-muted-foreground mt-0.5">{group.description}</p>
-                )}
+            <div className="border-b border-slate-200 dark:border-slate-800 pb-2.5 flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="h-2 w-2 rounded-full bg-blue-600 shrink-0" />
+                <div>
+                  <h3 className="text-sm font-bold text-foreground group-hover:text-blue-600 transition-colors">
+                    {group.name}
+                  </h3>
+                  {group.description && (
+                    <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">{group.description}</p>
+                  )}
+                </div>
               </div>
-              <span className="text-[10px] font-mono font-medium text-muted-foreground bg-muted px-2 py-0.5 rounded-md border border-border">
+              <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-0.5 rounded-full border border-slate-200 dark:border-slate-700">
                 {group.fields?.length || 0} fields
               </span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {group.fields?.map((field) => (
                 <FieldRenderer
                   key={field.id}

@@ -189,3 +189,95 @@ export async function downloadDocument(documentId: string, fileName: string): Pr
   document.body.removeChild(a);
   window.URL.revokeObjectURL(url);
 }
+
+// ─────────────────────────────────────────────
+// RAG / Ollama Import Workflow Types & API
+// ─────────────────────────────────────────────
+
+export interface ImportTemplate {
+  id: string;
+  code: string;
+  name: string;
+  description: string;
+  version: string;
+  status: string;
+}
+
+export interface FieldDefinition {
+  key: string;
+  label: string;
+  description: string;
+  required: boolean;
+  type: string;
+  aliases: string[];
+}
+
+export interface OllamaMappingItem {
+  excel: string | null;
+  confidence: number;
+  source: 'ollama_llm' | 'mapping_memory' | 'exact_match' | 'alias_match' | 'fuzzy_fallback' | 'none';
+}
+
+export interface OllamaExecutionTimes {
+  headerResolutionMs?: number;
+  templateLoadingMs?: number;
+  ollamaResponseTimeMs?: number;
+  totalMappingMs?: number;
+}
+
+export interface OllamaMappingResult {
+  templateCode: string;
+  templateName: string;
+  excelHeaders: string[];
+  mapping: Record<string, OllamaMappingItem>;
+  promptUsed: string;
+  ollamaActive: boolean;
+  ollamaReachable?: boolean;
+  executionTimes?: OllamaExecutionTimes;
+  model: string;
+  fieldDefinitions: FieldDefinition[];
+}
+
+export interface ExtractedHeaders {
+  fileName: string;
+  headerCount: number;
+  headers: string[];
+  extractionDurationMs?: number;
+}
+
+/** Fetch project templates available for import selection (K0, K9, etc.) */
+export async function getImportTemplates(): Promise<ImportTemplate[]> {
+  return api.get<ImportTemplate[]>('/import/import-templates');
+}
+
+/** Extract only Excel column headers from an uploaded file (no row data) */
+export async function extractExcelHeaders(file: File): Promise<ExtractedHeaders> {
+  const formData = new FormData();
+  formData.append('file', file);
+  return api.upload<ExtractedHeaders>('/import/extract-headers', formData);
+}
+
+/** Run RAG semantic mapping via local Ollama for given template + Excel headers */
+export async function generateOllamaMapping(
+  templateIdentifier: string,
+  excelHeaders: string[],
+  file?: File,
+): Promise<OllamaMappingResult> {
+  const formData = new FormData();
+  formData.append('template_identifier', templateIdentifier);
+  formData.append('headers_json', JSON.stringify(excelHeaders));
+  // Only attach file if headers are empty
+  if (file && excelHeaders.length === 0) formData.append('file', file);
+  return api.upload<OllamaMappingResult>('/import/ollama-map', formData);
+}
+
+/** Persist confirmed mapping to the server-side mapping memory cache */
+export async function saveMappingMemory(
+  templateCode: string,
+  mapping: Record<string, string>,
+): Promise<{ success: boolean; saved_count: number }> {
+  const formData = new FormData();
+  formData.append('template_code', templateCode);
+  formData.append('mapping_json', JSON.stringify(mapping));
+  return api.upload<{ success: boolean; saved_count: number }>('/import/save-mapping-memory', formData);
+}

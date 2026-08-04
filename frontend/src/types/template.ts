@@ -17,6 +17,7 @@ export type FieldType =
   | 'supplier'
   | 'project'
   | 'status'
+  | 'cat_status'
   | 'file_upload'
   | 'percentage'
   | 'calculated'

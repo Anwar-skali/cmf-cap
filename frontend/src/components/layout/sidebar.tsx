@@ -32,6 +32,19 @@ import {
 import { usePermissions } from '@/hooks/usePermissions';
 import { useLanguage } from '@/context/LanguageContext';
 
+interface SidebarNavItem {
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
+  path: string;
+  adminOnly?: boolean;
+  badge?: number;
+}
+
+interface SidebarNavGroup {
+  label?: string;
+  items: SidebarNavItem[];
+}
+
 export function Sidebar() {
   const { isCollapsed, toggle } = useSidebarStore();
   const { state } = useAuthStore();
@@ -39,7 +52,7 @@ export function Sidebar() {
   const { t } = useLanguage();
   const RoleIcon = roleMeta.icon;
 
-  const navGroups = [
+  const navGroups: SidebarNavGroup[] = [
     {
       items: [
         { label: t('nav.dashboard', 'Dashboard'), icon: LayoutDashboard, path: '/dashboard' },
