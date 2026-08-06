@@ -9,23 +9,68 @@ interface RequestOptions extends Omit<RequestInit, 'body'> {
   params?: Record<string, string | number | boolean | undefined>;
 }
 
-function parseApiError(errorBody: unknown): {
+export interface ParsedApiErrorDetails {
   message: string;
+  reason?: string;
   errors?: Record<string, string[]>;
-} {
+  validationErrors?: any[];
+  serializerErrors?: any;
+  requestPayload?: any;
+  fileInfo?: any;
+  selectedTemplate?: string;
+  mappingResult?: any;
+  stackTrace?: string;
+}
+
+function parseApiError(errorBody: unknown): ParsedApiErrorDetails {
   if (typeof errorBody === 'object' && errorBody !== null) {
     const body = errorBody as Record<string, unknown>;
+
+    // FastAPI's detail field
+    if (body.detail !== undefined) {
+      if (typeof body.detail === 'string') {
+        return { message: body.detail, reason: body.detail };
+      }
+      if (Array.isArray(body.detail)) {
+        const msgs = body.detail.map((d: any) => (typeof d === 'string' ? d : d.msg || JSON.stringify(d))).join('; ');
+        return { message: msgs, reason: msgs, validationErrors: body.detail };
+      }
+      if (typeof body.detail === 'object' && body.detail !== null) {
+        const d = body.detail as Record<string, any>;
+        return {
+          message: d.message || d.reason || 'An unexpected error occurred',
+          reason: d.reason || d.message,
+          validationErrors: d.validation_errors || d.validationErrors,
+          serializerErrors: d.serializer_errors || d.serializerErrors,
+          requestPayload: d.request_payload || d.requestPayload,
+          fileInfo: d.uploaded_file || d.file_info || d.fileInfo,
+          selectedTemplate: d.selected_template || d.selectedTemplate,
+          mappingResult: d.mapping_result || d.mappingResult,
+          stackTrace: d.stack_trace || d.stackTrace,
+        };
+      }
+    }
+
+    if (typeof body.message === 'string' || typeof body.reason === 'string') {
+      return {
+        message: (body.message as string) || (body.reason as string) || 'An unexpected error occurred',
+        reason: (body.reason as string) || (body.message as string),
+        errors: body.errors as Record<string, string[]> | undefined,
+        validationErrors: (body.validation_errors || body.validationErrors) as any[],
+        serializerErrors: body.serializer_errors || body.serializerErrors,
+        requestPayload: body.request_payload || body.requestPayload,
+        fileInfo: body.uploaded_file || body.file_info || body.fileInfo,
+        selectedTemplate: (body.selected_template || body.selectedTemplate) as string,
+        mappingResult: body.mapping_result || body.mappingResult,
+        stackTrace: (body.stack_trace || body.stackTrace) as string,
+      };
+    }
+
     if (typeof body.error === 'object' && body.error !== null) {
       const err = body.error as Record<string, unknown>;
       return {
         message: (err.message as string) || 'An unexpected error occurred',
         errors: err.details as Record<string, string[]> | undefined,
-      };
-    }
-    if (typeof body.message === 'string') {
-      return {
-        message: body.message,
-        errors: body.errors as Record<string, string[]> | undefined,
       };
     }
   }
@@ -154,11 +199,11 @@ class ApiClient {
 
     if (!response.ok) {
       const errorBody = await response.json().catch(() => ({}));
-      const { message, errors } = parseApiError(errorBody);
+      const parsed = parseApiError(errorBody);
       throw new ApiError(
-        message || `Request failed with status ${response.status}`,
+        parsed.message || `Request failed with status ${response.status}`,
         response.status,
-        errors,
+        parsed,
       );
     }
 
@@ -252,11 +297,11 @@ class ApiClient {
 
     if (!response.ok) {
       const errorBody = await response.json().catch(() => ({}));
-      const { message, errors } = parseApiError(errorBody);
+      const parsed = parseApiError(errorBody);
       throw new ApiError(
-        message || `Upload failed with status ${response.status}`,
+        parsed.message || `Upload failed with status ${response.status}`,
         response.status,
-        errors,
+        parsed,
       );
     }
 
@@ -272,13 +317,50 @@ interface TokenData {
 
 export class ApiError extends Error {
   statusCode: number;
+  /** Legacy generic field errors map */
   errors?: Record<string, string[]>;
+  /** Structured import-error details returned by the backend */
+  details?: ParsedApiErrorDetails;
 
-  constructor(message: string, statusCode: number, errors?: Record<string, string[]>) {
+  constructor(message: string, statusCode: number, details?: ParsedApiErrorDetails) {
     super(message);
     this.name = 'ApiError';
     this.statusCode = statusCode;
-    this.errors = errors;
+    this.details = details;
+    // back-compat: preserve .errors if present
+    this.errors = details?.errors;
+  }
+
+  get reason(): string | undefined {
+    return this.details?.reason;
+  }
+
+  get validationErrors(): any[] {
+    return this.details?.validationErrors ?? [];
+  }
+
+  get serializerErrors(): any {
+    return this.details?.serializerErrors;
+  }
+
+  get requestPayload(): any {
+    return this.details?.requestPayload;
+  }
+
+  get fileInfo(): any {
+    return this.details?.fileInfo;
+  }
+
+  get selectedTemplate(): string | undefined {
+    return this.details?.selectedTemplate;
+  }
+
+  get mappingResult(): any {
+    return this.details?.mappingResult;
+  }
+
+  get stackTrace(): string | undefined {
+    return this.details?.stackTrace;
   }
 }
 

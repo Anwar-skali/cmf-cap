@@ -34,9 +34,12 @@ export class OllamaMappingService {
     templateIdentifier: string,
     excelHeaders: string[],
     file?: File,
+    headerRow?: number,
+    sheetName?: string,
   ): Promise<OllamaMappingResult> {
-    return generateOllamaMapping(templateIdentifier, excelHeaders, file);
+    return generateOllamaMapping(templateIdentifier, excelHeaders, file, headerRow, sheetName);
   }
+
 
   /**
    * Converts the mapping result into a flat db_field_key -> excel_header dict

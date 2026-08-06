@@ -13,12 +13,44 @@ from openpyxl.utils import get_column_letter
 
 from app.domain.enums import ActivityAction
 from app.domain.import_schema import ENTITY_IMPORT_SCHEMAS, EntityImportSchema, ImportColumnSpec
+from app.application.services.data_normalizer import DataNormalizer, NormalizationResult
 from app.infrastructure.persistence.unit_of_work import UnitOfWork
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class ImportEngineService:
     def __init__(self, uow: UnitOfWork) -> None:
         self._uow = uow
+
+    @staticmethod
+    def _make_json_safe(record: dict[str, Any]) -> dict[str, Any]:
+        """Deep-convert a record dict to JSON-serializable primitives.
+
+        SQLAlchemy stores the 'data' column as JSON. Python types that
+        are not natively JSON-serializable (datetime.date, datetime.datetime,
+        Decimal) must be converted to strings before being passed to the ORM.
+        """
+        result: dict[str, Any] = {}
+        for k, v in record.items():
+            if isinstance(v, datetime):
+                result[k] = v.isoformat()
+            elif isinstance(v, date):
+                result[k] = v.isoformat()
+            elif isinstance(v, Decimal):
+                result[k] = float(v)
+            elif isinstance(v, dict):
+                result[k] = ImportEngineService._make_json_safe(v)
+            elif isinstance(v, list):
+                result[k] = [
+                    ImportEngineService._make_json_safe(i) if isinstance(i, dict)
+                    else (i.isoformat() if isinstance(i, (date, datetime)) else i)
+                    for i in v
+                ]
+            else:
+                result[k] = v
+        return result
 
     def parse_excel_file(self, file_bytes: bytes) -> dict[str, Any]:
         """
@@ -188,9 +220,9 @@ class ImportEngineService:
                 }
             )
 
-        # Step 3: Row-by-Row validation & internal duplicate check
+        # Step 3: Row-by-Row validation & duplicate detection
         unique_key_spec = next((c for c in schema.columns if c.unique_key), None)
-        seen_unique_values: set[str] = set()
+        seen_unique_values: dict[str, int] = {}  # clean_value -> first_seen_row_idx
 
         # Database existing unique values check
         existing_db_unique_values: set[str] = set()
@@ -201,61 +233,125 @@ class ImportEngineService:
 
         valid_rows_count = 0
         error_rows_set: set[int] = set()
+        duplicate_in_excel_set: set[int] = set()
+        duplicate_in_db_set: set[int] = set()
+        validation_error_rows_set: set[int] = set()
+
         preview_rows: list[dict[str, Any]] = []
+        normalization_warnings: list[dict[str, Any]] = []
 
         for row_idx, row_vals in enumerate(data_rows, start=1):
+            row_raw_dict: dict[str, Any] = {}
             row_dict: dict[str, Any] = {}
+            row_norm_details: dict[str, Any] = {}
             row_has_error = False
 
             # Convert row using column mapping
             for header, val in zip(headers, row_vals):
                 db_key = column_mapping.get(header)
                 if db_key:
-                    row_dict[db_key] = val
+                    row_raw_dict[db_key] = val
 
-            # Validate each schema column
+            # Normalize and Validate each schema column
             for col_spec in schema.columns:
-                val = row_dict.get(col_spec.key)
+                raw_val = row_raw_dict.get(col_spec.key)
+                excel_hdr = mapped_fields.get(col_spec.key, col_spec.label)
 
-                # Required check
-                if col_spec.required and (val is None or str(val).strip() == ""):
-                    validation_errors.append(
+                # Stage 1: Data Normalization
+                norm = DataNormalizer.normalize(raw_val, col_spec)
+
+                if norm.warning:
+                    normalization_warnings.append(
                         {
                             "row_index": row_idx,
                             "column_name": col_spec.label,
                             "field_key": col_spec.key,
-                            "raw_value": val,
-                            "error_type": "EmptyValue",
-                            "message": f"Field '{col_spec.label}' is mandatory.",
+                            "original_value": str(raw_val) if raw_val is not None else None,
+                            "warning": norm.warning,
                         }
                     )
-                    row_has_error = True
-                    continue
 
-                if val is None or str(val).strip() == "":
-                    continue
-
-                # Type checks
-                coerced_val, err_msg = self._validate_and_coerce_type(val, col_spec)
-                if err_msg:
-                    validation_errors.append(
-                        {
-                            "row_index": row_idx,
-                            "column_name": col_spec.label,
-                            "field_key": col_spec.key,
-                            "raw_value": str(val),
-                            "error_type": "InvalidDataType",
+                # Stage 2: Validation on Normalized Value
+                if norm.is_null:
+                    if col_spec.required:
+                        msg = f"Field '{col_spec.label}' is mandatory."
+                        validation_errors.append(
+                            {
+                                "row_index": row_idx,
+                                "column_name": col_spec.label,
+                                "field_key": col_spec.key,
+                                "raw_value": str(raw_val) if raw_val is not None else None,
+                                "error_type": "EmptyValue",
+                                "message": msg,
+                            }
+                        )
+                        row_has_error = True
+                        validation_error_rows_set.add(row_idx)
+                        row_norm_details[col_spec.key] = {
+                            "original": raw_val,
+                            "normalized": None,
+                            "status": "error",
+                            "message": msg,
+                        }
+                    else:
+                        row_dict[col_spec.key] = None
+                        row_norm_details[col_spec.key] = {
+                            "original": raw_val,
+                            "normalized": None,
+                            "status": "warning" if norm.warning else "valid",
+                            "message": norm.warning or "Normalized to NULL",
+                        }
+                else:
+                    coerced_val, err_msg = self._validate_and_coerce_type(norm.normalized_value, col_spec)
+                    if err_msg:
+                        validation_errors.append(
+                            {
+                                "row_index": row_idx,
+                                "column_name": col_spec.label,
+                                "field_key": col_spec.key,
+                                "raw_value": str(raw_val),
+                                "error_type": "InvalidDataType",
+                                "message": err_msg,
+                            }
+                        )
+                        row_has_error = True
+                        validation_error_rows_set.add(row_idx)
+                        row_norm_details[col_spec.key] = {
+                            "original": raw_val,
+                            "normalized": str(norm.normalized_value),
+                            "status": "error",
                             "message": err_msg,
                         }
-                    )
-                    row_has_error = True
-                else:
-                    row_dict[col_spec.key] = coerced_val
+                    else:
+                        row_dict[col_spec.key] = coerced_val
+                        norm_disp = coerced_val.isoformat() if isinstance(coerced_val, (date, datetime)) else coerced_val
+                        row_norm_details[col_spec.key] = {
+                            "original": raw_val,
+                            "normalized": norm_disp,
+                            "status": "valid",
+                            "message": "OK",
+                        }
 
-            # Unique key duplicate check
-            if unique_key_spec and unique_key_spec.key in row_dict:
+                logger.debug(
+                    "[NORM] Row %d | Excel Header: '%s' -> DB Field: '%s' (%s) | Original: %r | Normalized: %r | Result: %s | Reason: %s",
+                    row_idx,
+                    excel_hdr,
+                    col_spec.key,
+                    col_spec.type,
+                    raw_val,
+                    row_dict.get(col_spec.key),
+                    "ERROR" if row_norm_details[col_spec.key]["status"] == "error" else "OK",
+                    row_norm_details[col_spec.key]["message"],
+                )
+
+            # Stage 3: Duplicate detection (Excel file & Database)
+            if unique_key_spec and unique_key_spec.key in row_dict and row_dict[unique_key_spec.key] is not None:
                 u_val = str(row_dict[unique_key_spec.key]).strip()
-                if u_val in seen_unique_values:
+                clean_u_val = u_val.lower()
+
+                # Duplicate inside Excel file check
+                if clean_u_val in seen_unique_values:
+                    first_row = seen_unique_values[clean_u_val]
                     validation_errors.append(
                         {
                             "row_index": row_idx,
@@ -263,16 +359,29 @@ class ImportEngineService:
                             "field_key": unique_key_spec.key,
                             "raw_value": u_val,
                             "error_type": "DuplicateInFile",
-                            "message": f"Duplicate value '{u_val}' found in row {row_idx}.",
+                            "message": f"Duplicate value '{u_val}' found in Excel (first seen in row {first_row}).",
                         }
                     )
                     row_has_error = True
+                    duplicate_in_excel_set.add(row_idx)
                 else:
-                    seen_unique_values.add(u_val)
+                    seen_unique_values[clean_u_val] = row_idx
 
-                if u_val in existing_db_unique_values:
-                    # Mark as existing in database (can be updated in upsert mode)
+                # Duplicate against Database check
+                if clean_u_val in existing_db_unique_values:
                     row_dict["_exists_in_db"] = True
+                    validation_errors.append(
+                        {
+                            "row_index": row_idx,
+                            "column_name": unique_key_spec.label,
+                            "field_key": unique_key_spec.key,
+                            "raw_value": u_val,
+                            "error_type": "DuplicateInDatabase",
+                            "message": f"Value '{u_val}' already exists in database.",
+                        }
+                    )
+                    row_has_error = True
+                    duplicate_in_db_set.add(row_idx)
 
             if row_has_error:
                 error_rows_set.add(row_idx)
@@ -280,9 +389,14 @@ class ImportEngineService:
                 valid_rows_count += 1
 
             if len(preview_rows) < 100:
-                row_dict["_row_index"] = row_idx
-                row_dict["_has_error"] = row_has_error
-                preview_rows.append(row_dict)
+                preview_entry: dict[str, Any] = {}
+                for k, v in row_dict.items():
+                    preview_entry[k] = v.isoformat() if isinstance(v, (date, datetime)) else v
+                preview_entry["_row_index"] = row_idx
+                preview_entry["_has_error"] = row_has_error
+                preview_entry["norm_details"] = row_norm_details
+                preview_entry["_norm_details"] = row_norm_details
+                preview_rows.append(preview_entry)
 
         return {
             "entity_type": entity_type,
@@ -291,6 +405,9 @@ class ImportEngineService:
             "total_rows": len(data_rows),
             "valid_rows_count": valid_rows_count,
             "error_rows_count": len(error_rows_set),
+            "duplicate_in_excel_count": len(duplicate_in_excel_set),
+            "duplicate_in_db_count": len(duplicate_in_db_set),
+            "validation_errors_count": len(validation_error_rows_set),
             "headers": headers,
             "column_mapping": column_mapping,
             "available_schema_columns": [
@@ -303,6 +420,7 @@ class ImportEngineService:
                 for c in schema.columns
             ],
             "validation_errors": validation_errors,
+            "normalization_warnings": normalization_warnings,
             "preview_rows": preview_rows,
         }
 
@@ -322,6 +440,12 @@ class ImportEngineService:
         and history recording.
         """
         start_time = time.time()
+        logger.info("[IMPORT DEBUG] Starting execution for file '%s' with template '%s'", file_name, entity_type)
+        logger.info("[IMPORT DEBUG] Selected template: '%s'", entity_type)
+        logger.info("[IMPORT DEBUG] Uploaded filename: '%s' (%d bytes)", file_name, len(file_bytes))
+        logger.info("[IMPORT DEBUG] Mapped fields: %r", column_mapping)
+        logger.info("[IMPORT DEBUG] Import mode: '%s', strategy: '%s'", mode, strategy)
+
         preview = await self.preview_and_validate(
             file_bytes=file_bytes,
             file_name=file_name,
@@ -331,8 +455,15 @@ class ImportEngineService:
 
         validation_errors = preview["validation_errors"]
         has_errors = len(validation_errors) > 0
+        logger.info(
+            "[IMPORT DEBUG] Validation summary: Total Rows=%d, Valid=%d, Errors=%d",
+            preview.get("total_rows", 0),
+            preview.get("valid_rows_count", 0),
+            len(validation_errors),
+        )
 
         if strategy == "rollback_all" and has_errors:
+            logger.warning("[IMPORT DEBUG] Aborting import due to 'rollback_all' strategy with %d validation error(s)", len(validation_errors))
             raise ValueError(
                 f"Import aborted: {len(validation_errors)} error(s) detected and 'Rollback All' strategy was selected."
             )
@@ -341,62 +472,164 @@ class ImportEngineService:
         data_rows = parsed["rows"]
         headers = parsed["headers"]
         schema = await self._get_schema(entity_type)
+        unique_key_spec = next((c for c in schema.columns if c.unique_key), None)
+
+        logger.info("[IMPORT DEBUG] Rows detected: %d", len(data_rows))
+        logger.info("[IMPORT DEBUG] Headers detected: %r", headers)
+
+        # Categorize validation errors for row-level skip logic
+        excel_dup_map = {
+            err["row_index"]: err["message"]
+            for err in validation_errors
+            if err.get("error_type") == "DuplicateInFile" and err["row_index"] > 0
+        }
+        db_dup_map = {
+            err["row_index"]: err["message"]
+            for err in validation_errors
+            if err.get("error_type") == "DuplicateInDatabase" and err["row_index"] > 0
+        }
+        val_error_map = {
+            err["row_index"]: err["message"]
+            for err in validation_errors
+            if err.get("error_type") not in ("DuplicateInFile", "DuplicateInDatabase") and err["row_index"] > 0
+        }
 
         imported_count = 0
         updated_count = 0
         skipped_count = 0
         failed_count = 0
+        duplicate_in_excel_count = 0
+        duplicate_in_db_count = 0
+        validation_errors_count = 0
 
-        # Group error row indices
-        error_row_indices = {
-            err["row_index"]
-            for err in validation_errors
-            if err["row_index"] > 0
-        }
+        skipped_details: list[dict[str, Any]] = []
+        serializer_errors: list[dict[str, Any]] = []
 
+        # Runtime batch tracking for inserted unique keys
+        inserted_in_batch: set[str] = set()
+
+        logger.info("[IMPORT DEBUG] Database transaction: Starting transaction session...")
         async with self._uow as uow:
             for row_idx, row_vals in enumerate(data_rows, start=1):
-                if row_idx in error_row_indices:
+                # 1. Skip Duplicate in Excel file
+                if row_idx in excel_dup_map:
                     skipped_count += 1
+                    duplicate_in_excel_count += 1
+                    skipped_details.append({
+                        "row_index": row_idx,
+                        "reason": "Duplicate in Excel",
+                        "message": excel_dup_map[row_idx],
+                    })
                     continue
 
+                # 2. Skip Duplicate in Database (when mode == "insert")
+                if mode == "insert" and row_idx in db_dup_map:
+                    skipped_count += 1
+                    duplicate_in_db_count += 1
+                    skipped_details.append({
+                        "row_index": row_idx,
+                        "reason": "Already exists in database",
+                        "message": db_dup_map[row_idx],
+                    })
+                    continue
+
+                # 3. Skip General Validation Error
+                if row_idx in val_error_map:
+                    skipped_count += 1
+                    validation_errors_count += 1
+                    skipped_details.append({
+                        "row_index": row_idx,
+                        "reason": "Validation error",
+                        "message": val_error_map[row_idx],
+                    })
+                    continue
+
+                # Prepare row values
                 row_dict: dict[str, Any] = {}
                 for header, val in zip(headers, row_vals):
                     db_key = column_mapping.get(header)
                     if db_key:
                         row_dict[db_key] = val
 
-                # Coerce data types
+                # Coerce data types via DataNormalizer pipeline
                 coerced_row: dict[str, Any] = {}
                 for col_spec in schema.columns:
                     if col_spec.key in row_dict:
                         raw_val = row_dict[col_spec.key]
-                        if raw_val is not None and str(raw_val).strip() != "":
-                            c_val, _ = self._validate_and_coerce_type(
-                                raw_val, col_spec
-                            )
+                        norm = DataNormalizer.normalize(raw_val, col_spec)
+                        if not norm.is_null:
+                            c_val, err_msg = self._validate_and_coerce_type(norm.normalized_value, col_spec)
+                            if err_msg:
+                                serializer_errors.append({
+                                    "row_index": row_idx,
+                                    "field_key": col_spec.key,
+                                    "column_name": col_spec.label,
+                                    "raw_value": str(raw_val),
+                                    "error": err_msg,
+                                })
                             coerced_row[col_spec.key] = c_val
+                        else:
+                            coerced_row[col_spec.key] = None
 
+                # 4. Check runtime duplicate in current batch run
+                u_val_str = None
+                clean_u_val = None
+                if unique_key_spec and unique_key_spec.key in coerced_row and coerced_row[unique_key_spec.key] is not None:
+                    u_val_str = str(coerced_row[unique_key_spec.key]).strip()
+                    clean_u_val = u_val_str.lower()
+
+                if mode == "insert" and clean_u_val and clean_u_val in inserted_in_batch:
+                    skipped_count += 1
+                    duplicate_in_excel_count += 1
+                    skipped_details.append({
+                        "row_index": row_idx,
+                        "reason": "Duplicate in Excel",
+                        "message": f"Duplicate value '{u_val_str}' already inserted in current import batch.",
+                    })
+                    continue
+
+                # 5. Row-level isolated database operation (SAVEPOINT)
                 try:
-                    success, is_update = await self._import_single_record(
-                        uow=uow,
-                        entity_type=entity_type,
-                        record=coerced_row,
-                        mode=mode,
-                    )
+                    async with uow.session.begin_nested():
+                        success, is_update = await self._import_single_record(
+                            uow=uow,
+                            entity_type=entity_type,
+                            record=coerced_row,
+                            mode=mode,
+                        )
+
                     if success:
                         if is_update:
                             updated_count += 1
                         else:
                             imported_count += 1
+                            if clean_u_val:
+                                inserted_in_batch.add(clean_u_val)
                     else:
                         skipped_count += 1
+                        duplicate_in_db_count += 1
+                        skipped_details.append({
+                            "row_index": row_idx,
+                            "reason": "Already exists in database",
+                            "message": f"Record '{u_val_str or row_idx}' already exists in database.",
+                        })
+
                 except Exception as e:
+                    # SAVEPOINT automatically rolled back only this row's savepoint
                     failed_count += 1
+                    ser_err = {
+                        "row_index": row_idx,
+                        "error": str(e),
+                        "record": self._make_json_safe(coerced_row),
+                    }
+                    serializer_errors.append(ser_err)
+                    logger.error("[IMPORT DEBUG] Row %d isolated DB insertion error: %s", row_idx, str(e), exc_info=True)
                     if strategy == "rollback_all":
+                        logger.warning("[IMPORT DEBUG] Database transaction: Rolling back transaction due to row %d error", row_idx)
                         raise e
 
             duration_ms = int((time.time() - start_time) * 1000)
+            logger.info("[IMPORT DEBUG] Serializer errors count: %d", len(serializer_errors))
 
             # Record Audit Log
             await uow.activity_logs.create(
@@ -410,6 +643,8 @@ class ImportEngineService:
                         "entity_type": entity_type,
                         "imported_count": imported_count,
                         "updated_count": updated_count,
+                        "skipped_count": skipped_count,
+                        "failed_count": failed_count,
                         "total_rows": len(data_rows),
                         "user_email": user_email,
                     },
@@ -438,6 +673,15 @@ class ImportEngineService:
             )
 
             await uow.commit()
+            logger.info(
+                "[IMPORT DEBUG] Database transaction: Committed successfully (Imported: %d, Updated: %d, Skipped: %d, Failed: %d)",
+                imported_count,
+                updated_count,
+                skipped_count,
+                failed_count,
+            )
+
+        logger.info("[IMPORT DEBUG] Execution time: %d ms", duration_ms)
 
         return {
             "id": str(history_entry.id),
@@ -448,9 +692,14 @@ class ImportEngineService:
             "updated_count": updated_count,
             "skipped_count": skipped_count,
             "failed_count": failed_count,
+            "duplicate_in_excel_count": duplicate_in_excel_count,
+            "duplicate_in_db_count": duplicate_in_db_count,
+            "validation_errors_count": validation_errors_count,
+            "skipped_details": skipped_details[:50],
             "duration_ms": duration_ms,
-            "status": "completed",
-            "message": f"Successfully imported {imported_count} new and updated {updated_count} records.",
+            "status": "completed" if failed_count == 0 else "partial",
+            "serializer_errors": serializer_errors,
+            "message": f"Import completed: {imported_count} imported, {updated_count} updated, {skipped_count} skipped, {failed_count} failed.",
         }
 
     def generate_sample_template(self, entity_type: str) -> bytes:
@@ -507,37 +756,28 @@ class ImportEngineService:
         keys: set[str] = set()
         if entity_type == "suppliers":
             suppliers = await self._uow.suppliers.get_multi(limit=5000)
-            keys = {s.name for s in suppliers if s.name}
+            keys = {s.name.strip().lower() for s in suppliers if s.name}
         elif entity_type == "parts":
             parts = await self._uow.project_parts.get_multi(limit=5000)
-            keys = {pt.part_number for pt in parts if pt.part_number}
+            keys = {pt.part_number.strip().lower() for pt in parts if pt.part_number}
         elif entity_type == "risks":
             risks = await self._uow.risks.get_multi(limit=5000)
-            keys = {r.title for r in risks if r.title}
+            keys = {r.title.strip().lower() for r in risks if r.title}
         else:
             projects = await self._uow.projects.get_multi(limit=5000)
             keys = set()
             for p in projects:
                 if p.code:
-                    keys.add(p.code)
+                    keys.add(p.code.strip().lower())
                 if p.data and isinstance(p.data, dict):
                     if p.data.get("unique_id"):
-                        keys.add(str(p.data.get("unique_id")))
+                        keys.add(str(p.data.get("unique_id")).strip().lower())
                     if p.data.get("code"):
-                        keys.add(str(p.data.get("code")))
+                        keys.add(str(p.data.get("code")).strip().lower())
+                    if p.data.get("part_number"):
+                        keys.add(str(p.data.get("part_number")).strip().lower())
         return keys
 
-    async def _import_single_record(
-        self,
-        uow: UnitOfWork,
-        entity_type: str,
-        record: dict[str, Any],
-        mode: str,
-    ) -> tuple[bool, bool]:
-        """
-        Inserts or updates a record depending on mode and existing presence.
-        Returns tuple: (success: bool, is_update: bool)
-        """
     async def _import_single_record(
         self,
         uow: UnitOfWork,
@@ -632,13 +872,31 @@ class ImportEngineService:
                 "name": str(name),
                 "description": record.get("description") or record.get("part_info"),
                 "notes": record.get("notes"),
-                "data": record,
+                "data": self._make_json_safe(record),
             }
             if tmpl:
                 project_payload["template_id"] = tmpl.id
                 project_payload["template_version"] = tmpl.version
 
-            existing = await uow.projects.get_by_code(str(code))
+            code_str = str(code).strip()
+            existing = await uow.projects.get_by_code(code_str)
+            if not existing:
+                # Also check all projects in case code matches case-insensitively or is stored in data dict
+                all_projects = await uow.projects.get_multi(limit=5000)
+                clean_target = code_str.lower()
+                for p in all_projects:
+                    if p.code and p.code.strip().lower() == clean_target:
+                        existing = p
+                        break
+                    if p.data and isinstance(p.data, dict):
+                        if (
+                            str(p.data.get("unique_id", "")).strip().lower() == clean_target
+                            or str(p.data.get("code", "")).strip().lower() == clean_target
+                            or str(p.data.get("part_number", "")).strip().lower() == clean_target
+                        ):
+                            existing = p
+                            break
+
             if existing:
                 if mode == "upsert":
                     await uow.projects.update(existing.id, project_payload)
@@ -655,44 +913,47 @@ class ImportEngineService:
         if val is None:
             return None, None
 
+        field_type = (spec.type or "string").lower()
+
+        if field_type in ("string", "text", "textarea"):
+            val_str = val.isoformat() if isinstance(val, (datetime, date)) else str(val).strip()
+            return val_str, None
+
+        if isinstance(val, (datetime, date)):
+            d_val = val.date() if isinstance(val, datetime) else val
+            return d_val, None
+
         val_str = str(val).strip()
         if not val_str:
             return None, None
 
-        if spec.type == "string":
-            return val_str, None
-
-        elif spec.type == "integer":
+        elif field_type == "integer":
+            if isinstance(val, int) and not isinstance(val, bool):
+                return val, None
             try:
-                # Handle floats like 100.0 from excel
                 f_val = float(val_str)
                 return int(f_val), None
-            except ValueError:
+            except (ValueError, OverflowError):
                 return None, f"Expected integer number for '{spec.label}', got '{val_str}'"
 
-        elif spec.type == "number":
+        elif field_type == "number":
+            if isinstance(val, (int, float)) and not isinstance(val, bool):
+                return float(val), None
             try:
                 return float(val_str), None
-            except ValueError:
+            except (ValueError, OverflowError):
                 return None, f"Expected numeric value for '{spec.label}', got '{val_str}'"
 
-        elif spec.type == "enum":
+        elif field_type == "enum":
             clean_enum = val_str.lower().replace(" ", "_")
             if spec.enum_values and clean_enum not in spec.enum_values:
                 allowed = ", ".join(spec.enum_values)
                 return None, f"Invalid value '{val_str}'. Allowed values: {allowed}"
             return clean_enum, None
 
-        elif spec.type == "date":
-            if isinstance(val, (datetime, date)):
-                return (val.date() if isinstance(val, datetime) else val), None
-            # Parse string dates
-            for fmt in ("%Y-%m-%d", "%d/%m/%Y", "%m/%d/%Y", "%Y/%m/%d"):
-                try:
-                    dt = datetime.strptime(val_str, fmt)
-                    return dt.date(), None
-                except ValueError:
-                    continue
-            return None, f"Invalid date format for '{spec.label}'. Use YYYY-MM-DD."
+        elif field_type == "date":
+            # For date types, if DataNormalizer returned a date, it was already handled above.
+            # If it's a string here, it failed date normalization.
+            return None, f"Invalid date format for '{spec.label}'. Expected YYYY-MM-DD."
 
         return val_str, None

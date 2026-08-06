@@ -26,6 +26,14 @@ export interface ValidationError {
   message: string;
 }
 
+export interface NormalizationWarning {
+  rowIndex: number;
+  columnName: string;
+  fieldKey: string;
+  originalValue: string | null;
+  warning: string;
+}
+
 export interface ImportPreviewReport {
   entityType: string;
   entityDisplayName: string;
@@ -37,6 +45,7 @@ export interface ImportPreviewReport {
   columnMapping: Record<string, string | null>;
   availableSchemaColumns: ImportSchemaColumn[];
   validationErrors: ValidationError[];
+  normalizationWarnings?: NormalizationWarning[];
   previewRows: Record<string, any>[];
 }
 
@@ -49,6 +58,10 @@ export interface ImportExecutionResult {
   updatedCount: number;
   skippedCount: number;
   failedCount: number;
+  duplicateInExcelCount?: number;
+  duplicateInDbCount?: number;
+  validationErrorsCount?: number;
+  skippedDetails?: { rowIndex: number; reason: string; message: string }[];
   durationMs: number;
   status: string;
   message: string;
@@ -219,22 +232,51 @@ export interface OllamaMappingItem {
 }
 
 export interface OllamaExecutionTimes {
+  excelReadMs?: number;
+  promptBuildMs?: number;
+  ollamaResponseTimeMs?: number;
+  jsonParseMs?: number;
+  totalMappingMs?: number;
   headerResolutionMs?: number;
   templateLoadingMs?: number;
-  ollamaResponseTimeMs?: number;
-  totalMappingMs?: number;
+}
+
+export interface WorksheetScore {
+  sheetName: string;
+  score: number;
+  confidence: number; // 0 - 100%
+  populatedRows: number;
+  maxColumns: number;
+  keywordHits: number;
+  isDashboardName: boolean;
+  preview: string[];
+}
+
+export interface RowPreview {
+  rowNumber: number;
+  score: number;
+  confidence?: number;
+  nonEmptyCount: number;
+  preview: string[];
 }
 
 export interface OllamaMappingResult {
   templateCode: string;
   templateName: string;
   excelHeaders: string[];
+  sheetUsed?: string;
+  sheetConfidence?: number;
+  detectedHeaderRow?: number;
+  headerConfidence?: number;
+  rowPreviews?: RowPreview[];
+  sheetScores?: WorksheetScore[];
   mapping: Record<string, OllamaMappingItem>;
   promptUsed: string;
   ollamaActive: boolean;
   ollamaReachable?: boolean;
   executionTimes?: OllamaExecutionTimes;
   model: string;
+  fallbackReason?: string | null;
   fieldDefinitions: FieldDefinition[];
 }
 
@@ -242,7 +284,20 @@ export interface ExtractedHeaders {
   fileName: string;
   headerCount: number;
   headers: string[];
+  sheetUsed?: string;
+  sheetConfidence?: number;
+  detectedHeaderRow?: number;
+  headerConfidence?: number;
+  sheetScores?: WorksheetScore[];
+  rowPreviews?: RowPreview[];
   extractionDurationMs?: number;
+}
+
+export interface WorkbookScanResult {
+  fileName: string;
+  sheets: WorksheetScore[];
+  detectedSheet: string;
+  scanDurationMs?: number;
 }
 
 /** Fetch project templates available for import selection (K0, K9, etc.) */
@@ -250,10 +305,23 @@ export async function getImportTemplates(): Promise<ImportTemplate[]> {
   return api.get<ImportTemplate[]>('/import/import-templates');
 }
 
-/** Extract only Excel column headers from an uploaded file (no row data) */
-export async function extractExcelHeaders(file: File): Promise<ExtractedHeaders> {
+/** Scan workbook sheets before header extraction */
+export async function scanWorkbook(file: File): Promise<WorkbookScanResult> {
   const formData = new FormData();
   formData.append('file', file);
+  return api.upload<WorkbookScanResult>('/import/scan-workbook', formData);
+}
+
+/** Extract only Excel column headers from an uploaded file (no row data) */
+export async function extractExcelHeaders(
+  file: File,
+  headerRow?: number,
+  sheetName?: string,
+): Promise<ExtractedHeaders> {
+  const formData = new FormData();
+  formData.append('file', file);
+  if (headerRow != null) formData.append('header_row', String(headerRow));
+  if (sheetName) formData.append('sheet_name', sheetName);
   return api.upload<ExtractedHeaders>('/import/extract-headers', formData);
 }
 
@@ -262,10 +330,14 @@ export async function generateOllamaMapping(
   templateIdentifier: string,
   excelHeaders: string[],
   file?: File,
+  headerRow?: number,
+  sheetName?: string,
 ): Promise<OllamaMappingResult> {
   const formData = new FormData();
   formData.append('template_identifier', templateIdentifier);
   formData.append('headers_json', JSON.stringify(excelHeaders));
+  if (headerRow != null) formData.append('header_row', String(headerRow));
+  if (sheetName) formData.append('sheet_name', sheetName);
   // Only attach file if headers are empty
   if (file && excelHeaders.length === 0) formData.append('file', file);
   return api.upload<OllamaMappingResult>('/import/ollama-map', formData);
@@ -281,3 +353,4 @@ export async function saveMappingMemory(
   formData.append('mapping_json', JSON.stringify(mapping));
   return api.upload<{ success: boolean; saved_count: number }>('/import/save-mapping-memory', formData);
 }
+

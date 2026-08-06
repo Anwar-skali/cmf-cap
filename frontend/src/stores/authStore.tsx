@@ -95,23 +95,48 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const token = localStorage.getItem(TOKEN_KEY);
-    if (token) {
-      authApi.getMe()
-        .then((user) => {
-          dispatch({
-            type: 'AUTH_SUCCESS',
-            payload: {
-              user,
-              accessToken: localStorage.getItem(TOKEN_KEY) ?? '',
-              refreshToken: localStorage.getItem(REFRESH_TOKEN_KEY) ?? '',
-            },
-          });
-        })
-        .catch(() => {
-          clearTokens();
-          dispatch({ type: 'LOGOUT' });
+    if (!token) return;
+
+    authApi.getMe()
+      .then((user) => {
+        dispatch({
+          type: 'AUTH_SUCCESS',
+          payload: {
+            user,
+            accessToken: localStorage.getItem(TOKEN_KEY) ?? '',
+            refreshToken: localStorage.getItem(REFRESH_TOKEN_KEY) ?? '',
+          },
         });
-    }
+      })
+      .catch(async (err: any) => {
+        const status = err?.statusCode ?? err?.status ?? 0;
+        // Try to silently refresh if the access token is expired (401)
+        if (status === 401) {
+          const refreshToken = localStorage.getItem(REFRESH_TOKEN_KEY);
+          if (refreshToken) {
+            try {
+              const response = await authApi.refresh(refreshToken);
+              localStorage.setItem(TOKEN_KEY, response.accessToken);
+              localStorage.setItem(REFRESH_TOKEN_KEY, response.refreshToken);
+              const user = await authApi.getMe();
+              dispatch({
+                type: 'AUTH_SUCCESS',
+                payload: {
+                  user,
+                  accessToken: response.accessToken,
+                  refreshToken: response.refreshToken,
+                },
+              });
+              return;
+            } catch {
+              // Refresh also failed — fall through to logout
+            }
+          }
+        }
+        // Token is invalid/expired with no valid refresh — log out and redirect
+        clearTokens();
+        dispatch({ type: 'LOGOUT' });
+      });
   }, []);
 
   useEffect(() => {

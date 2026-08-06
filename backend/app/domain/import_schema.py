@@ -8,7 +8,8 @@ class ImportColumnSpec(BaseModel):
     key: str
     label: str
     required: bool = False
-    type: str = "string"  # string, integer, number, date, enum
+    nullable: bool = True          # if True, null-proxy values (TBD, N/A, …) become NULL silently
+    type: str = "string"           # string | integer | number | date | enum | textarea | text
     enum_values: list[str] | None = None
     aliases: list[str] = Field(default_factory=list)
     description: str | None = None

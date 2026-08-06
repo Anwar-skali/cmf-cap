@@ -14,14 +14,27 @@ from app.application.services.mapping_cache_service import MappingCacheService
 logger = logging.getLogger(__name__)
 
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
-OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3")
-OLLAMA_TIMEOUT = float(os.getenv("OLLAMA_TIMEOUT", "60.0"))
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.2:1b")
+OLLAMA_TIMEOUT = float(os.getenv("OLLAMA_TIMEOUT", "30.0"))
+
+
+def _build_ollama_timeout(timeout_seconds: float) -> httpx.Timeout:
+    """
+    Build an httpx.Timeout with configured read timeout for Ollama LLM generation.
+    """
+    return httpx.Timeout(
+        connect=5.0,
+        read=timeout_seconds,
+        write=15.0,
+        pool=5.0,
+    )
 
 
 class OllamaMappingService:
     """
-    RAG-powered LLM Service for semantic column mapping between Excel headers and database fields.
-    Uses local Ollama without sending any row data.
+    High-performance LLM Service for semantic column mapping using llama3.2:1b by default.
+    Reads ONLY Excel column headers (zero row data sent to LLM).
+    Makes a SINGLE request to Ollama with minimal tokens (<150 completion tokens).
     """
 
     def __init__(
@@ -33,22 +46,23 @@ class OllamaMappingService:
         self.ollama_url = ollama_url.rstrip("/")
         self.model = model
         self.timeout = timeout
+        logger.info("[OLLAMA] Configured timeout: %.1fs, default model: %s, url: %s", timeout, model, self.ollama_url)
 
     async def check_ollama_reachable(self, timeout: float = 2.0) -> bool:
         """
-        Fast health check to verify whether Ollama local service is up and responding.
+        Fast health check to verify whether local Ollama service is up.
         """
         try:
             async with httpx.AsyncClient(timeout=timeout) as client:
                 res = await client.get(f"{self.ollama_url}/api/tags")
                 return res.status_code == 200
         except Exception as e:
-            logger.warning("Ollama health check failed at %s: %s", self.ollama_url, str(e))
+            logger.warning("[OLLAMA] Health check failed at %s: %s", self.ollama_url, str(e))
             return False
 
     async def _get_available_model(self, client: httpx.AsyncClient) -> str:
         """
-        Attempts to verify if self.model exists, or falls back to an available model installed in Ollama.
+        Prefers llama3.2:1b or explicitly configured self.model over llama3:latest.
         """
         try:
             res = await client.get(f"{self.ollama_url}/api/tags")
@@ -57,96 +71,131 @@ class OllamaMappingService:
                 models = [m.get("name", "") for m in data.get("models", []) if m.get("name")]
                 if not models:
                     return self.model
-                # Direct match or prefix match
+
+                # 1. Direct match on configured model
                 for m in models:
                     if m == self.model or m.startswith(f"{self.model}:"):
                         return m
-                # Fallback to first available model if self.model not found
-                logger.info("Model '%s' not explicitly found in Ollama, using available model '%s'", self.model, models[0])
+
+                # 2. Try any llama3.2:1b variant
+                for m in models:
+                    if "llama3.2:1b" in m or "llama3.2-1b" in m:
+                        return m
+
+                # 3. Try any llama3.2 variant
+                for m in models:
+                    if "llama3.2" in m:
+                        return m
+
+                # 4. Return first available model if self.model not found
+                logger.info("[OLLAMA] Model '%s' not explicitly found, using installed model '%s'", self.model, models[0])
                 return models[0]
         except Exception as e:
-            logger.debug("Failed to query Ollama tags: %s", e)
+            logger.debug("[OLLAMA] Failed to query Ollama tags: %s", e)
         return self.model
 
     async def generate_mapping(
         self,
         template_context: TemplateContext,
         excel_headers: list[str],
+        excel_read_ms: float = 0.0,
     ) -> dict[str, Any]:
-        """
-        Executes RAG prompt on Ollama to map database fields to Excel headers.
-        Returns:
-        {
-            "mapping": {
-                "db_field_key": {
-                    "excel": "Excel Header Name" | None,
-                    "confidence": 0.95,
-                    "source": "ollama_llm" | "mapping_memory" | "fuzzy_fallback"
-                }
-            },
-            "prompt_used": str,
-            "ollama_active": bool,
-            "ollama_reachable": bool,
-            "ollama_response_time_ms": float,
-            "total_mapping_ms": float
-        }
-        """
         total_start = time.perf_counter()
         result_mapping: dict[str, Any] = {}
 
-        # 1. Check Ollama reachability fast
+        # 1. Debug input statistics
+        logger.info("[OLLAMA MAP] Template: '%s' (%s), Fields: %d, Headers: %d",
+                    template_context.template_code, template_context.template_name,
+                    len(template_context.fields), len(excel_headers))
+        logger.debug("[OLLAMA MAP] Fields sent to Ollama: %r",
+                     [f.key for f in template_context.fields])
+        logger.debug("[OLLAMA MAP] Excel headers passed in: %r", excel_headers)
+
+        # 2. Measure Prompt Build Time & Size
+        prompt_build_start = time.perf_counter()
+        prompt_text = self._build_rag_prompt(template_context, excel_headers)
+        prompt_build_ms = round((time.perf_counter() - prompt_build_start) * 1000, 2)
+        prompt_size = len(prompt_text)
+
+        # 3. Check Ollama reachability fast
         ollama_reachable = await self.check_ollama_reachable(timeout=2.0)
         ollama_active = False
+        fallback_reason: str | None = None
         ollama_response_text = ""
         ollama_response_time_ms = 0.0
+        target_model = self.model
+        prompt_tokens = 0
+        completion_tokens = 0
+        inference_time_ms = 0.0
 
-        # 2. Build RAG Prompt (only schema + field descriptions + Excel headers)
-        prompt_text = self._build_rag_prompt(template_context, excel_headers)
-
-        # 3. Attempt calling Ollama if reachable
-        if ollama_reachable:
+        # 4. Single Ollama Call (if reachable)
+        if not ollama_reachable:
+            fallback_reason = f"Ollama local service is not reachable at {self.ollama_url}. Switched to deterministic fuzzy mapping."
+            logger.warning("[OLLAMA MAP] %s", fallback_reason)
+        else:
             ollama_start = time.perf_counter()
             try:
-                async with httpx.AsyncClient(timeout=self.timeout) as client:
+                async with httpx.AsyncClient(timeout=_build_ollama_timeout(self.timeout)) as client:
                     target_model = await self._get_available_model(client)
                     res = await client.post(
                         f"{self.ollama_url}/api/generate",
                         json={
                             "model": target_model,
-                            "system": "You are an enterprise AI semantic column mapper. Output ONLY raw JSON matching the required target schema without markdown or conversational explanations.",
+                            "system": "Return ONLY valid JSON. No markdown. No explanations. No reasoning. No examples. No comments.",
                             "prompt": prompt_text,
                             "stream": False,
                             "format": "json",
                             "options": {
-                                "temperature": 0.1,
-                                "num_predict": 512,
+                                "temperature": 0.0,
+                                "top_p": 0.1,
+                                "num_predict": 150,
                             },
                             "keep_alive": "15m",
                         },
                     )
                     ollama_response_time_ms = round((time.perf_counter() - ollama_start) * 1000, 2)
                     if res.status_code == 200:
-                        ollama_active = True
                         data = res.json()
                         ollama_response_text = data.get("response", "")
-                        logger.info("Ollama AI mapping query succeeded in %.2f ms (Model: %s)", ollama_response_time_ms, target_model)
+                        prompt_tokens = data.get("prompt_eval_count", 0)
+                        completion_tokens = data.get("eval_count", 0)
+                        eval_duration_ns = data.get("eval_duration", 0)
+                        if eval_duration_ns > 0:
+                            inference_time_ms = round(eval_duration_ns / 1_000_000, 2)
+                        else:
+                            inference_time_ms = ollama_response_time_ms
+                        logger.info("[OLLAMA MAP] LLM Raw Response: %r", ollama_response_text[:500])
                     else:
-                        logger.warning("Ollama returned HTTP %s in %.2f ms: %s", res.status_code, ollama_response_time_ms, res.text)
+                        fallback_reason = f"Ollama returned HTTP status {res.status_code}: {res.text[:200]}"
+                        logger.warning("[OLLAMA MAP] %s", fallback_reason)
+            except httpx.TimeoutException:
+                ollama_response_time_ms = round((time.perf_counter() - ollama_start) * 1000, 2)
+                fallback_reason = f"Request to Ollama timed out after {self.timeout}s. Automatically switched to deterministic fuzzy mapping."
+                logger.warning("[OLLAMA MAP] %s", fallback_reason)
             except Exception as e:
                 ollama_response_time_ms = round((time.perf_counter() - ollama_start) * 1000, 2)
-                logger.warning("Ollama request failed after %.2f ms: %s. Using fallback matching engine.", ollama_response_time_ms, str(e))
-        else:
-            logger.warning("Ollama local service is not reachable at %s. Direct fallback matching will be used.", self.ollama_url)
+                fallback_reason = f"Ollama connection error: {e}. Switched to deterministic fuzzy mapping."
+                logger.warning("[OLLAMA MAP] %s", fallback_reason)
 
+        # 5. Measure JSON Parsing Time
+        json_parse_start = time.perf_counter()
         parsed_llm_mapping: dict[str, Any] = {}
-        if ollama_active and ollama_response_text:
-            parsed_llm_mapping = self._parse_json_from_llm(ollama_response_text)
+        if ollama_response_text:
+            field_keys = {f.key for f in template_context.fields}
+            parsed_llm_mapping = self._parse_json_from_llm(ollama_response_text, field_keys, set(excel_headers))
+            if not parsed_llm_mapping and not fallback_reason:
+                fallback_reason = "Ollama model returned an unparseable JSON format. Switched to deterministic fuzzy mapping."
+        json_parse_ms = round((time.perf_counter() - json_parse_start) * 1000, 2)
+        logger.debug("[OLLAMA MAP] JSON Parsed Result: %r", parsed_llm_mapping)
 
-        # 4. Synthesize final mapping combining Memory, Ollama RAG, and Fuzzy Fallback
+        # 6. Synthesize Final Mapping (Memory -> Single Ollama LLM -> Fuzzy Fallback)
+        llm_mapped_count = 0
+        conf_scores: dict[str, float] = {}
+
         for field in template_context.fields:
             field_key = field.key
 
-            # A. Check Memory
+            # A. Mapping Memory
             cached = None
             for hdr in excel_headers:
                 mem = MappingCacheService.get_cached_field(template_context.template_code, hdr)
@@ -160,38 +209,81 @@ class OllamaMappingService:
 
             if cached:
                 result_mapping[field_key] = cached
+                conf_scores[field_key] = 0.99
                 continue
 
-            # B. Check Ollama output
+            # B. Ollama LLM Match
             if field_key in parsed_llm_mapping:
                 llm_item = parsed_llm_mapping[field_key]
                 excel_col = llm_item.get("excel")
-                conf = float(llm_item.get("confidence", 0.90))
+                conf = float(llm_item.get("confidence", 0.95))
 
-                # Verify excel_col actually exists in uploaded excel_headers
-                matched_header = next((h for h in excel_headers if h.lower().strip() == str(excel_col).lower().strip()), None)
-                if matched_header:
-                    result_mapping[field_key] = {
-                        "excel": matched_header,
-                        "confidence": round(conf, 2),
-                        "source": "ollama_llm",
-                    }
-                    continue
+                if excel_col:
+                    matched_header = next((h for h in excel_headers if h.lower().strip() == str(excel_col).lower().strip()), None)
+                    if matched_header:
+                        result_mapping[field_key] = {
+                            "excel": matched_header,
+                            "confidence": round(conf, 2),
+                            "source": "ollama_llm",
+                        }
+                        conf_scores[field_key] = round(conf, 2)
+                        llm_mapped_count += 1
+                        continue
 
-            # C. Fallback Fuzzy & Semantic Matching Algorithm
-            fallback_match = self._fuzzy_fallback_match(field, excel_headers, used_headers=[v["excel"] for v in result_mapping.values() if v.get("excel")])
+            # C. Deterministic Fuzzy Fallback
+            fallback_match = self._fuzzy_fallback_match(
+                field,
+                excel_headers,
+                used_headers=[v["excel"] for v in result_mapping.values() if v.get("excel")],
+            )
             result_mapping[field_key] = fallback_match
+            conf_scores[field_key] = fallback_match.get("confidence", 0.0)
+
+        if llm_mapped_count > 0:
+            ollama_active = True
+            fallback_reason = None
+        else:
+            ollama_active = False
+            if not fallback_reason:
+                fallback_reason = "Ollama returned no valid field matches. Switched to deterministic fuzzy mapping."
 
         total_mapping_ms = round((time.perf_counter() - total_start) * 1000, 2)
+
+        # Log final mapping
         logger.info(
-            "Completed column mapping for template '%s' (%d fields, %d headers) in %.2f ms. Ollama Reachable: %s, Active: %s (Ollama Time: %.2f ms)",
-            template_context.template_code,
+            "[OLLAMA MAP] Final Mapping Summary (%d/%d fields mapped via LLM):\n%s",
+            llm_mapped_count,
             len(template_context.fields),
-            len(excel_headers),
+            "\n".join(
+                f"  {fk}: excel='{v.get('excel')}' conf={v.get('confidence')} src={v.get('source')}"
+                for fk, v in result_mapping.items()
+            ),
+        )
+
+        # 7. Log required metrics: Prompt size, Prompt tokens, Completion tokens, Inference time, JSON parse time
+        logger.info(
+            "\n==================== [OLLAMA LLM METRICS] ====================\n"
+            "  - Model:             %s\n"
+            "  - Prompt Size:       %d chars\n"
+            "  - Prompt Tokens:     %d\n"
+            "  - Completion Tokens: %d\n"
+            "  - Inference Time:    %.2f ms\n"
+            "  - JSON Parse Time:   %.2f ms\n"
+            "  - Excel Read Time:   %.2f ms\n"
+            "  - Total Mapping:     %.2f ms\n"
+            "  - LLM Mapped Fields: %d/%d (Active: %s)\n"
+            "==============================================================",
+            target_model,
+            prompt_size,
+            prompt_tokens,
+            completion_tokens,
+            inference_time_ms if inference_time_ms > 0 else ollama_response_time_ms,
+            json_parse_ms,
+            excel_read_ms,
             total_mapping_ms,
-            ollama_reachable,
+            llm_mapped_count,
+            len(template_context.fields),
             ollama_active,
-            ollama_response_time_ms,
         )
 
         return {
@@ -199,63 +291,117 @@ class OllamaMappingService:
             "prompt_used": prompt_text,
             "ollama_active": ollama_active,
             "ollama_reachable": ollama_reachable,
-            "ollama_response_time_ms": ollama_response_time_ms,
-            "total_mapping_ms": total_mapping_ms,
-            "model": self.model,
+            "execution_times": {
+                "excel_read_ms": excel_read_ms,
+                "prompt_build_ms": prompt_build_ms,
+                "ollama_response_time_ms": ollama_response_time_ms,
+                "json_parse_ms": json_parse_ms,
+                "total_mapping_ms": total_mapping_ms,
+                "inference_time_ms": inference_time_ms,
+            },
+            "metrics": {
+                "prompt_size_chars": prompt_size,
+                "prompt_tokens": prompt_tokens,
+                "completion_tokens": completion_tokens,
+                "inference_time_ms": inference_time_ms,
+                "json_parse_ms": json_parse_ms,
+            },
+            "model": target_model,
+            "fallback_reason": fallback_reason,
         }
 
     def _build_rag_prompt(self, template_context: TemplateContext, excel_headers: list[str]) -> str:
-        fields_text = template_context.to_rag_context_text()
-        headers_text = "\n".join([f"- {hdr}" for hdr in excel_headers])
+        """
+        Build ultra-compact prompt containing ONLY Excel headers, template fields, and optional descriptions.
+        """
+        field_specs = []
+        for f in template_context.fields:
+            desc_part = f" ({f.description})" if f.description else ""
+            field_specs.append(f"- key: {f.key}{desc_part}")
 
-        return f"""You are an enterprise CMF import assistant specializing in semantic column mapping.
+        fields_str = "\n".join(field_specs)
+        headers_str = "\n".join([f'- "{h}"' for h in excel_headers])
 
-{fields_text}
+        return f"""Target database fields:
+{fields_str}
 
-The uploaded Excel contains these column headers:
-{headers_text}
+Uploaded Excel headers:
+{headers_str}
 
-Instructions:
-Perform semantic matching between the available database target fields and the uploaded Excel columns based on header names, field labels, descriptions, and aliases.
-
-Return ONLY a valid JSON object matching this exact format:
-{{
-    "field_key_1": {{
-        "excel": "Matching Excel Column Name",
-        "confidence": 0.98
-    }},
-    "field_key_2": {{
-        "excel": "Matching Excel Column Name",
-        "confidence": 0.95
-    }}
-}}
-
-Rules:
-1. Do not include markdown codeblocks outside JSON if possible. Return raw JSON.
-2. Ensure confidence is a float between 0.00 and 1.00.
-3. Map every database field to the best corresponding Excel column header. If no matching column exists, set "excel": null and "confidence": 0.0.
+Return ONLY a valid raw JSON object mapping Excel headers to matching target field keys.
+No markdown. No explanations. No reasoning. No examples. No comments.
+Example format:
+{{"Supplier Name": "supplier_name", "Weekly Capacity": "weekly_capacity"}}
 """
 
-    def _parse_json_from_llm(self, text: str) -> dict[str, Any]:
+    def _parse_json_from_llm(
+        self, text: str, field_keys: set[str] | None = None, excel_headers: set[str] | None = None
+    ) -> dict[str, Any]:
         clean_text = text.strip()
-        # Remove ```json wrapper if present
         if "```" in clean_text:
             match = re.search(r"```(?:json)?\s*(\{[\s\S]*?\})\s*```", clean_text)
             if match:
                 clean_text = match.group(1)
 
+        parsed: Any = None
         try:
-            return json.loads(clean_text)
+            parsed = json.loads(clean_text)
         except Exception:
-            # Try finding first { and last }
             start = clean_text.find("{")
             end = clean_text.rfind("}")
             if start != -1 and end != -1:
                 try:
-                    return json.loads(clean_text[start : end + 1])
+                    parsed = json.loads(clean_text[start : end + 1])
                 except Exception:
                     pass
+
+        if not isinstance(parsed, dict):
             return {}
+
+        # Unwrap top-level wrapper objects if LLM wrapped output (e.g. {"mapping": {...}})
+        for wrapper_key in ["mapping", "mappings", "result", "columns", "column_mapping", "matches", "data"]:
+            if wrapper_key in parsed and isinstance(parsed[wrapper_key], dict):
+                parsed = parsed[wrapper_key]
+                break
+
+        keys_lower = {k.lower(): k for k in (field_keys or set())}
+        headers_lower = {h.lower(): h for h in (excel_headers or set())}
+
+        normalized: dict[str, Any] = {}
+        for k, v in parsed.items():
+            str_k = str(k).strip()
+            if isinstance(v, dict):
+                excel_col = v.get("excel") or v.get("column") or v.get("header") or v.get("matched_column")
+                conf = v.get("confidence") or v.get("score") or 0.95
+                field_key = v.get("field") or v.get("key") or str_k
+                normalized[str(field_key)] = {
+                    "excel": str(excel_col) if excel_col is not None else None,
+                    "confidence": float(conf),
+                }
+            elif isinstance(v, str):
+                str_v = str(v).strip()
+
+                # Check direction: {"Excel Header": "target_field_key"} vs {"target_field_key": "Excel Header"}
+                k_lower = str_k.lower()
+                v_lower = str_v.lower()
+
+                if keys_lower and v_lower in keys_lower:
+                    # Format: {"Excel Header": "target_field_key"}
+                    fk = keys_lower[v_lower]
+                    matched_hdr = headers_lower.get(k_lower, str_k)
+                    normalized[fk] = {"excel": matched_hdr, "confidence": 0.95}
+                elif keys_lower and k_lower in keys_lower:
+                    # Format: {"target_field_key": "Excel Header"}
+                    fk = keys_lower[k_lower]
+                    matched_hdr = headers_lower.get(v_lower, str_v)
+                    normalized[fk] = {"excel": matched_hdr, "confidence": 0.95}
+                else:
+                    # Fallback key-value
+                    normalized[str_k] = {"excel": str_v, "confidence": 0.95}
+            elif v is None:
+                normalized[str_k] = {"excel": None, "confidence": 0.0}
+
+        return normalized
 
     def _fuzzy_fallback_match(
         self, field: TemplateFieldSpec, headers: list[str], used_headers: list[str]
@@ -293,3 +439,5 @@ Rules:
             return {"excel": best_header, "confidence": best_conf, "source": "fuzzy_fallback"}
 
         return {"excel": None, "confidence": 0.0, "source": "none"}
+
+
