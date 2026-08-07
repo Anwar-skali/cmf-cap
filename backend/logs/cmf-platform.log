@@ -22333,3 +22333,532 @@ sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed
 2026-08-06 17:57:05,263 - app.main - INFO - GET /api/v1/projects/f29d1457-722a-446a-a834-512ac11b6a1f -> 200
 2026-08-06 17:59:48,816 - app.main - INFO - GET /api/v1/projects/f29d1457-722a-446a-a834-512ac11b6a1f
 2026-08-06 17:59:48,892 - app.main - INFO - GET /api/v1/projects/f29d1457-722a-446a-a834-512ac11b6a1f -> 200
+2026-08-06 21:55:34,796 - app.main - INFO - Starting CMF Platform API
+2026-08-06 21:55:34,808 - app.main - INFO - Database tables created (SQLite)
+2026-08-06 21:56:27,098 - app.main - INFO - GET /api/v1/auth/me
+2026-08-06 21:56:27,345 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-06 21:56:27,363 - app.main - INFO - GET /api/v1/auth/me
+2026-08-06 21:56:27,420 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-06 21:56:27,512 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-06 21:56:27,522 - app.main - INFO - GET /api/v1/templates
+2026-08-06 21:56:27,524 - app.main - INFO - GET /api/v1/documents
+2026-08-06 21:56:27,634 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 2 published templates in 51.36 ms
+2026-08-06 21:56:27,650 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-06 21:56:27,674 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-06 21:56:27,687 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-06 21:56:27,707 - app.main - INFO - GET /api/v1/templates
+2026-08-06 21:56:27,752 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-06 21:56:27,961 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 2 published templates in 167.47 ms
+2026-08-06 21:56:27,966 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-06 21:56:27,983 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-06 21:56:40,689 - app.main - INFO - POST /api/v1/auth/logout
+2026-08-06 21:56:40,777 - app.main - INFO - POST /api/v1/auth/logout -> 200
+2026-08-06 21:56:47,230 - app.main - INFO - POST /api/v1/auth/login
+2026-08-06 21:56:48,212 - app.main - INFO - POST /api/v1/auth/login -> 200
+2026-08-06 21:56:48,234 - app.main - INFO - GET /api/v1/auth/me
+2026-08-06 21:56:48,295 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-06 21:56:48,464 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-06 21:56:48,467 - app.main - INFO - GET /api/v1/projects
+2026-08-06 21:56:48,475 - app.main - INFO - GET /api/v1/templates
+2026-08-06 21:56:48,698 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-06 21:56:48,738 - app.main - INFO - GET /api/v1/templates
+2026-08-06 21:56:48,898 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-06 21:56:49,338 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-06 21:56:49,604 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-06 21:56:50,242 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-06 21:56:50,316 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 2 published templates in 13.95 ms
+2026-08-06 21:56:50,322 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-06 21:56:50,339 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-06 21:56:50,389 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 2 published templates in 16.05 ms
+2026-08-06 21:56:50,394 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-06 21:57:15,562 - app.main - INFO - GET /api/v1/projects
+2026-08-06 21:57:15,872 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-06 21:57:23,160 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-06 21:57:23,163 - app.main - INFO - GET /api/v1/documents
+2026-08-06 21:57:23,261 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 2 published templates in 30.95 ms
+2026-08-06 21:57:23,267 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-06 21:57:23,294 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-06 21:57:23,320 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-06 21:57:23,364 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 2 published templates in 17.06 ms
+2026-08-06 21:57:23,403 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-06 21:58:43,504 - app.main - INFO - GET /api/v1/auth/me
+2026-08-06 21:58:43,610 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-06 21:58:43,629 - app.main - INFO - GET /api/v1/auth/me
+2026-08-06 21:58:43,706 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-06 21:58:43,835 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-06 21:58:43,849 - app.main - INFO - GET /api/v1/documents
+2026-08-06 21:58:43,852 - app.main - INFO - GET /api/v1/templates
+2026-08-06 21:58:43,979 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 2 published templates in 39.52 ms
+2026-08-06 21:58:43,989 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-06 21:58:44,018 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-06 21:58:44,029 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-06 21:58:44,053 - app.main - INFO - GET /api/v1/templates
+2026-08-06 21:58:44,080 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-06 21:58:44,136 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 2 published templates in 26.15 ms
+2026-08-06 21:58:44,141 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-06 21:58:44,168 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-06 21:58:55,575 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-06 21:58:55,655 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Sheet: 'K9_Test' (90.0%) | Detected Header Row: 1 (90.0%) | Headers (22): ['Unique_ID', 'Supplier Name', 'Project', 'Buyer', 'Supplier', 'Country', 'Location', 'Part Number', 'Part Name', 'Commodity', 'Plant', 'Roadmap Volume', 'Weekly Capacity', 'Contracted Capacity', 'Available Capacity', 'Lead Time (Weeks)', 'GOR', 'APQP Status', 'SQE', 'SQM', 'Comments', 'Status']
+2026-08-06 21:58:55,692 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Normalized Headers: ['unique id', 'supplier name', 'project', 'buyer', 'supplier', 'country', 'location', 'part number', 'part name', 'commodity', 'plant', 'roadmap volume', 'weekly capacity', 'contracted capacity', 'available capacity', 'lead time (weeks)', 'gor', 'apqp status', 'sqe', 'sqm', 'comments', 'status']
+2026-08-06 21:58:55,695 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Fields sent to Ollama (35): ['unique_id', 'apqp', 'part_name', 'use_case', 'part_info', 'part_number', 'supplier_info', 'supplier_name', 'manufacturing_cofor', 'production_location', 'stakeholder', 'buyer', 'capacity', 'scr_link_docinfo', 'gst_no', 'contracted_capacity', 'fete', 'tko_fete_link_sharepoint', 'capacity_standard', 'fete_tko_letter_doc', 'technical_manager', 'k9_sck', 'cat1_forecast_date_cw', 'cat2_forecast_date', 'cat3_forecast_date', 'cat1_2_3_type', 'weekly_capacity_measured', 'estimated_target', 'cat_evaluation', 'shared_folder_link', 'comments', 'sqe', 'sqm', 'team', 'family_multiplier']
+2026-08-06 21:58:55,698 - app.application.services.ollama_mapping_service - INFO - [OLLAMA] Configured timeout: 30.0s, default model: llama3.2:1b, url: http://localhost:11434
+2026-08-06 21:58:55,702 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Template: 'K9' (CMF K9 Project Template), Fields: 35, Headers: 22
+2026-08-06 21:58:56,272 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-06 21:58:56,670 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-06 21:59:15,509 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2026-08-06 21:59:15,516 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] LLM Raw Response: '{"Unique_ID": "unique_id", "Supplier Name": "supplier_name", "Project": "project", "Buyer": "buyer", "Supplier": "supplier", "Country": "country", "Location": "location", "Part Number": "part_number", "Part Name": "part_name", "Commodity": "commodity", "Plant": "plant", "Roadmap Volume": "roadmap_volume", "Weekly Capacity": "weekly_capacity", "Contracted Capacity": "contracted_capacity", "Available Capacity": "available_capacity", "Lead Time (Weeks)": "lead_time_weeks", "GOR": "gor", "APQP Statu'
+2026-08-06 21:59:15,521 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Final Mapping Summary (0/35 fields mapped via LLM):
+  unique_id: excel='Unique_ID' conf=0.99 src=exact_match
+  apqp: excel='APQP Status' conf=0.85 src=fuzzy_fallback
+  part_name: excel='Part Name' conf=0.99 src=exact_match
+  use_case: excel='None' conf=0.0 src=none
+  part_info: excel='None' conf=0.0 src=none
+  part_number: excel='Part Number' conf=0.99 src=exact_match
+  supplier_info: excel='Supplier' conf=0.85 src=fuzzy_fallback
+  supplier_name: excel='Supplier Name' conf=0.99 src=exact_match
+  manufacturing_cofor: excel='None' conf=0.0 src=none
+  production_location: excel='Location' conf=0.85 src=fuzzy_fallback
+  stakeholder: excel='None' conf=0.0 src=none
+  buyer: excel='Buyer' conf=0.99 src=exact_match
+  capacity: excel='Weekly Capacity' conf=0.85 src=fuzzy_fallback
+  scr_link_docinfo: excel='None' conf=0.0 src=none
+  gst_no: excel='None' conf=0.0 src=none
+  contracted_capacity: excel='Contracted Capacity' conf=0.99 src=exact_match
+  fete: excel='None' conf=0.0 src=none
+  tko_fete_link_sharepoint: excel='None' conf=0.0 src=none
+  capacity_standard: excel='None' conf=0.0 src=none
+  fete_tko_letter_doc: excel='None' conf=0.0 src=none
+  technical_manager: excel='None' conf=0.0 src=none
+  k9_sck: excel='None' conf=0.0 src=none
+  cat1_forecast_date_cw: excel='None' conf=0.0 src=none
+  cat2_forecast_date: excel='None' conf=0.0 src=none
+  cat3_forecast_date: excel='None' conf=0.0 src=none
+  cat1_2_3_type: excel='None' conf=0.0 src=none
+  weekly_capacity_measured: excel='None' conf=0.0 src=none
+  estimated_target: excel='None' conf=0.0 src=none
+  cat_evaluation: excel='None' conf=0.0 src=none
+  shared_folder_link: excel='None' conf=0.0 src=none
+  comments: excel='Comments' conf=0.99 src=exact_match
+  sqe: excel='SQE' conf=0.99 src=exact_match
+  sqm: excel='SQM' conf=0.99 src=exact_match
+  team: excel='None' conf=0.0 src=none
+  family_multiplier: excel='None' conf=0.0 src=none
+2026-08-06 21:59:15,522 - app.application.services.ollama_mapping_service - INFO - 
+==================== [OLLAMA LLM METRICS] ====================
+  - Model:             llama3.2:1b
+  - Prompt Size:       2630 chars
+  - Prompt Tokens:     683
+  - Completion Tokens: 150
+  - Inference Time:    17393.90 ms
+  - JSON Parse Time:   0.14 ms
+  - Excel Read Time:   0.07 ms
+  - Total Mapping:     19819.99 ms
+  - LLM Mapped Fields: 0/35 (Active: False)
+==============================================================
+2026-08-06 21:59:15,524 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Final Mapping: {'unique_id': {'excel': 'Unique_ID', 'confidence': 0.99, 'source': 'exact_match'}, 'apqp': {'excel': 'APQP Status', 'confidence': 0.85, 'source': 'fuzzy_fallback'}, 'part_name': {'excel': 'Part Name', 'confidence': 0.99, 'source': 'exact_match'}, 'use_case': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'part_info': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'part_number': {'excel': 'Part Number', 'confidence': 0.99, 'source': 'exact_match'}, 'supplier_info': {'excel': 'Supplier', 'confidence': 0.85, 'source': 'fuzzy_fallback'}, 'supplier_name': {'excel': 'Supplier Name', 'confidence': 0.99, 'source': 'exact_match'}, 'manufacturing_cofor': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'production_location': {'excel': 'Location', 'confidence': 0.85, 'source': 'fuzzy_fallback'}, 'stakeholder': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'buyer': {'excel': 'Buyer', 'confidence': 0.99, 'source': 'exact_match'}, 'capacity': {'excel': 'Weekly Capacity', 'confidence': 0.85, 'source': 'fuzzy_fallback'}, 'scr_link_docinfo': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'gst_no': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'contracted_capacity': {'excel': 'Contracted Capacity', 'confidence': 0.99, 'source': 'exact_match'}, 'fete': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'tko_fete_link_sharepoint': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'capacity_standard': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'fete_tko_letter_doc': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'technical_manager': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'k9_sck': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'cat1_forecast_date_cw': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'cat2_forecast_date': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'cat3_forecast_date': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'cat1_2_3_type': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'weekly_capacity_measured': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'estimated_target': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'cat_evaluation': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'shared_folder_link': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'comments': {'excel': 'Comments', 'confidence': 0.99, 'source': 'exact_match'}, 'sqe': {'excel': 'SQE', 'confidence': 0.99, 'source': 'exact_match'}, 'sqm': {'excel': 'SQM', 'confidence': 0.99, 'source': 'exact_match'}, 'team': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'family_multiplier': {'excel': None, 'confidence': 0.0, 'source': 'none'}}
+2026-08-06 21:59:15,525 - app.api.v1.endpoints.import_endpoints - INFO - AI Semantic Mapping Complete for Template 'K9' in 19871.36 ms (Excel Read: 0.07 ms, Prompt Build: 0.19 ms, Ollama Call: 19221.08 ms, JSON Parse: 0.14 ms)
+2026-08-06 21:59:15,531 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-06 21:59:23,382 - app.main - INFO - POST /api/v1/import/preview
+2026-08-06 21:59:23,427 - app.api.v1.endpoints.import_endpoints - INFO - [IMPORT DEBUG] Preview request: file='K9_Clean_Test_Template_v2.xlsx' (5333 bytes), template='K9'
+2026-08-06 21:59:23,493 - app.api.v1.endpoints.import_endpoints - INFO - [IMPORT DEBUG] Preview completed in 64.97 ms (Total Rows: 1, Valid: 1, Errors: 0, Headers: ['Unique_ID', 'Supplier Name', 'Project', 'Buyer', 'Supplier'])
+2026-08-06 21:59:23,498 - app.main - INFO - POST /api/v1/import/preview -> 200
+2026-08-06 21:59:26,150 - app.main - INFO - POST /api/v1/import/execute
+2026-08-06 21:59:26,224 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Starting execution for file 'K9_Clean_Test_Template_v2.xlsx' with template 'K9'
+2026-08-06 21:59:26,227 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Selected template: 'K9'
+2026-08-06 21:59:26,230 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Uploaded filename: 'K9_Clean_Test_Template_v2.xlsx' (5333 bytes)
+2026-08-06 21:59:26,232 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Mapped fields: {'Unique_ID': 'unique_id', 'APQP Status': 'apqp', 'Part Name': 'part_name', 'Part Number': 'part_number', 'Supplier': 'supplier_info', 'Supplier Name': 'supplier_name', 'Location': 'production_location', 'Buyer': 'buyer', 'Weekly Capacity': 'capacity', 'Contracted Capacity': 'contracted_capacity', 'GOR': 'cat_evaluation', 'Comments': 'comments', 'SQE': 'sqe', 'SQM': 'sqm'}
+2026-08-06 21:59:26,234 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Import mode: 'insert', strategy: 'skip_invalid'
+2026-08-06 21:59:26,547 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Validation summary: Total Rows=1, Valid=1, Errors=0
+2026-08-06 21:59:26,577 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Rows detected: 1
+2026-08-06 21:59:26,578 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Headers detected: ['Unique_ID', 'Supplier Name', 'Project', 'Buyer', 'Supplier', 'Country', 'Location', 'Part Number', 'Part Name', 'Commodity', 'Plant', 'Roadmap Volume', 'Weekly Capacity', 'Contracted Capacity', 'Available Capacity', 'Lead Time (Weeks)', 'GOR', 'APQP Status', 'SQE', 'SQM', 'Comments', 'Status']
+2026-08-06 21:59:26,579 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Database transaction: Starting transaction session...
+2026-08-06 21:59:26,629 - app.application.services.import_engine_service - ERROR - [IMPORT DEBUG] Row 1 isolated DB insertion error: (sqlite3.IntegrityError) UNIQUE constraint failed: projects.code
+[SQL: INSERT INTO projects (id, code, name, description, status, priority, start_date, end_date, client_name, budget, currency, notes, buyer_id, sqd_id, capacity_manager_id, template_id, template_version, data, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('72b15b1038f74c979e9fa9106789cb8d', 'UID-0001', 'Brake Module', None, <ProjectStatus.DRAFT: 'draft'>, 0, None, None, None, None, 'EUR', None, None, None, None, '8de8d5bc47734b94b40de888fee4ff1b', '2.0', '{"unique_id": "UID-0001", "apqp": "Completed", "part_name": "Brake Module", "part_number": "PN-458721", "supplier_info": "Bosch", "supplier_name": "B ... (63 characters truncated) ... ", "capacity": 5200, "contracted_capacity": 5000, "cat_evaluation": "Green", "comments": "Ready for SOP", "sqe": "Alice Brown", "sqm": "Michael Lee"}', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 183, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 343, in _handle_exception
+    raise error
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 165, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 40, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 32, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 160, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 63, in _connection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: projects.code
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\import_engine_service.py", line 594, in execute_import
+    success, is_update = await self._import_single_record(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\import_engine_service.py", line 907, in _import_single_record
+    await uow.projects.create(project_payload)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\infrastructure\persistence\repositories\base.py", line 64, in create
+    await self._session.flush()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 786, in flush
+    await greenlet_spawn(self.sync_session.flush, objects=objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 203, in greenlet_spawn
+    result = context.switch(value)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4353, in flush
+    self._flush(objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4488, in _flush
+    with util.safe_reraise():
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 122, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4449, in _flush
+    flush_context.execute()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 465, in execute
+    rec.execute(self)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 641, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 94, in save_obj
+    _emit_insert_statements(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1234, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 183, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 343, in _handle_exception
+    raise error
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 165, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 40, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 32, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 160, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 63, in _connection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: projects.code
+[SQL: INSERT INTO projects (id, code, name, description, status, priority, start_date, end_date, client_name, budget, currency, notes, buyer_id, sqd_id, capacity_manager_id, template_id, template_version, data, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('72b15b1038f74c979e9fa9106789cb8d', 'UID-0001', 'Brake Module', None, <ProjectStatus.DRAFT: 'draft'>, 0, None, None, None, None, 'EUR', None, None, None, None, '8de8d5bc47734b94b40de888fee4ff1b', '2.0', '{"unique_id": "UID-0001", "apqp": "Completed", "part_name": "Brake Module", "part_number": "PN-458721", "supplier_info": "Bosch", "supplier_name": "B ... (63 characters truncated) ... ", "capacity": 5200, "contracted_capacity": 5000, "cat_evaluation": "Green", "comments": "Ready for SOP", "sqe": "Alice Brown", "sqm": "Michael Lee"}', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-08-06 21:59:26,662 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Serializer errors count: 1
+2026-08-06 21:59:26,704 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Database transaction: Committed successfully (Imported: 0, Updated: 0, Skipped: 0, Failed: 1)
+2026-08-06 21:59:26,706 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Execution time: 437 ms
+2026-08-06 21:59:26,707 - app.api.v1.endpoints.import_endpoints - INFO - [IMPORT DEBUG] Excel import execution completed in 483.31 ms (Imported: 0, Updated: 0, Skipped: 0)
+2026-08-06 21:59:26,713 - app.main - INFO - POST /api/v1/import/execute -> 200
+2026-08-06 21:59:26,735 - app.main - INFO - POST /api/v1/import/save-mapping-memory
+2026-08-06 21:59:26,781 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:unique_id -> unique_id
+2026-08-06 21:59:26,782 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:apqp status -> apqp
+2026-08-06 21:59:26,784 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:part name -> part_name
+2026-08-06 21:59:26,785 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:part number -> part_number
+2026-08-06 21:59:26,786 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:supplier -> supplier_info
+2026-08-06 21:59:26,788 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:supplier name -> supplier_name
+2026-08-06 21:59:26,789 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:location -> production_location
+2026-08-06 21:59:26,790 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:buyer -> buyer
+2026-08-06 21:59:26,791 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:weekly capacity -> capacity
+2026-08-06 21:59:26,792 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:contracted capacity -> contracted_capacity
+2026-08-06 21:59:26,794 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:gor -> cat_evaluation
+2026-08-06 21:59:26,796 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:comments -> comments
+2026-08-06 21:59:26,797 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:sqe -> sqe
+2026-08-06 21:59:26,799 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:sqm -> sqm
+2026-08-06 21:59:26,803 - app.main - INFO - POST /api/v1/import/save-mapping-memory -> 200
+2026-08-06 21:59:39,258 - app.main - INFO - GET /api/v1/projects
+2026-08-06 21:59:39,582 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-06 22:00:19,712 - app.main - INFO - DELETE /api/v1/projects/a4fb8c78-2f68-4710-96c3-00bcbce466a0
+2026-08-06 22:00:19,950 - app.main - INFO - DELETE /api/v1/projects/a4fb8c78-2f68-4710-96c3-00bcbce466a0 -> 200
+2026-08-06 22:00:19,974 - app.main - INFO - GET /api/v1/projects
+2026-08-06 22:00:20,203 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-06 22:00:20,222 - app.main - INFO - GET /api/v1/projects
+2026-08-06 22:00:20,543 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-06 22:00:22,847 - app.main - INFO - DELETE /api/v1/projects/d54ec47c-9149-4abd-b5a4-2c0994652056
+2026-08-06 22:00:23,053 - app.main - INFO - DELETE /api/v1/projects/d54ec47c-9149-4abd-b5a4-2c0994652056 -> 200
+2026-08-06 22:00:23,073 - app.main - INFO - GET /api/v1/projects
+2026-08-06 22:00:23,371 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-06 22:00:23,405 - app.main - INFO - GET /api/v1/projects
+2026-08-06 22:00:23,712 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-06 22:00:28,700 - app.main - INFO - GET /api/v1/auth/me
+2026-08-06 22:00:28,881 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-06 22:00:28,912 - app.main - INFO - GET /api/v1/auth/me
+2026-08-06 22:00:29,065 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-06 22:00:29,233 - app.main - INFO - GET /api/v1/projects
+2026-08-06 22:00:29,240 - app.main - INFO - GET /api/v1/templates
+2026-08-06 22:00:29,489 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-06 22:00:29,534 - app.main - INFO - GET /api/v1/templates
+2026-08-06 22:00:29,667 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-06 22:00:29,806 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-06 22:00:35,320 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-06 22:00:35,326 - app.main - INFO - GET /api/v1/documents
+2026-08-06 22:00:35,400 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 2 published templates in 30.19 ms
+2026-08-06 22:00:35,409 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-06 22:00:35,431 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-06 22:00:35,455 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-06 22:00:35,504 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 2 published templates in 19.30 ms
+2026-08-06 22:00:35,508 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-06 22:01:36,725 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-06 22:01:36,791 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Sheet: 'Curves datas (Données courbes)' (90.0%) | Detected Header Row: 1 (90.0%) | Headers (33): ['Project target date', 'Cumul', 'Forecast\r\nDate', 'Cumul', 'Completion date', 'Cumul', '', '', 'Project target date', 'Cumul', 'Forecast\r\nDate', 'Cumul', 'Completion date', 'Cumul', '', '', '', 'Cum', '', 'Cum', '', 'Cum', '', 'Cum', '', 'Cum', '', '202617', '0.5', '202624', '0.8', '202619', '1']
+2026-08-06 22:01:36,823 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Normalized Headers: ['project target date', 'cumul', 'forecast\r\ndate', 'cumul', 'completion date', 'cumul', '', '', 'project target date', 'cumul', 'forecast\r\ndate', 'cumul', 'completion date', 'cumul', '', '', '', 'cum', '', 'cum', '', 'cum', '', 'cum', '', 'cum', '', '202617', '0.5', '202624', '0.8', '202619', '1']
+2026-08-06 22:01:36,826 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Fields sent to Ollama (66): ['line_item', 'components_package_rfq', 'tazebao_id_dev_system_no', 'gst_source_package_number', 'part_number', 'part_name', 'comments', 'make_or_buy', 'other_platform_impacted', 'development_type', 'status_resourcing', 'original_vehicle_co_parts', 'supplier_name_co_parts', 'new_supplier_yn', 'nominated_supplier', 'manufacturing_cofor', 'supplier_location', 'ppm', 'commodity_buyer', 'program_buyer', 'gm_commodity', 'pur_manager', 'ga', 'pur_area', 'lead_engineer_hordain', 'e_port', 'tofas', 'eko', 'lfp_66_kwh', 'nmc_82_kwh', 'quantity_parts_per_vehicle', 'weekly_capacity_requested_gst', 'capacity_step_requested_gst', 'calculation_date_gst', 'weekly_capacity_requested_tko', 'capacity_step_requested_tko', 'scr_date_tko', 'scr_tko_link', 'weekly_capacity_latest_ltos', 'capacity_step_latest_ltos', 'date_latest_ltos', 'calculation_link', 'contracted_capacity', 'contracted_capacity_step', 'capacity_sizing_ok', 'new_scr_calculation_done', 'contracted_capacity_ok', 'capacity_comments', 'capacity_workshop_date', 'capacity_workshop_comment', 'sqvl', 'sqme_manufacturing', 'apqp_grid', 'run_assessment', 'cat_forecast_date', 'cat_forecast_calendar_week', 'cat_real_date', 'cat_real_calendar_week', 'last_cat', 'requested_supplier_weekly_capacity', 'cat_run_observation', 'number_production_days', 'number_production_shifts', 'cat_rating', 'cat_link', 'cat_comment']
+2026-08-06 22:01:36,829 - app.application.services.ollama_mapping_service - INFO - [OLLAMA] Configured timeout: 30.0s, default model: llama3.2:1b, url: http://localhost:11434
+2026-08-06 22:01:36,832 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Template: 'K0' (CMF K0 Project Template), Fields: 66, Headers: 33
+2026-08-06 22:01:37,166 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-06 22:01:37,510 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-06 22:02:07,526 - app.application.services.ollama_mapping_service - WARNING - [OLLAMA MAP] Request to Ollama timed out after 30.0s. Automatically switched to deterministic fuzzy mapping.
+2026-08-06 22:02:07,537 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Final Mapping Summary (0/66 fields mapped via LLM):
+  line_item: excel='None' conf=0.0 src=none
+  components_package_rfq: excel='None' conf=0.0 src=none
+  tazebao_id_dev_system_no: excel='None' conf=0.0 src=none
+  gst_source_package_number: excel='None' conf=0.0 src=none
+  part_number: excel='None' conf=0.0 src=none
+  part_name: excel='None' conf=0.0 src=none
+  comments: excel='None' conf=0.0 src=none
+  make_or_buy: excel='None' conf=0.0 src=none
+  other_platform_impacted: excel='None' conf=0.0 src=none
+  development_type: excel='None' conf=0.0 src=none
+  status_resourcing: excel='None' conf=0.0 src=none
+  original_vehicle_co_parts: excel='None' conf=0.0 src=none
+  supplier_name_co_parts: excel='None' conf=0.0 src=none
+  new_supplier_yn: excel='None' conf=0.0 src=none
+  nominated_supplier: excel='None' conf=0.0 src=none
+  manufacturing_cofor: excel='None' conf=0.0 src=none
+  supplier_location: excel='None' conf=0.0 src=none
+  ppm: excel='None' conf=0.0 src=none
+  commodity_buyer: excel='None' conf=0.0 src=none
+  program_buyer: excel='None' conf=0.0 src=none
+  gm_commodity: excel='None' conf=0.0 src=none
+  pur_manager: excel='None' conf=0.0 src=none
+  ga: excel='None' conf=0.0 src=none
+  pur_area: excel='None' conf=0.0 src=none
+  lead_engineer_hordain: excel='None' conf=0.0 src=none
+  e_port: excel='None' conf=0.0 src=none
+  tofas: excel='None' conf=0.0 src=none
+  eko: excel='None' conf=0.0 src=none
+  lfp_66_kwh: excel='None' conf=0.0 src=none
+  nmc_82_kwh: excel='None' conf=0.0 src=none
+  quantity_parts_per_vehicle: excel='None' conf=0.0 src=none
+  weekly_capacity_requested_gst: excel='None' conf=0.0 src=none
+  capacity_step_requested_gst: excel='None' conf=0.0 src=none
+  calculation_date_gst: excel='None' conf=0.0 src=none
+  weekly_capacity_requested_tko: excel='None' conf=0.0 src=none
+  capacity_step_requested_tko: excel='None' conf=0.0 src=none
+  scr_date_tko: excel='None' conf=0.0 src=none
+  scr_tko_link: excel='None' conf=0.0 src=none
+  weekly_capacity_latest_ltos: excel='None' conf=0.0 src=none
+  capacity_step_latest_ltos: excel='None' conf=0.0 src=none
+  date_latest_ltos: excel='None' conf=0.0 src=none
+  calculation_link: excel='None' conf=0.0 src=none
+  contracted_capacity: excel='None' conf=0.0 src=none
+  contracted_capacity_step: excel='None' conf=0.0 src=none
+  capacity_sizing_ok: excel='None' conf=0.0 src=none
+  new_scr_calculation_done: excel='None' conf=0.0 src=none
+  contracted_capacity_ok: excel='None' conf=0.0 src=none
+  capacity_comments: excel='None' conf=0.0 src=none
+  capacity_workshop_date: excel='None' conf=0.0 src=none
+  capacity_workshop_comment: excel='None' conf=0.0 src=none
+  sqvl: excel='None' conf=0.0 src=none
+  sqme_manufacturing: excel='None' conf=0.0 src=none
+  apqp_grid: excel='None' conf=0.0 src=none
+  run_assessment: excel='None' conf=0.0 src=none
+  cat_forecast_date: excel='None' conf=0.0 src=none
+  cat_forecast_calendar_week: excel='None' conf=0.0 src=none
+  cat_real_date: excel='None' conf=0.0 src=none
+  cat_real_calendar_week: excel='None' conf=0.0 src=none
+  last_cat: excel='None' conf=0.0 src=none
+  requested_supplier_weekly_capacity: excel='None' conf=0.0 src=none
+  cat_run_observation: excel='None' conf=0.0 src=none
+  number_production_days: excel='None' conf=0.0 src=none
+  number_production_shifts: excel='None' conf=0.0 src=none
+  cat_rating: excel='None' conf=0.0 src=none
+  cat_link: excel='None' conf=0.0 src=none
+  cat_comment: excel='None' conf=0.0 src=none
+2026-08-06 22:02:07,539 - app.application.services.ollama_mapping_service - INFO - 
+==================== [OLLAMA LLM METRICS] ====================
+  - Model:             llama3.2:1b
+  - Prompt Size:       4477 chars
+  - Prompt Tokens:     0
+  - Completion Tokens: 0
+  - Inference Time:    30348.41 ms
+  - JSON Parse Time:   0.00 ms
+  - Excel Read Time:   0.08 ms
+  - Total Mapping:     30705.30 ms
+  - LLM Mapped Fields: 0/66 (Active: False)
+==============================================================
+2026-08-06 22:02:07,541 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Final Mapping: {'line_item': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'components_package_rfq': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'tazebao_id_dev_system_no': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'gst_source_package_number': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'part_number': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'part_name': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'comments': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'make_or_buy': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'other_platform_impacted': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'development_type': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'status_resourcing': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'original_vehicle_co_parts': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'supplier_name_co_parts': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'new_supplier_yn': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'nominated_supplier': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'manufacturing_cofor': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'supplier_location': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'ppm': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'commodity_buyer': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'program_buyer': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'gm_commodity': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'pur_manager': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'ga': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'pur_area': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'lead_engineer_hordain': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'e_port': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'tofas': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'eko': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'lfp_66_kwh': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'nmc_82_kwh': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'quantity_parts_per_vehicle': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'weekly_capacity_requested_gst': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'capacity_step_requested_gst': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'calculation_date_gst': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'weekly_capacity_requested_tko': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'capacity_step_requested_tko': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'scr_date_tko': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'scr_tko_link': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'weekly_capacity_latest_ltos': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'capacity_step_latest_ltos': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'date_latest_ltos': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'calculation_link': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'contracted_capacity': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'contracted_capacity_step': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'capacity_sizing_ok': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'new_scr_calculation_done': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'contracted_capacity_ok': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'capacity_comments': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'capacity_workshop_date': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'capacity_workshop_comment': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'sqvl': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'sqme_manufacturing': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'apqp_grid': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'run_assessment': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'cat_forecast_date': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'cat_forecast_calendar_week': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'cat_real_date': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'cat_real_calendar_week': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'last_cat': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'requested_supplier_weekly_capacity': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'cat_run_observation': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'number_production_days': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'number_production_shifts': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'cat_rating': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'cat_link': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'cat_comment': {'excel': None, 'confidence': 0.0, 'source': 'none'}}
+2026-08-06 22:02:07,544 - app.api.v1.endpoints.import_endpoints - INFO - AI Semantic Mapping Complete for Template 'K0' in 30753.44 ms (Excel Read: 0.08 ms, Prompt Build: 0.20 ms, Ollama Call: 30348.41 ms, JSON Parse: 0.00 ms)
+2026-08-06 22:02:07,548 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-06 22:02:24,759 - app.main - INFO - GET /api/v1/projects
+2026-08-06 22:02:25,061 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-06 22:03:09,539 - app.main - INFO - GET /api/v1/projects
+2026-08-06 22:03:09,784 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-06 22:03:12,079 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-06 22:03:12,093 - app.main - INFO - GET /api/v1/documents
+2026-08-06 22:03:12,313 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 2 published templates in 62.70 ms
+2026-08-06 22:03:12,331 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-06 22:03:12,366 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-06 22:03:12,383 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-06 22:03:12,425 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 2 published templates in 14.27 ms
+2026-08-06 22:03:12,429 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-06 22:03:24,208 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-06 22:03:24,280 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Sheet: 'K9' (90.0%) | Detected Header Row: 1 (90.0%) | Headers (17): ['Unique_ID', 'APQP Status', 'Part Name', 'Part Number', 'Supplier Name', 'Production Location', 'Buyer', 'Weekly Capacity', 'Contracted Capacity', 'CAT1/2/3 Evaluation', 'Forecast CW', 'CAT1 Forecasted Date', 'CAT2 Forecasted Date', 'CAT3 Forecasted Date', 'Comments', 'SQE', 'SQM']
+2026-08-06 22:03:24,311 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Normalized Headers: ['unique id', 'apqp status', 'part name', 'part number', 'supplier name', 'production location', 'buyer', 'weekly capacity', 'contracted capacity', 'cat1/2/3 evaluation', 'forecast cw', 'cat1 forecasted date', 'cat2 forecasted date', 'cat3 forecasted date', 'comments', 'sqe', 'sqm']
+2026-08-06 22:03:24,313 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Fields sent to Ollama (35): ['unique_id', 'apqp', 'part_name', 'use_case', 'part_info', 'part_number', 'supplier_info', 'supplier_name', 'manufacturing_cofor', 'production_location', 'stakeholder', 'buyer', 'capacity', 'scr_link_docinfo', 'gst_no', 'contracted_capacity', 'fete', 'tko_fete_link_sharepoint', 'capacity_standard', 'fete_tko_letter_doc', 'technical_manager', 'k9_sck', 'cat1_forecast_date_cw', 'cat2_forecast_date', 'cat3_forecast_date', 'cat1_2_3_type', 'weekly_capacity_measured', 'estimated_target', 'cat_evaluation', 'shared_folder_link', 'comments', 'sqe', 'sqm', 'team', 'family_multiplier']
+2026-08-06 22:03:24,316 - app.application.services.ollama_mapping_service - INFO - [OLLAMA] Configured timeout: 30.0s, default model: llama3.2:1b, url: http://localhost:11434
+2026-08-06 22:03:24,319 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Template: 'K9' (CMF K9 Project Template), Fields: 35, Headers: 17
+2026-08-06 22:03:24,653 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-06 22:03:25,007 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-06 22:03:43,993 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2026-08-06 22:03:43,999 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] LLM Raw Response: '{"Unique_ID": "unique_id", "APQP Status": "apqp", "Part Name": "part_name", "Part Number": "part_number", "Supplier Name": "supplier_name", "Production Location": "production_location", "Buyer": "buyer", "Capacity": "capacity", "SCR Link Docinfo": "scr_link_docinfo", "GST No": "gst_no", "Contracted Capacity": "contracted_capacity", "Fete": "fete", "TKO Fete Link Sharepoint": "tko_fete_link_sharepoint", "Capacity Standard": "capacity_standard", "Fete Tko Letter Doc": "fete_tko_letter_doc", "Techn'
+2026-08-06 22:03:44,004 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Final Mapping Summary (0/35 fields mapped via LLM):
+  unique_id: excel='Unique_ID' conf=0.99 src=mapping_memory
+  apqp: excel='APQP Status' conf=0.99 src=mapping_memory
+  part_name: excel='Part Name' conf=0.99 src=mapping_memory
+  use_case: excel='None' conf=0.0 src=none
+  part_info: excel='None' conf=0.0 src=none
+  part_number: excel='Part Number' conf=0.99 src=mapping_memory
+  supplier_info: excel='None' conf=0.0 src=none
+  supplier_name: excel='Supplier Name' conf=0.99 src=mapping_memory
+  manufacturing_cofor: excel='None' conf=0.0 src=none
+  production_location: excel='Production Location' conf=0.99 src=exact_match
+  stakeholder: excel='None' conf=0.0 src=none
+  buyer: excel='Buyer' conf=0.99 src=mapping_memory
+  capacity: excel='Weekly Capacity' conf=0.99 src=mapping_memory
+  scr_link_docinfo: excel='None' conf=0.0 src=none
+  gst_no: excel='None' conf=0.0 src=none
+  contracted_capacity: excel='Contracted Capacity' conf=0.99 src=mapping_memory
+  fete: excel='None' conf=0.0 src=none
+  tko_fete_link_sharepoint: excel='None' conf=0.0 src=none
+  capacity_standard: excel='None' conf=0.0 src=none
+  fete_tko_letter_doc: excel='None' conf=0.0 src=none
+  technical_manager: excel='None' conf=0.0 src=none
+  k9_sck: excel='None' conf=0.0 src=none
+  cat1_forecast_date_cw: excel='CAT1 Forecasted Date' conf=0.85 src=fuzzy_fallback
+  cat2_forecast_date: excel='CAT2 Forecasted Date' conf=0.99 src=exact_match
+  cat3_forecast_date: excel='CAT3 Forecasted Date' conf=0.99 src=exact_match
+  cat1_2_3_type: excel='None' conf=0.0 src=none
+  weekly_capacity_measured: excel='None' conf=0.0 src=none
+  estimated_target: excel='None' conf=0.0 src=none
+  cat_evaluation: excel='CAT1/2/3 Evaluation' conf=0.99 src=exact_match
+  shared_folder_link: excel='None' conf=0.0 src=none
+  comments: excel='Comments' conf=0.99 src=mapping_memory
+  sqe: excel='SQE' conf=0.99 src=mapping_memory
+  sqm: excel='SQM' conf=0.99 src=mapping_memory
+  team: excel='None' conf=0.0 src=none
+  family_multiplier: excel='None' conf=0.0 src=none
+2026-08-06 22:03:44,005 - app.application.services.ollama_mapping_service - INFO - 
+==================== [OLLAMA LLM METRICS] ====================
+  - Model:             llama3.2:1b
+  - Prompt Size:       2612 chars
+  - Prompt Tokens:     675
+  - Completion Tokens: 150
+  - Inference Time:    13985.14 ms
+  - JSON Parse Time:   0.13 ms
+  - Excel Read Time:   0.05 ms
+  - Total Mapping:     19684.04 ms
+  - LLM Mapped Fields: 0/35 (Active: False)
+==============================================================
+2026-08-06 22:03:44,006 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Final Mapping: {'unique_id': {'excel': 'Unique_ID', 'confidence': 0.99, 'source': 'mapping_memory'}, 'apqp': {'excel': 'APQP Status', 'confidence': 0.99, 'source': 'mapping_memory'}, 'part_name': {'excel': 'Part Name', 'confidence': 0.99, 'source': 'mapping_memory'}, 'use_case': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'part_info': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'part_number': {'excel': 'Part Number', 'confidence': 0.99, 'source': 'mapping_memory'}, 'supplier_info': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'supplier_name': {'excel': 'Supplier Name', 'confidence': 0.99, 'source': 'mapping_memory'}, 'manufacturing_cofor': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'production_location': {'excel': 'Production Location', 'confidence': 0.99, 'source': 'exact_match'}, 'stakeholder': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'buyer': {'excel': 'Buyer', 'confidence': 0.99, 'source': 'mapping_memory'}, 'capacity': {'excel': 'Weekly Capacity', 'confidence': 0.99, 'source': 'mapping_memory'}, 'scr_link_docinfo': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'gst_no': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'contracted_capacity': {'excel': 'Contracted Capacity', 'confidence': 0.99, 'source': 'mapping_memory'}, 'fete': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'tko_fete_link_sharepoint': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'capacity_standard': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'fete_tko_letter_doc': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'technical_manager': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'k9_sck': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'cat1_forecast_date_cw': {'excel': 'CAT1 Forecasted Date', 'confidence': 0.85, 'source': 'fuzzy_fallback'}, 'cat2_forecast_date': {'excel': 'CAT2 Forecasted Date', 'confidence': 0.99, 'source': 'exact_match'}, 'cat3_forecast_date': {'excel': 'CAT3 Forecasted Date', 'confidence': 0.99, 'source': 'exact_match'}, 'cat1_2_3_type': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'weekly_capacity_measured': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'estimated_target': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'cat_evaluation': {'excel': 'CAT1/2/3 Evaluation', 'confidence': 0.99, 'source': 'exact_match'}, 'shared_folder_link': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'comments': {'excel': 'Comments', 'confidence': 0.99, 'source': 'mapping_memory'}, 'sqe': {'excel': 'SQE', 'confidence': 0.99, 'source': 'mapping_memory'}, 'sqm': {'excel': 'SQM', 'confidence': 0.99, 'source': 'mapping_memory'}, 'team': {'excel': None, 'confidence': 0.0, 'source': 'none'}, 'family_multiplier': {'excel': None, 'confidence': 0.0, 'source': 'none'}}
+2026-08-06 22:03:44,008 - app.api.v1.endpoints.import_endpoints - INFO - AI Semantic Mapping Complete for Template 'K9' in 19727.68 ms (Excel Read: 0.05 ms, Prompt Build: 0.19 ms, Ollama Call: 19332.35 ms, JSON Parse: 0.13 ms)
+2026-08-06 22:03:44,015 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-06 22:03:53,340 - app.main - INFO - POST /api/v1/import/preview
+2026-08-06 22:03:53,381 - app.api.v1.endpoints.import_endpoints - INFO - [IMPORT DEBUG] Preview request: file='K9_Test_Data_Clean.xlsx' (5516 bytes), template='K9'
+2026-08-06 22:03:53,452 - app.api.v1.endpoints.import_endpoints - INFO - [IMPORT DEBUG] Preview completed in 70.33 ms (Total Rows: 4, Valid: 3, Errors: 1, Headers: ['Unique_ID', 'APQP Status', 'Part Name', 'Part Number', 'Supplier Name'])
+2026-08-06 22:03:53,459 - app.main - INFO - POST /api/v1/import/preview -> 200
+2026-08-06 22:03:58,362 - app.main - INFO - POST /api/v1/import/execute
+2026-08-06 22:03:58,434 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Starting execution for file 'K9_Test_Data_Clean.xlsx' with template 'K9'
+2026-08-06 22:03:58,437 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Selected template: 'K9'
+2026-08-06 22:03:58,439 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Uploaded filename: 'K9_Test_Data_Clean.xlsx' (5516 bytes)
+2026-08-06 22:03:58,442 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Mapped fields: {'Unique_ID': 'unique_id', 'APQP Status': 'apqp', 'Part Name': 'part_name', 'Part Number': 'part_number', 'Supplier Name': 'supplier_name', 'Production Location': 'production_location', 'Buyer': 'buyer', 'Weekly Capacity': 'capacity', 'Contracted Capacity': 'contracted_capacity', 'CAT1 Forecasted Date': 'cat1_forecast_date_cw', 'CAT2 Forecasted Date': 'cat2_forecast_date', 'CAT3 Forecasted Date': 'cat3_forecast_date', 'CAT1/2/3 Evaluation': 'cat_evaluation', 'Comments': 'comments', 'SQE': 'sqe', 'SQM': 'sqm'}
+2026-08-06 22:03:58,444 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Import mode: 'insert', strategy: 'skip_invalid'
+2026-08-06 22:03:58,577 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Validation summary: Total Rows=4, Valid=3, Errors=1
+2026-08-06 22:03:58,634 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Rows detected: 4
+2026-08-06 22:03:58,637 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Headers detected: ['Unique_ID', 'APQP Status', 'Part Name', 'Part Number', 'Supplier Name', 'Production Location', 'Buyer', 'Weekly Capacity', 'Contracted Capacity', 'CAT1/2/3 Evaluation', 'Forecast CW', 'CAT1 Forecasted Date', 'CAT2 Forecasted Date', 'CAT3 Forecasted Date', 'Comments', 'SQE', 'SQM']
+2026-08-06 22:03:58,639 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Database transaction: Starting transaction session...
+2026-08-06 22:03:59,058 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Serializer errors count: 0
+2026-08-06 22:03:59,107 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Database transaction: Committed successfully (Imported: 3, Updated: 0, Skipped: 1, Failed: 0)
+2026-08-06 22:03:59,110 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Execution time: 624 ms
+2026-08-06 22:03:59,113 - app.api.v1.endpoints.import_endpoints - INFO - [IMPORT DEBUG] Excel import execution completed in 678.21 ms (Imported: 3, Updated: 0, Skipped: 1)
+2026-08-06 22:03:59,119 - app.main - INFO - POST /api/v1/import/execute -> 200
+2026-08-06 22:03:59,159 - app.main - INFO - POST /api/v1/import/save-mapping-memory
+2026-08-06 22:03:59,229 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:unique_id -> unique_id
+2026-08-06 22:03:59,231 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:apqp status -> apqp
+2026-08-06 22:03:59,233 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:part name -> part_name
+2026-08-06 22:03:59,236 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:part number -> part_number
+2026-08-06 22:03:59,239 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:supplier name -> supplier_name
+2026-08-06 22:03:59,241 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:production location -> production_location
+2026-08-06 22:03:59,244 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:buyer -> buyer
+2026-08-06 22:03:59,246 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:weekly capacity -> capacity
+2026-08-06 22:03:59,248 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:contracted capacity -> contracted_capacity
+2026-08-06 22:03:59,250 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:cat1 forecasted date -> cat1_forecast_date_cw
+2026-08-06 22:03:59,254 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:cat2 forecasted date -> cat2_forecast_date
+2026-08-06 22:03:59,257 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:cat3 forecasted date -> cat3_forecast_date
+2026-08-06 22:03:59,259 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:cat1/2/3 evaluation -> cat_evaluation
+2026-08-06 22:03:59,261 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:comments -> comments
+2026-08-06 22:03:59,264 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:sqe -> sqe
+2026-08-06 22:03:59,267 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:sqm -> sqm
+2026-08-06 22:03:59,278 - app.main - INFO - POST /api/v1/import/save-mapping-memory -> 200
+2026-08-06 22:04:06,568 - app.main - INFO - GET /api/v1/projects
+2026-08-06 22:04:06,948 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-06 22:05:01,582 - app.main - INFO - GET /api/v1/projects
+2026-08-06 22:05:01,772 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-06 22:05:12,749 - app.main - INFO - GET /api/v1/projects/f34bbfa3-3780-402b-914a-548f5829f801
+2026-08-06 22:05:12,867 - app.main - INFO - GET /api/v1/projects/f34bbfa3-3780-402b-914a-548f5829f801 -> 200
+2026-08-06 22:05:13,036 - app.main - INFO - GET /api/v1/suppliers
+2026-08-06 22:05:13,040 - app.main - INFO - GET /api/v1/users
+2026-08-06 22:05:13,322 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-06 22:05:13,400 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-06 22:05:23,486 - app.main - INFO - GET /api/v1/projects/f34bbfa3-3780-402b-914a-548f5829f801
+2026-08-06 22:05:23,574 - app.main - INFO - GET /api/v1/projects/f34bbfa3-3780-402b-914a-548f5829f801 -> 200
+2026-08-06 22:05:25,174 - app.main - INFO - GET /api/v1/projects/f34bbfa3-3780-402b-914a-548f5829f801
+2026-08-06 22:05:25,226 - app.main - INFO - GET /api/v1/projects/f34bbfa3-3780-402b-914a-548f5829f801 -> 200
+2026-08-06 22:05:27,066 - app.main - INFO - GET /api/v1/projects
+2026-08-06 22:05:27,330 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-06 23:03:52,053 - app.main - INFO - GET /api/v1/projects
+2026-08-06 23:03:52,076 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-06 23:03:52,082 - app.main - INFO - GET /api/v1/projects -> 401
+2026-08-06 23:03:52,291 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-06 23:03:52,545 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-06 23:03:52,763 - app.main - INFO - GET /api/v1/projects
+2026-08-06 23:03:53,088 - app.main - INFO - GET /api/v1/projects -> 200
