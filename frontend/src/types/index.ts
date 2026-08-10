@@ -80,6 +80,8 @@ export interface ProjectFilter {
   search?: string;
   status?: ProjectStatus;
   managerId?: string;
+  template_id?: string;
+  templateId?: string;
   dateFrom?: string;
   dateTo?: string;
   page?: number;

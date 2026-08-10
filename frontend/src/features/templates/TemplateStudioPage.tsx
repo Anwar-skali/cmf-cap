@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTemplate } from '@/context/TemplateContext';
 import { CMFTemplate, TemplateField } from '@/types/template';
+import { Project } from '@/types';
+import { getProjects, createProject } from '@/api/endpoints/projects';
+import { DynamicForm } from '@/components/template-engine/DynamicForm';
+import { ImportWizard } from '@/features/import/ImportWizard';
 import { CrudFormHeader } from '@/components/layout/CrudFormHeader';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -20,33 +24,126 @@ import {
   Code2,
   Filter,
   Copy,
+  FolderKanban,
+  FileSpreadsheet,
+  X,
+  ExternalLink,
+  RefreshCw,
+  Building2,
+  Calendar,
+  Tag,
+  AlertTriangle,
 } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function TemplateStudioPage() {
   const navigate = useNavigate();
-  const { templates, activeTemplate, setActiveTemplate, isLoading } = useTemplate();
+  const { templates, activeTemplate, setActiveTemplate, isLoading: isTemplatesLoading } = useTemplate();
 
-  const [selectedTemplateCode, setSelectedTemplateCode] = useState<'K0' | 'K9' | 'ALL'>('ALL');
-  const [selectedRoleFilter, setSelectedRoleFilter] = useState<'ALL' | 'buyer' | 'capacity' | 'sqd'>('ALL');
-  const [activeTab, setActiveTab] = useState<'repository' | 'explorer' | 'matrix' | 'json'>('repository');
+  // Selected Structure state (driven dynamically by DB templates)
+  const [selectedStructureId, setSelectedStructureId] = useState<string>('');
+  const [activeTab, setActiveTab] = useState<'repository' | 'projects' | 'explorer' | 'matrix' | 'json'>('repository');
+
+  // Filters & Search
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [selectedRoleFilter, setSelectedRoleFilter] = useState<'ALL' | 'buyer' | 'capacity' | 'sqd'>('ALL');
+  const [projectSearchQuery, setProjectSearchQuery] = useState<string>('');
+  const [projectStatusFilter, setProjectStatusFilter] = useState<string>('ALL');
 
-  const k0Template = templates.find((t) => t.code?.toUpperCase() === 'K0') || templates[0];
-  const k9Template = templates.find((t) => t.code?.toUpperCase() === 'K9') || templates[1] || templates[0];
+  // Projects under selected structure state
+  const [structureProjects, setStructureProjects] = useState<Project[]>([]);
+  const [totalProjectsCount, setTotalProjectsCount] = useState<number>(0);
+  const [isProjectsLoading, setIsProjectsLoading] = useState<boolean>(false);
 
-  const currentTemplate =
-    selectedTemplateCode === 'K0'
-      ? k0Template
-      : selectedTemplateCode === 'K9'
-      ? k9Template
-      : activeTemplate || k0Template;
+  // Modals for Manual Creation and Import Pipeline
+  const [showManualModal, setShowManualModal] = useState<boolean>(false);
+  const [showImportModal, setShowImportModal] = useState<boolean>(false);
+  const [isCreatingProject, setIsCreatingProject] = useState<boolean>(false);
 
-  const handleCreateProjectWithTemplate = (tmpl: CMFTemplate) => {
-    setActiveTemplate(tmpl);
-    navigate('/projects/new');
+  // Sync selected structure when templates load or change
+  useEffect(() => {
+    if (templates.length > 0) {
+      if (!selectedStructureId) {
+        const initial = activeTemplate || templates[0];
+        setSelectedStructureId(initial.id);
+      }
+    }
+  }, [templates, activeTemplate, selectedStructureId]);
+
+  const selectedStructure: CMFTemplate | undefined =
+    templates.find((t) => t.id === selectedStructureId) || activeTemplate || templates[0];
+
+  // Fetch projects belonging to selected structure
+  const fetchStructureProjects = useCallback(async () => {
+    if (!selectedStructure?.id) return;
+    setIsProjectsLoading(true);
+    try {
+      const res = await getProjects({
+        template_id: selectedStructure.id,
+        search: projectSearchQuery || undefined,
+        status: projectStatusFilter !== 'ALL' ? (projectStatusFilter as any) : undefined,
+        pageSize: 100,
+      });
+      setStructureProjects(res.items || []);
+      setTotalProjectsCount(res.total || res.items?.length || 0);
+    } catch (err: any) {
+      console.error('Failed to load projects for structure:', err);
+      toast.error('Failed to fetch projects for selected structure.');
+    } finally {
+      setIsProjectsLoading(false);
+    }
+  }, [selectedStructure?.id, projectSearchQuery, projectStatusFilter]);
+
+  useEffect(() => {
+    if (selectedStructure?.id) {
+      fetchStructureProjects();
+    }
+  }, [selectedStructure?.id, fetchStructureProjects]);
+
+  // Handle Manual Project Creation save
+  const handleSaveManualProject = async (formValues: Record<string, any>) => {
+    if (!selectedStructure) {
+      toast.error('No Project Structure selected.');
+      return;
+    }
+    setIsCreatingProject(true);
+    try {
+      const name =
+        formValues.part_name ||
+        formValues.project_name ||
+        formValues.name ||
+        `Project (${selectedStructure.code})`;
+      const code =
+        formValues.unique_id ||
+        formValues.part_number ||
+        formValues.line_item ||
+        formValues.project_code ||
+        formValues.code;
+
+      const payload = {
+        name,
+        code,
+        template_id: selectedStructure.id,
+        template_version: selectedStructure.version,
+        data: {
+          ...formValues,
+          template_code: selectedStructure.code,
+          creation_source: 'manual_templates_page',
+        },
+      };
+
+      const created = await createProject(payload as any);
+      toast.success(`Project "${created.name}" created under ${selectedStructure.code}!`);
+      setShowManualModal(false);
+      fetchStructureProjects();
+    } catch (err: any) {
+      toast.error(err?.message || 'Failed to create project.');
+    } finally {
+      setIsCreatingProject(false);
+    }
   };
 
+  // Export & Copy JSON helpers
   const handleExportJson = (tmpl: CMFTemplate) => {
     try {
       const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(tmpl, null, 2));
@@ -67,7 +164,7 @@ export default function TemplateStudioPage() {
     toast.success(`Copied CMF ${tmpl.code} JSON schema to clipboard!`);
   };
 
-  // Collect all fields across selected templates
+  // Collect all fields across all templates for Field Schema Explorer
   const allFieldsWithMeta: Array<{
     templateCode: string;
     sectionName: string;
@@ -76,12 +173,7 @@ export default function TemplateStudioPage() {
     field: TemplateField;
   }> = [];
 
-  const targetTemplates =
-    selectedTemplateCode === 'ALL'
-      ? templates
-      : templates.filter((t) => t.code?.toUpperCase() === selectedTemplateCode);
-
-  targetTemplates.forEach((tmpl) => {
+  templates.forEach((tmpl) => {
     tmpl?.sections?.forEach((sec) => {
       sec.groups?.forEach((grp) => {
         grp.fields?.forEach((fld) => {
@@ -113,11 +205,11 @@ export default function TemplateStudioPage() {
     return matchesSearch && matchesRole;
   });
 
-  if (isLoading) {
+  if (isTemplatesLoading) {
     return (
       <div className="flex h-64 items-center justify-center space-y-3 flex-col">
         <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent" />
-        <p className="text-sm font-semibold text-muted-foreground">Loading CMF Template Studio...</p>
+        <p className="text-sm font-semibold text-muted-foreground">Loading CMF Project Structures...</p>
       </div>
     );
   }
@@ -129,23 +221,81 @@ export default function TemplateStudioPage() {
         breadcrumbs={[
           { label: 'Home', href: '/' },
           { label: 'Resources', href: '/documents' },
-          { label: 'Template Studio' },
+          { label: 'Project Structures & Templates' },
         ]}
-        title="CMF Template Studio & Schema Repository"
-        subtitle="Dedicated repository for Stellantis CMF K0 and K9 template schemas, 3-role workflow requirements, field validation rules, and JSON definitions."
-        versionBadge="CMF Template Engine v1.0.4"
+        title="Project Structures & Schema Repository"
+        subtitle="Central management entry point for Project Structure definitions, schemas, validation rules, manual creation, and AI Excel import pipelines."
+        versionBadge="CMF Structure Engine v2.0"
         extraActions={
-          <Button
-            onClick={() => handleCreateProjectWithTemplate(currentTemplate || k0Template)}
-            size="sm"
-            className="bg-[#0066CC] hover:bg-[#0052A3] text-white font-bold rounded-full px-5 py-2 text-xs shadow-md shadow-blue-500/20 gap-2 cursor-pointer"
-          >
-            <PlusCircle className="h-4 w-4" /> Create CMF Project
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              onClick={() => {
+                if (selectedStructure) setActiveTemplate(selectedStructure);
+                setShowManualModal(true);
+              }}
+              size="sm"
+              className="bg-[#0066CC] hover:bg-[#0052A3] text-white font-bold rounded-full px-4 py-2 text-xs shadow-md shadow-blue-500/20 gap-1.5 cursor-pointer"
+            >
+              <PlusCircle className="h-4 w-4" /> Create Project
+            </Button>
+            <Button
+              onClick={() => {
+                if (selectedStructure) setActiveTemplate(selectedStructure);
+                setShowImportModal(true);
+              }}
+              size="sm"
+              variant="outline"
+              className="bg-card hover:bg-accent border-slate-300 dark:border-slate-700 text-foreground font-bold rounded-full px-4 py-2 text-xs shadow-sm gap-1.5 cursor-pointer"
+            >
+              <FileSpreadsheet className="h-4 w-4 text-emerald-500" /> Import Projects
+            </Button>
+          </div>
         }
       />
 
-      {/* Navigation Tabs Header */}
+      {/* Global Structure Selection Header Bar */}
+      <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-card p-4 sm:p-6 shadow-md flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600/10 text-blue-600 font-black text-xl border border-blue-500/20 shrink-0">
+            {selectedStructure?.code || 'ST'}
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <h2 className="text-lg font-extrabold text-foreground">{selectedStructure?.name || 'Select Structure'}</h2>
+              <Badge variant="outline" className="border-blue-500/40 bg-blue-500/10 text-blue-600 dark:text-blue-400 text-[10px] font-bold rounded-full px-2.5 py-0.5">
+                v{selectedStructure?.version || '1.0'}
+              </Badge>
+            </div>
+            <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5">
+              {selectedStructure?.description || 'Selected Project Structure source of truth.'}
+            </p>
+          </div>
+        </div>
+
+        {/* Structure Picker Dropdown */}
+        <div className="flex items-center gap-2 shrink-0">
+          <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Active Structure:</span>
+          <select
+            value={selectedStructure?.id || ''}
+            onChange={(e) => {
+              const found = templates.find((t) => t.id === e.target.value);
+              if (found) {
+                setSelectedStructureId(found.id);
+                setActiveTemplate(found);
+              }
+            }}
+            className="bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-foreground font-extrabold text-xs rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer shadow-sm"
+          >
+            {templates.map((t) => (
+              <option key={t.id} value={t.id}>
+                {t.code} — {t.name} (v{t.version})
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      {/* Navigation Tabs */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-3">
         <div className="flex items-center gap-2 overflow-x-auto">
           <button
@@ -158,7 +308,21 @@ export default function TemplateStudioPage() {
             }`}
           >
             <span className="flex items-center gap-1.5">
-              <Layers className="h-3.5 w-3.5" /> 1. Repository Hub (K0 & K9)
+              <Layers className="h-3.5 w-3.5" /> 1. Structures Overview
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab('projects')}
+            className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer relative ${
+              activeTab === 'projects'
+                ? 'bg-blue-600 text-white shadow-sm'
+                : 'bg-card text-muted-foreground hover:bg-accent border border-slate-200 dark:border-slate-800'
+            }`}
+          >
+            <span className="flex items-center gap-1.5">
+              <FolderKanban className="h-3.5 w-3.5" /> 2. Projects in {selectedStructure?.code} ({totalProjectsCount})
             </span>
           </button>
 
@@ -172,7 +336,7 @@ export default function TemplateStudioPage() {
             }`}
           >
             <span className="flex items-center gap-1.5">
-              <Search className="h-3.5 w-3.5" /> 2. Field Schema Explorer ({allFieldsWithMeta.length})
+              <Search className="h-3.5 w-3.5" /> 3. Field Schema Explorer ({allFieldsWithMeta.length})
             </span>
           </button>
 
@@ -186,7 +350,7 @@ export default function TemplateStudioPage() {
             }`}
           >
             <span className="flex items-center gap-1.5">
-              <Sparkles className="h-3.5 w-3.5" /> 3. K0 vs K9 Comparison
+              <Sparkles className="h-3.5 w-3.5" /> 4. Structure Comparison
             </span>
           </button>
 
@@ -200,203 +364,308 @@ export default function TemplateStudioPage() {
             }`}
           >
             <span className="flex items-center gap-1.5">
-              <Code2 className="h-3.5 w-3.5" /> 4. JSON Schema Code
+              <Code2 className="h-3.5 w-3.5" /> 5. JSON Schema Code
             </span>
           </button>
         </div>
-
-        {/* Template Selector Badge Pill */}
-        <div className="flex items-center gap-2 shrink-0">
-          <span className="text-xs font-semibold text-muted-foreground">Filter Template:</span>
-          <div className="inline-flex rounded-lg border border-slate-300 dark:border-slate-700 p-0.5 bg-card">
-            <button
-              type="button"
-              onClick={() => setSelectedTemplateCode('ALL')}
-              className={`px-2.5 py-1 text-xs font-bold rounded-md transition-colors ${
-                selectedTemplateCode === 'ALL' ? 'bg-blue-600 text-white' : 'text-muted-foreground hover:text-foreground'
-              }`}
-            >
-              All (K0 & K9)
-            </button>
-            <button
-              type="button"
-              onClick={() => setSelectedTemplateCode('K0')}
-              className={`px-2.5 py-1 text-xs font-bold rounded-md transition-colors ${
-                selectedTemplateCode === 'K0' ? 'bg-blue-600 text-white' : 'text-muted-foreground hover:text-foreground'
-              }`}
-            >
-              K0 Only
-            </button>
-            <button
-              type="button"
-              onClick={() => setSelectedTemplateCode('K9')}
-              className={`px-2.5 py-1 text-xs font-bold rounded-md transition-colors ${
-                selectedTemplateCode === 'K9' ? 'bg-blue-600 text-white' : 'text-muted-foreground hover:text-foreground'
-              }`}
-            >
-              K9 Only
-            </button>
-          </div>
-        </div>
       </div>
 
-      {/* TAB 1: REPOSITORY HUB (K0 & K9 CARDS) */}
+      {/* TAB 1: STRUCTURES OVERVIEW */}
       {activeTab === 'repository' && (
         <div className="space-y-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* K0 TEMPLATE CARD */}
-            {k0Template && (
-              <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-card p-6 sm:p-8 shadow-xl space-y-6 flex flex-col justify-between relative overflow-hidden group hover:border-blue-500/40 transition-all">
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600/10 text-blue-600 font-black text-xl border border-blue-500/20">
-                        K0
+            {templates.map((tmpl) => {
+              const isSelected = tmpl.id === selectedStructure?.id;
+              return (
+                <div
+                  key={tmpl.id}
+                  className={`rounded-3xl border ${
+                    isSelected
+                      ? 'border-blue-500 ring-2 ring-blue-500/20'
+                      : 'border-slate-200 dark:border-slate-800'
+                  } bg-card p-6 sm:p-8 shadow-xl space-y-6 flex flex-col justify-between relative overflow-hidden group hover:border-blue-500/40 transition-all`}
+                >
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600/10 text-blue-600 font-black text-xl border border-blue-500/20">
+                          {tmpl.code}
+                        </div>
+                        <div>
+                          <h2 className="text-xl font-extrabold text-foreground">{tmpl.name}</h2>
+                          <p className="text-xs text-muted-foreground font-mono">
+                            Code: {tmpl.code} • Version {tmpl.version}
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <h2 className="text-xl font-extrabold text-foreground">{k0Template.name}</h2>
-                        <p className="text-xs text-muted-foreground font-mono">Code: K0 • Version {k0Template.version}</p>
+                      <Badge
+                        variant="outline"
+                        className="border-emerald-500/40 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold rounded-full px-3 py-1"
+                      >
+                        <CheckCircle2 className="h-3.5 w-3.5 mr-1" /> {tmpl.status || 'Published Standard'}
+                      </Badge>
+                    </div>
+
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      {tmpl.description ||
+                        `Standard CMF ${tmpl.code} project template structure defining field validation rules, schemas, and 3-role workflow requirements.`}
+                    </p>
+
+                    {/* Section Breakdown Preview */}
+                    <div className="space-y-3 pt-2">
+                      <h4 className="text-xs font-extrabold uppercase tracking-wider text-muted-foreground">
+                        Module Sections ({tmpl.sections?.length || 0})
+                      </h4>
+                      <div className="grid grid-cols-3 gap-2">
+                        {tmpl.sections && tmpl.sections.length > 0 ? (
+                          tmpl.sections.slice(0, 3).map((sec, idx) => (
+                            <div
+                              key={sec.id || idx}
+                              className="p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/50 space-y-1"
+                            >
+                              <div className="flex items-center gap-1.5 text-blue-600 font-bold text-xs">
+                                {idx === 0 && <ShoppingBag className="h-3.5 w-3.5" />}
+                                {idx === 1 && <Gauge className="h-3.5 w-3.5" />}
+                                {idx === 2 && <ShieldCheck className="h-3.5 w-3.5" />}
+                                {idx + 1}. {sec.name}
+                              </div>
+                              <p className="text-[11px] text-muted-foreground line-clamp-1">
+                                {sec.groups?.reduce((acc, g) => acc + (g.fields?.length || 0), 0) || 0} fields
+                              </p>
+                            </div>
+                          ))
+                        ) : (
+                          <div className="col-span-3 p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 text-xs text-muted-foreground">
+                            Standard single-module schema
+                          </div>
+                        )}
                       </div>
                     </div>
-                    <Badge variant="outline" className="border-emerald-500/40 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold rounded-full px-3 py-1">
-                      <CheckCircle2 className="h-3.5 w-3.5 mr-1" /> Published Standard
-                    </Badge>
                   </div>
 
-                  <p className="text-xs text-muted-foreground leading-relaxed">
-                    {k0Template.description || 'Standard CMF K0 calculation template for Direct Purchasing, vehicle platform parts, contracted capacity sizing, SCR TKO links, and SQD CAT ratings.'}
-                  </p>
-
-                  {/* 3-Role Workflow Modules Preview */}
-                  <div className="space-y-3 pt-2">
-                    <h4 className="text-xs font-extrabold uppercase tracking-wider text-muted-foreground">3-Role Module Structure</h4>
-                    <div className="grid grid-cols-3 gap-2">
-                      <div className="p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/50 space-y-1">
-                        <div className="flex items-center gap-1.5 text-blue-600 font-bold text-xs">
-                          <ShoppingBag className="h-3.5 w-3.5" /> 1. Buyer
-                        </div>
-                        <p className="text-[11px] text-muted-foreground">Part Name, Part Number, SCR Link</p>
-                      </div>
-
-                      <div className="p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/50 space-y-1">
-                        <div className="flex items-center gap-1.5 text-amber-500 font-bold text-xs">
-                          <Gauge className="h-3.5 w-3.5" /> 2. Capacity
-                        </div>
-                        <p className="text-[11px] text-muted-foreground">Weekly GST, SCR TKO, Contracted</p>
-                      </div>
-
-                      <div className="p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/50 space-y-1">
-                        <div className="flex items-center gap-1.5 text-emerald-500 font-bold text-xs">
-                          <ShieldCheck className="h-3.5 w-3.5" /> 3. SQD
-                        </div>
-                        <p className="text-[11px] text-muted-foreground">CAT Rating, Real Date, SQVL</p>
-                      </div>
+                  {/* Card Actions */}
+                  <div className="pt-6 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2">
+                      <Button
+                        onClick={() => {
+                          setSelectedStructureId(tmpl.id);
+                          setActiveTemplate(tmpl);
+                          setActiveTab('projects');
+                        }}
+                        variant="outline"
+                        size="sm"
+                        className="rounded-full text-xs font-bold gap-1.5 border-slate-300 dark:border-slate-700"
+                      >
+                        <FolderKanban className="h-3.5 w-3.5 text-blue-600" /> View Projects
+                      </Button>
+                      <Button
+                        onClick={() => handleExportJson(tmpl)}
+                        variant="outline"
+                        size="sm"
+                        className="rounded-full text-xs font-bold gap-1.5 border-slate-300 dark:border-slate-700"
+                      >
+                        <Download className="h-3.5 w-3.5" /> JSON
+                      </Button>
                     </div>
+
+                    <Button
+                      onClick={() => {
+                        setSelectedStructureId(tmpl.id);
+                        setActiveTemplate(tmpl);
+                        setShowManualModal(true);
+                      }}
+                      size="sm"
+                      className="bg-[#0066CC] hover:bg-[#0052A3] text-white font-bold rounded-full px-4 py-2 text-xs shadow-md shadow-blue-500/20 gap-1.5 cursor-pointer"
+                    >
+                      Create Project <ArrowRight className="h-3.5 w-3.5" />
+                    </Button>
                   </div>
                 </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
-                {/* Card Actions */}
-                <div className="pt-6 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3">
-                  <Button
-                    onClick={() => handleExportJson(k0Template)}
-                    variant="outline"
-                    size="sm"
-                    className="rounded-full text-xs font-bold gap-1.5 border-slate-300 dark:border-slate-700"
-                  >
-                    <Download className="h-3.5 w-3.5" /> JSON Schema
-                  </Button>
+      {/* TAB 2: PROJECTS IN SELECTED STRUCTURE */}
+      {activeTab === 'projects' && (
+        <div className="space-y-6">
+          {/* Header Actions & Filter Bar */}
+          <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-card p-6 shadow-md space-y-4">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-border pb-4">
+              <div>
+                <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
+                  <FolderKanban className="h-5 w-5 text-blue-600" />
+                  Projects Belonging to Structure: <span className="text-blue-600">{selectedStructure?.name}</span>
+                </h3>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  Listing all projects created manually or imported into this Project Structure.
+                </p>
+              </div>
 
+              <div className="flex items-center gap-2 shrink-0">
+                <Button
+                  onClick={() => setShowManualModal(true)}
+                  size="sm"
+                  className="bg-[#0066CC] hover:bg-[#0052A3] text-white font-bold rounded-full px-4 py-2 text-xs shadow-md shadow-blue-500/20 gap-1.5 cursor-pointer"
+                >
+                  <PlusCircle className="h-4 w-4" /> Create Project
+                </Button>
+                <Button
+                  onClick={() => setShowImportModal(true)}
+                  size="sm"
+                  variant="outline"
+                  className="bg-card hover:bg-accent border-slate-300 dark:border-slate-700 text-foreground font-bold rounded-full px-4 py-2 text-xs shadow-sm gap-1.5 cursor-pointer"
+                >
+                  <FileSpreadsheet className="h-4 w-4 text-emerald-500" /> Import Project
+                </Button>
+                <Button
+                  onClick={fetchStructureProjects}
+                  size="sm"
+                  variant="ghost"
+                  className="rounded-full p-2 text-muted-foreground hover:text-foreground cursor-pointer"
+                  title="Refresh Projects List"
+                >
+                  <RefreshCw className={`h-4 w-4 ${isProjectsLoading ? 'animate-spin' : ''}`} />
+                </Button>
+              </div>
+            </div>
+
+            {/* Filter controls */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="relative flex-1 max-w-md">
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder="Filter projects by code, name, or details..."
+                  value={projectSearchQuery}
+                  onChange={(e) => setProjectSearchQuery(e.target.value)}
+                  className="pl-10 text-xs rounded-xl border-slate-300 dark:border-slate-700"
+                />
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-semibold text-muted-foreground">Status:</span>
+                <select
+                  value={projectStatusFilter}
+                  onChange={(e) => setProjectStatusFilter(e.target.value)}
+                  className="bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-foreground font-bold text-xs rounded-xl px-3 py-1.5 focus:outline-none cursor-pointer"
+                >
+                  <option value="ALL">All Statuses</option>
+                  <option value="draft">Draft</option>
+                  <option value="active">Active</option>
+                  <option value="on_hold">On Hold</option>
+                  <option value="completed">Completed</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          {/* Projects Table */}
+          <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-card overflow-hidden shadow-xl">
+            {isProjectsLoading ? (
+              <div className="flex h-48 items-center justify-center space-y-2 flex-col">
+                <div className="h-6 w-6 animate-spin rounded-full border-3 border-blue-600 border-t-transparent" />
+                <p className="text-xs font-semibold text-muted-foreground">Loading projects...</p>
+              </div>
+            ) : structureProjects.length === 0 ? (
+              <div className="p-12 text-center space-y-4">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-muted-foreground mx-auto">
+                  <FolderKanban className="h-8 w-8 text-blue-500 opacity-60" />
+                </div>
+                <div>
+                  <h4 className="text-base font-bold text-foreground">No Projects Created Yet</h4>
+                  <p className="text-xs text-muted-foreground max-w-sm mx-auto mt-1">
+                    No projects belong to structure <strong>{selectedStructure?.code}</strong> yet. You can create one manually or import an Excel file.
+                  </p>
+                </div>
+                <div className="flex items-center justify-center gap-3 pt-2">
                   <Button
-                    onClick={() => handleCreateProjectWithTemplate(k0Template)}
+                    onClick={() => setShowManualModal(true)}
                     size="sm"
                     className="bg-[#0066CC] hover:bg-[#0052A3] text-white font-bold rounded-full px-5 py-2 text-xs shadow-md shadow-blue-500/20 gap-1.5"
                   >
-                    Create K0 Project <ArrowRight className="h-3.5 w-3.5" />
+                    <PlusCircle className="h-4 w-4" /> Create Manual Project
+                  </Button>
+                  <Button
+                    onClick={() => setShowImportModal(true)}
+                    size="sm"
+                    variant="outline"
+                    className="rounded-full px-5 py-2 text-xs font-bold gap-1.5"
+                  >
+                    <FileSpreadsheet className="h-4 w-4 text-emerald-500" /> Import Excel Project
                   </Button>
                 </div>
               </div>
-            )}
-
-            {/* K9 TEMPLATE CARD */}
-            {k9Template && (
-              <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-card p-6 sm:p-8 shadow-xl space-y-6 flex flex-col justify-between relative overflow-hidden group hover:border-blue-500/40 transition-all">
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-600/10 text-indigo-600 font-black text-xl border border-indigo-500/20">
-                        K9
-                      </div>
-                      <div>
-                        <h2 className="text-xl font-extrabold text-foreground">{k9Template.name}</h2>
-                        <p className="text-xs text-muted-foreground font-mono">Code: K9 • Version {k9Template.version}</p>
-                      </div>
-                    </div>
-                    <Badge variant="outline" className="border-emerald-500/40 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold rounded-full px-3 py-1">
-                      <CheckCircle2 className="h-3.5 w-3.5 mr-1" /> Published Standard
-                    </Badge>
-                  </div>
-
-                  <p className="text-xs text-muted-foreground leading-relaxed">
-                    {k9Template.description || 'Standard CMF K9 modular architecture template for multi-supplier sourcing, unique object IDs, weekly capacity measurement, and technical SQD audits.'}
-                  </p>
-
-                  {/* 3-Role Workflow Modules Preview */}
-                  <div className="space-y-3 pt-2">
-                    <h4 className="text-xs font-extrabold uppercase tracking-wider text-muted-foreground">3-Role Module Structure</h4>
-                    <div className="grid grid-cols-3 gap-2">
-                      <div className="p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/50 space-y-1">
-                        <div className="flex items-center gap-1.5 text-blue-600 font-bold text-xs">
-                          <ShoppingBag className="h-3.5 w-3.5" /> 1. Buyer
-                        </div>
-                        <p className="text-[11px] text-muted-foreground">Unique ID, Supplier, GST, FETE</p>
-                      </div>
-
-                      <div className="p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/50 space-y-1">
-                        <div className="flex items-center gap-1.5 text-amber-500 font-bold text-xs">
-                          <Gauge className="h-3.5 w-3.5" /> 2. Capacity
-                        </div>
-                        <p className="text-[11px] text-muted-foreground">Contracted & Weekly Measured</p>
-                      </div>
-
-                      <div className="p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/50 space-y-1">
-                        <div className="flex items-center gap-1.5 text-emerald-500 font-bold text-xs">
-                          <ShieldCheck className="h-3.5 w-3.5" /> 3. SQD
-                        </div>
-                        <p className="text-[11px] text-muted-foreground">CAT Evaluation, Tech Manager</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Card Actions */}
-                <div className="pt-6 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3">
-                  <Button
-                    onClick={() => handleExportJson(k9Template)}
-                    variant="outline"
-                    size="sm"
-                    className="rounded-full text-xs font-bold gap-1.5 border-slate-300 dark:border-slate-700"
-                  >
-                    <Download className="h-3.5 w-3.5" /> JSON Schema
-                  </Button>
-
-                  <Button
-                    onClick={() => handleCreateProjectWithTemplate(k9Template)}
-                    size="sm"
-                    className="bg-[#0066CC] hover:bg-[#0052A3] text-white font-bold rounded-full px-5 py-2 text-xs shadow-md shadow-blue-500/20 gap-1.5"
-                  >
-                    Create K9 Project <ArrowRight className="h-3.5 w-3.5" />
-                  </Button>
-                </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-slate-100 dark:bg-slate-800/80 font-extrabold uppercase text-muted-foreground tracking-wider">
+                    <tr>
+                      <th className="p-4 pl-6">Project Code</th>
+                      <th className="p-4">Project Name</th>
+                      <th className="p-4">Status</th>
+                      <th className="p-4">Parts Count</th>
+                      <th className="p-4">Created Date</th>
+                      <th className="p-4 pr-6 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-border">
+                    {structureProjects.map((prj) => (
+                      <tr key={prj.id} className="hover:bg-accent/40 transition-colors">
+                        <td className="p-4 pl-6 font-mono font-bold text-blue-600 dark:text-blue-400">
+                          {prj.code}
+                        </td>
+                        <td className="p-4 font-bold text-foreground">
+                          <div>{prj.name}</div>
+                          {prj.description && (
+                            <div className="text-[11px] font-normal text-muted-foreground line-clamp-1">{prj.description}</div>
+                          )}
+                        </td>
+                        <td className="p-4">
+                          <Badge
+                            variant="outline"
+                            className={`text-[10px] font-bold rounded-full px-2.5 py-0.5 uppercase ${
+                              prj.status === 'active'
+                                ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-600'
+                                : prj.status === 'completed'
+                                ? 'border-blue-500/40 bg-blue-500/10 text-blue-600'
+                                : 'border-slate-500/40 bg-slate-500/10 text-slate-600'
+                            }`}
+                          >
+                            {prj.status}
+                          </Badge>
+                        </td>
+                        <td className="p-4 font-semibold text-foreground">
+                          {prj.partsCount || 0} parts
+                        </td>
+                        <td className="p-4 text-muted-foreground text-[11px]">
+                          {prj.createdAt ? new Date(prj.createdAt).toLocaleDateString() : 'N/A'}
+                        </td>
+                        <td className="p-4 pr-6 text-right">
+                          <Button
+                            onClick={() => navigate(`/projects/${prj.id}`)}
+                            size="sm"
+                            variant="ghost"
+                            className="rounded-full text-xs font-bold text-blue-600 hover:text-blue-700 hover:bg-blue-50 dark:hover:bg-blue-950/50 gap-1"
+                          >
+                            View Details <ExternalLink className="h-3.5 w-3.5" />
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             )}
           </div>
         </div>
       )}
 
-      {/* TAB 2: INTERACTIVE FIELD EXPLORER */}
+      {/* TAB 3: FIELD SCHEMA EXPLORER */}
       {activeTab === 'explorer' && (
         <div className="space-y-6">
-          {/* Search & Role Filter Bar */}
           <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-card p-4 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="relative flex-1 max-w-md">
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -453,14 +722,10 @@ export default function TemplateStudioPage() {
             </div>
           </div>
 
-          {/* Fields Table */}
           <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-card overflow-hidden shadow-md">
             <div className="p-4 border-b border-border bg-slate-50/70 dark:bg-slate-900/60 flex items-center justify-between">
               <span className="text-xs font-bold text-foreground">
                 Showing {filteredFields.length} Defined Schema Fields
-              </span>
-              <span className="text-[11px] text-muted-foreground">
-                Template Filter: {selectedTemplateCode} | Role Filter: {selectedRoleFilter}
               </span>
             </div>
 
@@ -468,13 +733,13 @@ export default function TemplateStudioPage() {
               <table className="w-full text-left text-xs">
                 <thead className="bg-slate-100 dark:bg-slate-800/80 font-extrabold uppercase text-muted-foreground tracking-wider">
                   <tr>
-                    <th className="p-3.5 pl-6">Template</th>
+                    <th className="p-3.5 pl-6">Structure</th>
                     <th className="p-3.5">Field Label</th>
                     <th className="p-3.5">Internal Name</th>
-                    <th className="p-3.5">Role Section</th>
-                    <th className="p-3.5">Field Type</th>
+                    <th className="p-3.5">Section</th>
+                    <th className="p-3.5">Type</th>
                     <th className="p-3.5">Required</th>
-                    <th className="p-3.5 pr-6">Validation / Options</th>
+                    <th className="p-3.5 pr-6">Validation / Rules</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border">
@@ -524,14 +789,14 @@ export default function TemplateStudioPage() {
         </div>
       )}
 
-      {/* TAB 3: K0 VS K9 COMPARISON MATRIX */}
+      {/* TAB 4: STRUCTURE COMPARISON */}
       {activeTab === 'matrix' && (
         <div className="space-y-6">
           <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-card p-6 sm:p-8 shadow-xl space-y-6">
             <div>
-              <h2 className="text-xl font-bold tracking-tight text-foreground">CMF K0 vs CMF K9 Comparison Matrix</h2>
+              <h2 className="text-xl font-bold tracking-tight text-foreground">Project Structure Comparison Matrix</h2>
               <p className="text-xs text-muted-foreground mt-1">
-                Comparative architecture analysis of CMF K0 and CMF K9 template definitions.
+                Comparative architecture analysis of loaded Project Structure definitions.
               </p>
             </div>
 
@@ -540,39 +805,51 @@ export default function TemplateStudioPage() {
                 <thead>
                   <tr className="border-b border-border bg-slate-50 dark:bg-slate-900">
                     <th className="p-4 font-bold text-muted-foreground w-1/3">Criteria / Feature</th>
-                    <th className="p-4 font-black text-blue-600 dark:text-blue-400 text-sm w-1/3 border-l border-border">
-                      CMF K0 (Direct Purchasing)
-                    </th>
-                    <th className="p-4 font-black text-indigo-600 dark:text-indigo-400 text-sm w-1/3 border-l border-border">
-                      CMF K9 (Modular Architecture)
-                    </th>
+                    {templates.map((tmpl) => (
+                      <th key={tmpl.id} className="p-4 font-black text-blue-600 dark:text-blue-400 text-sm border-l border-border">
+                        {tmpl.code} ({tmpl.name})
+                      </th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border">
                   <tr>
-                    <td className="p-4 font-bold text-foreground">Primary Object Key</td>
-                    <td className="p-4 border-l border-border font-mono">part_number & line_item</td>
-                    <td className="p-4 border-l border-border font-mono">unique_id & part_number</td>
+                    <td className="p-4 font-bold text-foreground">Version & Status</td>
+                    {templates.map((tmpl) => (
+                      <td key={tmpl.id} className="p-4 border-l border-border font-mono">
+                        v{tmpl.version} ({tmpl.status})
+                      </td>
+                    ))}
                   </tr>
                   <tr>
-                    <td className="p-4 font-bold text-foreground">Buyer Required Fields</td>
-                    <td className="p-4 border-l border-border">part_name, part_number, quantity_parts_per_vehicle</td>
-                    <td className="p-4 border-l border-border">unique_id, part_name, part_number, supplier, gst_no</td>
+                    <td className="p-4 font-bold text-foreground">Total Sections</td>
+                    {templates.map((tmpl) => (
+                      <td key={tmpl.id} className="p-4 border-l border-border font-bold">
+                        {tmpl.sections?.length || 0} sections
+                      </td>
+                    ))}
                   </tr>
                   <tr>
-                    <td className="p-4 font-bold text-foreground">Capacity Manager Focus</td>
-                    <td className="p-4 border-l border-border">weekly_capacity_requested_gst & scr_tko_link</td>
-                    <td className="p-4 border-l border-border">contracted_capacity & weekly_capacity_measured</td>
+                    <td className="p-4 font-bold text-foreground">Total Fields Count</td>
+                    {templates.map((tmpl) => {
+                      const count = tmpl.sections?.reduce(
+                        (acc, sec) => acc + (sec.groups?.reduce((gAcc, grp) => gAcc + (grp.fields?.length || 0), 0) || 0),
+                        0
+                      ) || 0;
+                      return (
+                        <td key={tmpl.id} className="p-4 border-l border-border font-mono font-bold text-indigo-600">
+                          {count} fields
+                        </td>
+                      );
+                    })}
                   </tr>
                   <tr>
-                    <td className="p-4 font-bold text-foreground">SQD Evaluation Metric</td>
-                    <td className="p-4 border-l border-border">cat_rating (GREEN/AMBER/RED), cat_real_date, sqvl</td>
-                    <td className="p-4 border-l border-border">cat_evaluation (GREEN/AMBER/RED), technical_manager</td>
-                  </tr>
-                  <tr>
-                    <td className="p-4 font-bold text-foreground">Workflow Steps</td>
-                    <td className="p-4 border-l border-border">4 Steps (Buyer -&gt; Capacity -&gt; SQD -&gt; Validated)</td>
-                    <td className="p-4 border-l border-border">4 Steps (Buyer -&gt; Capacity -&gt; SQD -&gt; Validated)</td>
+                    <td className="p-4 font-bold text-foreground">Description</td>
+                    {templates.map((tmpl) => (
+                      <td key={tmpl.id} className="p-4 border-l border-border text-muted-foreground">
+                        {tmpl.description || 'No description provided.'}
+                      </td>
+                    ))}
                   </tr>
                 </tbody>
               </table>
@@ -581,23 +858,23 @@ export default function TemplateStudioPage() {
         </div>
       )}
 
-      {/* TAB 4: RAW JSON SCHEMA CODE INSPECTOR */}
-      {activeTab === 'json' && (
+      {/* TAB 5: RAW JSON SCHEMA CODE INSPECTOR */}
+      {activeTab === 'json' && selectedStructure && (
         <div className="space-y-6">
           <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-card p-6 sm:p-8 shadow-xl space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border pb-4">
               <div>
                 <h2 className="text-xl font-bold tracking-tight text-foreground">
-                  JSON Schema Definition ({currentTemplate?.code})
+                  JSON Schema Definition ({selectedStructure.code})
                 </h2>
                 <p className="text-xs text-muted-foreground mt-0.5">
-                  Template Version {currentTemplate?.version} • Status: {currentTemplate?.status}
+                  Template Version {selectedStructure.version} • Status: {selectedStructure.status}
                 </p>
               </div>
 
               <div className="flex items-center gap-3">
                 <Button
-                  onClick={() => handleCopyJson(currentTemplate || k0Template)}
+                  onClick={() => handleCopyJson(selectedStructure)}
                   variant="outline"
                   size="sm"
                   className="rounded-full text-xs font-bold gap-1.5"
@@ -605,7 +882,7 @@ export default function TemplateStudioPage() {
                   <Copy className="h-3.5 w-3.5" /> Copy JSON
                 </Button>
                 <Button
-                  onClick={() => handleExportJson(currentTemplate || k0Template)}
+                  onClick={() => handleExportJson(selectedStructure)}
                   size="sm"
                   className="bg-[#0066CC] hover:bg-[#0052A3] text-white font-bold rounded-full text-xs gap-1.5 shadow-sm"
                 >
@@ -615,8 +892,78 @@ export default function TemplateStudioPage() {
             </div>
 
             <div className="rounded-2xl border border-slate-800 bg-[#0a101d] p-5 font-mono text-xs text-blue-300 overflow-x-auto max-h-[600px] leading-relaxed shadow-inner">
-              <pre>{JSON.stringify(currentTemplate, null, 2)}</pre>
+              <pre>{JSON.stringify(selectedStructure, null, 2)}</pre>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: MANUAL PROJECT CREATION */}
+      {showManualModal && selectedStructure && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto animate-fade-in">
+          <div className="bg-card border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative space-y-6">
+            <div className="flex items-center justify-between border-b border-border pb-4">
+              <div>
+                <h3 className="text-lg font-bold text-foreground">
+                  Create Project in <span className="text-blue-600">{selectedStructure.name}</span>
+                </h3>
+                <p className="text-xs text-muted-foreground">
+                  The form below is dynamically generated from structure schema <code className="text-blue-500 font-bold">{selectedStructure.code}</code>.
+                </p>
+              </div>
+              <button
+                onClick={() => setShowManualModal(false)}
+                className="rounded-full p-2 text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <DynamicForm
+              template={selectedStructure}
+              onSave={handleSaveManualProject}
+              isSaving={isCreatingProject}
+              title={`New Project Form (${selectedStructure.code})`}
+              onCancel={() => setShowManualModal(false)}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: EXCEL IMPORT PIPELINE */}
+      {showImportModal && selectedStructure && (
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto animate-fade-in">
+          <div className="bg-card border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 max-w-5xl w-full max-h-[92vh] overflow-y-auto shadow-2xl relative space-y-6">
+            <div className="flex items-center justify-between border-b border-border pb-4">
+              <div>
+                <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
+                  <FileSpreadsheet className="h-5 w-5 text-emerald-500" />
+                  Excel Import Pipeline — Structure: <span className="text-blue-600">{selectedStructure.name}</span>
+                </h3>
+                <p className="text-xs text-muted-foreground">
+                  Detect layout, map fields using RAG AI & memory, validate, preview, and create projects inside <code className="text-blue-500 font-bold">{selectedStructure.code}</code>.
+                </p>
+              </div>
+              <button
+                onClick={() => {
+                  setShowImportModal(false);
+                  fetchStructureProjects();
+                }}
+                className="rounded-full p-2 text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <ImportWizard
+              preselectedStructureId={selectedStructure.id}
+              preselectedTemplateCode={selectedStructure.code}
+              onComplete={() => {
+                setShowImportModal(false);
+                fetchStructureProjects();
+                toast.success(`Import complete! Refreshing ${selectedStructure.code} projects.`);
+              }}
+            />
           </div>
         </div>
       )}

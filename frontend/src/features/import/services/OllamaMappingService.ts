@@ -36,8 +36,9 @@ export class OllamaMappingService {
     file?: File,
     headerRow?: number,
     sheetName?: string,
+    orientation?: string,
   ): Promise<OllamaMappingResult> {
-    return generateOllamaMapping(templateIdentifier, excelHeaders, file, headerRow, sheetName);
+    return generateOllamaMapping(templateIdentifier, excelHeaders, file, headerRow, sheetName, orientation);
   }
 
 

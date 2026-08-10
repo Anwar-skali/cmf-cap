@@ -23,6 +23,10 @@ import {
   Rows3,
   Layers,
   Sparkles,
+  ScanSearch,
+  AlignVerticalJustifyStart,
+  AlignHorizontalJustifyStart,
+  Wand2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -46,13 +50,15 @@ import {
   type WorksheetScore,
 } from '@/api/endpoints/importApi';
 import { MappingPreviewComponent } from './components/MappingPreviewComponent';
-import { ExcelHeaderExtractor } from './services/ExcelHeaderExtractor';
+import { ExcelHeaderExtractor, type OrientationMode, type OrientationInfo } from './services/ExcelHeaderExtractor';
 import { OllamaMappingService } from './services/OllamaMappingService';
 import { MappingCacheService } from './services/MappingCacheService';
 import { ApiError } from '@/api/client';
 
 interface ImportWizardProps {
   defaultEntity?: string;
+  preselectedStructureId?: string;
+  preselectedTemplateCode?: string;
   onComplete?: () => void;
 }
 
@@ -66,7 +72,12 @@ const STEP_LABELS = [
   { stepNum: 7, title: 'Import' },
 ];
 
-export function ImportWizard({ defaultEntity = 'projects', onComplete }: ImportWizardProps) {
+export function ImportWizard({
+  defaultEntity = 'projects',
+  preselectedStructureId,
+  preselectedTemplateCode,
+  onComplete,
+}: ImportWizardProps) {
   const toast = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -82,6 +93,14 @@ export function ImportWizard({ defaultEntity = 'projects', onComplete }: ImportW
   const [detectedSheet, setDetectedSheet] = useState<string>('');
   const [selectedSheet, setSelectedSheet] = useState<string>('');
   const [sheetConfidence, setSheetConfidence] = useState<number>(0);
+
+  // Orientation
+  const [selectedOrientation, setSelectedOrientation] = useState<OrientationMode>('AUTO');
+  const [orientationInfo, setOrientationInfo] = useState<OrientationInfo | null>(null);
+
+  // Refs: race-condition guard and always-current orientation (bypasses stale React closure)
+  const analysisCounterRef = useRef(0);
+  const orientationRef = useRef<OrientationMode>('AUTO');
 
   // Step 3: Header Row Detection
   const [clientHeaders, setClientHeaders] = useState<string[]>([]);
@@ -126,14 +145,27 @@ export function ImportWizard({ defaultEntity = 'projects', onComplete }: ImportW
       try {
         const templates = await getImportTemplates();
         setAvailableTemplates(templates);
-        if (templates.length > 0) setSelectedTemplate(templates[0]);
+        if (preselectedStructureId || preselectedTemplateCode) {
+          const matched = templates.find(
+            (t) =>
+              (preselectedStructureId && (t.id === preselectedStructureId || t.code === preselectedStructureId)) ||
+              (preselectedTemplateCode && t.code?.toUpperCase() === preselectedTemplateCode.toUpperCase())
+          );
+          if (matched) {
+            setSelectedTemplate(matched);
+          } else if (templates.length > 0) {
+            setSelectedTemplate(templates[0]);
+          }
+        } else if (templates.length > 0) {
+          setSelectedTemplate(templates[0]);
+        }
       } catch {
         toast.error('Failed to load project templates.');
       } finally {
         setIsLoadingTemplates(false);
       }
     })();
-  }, []);
+  }, [preselectedStructureId, preselectedTemplateCode]);
 
   // Handler: Select/drop file in Step 1
   const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -161,11 +193,40 @@ export function ImportWizard({ defaultEntity = 'projects', onComplete }: ImportW
   };
 
   // Analyze workbook sheets and set up Step 2 & 3
-  const analyzeAndExtract = async (file: File, sheetOverride?: string, rowOverride?: number) => {
+  const analyzeAndExtract = async (file: File, sheetOverride?: string, rowOverride?: number, orientationOverride?: OrientationMode) => {
+    // Race condition guard: ignore stale async completions
+    const myAnalysisId = ++analysisCounterRef.current;
+
     setIsAnalyzingWorkbook(true);
     setIsExtractingHeaders(true);
     try {
-      const result = await ExcelHeaderExtractor.extractFromFile(file, rowOverride, sheetOverride);
+      const extraKeywords = new Set<string>();
+      const tmpl = selectedTemplate as any;
+      if (tmpl?.sections) {
+        for (const sec of tmpl.sections) {
+          for (const grp of sec.groups || []) {
+            for (const fld of grp.fields || []) {
+              if (fld.internalName) extraKeywords.add(fld.internalName.toLowerCase().replace(/_/g, ' '));
+              if (fld.label) extraKeywords.add(fld.label.toLowerCase().replace(/_/g, ' '));
+            }
+          }
+        }
+      }
+
+      // Always read from the ref — it's the CURRENT value even inside stale closures
+      const effectiveOrientation = orientationOverride ?? orientationRef.current;
+      console.log(`[IMPORT] analyzeAndExtract called — orientation: ${effectiveOrientation}, sheet: ${sheetOverride ?? 'auto'}`);
+
+      const result = await ExcelHeaderExtractor.extractFromFile(
+        file, rowOverride, sheetOverride, extraKeywords, effectiveOrientation
+      );
+
+      // Discard if a newer analysis has already started
+      if (myAnalysisId !== analysisCounterRef.current) {
+        console.log('[IMPORT] Discarding stale analysis result (a newer one is in progress).');
+        return;
+      }
+
       setClientHeaders(result.headers);
       setSheetScores(result.sheetScores);
       setDetectedSheet(result.sheetName);
@@ -177,14 +238,17 @@ export function ImportWizard({ defaultEntity = 'projects', onComplete }: ImportW
       }
       setHeaderConfidence(result.headerConfidence);
       setRowPreviews(result.rowPreviews);
+      setOrientationInfo(result.orientationInfo);
 
       // Auto advance to Step 2 if coming from Step 1
       if (step === 1) {
         setStep(2);
       }
     } catch (err: any) {
+      if (myAnalysisId !== analysisCounterRef.current) return;
       toast.error(err?.message || 'Failed to analyze Excel file worksheets.');
     } finally {
+      if (myAnalysisId !== analysisCounterRef.current) return;
       setIsAnalyzingWorkbook(false);
       setIsExtractingHeaders(false);
     }
@@ -193,14 +257,15 @@ export function ImportWizard({ defaultEntity = 'projects', onComplete }: ImportW
   const handleSheetChange = async (sheetName: string) => {
     setSelectedSheet(sheetName);
     if (selectedFile) {
-      await analyzeAndExtract(selectedFile, sheetName, undefined);
+      // Pass orientationRef.current — never use selectedOrientation state here (stale closure risk)
+      await analyzeAndExtract(selectedFile, sheetName, undefined, orientationRef.current);
     }
   };
 
   const handleHeaderRowChange = async (rowNum: number) => {
     setSelectedHeaderRow(rowNum);
     if (selectedFile) {
-      await analyzeAndExtract(selectedFile, selectedSheet, rowNum);
+      await analyzeAndExtract(selectedFile, selectedSheet, rowNum, orientationRef.current);
     }
   };
 
@@ -220,6 +285,7 @@ export function ImportWizard({ defaultEntity = 'projects', onComplete }: ImportW
         undefined,
         selectedHeaderRow,
         selectedSheet,
+        selectedOrientation !== 'AUTO' ? selectedOrientation : undefined,
       );
 
       setAiProgressStep('parsing_response');
@@ -267,7 +333,8 @@ export function ImportWizard({ defaultEntity = 'projects', onComplete }: ImportW
     setIsLoadingPreview(true);
     try {
       const executeMapping = OllamaMappingService.toExecuteMapping(wizardMapping);
-      const report = await previewImport(selectedFile, selectedTemplate.code, executeMapping);
+      const effectiveOrientation = selectedOrientation !== 'AUTO' ? selectedOrientation : (orientationInfo?.orientation ?? undefined);
+      const report = await previewImport(selectedFile, selectedTemplate.code, executeMapping, effectiveOrientation, selectedSheet);
       setPreviewReport(report);
       setStep(6);
     } catch (err: any) {
@@ -289,7 +356,8 @@ export function ImportWizard({ defaultEntity = 'projects', onComplete }: ImportW
 
     try {
       const executeMapping = OllamaMappingService.toExecuteMapping(wizardMapping);
-      const result = await executeImport(selectedFile, selectedTemplate.code, executeMapping, mode, strategy);
+      const effectiveOrientation = selectedOrientation !== 'AUTO' ? selectedOrientation : (orientationInfo?.orientation ?? undefined);
+      const result = await executeImport(selectedFile, selectedTemplate.code, executeMapping, mode, strategy, effectiveOrientation, selectedSheet);
       clearInterval(progressInterval);
       setImportProgress(100);
       setExecutionResult(result);
@@ -325,6 +393,10 @@ export function ImportWizard({ defaultEntity = 'projects', onComplete }: ImportW
     setImportProgress(0);
     setErrorFilter('all');
     setShowDebugPanel(false);
+    setSelectedOrientation('AUTO');
+    setOrientationInfo(null);
+    orientationRef.current = 'AUTO';
+    analysisCounterRef.current = 0;
   };
 
   const filteredErrors =
@@ -452,82 +524,398 @@ export function ImportWizard({ defaultEntity = 'projects', onComplete }: ImportW
                 <p className="font-medium text-sm">Analyzing workbook worksheets and calculating confidence scores...</p>
               </div>
             ) : (
-              <div className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                  {sheetScores.map((s) => {
-                    const isSelected = s.sheetName === selectedSheet;
-                    const isDetected = s.sheetName === detectedSheet;
-                    return (
-                      <div
-                        key={s.sheetName}
-                        onClick={() => handleSheetChange(s.sheetName)}
-                        className={`p-4 rounded-xl border-2 cursor-pointer transition-all hover:shadow-md ${
-                          isSelected
-                            ? 'border-primary bg-primary/5 shadow-sm'
-                            : s.isDashboardName
-                            ? 'border-muted opacity-60 bg-muted/20'
-                            : 'border-muted hover:border-primary/40'
-                        }`}
-                      >
-                        <div className="flex items-start justify-between gap-2">
-                          <div className="flex items-center gap-2">
-                            <FileSpreadsheet
-                              className={`h-4 w-4 ${isSelected ? 'text-primary' : 'text-muted-foreground'}`}
-                            />
-                            <span className="font-bold text-sm line-clamp-1">{s.sheetName}</span>
-                          </div>
-                          <Badge
-                            variant={s.confidence >= 80 ? 'default' : s.confidence >= 40 ? 'secondary' : 'outline'}
-                            className={`text-[10px] shrink-0 ${
-                              s.confidence >= 80
-                                ? 'bg-emerald-500/15 text-emerald-700 border-emerald-300'
-                                : s.confidence < 20
-                                ? 'text-muted-foreground opacity-60'
-                                : ''
-                            }`}
-                          >
-                            {s.confidence}% Score
+              <div className="space-y-6">
+                {/* Recommended Data Sheet Banner — adapts to VERTICAL vs HORIZONTAL mode */}
+                {(() => {
+                  const recSheet = sheetScores.find((s) => s.sheetName === detectedSheet) || sheetScores[0];
+                  if (!recSheet) return null;
+                  const isVertical = orientationInfo?.orientation === 'VERTICAL';
+                  return (
+                    <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/5 p-4 space-y-3">
+                      <div className="flex items-center justify-between flex-wrap gap-2">
+                        <div className="flex items-center gap-2">
+                          <Sparkles className="h-5 w-5 text-emerald-600" />
+                          <span className="text-xs uppercase font-extrabold tracking-wider text-emerald-700">
+                            Recommended Data Sheet:
+                          </span>
+                          <span className="text-base font-extrabold text-foreground">{recSheet.sheetName}</span>
+                          <Badge className="bg-emerald-600 text-white font-bold text-xs px-2.5 py-0.5">
+                            {recSheet.confidence}% Confidence
                           </Badge>
                         </div>
+                        <div className="flex items-center gap-2">
+                          {isVertical && (
+                            <Badge variant="outline" className="border-violet-400/60 text-violet-700 bg-violet-50 text-xs font-bold">
+                              Vertical / Key-Value
+                            </Badge>
+                          )}
+                          <Badge variant="outline" className="border-emerald-500/40 text-emerald-700 bg-emerald-50 text-xs font-bold">
+                            Class: {recSheet.classification || 'PROJECT_DATA'}
+                          </Badge>
+                        </div>
+                      </div>
 
-                        <div className="mt-3 text-xs text-muted-foreground space-y-1">
-                          <div className="flex justify-between">
-                            <span>Populated Rows:</span>
-                            <span className="font-medium text-foreground">{s.populatedRows}</span>
+                      {isVertical ? (
+                        /* ── VERTICAL stats ── */
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-xs pt-1">
+                          <div className="bg-background/80 p-2.5 rounded-lg border">
+                            <span className="text-muted-foreground block text-[10px]">Detected Field Column</span>
+                            <span className="font-bold text-foreground">{orientationInfo?.fieldColumn || 'A'}</span>
                           </div>
-                          <div className="flex justify-between">
-                            <span>Max Columns:</span>
-                            <span className="font-medium text-foreground">{s.maxColumns}</span>
+                          <div className="bg-background/80 p-2.5 rounded-lg border">
+                            <span className="text-muted-foreground block text-[10px]">Detected Value Column</span>
+                            <span className="font-bold text-foreground">{orientationInfo?.valueColumn || 'B'}</span>
                           </div>
-                          <div className="flex justify-between">
-                            <span>Keyword Hits:</span>
-                            <span className="font-medium text-foreground">{s.keywordHits}</span>
+                          <div className="bg-background/80 p-2.5 rounded-lg border">
+                            <span className="text-muted-foreground block text-[10px]">Detected Fields</span>
+                            <span className="font-bold text-foreground">
+                              {orientationInfo?.detectedFields ?? clientHeaders.length}
+                            </span>
+                          </div>
+                          <div className="bg-background/80 p-2.5 rounded-lg border">
+                            <span className="text-muted-foreground block text-[10px]">Non-empty Values</span>
+                            <span className="font-bold text-foreground">
+                              {orientationInfo?.valueFillCount ?? 0}
+                            </span>
+                          </div>
+                          <div className="bg-background/80 p-2.5 rounded-lg border">
+                            <span className="text-muted-foreground block text-[10px]">Project Field Matches</span>
+                            <span className="font-bold text-emerald-600">
+                              {orientationInfo?.projectFieldMatches ?? recSheet.projectFieldMatches ?? 0}
+                            </span>
+                          </div>
+                          <div className="bg-background/80 p-2.5 rounded-lg border">
+                            <span className="text-muted-foreground block text-[10px]">Unmapped Fields</span>
+                            <span className="font-bold text-foreground">
+                              {Math.max(0, (orientationInfo?.detectedFields ?? clientHeaders.length) - (orientationInfo?.projectFieldMatches ?? recSheet.projectFieldMatches ?? 0))}
+                            </span>
                           </div>
                         </div>
-
-                        {s.preview.length > 0 && (
-                          <div className="mt-3 pt-2 border-t flex flex-wrap gap-1">
-                            {s.preview.slice(0, 4).map((c, idx) => (
-                              <span key={idx} className="text-[10px] bg-muted px-1.5 py-0.5 rounded line-clamp-1">
-                                {c}
-                              </span>
-                            ))}
+                      ) : (
+                        /* ── HORIZONTAL stats ── */
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-xs pt-1">
+                          <div className="bg-background/80 p-2.5 rounded-lg border">
+                            <span className="text-muted-foreground block text-[10px]">Detected Header Row</span>
+                            <span className="font-bold text-foreground">Row {detectedHeaderRow}</span>
                           </div>
-                        )}
-
-                        {isDetected && (
-                          <div className="mt-2 text-[10px] text-emerald-700 font-bold flex items-center gap-1">
-                            <CheckCircle2 className="h-3 w-3" /> Highest Confidence Data Sheet
+                          <div className="bg-background/80 p-2.5 rounded-lg border">
+                            <span className="text-muted-foreground block text-[10px]">Populated Rows</span>
+                            <span className="font-bold text-foreground">{recSheet.populatedRows}</span>
                           </div>
-                        )}
-                      </div>
-                    );
-                  })}
+                          <div className="bg-background/80 p-2.5 rounded-lg border">
+                            <span className="text-muted-foreground block text-[10px]">Populated Columns</span>
+                            <span className="font-bold text-foreground">{recSheet.maxColumns}</span>
+                          </div>
+                          <div className="bg-background/80 p-2.5 rounded-lg border">
+                            <span className="text-muted-foreground block text-[10px]">Project Field Matches</span>
+                            <span className="font-bold text-foreground">{recSheet.projectFieldMatches ?? recSheet.keywordHits}</span>
+                          </div>
+                          <div className="bg-background/80 p-2.5 rounded-lg border">
+                            <span className="text-muted-foreground block text-[10px]">Structure Similarity</span>
+                            <span className="font-bold text-emerald-600">{recSheet.structureSimilarity ?? 0}%</span>
+                          </div>
+                          <div className="bg-background/80 p-2.5 rounded-lg border">
+                            <span className="text-muted-foreground block text-[10px]">Pivot Indicators</span>
+                            <span className="font-bold text-foreground">{recSheet.pivotIndicators ?? 0}</span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()}
+
+                {/* Grid of Sheet Cards */}
+                <div>
+                  <h4 className="text-xs font-extrabold uppercase tracking-wider text-muted-foreground mb-3">
+                    Evaluated Worksheets Cards
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                    {sheetScores.map((s) => {
+                      const isSelected = s.sheetName === selectedSheet;
+                      const isDetected = s.sheetName === detectedSheet;
+                      const isProjectData = (s.classification || 'PROJECT_DATA') === 'PROJECT_DATA';
+
+                      return (
+                        <div
+                          key={s.sheetName}
+                          onClick={() => handleSheetChange(s.sheetName)}
+                          className={`p-4 rounded-xl border-2 cursor-pointer transition-all hover:shadow-md ${
+                            isSelected
+                              ? 'border-primary bg-primary/5 shadow-sm'
+                              : !isProjectData
+                              ? 'border-muted opacity-75 bg-muted/20'
+                              : 'border-muted hover:border-primary/40'
+                          }`}
+                        >
+                          <div className="flex items-start justify-between gap-2">
+                            <div className="flex items-center gap-2">
+                              <FileSpreadsheet
+                                className={`h-4 w-4 ${isSelected ? 'text-primary' : 'text-muted-foreground'}`}
+                              />
+                              <span className="font-bold text-sm line-clamp-1">{s.sheetName}</span>
+                            </div>
+                            <Badge
+                              variant={s.confidence >= 80 ? 'default' : s.confidence >= 40 ? 'secondary' : 'outline'}
+                              className={`text-[10px] shrink-0 ${
+                                s.confidence >= 80
+                                  ? 'bg-emerald-500/15 text-emerald-700 border-emerald-300'
+                                  : s.confidence < 30
+                                  ? 'text-muted-foreground opacity-60'
+                                  : ''
+                              }`}
+                            >
+                              {s.confidence}% Score
+                            </Badge>
+                          </div>
+
+                          <div className="mt-2 flex items-center gap-1.5">
+                            <span
+                              className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full ${
+                                s.classification === 'PROJECT_DATA'
+                                  ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
+                                  : s.classification === 'PIVOT_TABLE'
+                                  ? 'bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300'
+                                  : s.classification === 'KPI'
+                                  ? 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300'
+                                  : s.classification === 'SUMMARY'
+                                  ? 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'
+                                  : 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
+                              }`}
+                            >
+                              {s.classification || 'PROJECT_DATA'}
+                            </span>
+                          </div>
+
+                          <div className="mt-3 text-xs text-muted-foreground space-y-1">
+                            {orientationInfo?.orientation === 'VERTICAL' ? (
+                              /* Vertical card metrics */
+                              <>
+                                <div className="flex justify-between">
+                                  <span>Field/Value Pairs:</span>
+                                  <span className="font-medium text-foreground">{s.populatedRows}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                  <span>Field Matches:</span>
+                                  <span className="font-medium text-foreground">{s.projectFieldMatches ?? s.keywordHits}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                  <span>Value Fill:</span>
+                                  <span className="font-medium text-emerald-600">{s.structureSimilarity ?? 0}%</span>
+                                </div>
+                              </>
+                            ) : (
+                              /* Horizontal card metrics */
+                              <>
+                                <div className="flex justify-between">
+                                  <span>Populated Rows:</span>
+                                  <span className="font-medium text-foreground">{s.populatedRows}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                  <span>Max Columns:</span>
+                                  <span className="font-medium text-foreground">{s.maxColumns}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                  <span>Project Field Matches:</span>
+                                  <span className="font-medium text-foreground">{s.projectFieldMatches ?? s.keywordHits}</span>
+                                </div>
+                                {s.structureSimilarity != null && s.structureSimilarity > 0 && (
+                                  <div className="flex justify-between text-emerald-600 font-semibold">
+                                    <span>Structure Match:</span>
+                                    <span>{s.structureSimilarity}%</span>
+                                  </div>
+                                )}
+                              </>
+                            )}
+                          </div>
+
+                          {s.preview.length > 0 && (
+                            <div className="mt-3 pt-2 border-t flex flex-wrap gap-1">
+                              {s.preview.slice(0, 4).map((c, idx) => (
+                                <span key={idx} className="text-[10px] bg-muted px-1.5 py-0.5 rounded line-clamp-1">
+                                  {c}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+
+                          {isDetected && (
+                            <div className="mt-2 text-[10px] text-emerald-700 font-bold flex items-center gap-1">
+                              <CheckCircle2 className="h-3 w-3" /> Recommended Data Sheet
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Candidate Ranking Table */}
+                <div className="rounded-xl border border-border bg-card overflow-hidden">
+                  <div className="p-3 bg-muted/40 border-b flex items-center justify-between">
+                    <span className="text-xs font-extrabold uppercase tracking-wider text-foreground">
+                      Worksheets Ranking Table
+                    </span>
+                    <span className="text-[11px] text-muted-foreground">Click any row to manually override selection</span>
+                  </div>
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow className="text-[11px] uppercase">
+                          <TableHead>Worksheet Name</TableHead>
+                          <TableHead>Classification</TableHead>
+                          <TableHead>Confidence</TableHead>
+                          {orientationInfo?.orientation === 'VERTICAL' ? (
+                            <>
+                              <TableHead>Field/Value Pairs</TableHead>
+                              <TableHead>Field Matches</TableHead>
+                              <TableHead>Value Fill</TableHead>
+                            </>
+                          ) : (
+                            <>
+                              <TableHead>Columns</TableHead>
+                              <TableHead>Rows</TableHead>
+                              <TableHead>Field Matches</TableHead>
+                              <TableHead>Structure Match</TableHead>
+                            </>
+                          )}
+                          <TableHead className="text-right">Action</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {sheetScores.map((s) => {
+                          const isSelected = s.sheetName === selectedSheet;
+                          const isRecommended = s.sheetName === detectedSheet;
+                          return (
+                            <TableRow
+                              key={s.sheetName}
+                              onClick={() => handleSheetChange(s.sheetName)}
+                              className={`cursor-pointer text-xs ${isSelected ? 'bg-primary/10 font-semibold' : 'hover:bg-accent/50'}`}
+                            >
+                              <TableCell className="font-bold flex items-center gap-2">
+                                <FileSpreadsheet className="h-3.5 w-3.5 text-primary shrink-0" />
+                                {s.sheetName}
+                                {isRecommended && (
+                                  <Badge className="bg-emerald-500/15 text-emerald-700 border-emerald-300 text-[10px] py-0 px-1.5">
+                                    Recommended
+                                  </Badge>
+                                )}
+                              </TableCell>
+                              <TableCell>
+                                <span
+                                  className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                                    s.classification === 'PROJECT_DATA'
+                                      ? 'bg-emerald-100 text-emerald-800'
+                                      : s.classification === 'PIVOT_TABLE'
+                                      ? 'bg-purple-100 text-purple-800'
+                                      : s.classification === 'KPI'
+                                      ? 'bg-rose-100 text-rose-800'
+                                      : s.classification === 'SUMMARY'
+                                      ? 'bg-amber-100 text-amber-800'
+                                      : 'bg-slate-100 text-slate-700'
+                                  }`}
+                                >
+                                  {s.classification || 'PROJECT_DATA'}
+                                </span>
+                              </TableCell>
+                              <TableCell className="font-bold">{s.confidence}%</TableCell>
+                              {orientationInfo?.orientation === 'VERTICAL' ? (
+                                <>
+                                  <TableCell>{s.populatedRows}</TableCell>
+                                  <TableCell className="text-emerald-700 font-semibold">{s.projectFieldMatches ?? s.keywordHits}</TableCell>
+                                  <TableCell>{s.structureSimilarity ?? 0}%</TableCell>
+                                </>
+                              ) : (
+                                <>
+                                  <TableCell>{s.maxColumns}</TableCell>
+                                  <TableCell>{s.populatedRows}</TableCell>
+                                  <TableCell>{s.projectFieldMatches ?? s.keywordHits}</TableCell>
+                                  <TableCell>{s.structureSimilarity ?? 0}%</TableCell>
+                                </>
+                              )}
+                              <TableCell className="text-right">
+                                {isSelected ? (
+                                  <Badge variant="default" className="text-[10px] bg-primary text-primary-foreground">
+                                    Selected
+                                  </Badge>
+                                ) : (
+                                  <Button variant="ghost" size="sm" className="h-6 text-[10px] px-2">
+                                    Select
+                                  </Button>
+                                )}
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })}
+                      </TableBody>
+                    </Table>
+                  </div>
                 </div>
               </div>
             )}
 
-            <div className="flex justify-between items-center">
+                {/* Orientation Detection Card */}
+                <div className="rounded-xl border border-border bg-card p-5 space-y-4">
+                  <div className="flex items-center gap-2 pb-3 border-b">
+                    <ScanSearch className="h-4 w-4 text-primary" />
+                    <span className="text-sm font-bold">Orientation Detection</span>
+                    {orientationInfo && (
+                      <span
+                        className={`ml-auto text-[11px] font-extrabold px-2.5 py-0.5 rounded-full ${
+                          orientationInfo.orientation === 'VERTICAL'
+                            ? 'bg-violet-100 text-violet-800 dark:bg-violet-950 dark:text-violet-300'
+                            : 'bg-sky-100 text-sky-800 dark:bg-sky-950 dark:text-sky-300'
+                        }`}
+                      >
+                        {orientationInfo.orientation} — {orientationInfo.confidence}% confidence
+                      </span>
+                    )}
+                  </div>
+
+                  {orientationInfo && (
+                    <p className="text-xs text-muted-foreground italic">{orientationInfo.reason}</p>
+                  )}
+
+                  <div className="flex flex-wrap gap-3">
+                    {([
+                      { mode: 'AUTO' as OrientationMode, label: 'Auto-detect', icon: <Wand2 className="h-3.5 w-3.5" />, desc: 'System picks best orientation automatically' },
+                      { mode: 'VERTICAL' as OrientationMode, label: 'Vertical / Key-Value', icon: <AlignVerticalJustifyStart className="h-3.5 w-3.5" />, desc: 'Col A = field names, Col B = values' },
+                      { mode: 'HORIZONTAL' as OrientationMode, label: 'Horizontal / Tabular', icon: <AlignHorizontalJustifyStart className="h-3.5 w-3.5" />, desc: 'Standard row-per-record table' },
+                    ]).map(({ mode, label, icon, desc }) => (
+                      <button
+                        key={mode}
+                        onClick={() => {
+                          orientationRef.current = mode;  // set immediately — before React state flush
+                          setSelectedOrientation(mode);
+                          if (selectedFile) analyzeAndExtract(selectedFile, selectedSheet, undefined, mode);
+                        }}
+                        className={`flex-1 min-w-[160px] text-left p-3.5 rounded-xl border-2 transition-all hover:shadow-sm ${
+                          selectedOrientation === mode
+                            ? 'border-primary bg-primary/5 shadow-sm'
+                            : 'border-muted hover:border-primary/30'
+                        }`}
+                      >
+                        <div className="flex items-center gap-1.5 font-bold text-xs mb-1">
+                          <span className={selectedOrientation === mode ? 'text-primary' : 'text-muted-foreground'}>{icon}</span>
+                          <span>{label}</span>
+                          {selectedOrientation === mode && <CheckCircle2 className="h-3 w-3 text-primary ml-auto" />}
+                        </div>
+                        <p className="text-[10px] text-muted-foreground">{desc}</p>
+                      </button>
+                    ))}
+                  </div>
+
+                  {orientationInfo?.orientation === 'VERTICAL' && (
+                    <div className="flex items-start gap-2 rounded-lg border border-violet-300/50 bg-violet-50/50 dark:bg-violet-950/20 px-3 py-2.5 text-xs text-violet-800 dark:text-violet-300">
+                      <Info className="h-3.5 w-3.5 mt-0.5 shrink-0" />
+                      <span>
+                        <strong>Vertical / Key-Value mode active.</strong> Column A field names are used as headers.
+                        Column B values will be mapped as the single data record. Header row selector is hidden in this mode.
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+            <div className="flex justify-between items-center pt-2">
               <Button variant="outline" onClick={() => setStep(1)} className="gap-2">
                 <ArrowLeft className="h-4 w-4" /> Change File
               </Button>
@@ -560,57 +948,66 @@ export function ImportWizard({ defaultEntity = 'projects', onComplete }: ImportW
                 <Badge variant="outline" className="text-xs bg-emerald-500/10 text-emerald-700 border-emerald-300">
                   Sheet: {selectedSheet} ({sheetConfidence}%)
                 </Badge>
-                <Badge variant="outline" className="text-xs bg-primary/10 text-primary border-primary/20">
-                  Header: Row {selectedHeaderRow} ({headerConfidence}%)
-                </Badge>
+                {orientationInfo?.orientation === 'VERTICAL' ? (
+                  <Badge variant="outline" className="text-xs bg-violet-500/10 text-violet-700 border-violet-300">
+                    Mode: Vertical (100%)
+                  </Badge>
+                ) : (
+                  <Badge variant="outline" className="text-xs bg-primary/10 text-primary border-primary/20">
+                    Header: Row {selectedHeaderRow} ({headerConfidence}%)
+                  </Badge>
+                )}
               </div>
             </div>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Header Preview & Controls Card */}
             <div className="rounded-xl border bg-card p-5 space-y-4 shadow-sm">
-              <div className="flex items-center justify-between flex-wrap gap-3 pb-3 border-b">
-                <div className="flex items-center gap-3">
-                  <span className="text-xs font-semibold text-muted-foreground">Worksheet:</span>
-                  <Select value={selectedSheet} onValueChange={handleSheetChange} disabled={isExtractingHeaders}>
-                    <SelectTrigger className="h-9 w-52 text-xs font-bold">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {sheetScores.map((s) => (
-                        <SelectItem key={s.sheetName} value={s.sheetName} className="text-xs">
-                          {s.sheetName} ({s.confidence}%)
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+                <div className="flex items-center justify-between flex-wrap gap-3 pb-3 border-b">
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs font-semibold text-muted-foreground">Worksheet:</span>
+                    <Select value={selectedSheet} onValueChange={handleSheetChange} disabled={isExtractingHeaders}>
+                      <SelectTrigger className="h-9 w-52 text-xs font-bold">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {sheetScores.map((s) => (
+                          <SelectItem key={s.sheetName} value={s.sheetName} className="text-xs">
+                            {s.sheetName} ({s.confidence}%)
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
 
-                <div className="flex items-center gap-3">
-                  <span className="text-xs font-semibold text-muted-foreground">Header Row:</span>
-                  <Select
-                    value={String(selectedHeaderRow)}
-                    onValueChange={(v) => handleHeaderRowChange(Number(v))}
-                    disabled={isExtractingHeaders}
-                  >
-                    <SelectTrigger className="h-9 w-36 text-xs font-bold">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {rowPreviews.map((rp) => (
-                        <SelectItem key={rp.rowNumber} value={String(rp.rowNumber)} className="text-xs">
-                          Row {rp.rowNumber} ({rp.confidence ?? 80}%)
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  {/* Hide Header Row selector in VERTICAL mode */}
+                  {orientationInfo?.orientation !== 'VERTICAL' && (
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs font-semibold text-muted-foreground">Header Row:</span>
+                      <Select
+                        value={String(selectedHeaderRow)}
+                        onValueChange={(v) => handleHeaderRowChange(Number(v))}
+                        disabled={isExtractingHeaders}
+                      >
+                        <SelectTrigger className="h-9 w-36 text-xs font-bold">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {rowPreviews.map((rp) => (
+                            <SelectItem key={rp.rowNumber} value={String(rp.rowNumber)} className="text-xs">
+                              Row {rp.rowNumber} ({rp.confidence ?? 80}%)
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  )}
                 </div>
-              </div>
 
               {/* Detected Column Headers List */}
               <div>
                 <h5 className="text-xs font-bold text-muted-foreground mb-2">
-                  Detected Column Headers ({clientHeaders.length}):
+                  {orientationInfo?.orientation === 'VERTICAL' ? 'Detected Field Names' : 'Detected Column Headers'} ({clientHeaders.length}):
                 </h5>
                 <div className="flex flex-wrap gap-1.5 p-3 rounded-lg border bg-muted/30 max-h-36 overflow-y-auto">
                   {clientHeaders.map((h, idx) => (
@@ -624,7 +1021,8 @@ export function ImportWizard({ defaultEntity = 'projects', onComplete }: ImportW
                 </div>
               </div>
 
-              {/* Row Table Selector */}
+              {/* Row Table Selector — hidden for VERTICAL orientation */}
+              {orientationInfo?.orientation !== 'VERTICAL' ? (
               <div className="space-y-2">
                 <h5 className="text-xs font-bold text-muted-foreground">Row Scoring Preview (Top 20 Rows):</h5>
                 <div className="overflow-x-auto border rounded-lg max-h-56">
@@ -682,6 +1080,15 @@ export function ImportWizard({ defaultEntity = 'projects', onComplete }: ImportW
                   </table>
                 </div>
               </div>
+              ) : (
+                <div className="flex items-start gap-2 rounded-lg border border-violet-200 bg-violet-50/60 dark:bg-violet-950/20 px-3.5 py-3 text-xs text-violet-800 dark:text-violet-300">
+                  <ScanSearch className="h-3.5 w-3.5 mt-0.5 shrink-0" />
+                  <span>
+                    <strong>Vertical / Key-Value mode:</strong> Column A field names ({clientHeaders.length} fields detected)
+                    are used directly as headers. No header row selection needed.
+                  </span>
+                </div>
+              )}
             </div>
 
             <div className="flex justify-between items-center">

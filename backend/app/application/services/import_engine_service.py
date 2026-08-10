@@ -52,37 +52,89 @@ class ImportEngineService:
                 result[k] = v
         return result
 
-    def parse_excel_file(self, file_bytes: bytes) -> dict[str, Any]:
+    def parse_excel_file(
+        self,
+        file_bytes: bytes,
+        specified_orientation: str | None = None,
+        specified_sheet_name: str | None = None,
+    ) -> dict[str, Any]:
         """
         Extract sheet names, headers, and raw rows from an uploaded Excel file.
+        Supports both HORIZONTAL (tabular) and VERTICAL (key-value) orientations.
         """
         workbook = openpyxl.load_workbook(io.BytesIO(file_bytes), data_only=True)
         sheets = workbook.sheetnames
         if not sheets:
             raise ValueError("The Excel file contains no worksheets.")
 
-        # Locate main data sheet and true header row among top 20 rows across all sheets
-        best_sheet_name = sheets[0]
+        best_sheet_name = specified_sheet_name if specified_sheet_name and specified_sheet_name in sheets else sheets[0]
         best_rows: list[tuple[Any, ...]] = []
-        header_idx = 0
-        max_count = 0
 
-        for sheet_name in sheets:
-            ws = workbook[sheet_name]
-            sheet_rows = list(ws.iter_rows(values_only=True))
-            if not sheet_rows:
-                continue
+        if specified_sheet_name and specified_sheet_name in sheets:
+            ws = workbook[specified_sheet_name]
+            best_rows = list(ws.iter_rows(values_only=True))
+        else:
+            max_count = 0
+            for sheet_name in sheets:
+                ws = workbook[sheet_name]
+                sheet_rows = list(ws.iter_rows(values_only=True))
+                if not sheet_rows:
+                    continue
 
-            for idx, r in enumerate(sheet_rows[:20]):
-                non_empty_count = len([c for c in r if c is not None and str(c).strip() != ""])
-                if non_empty_count > max_count:
-                    max_count = non_empty_count
-                    best_sheet_name = sheet_name
-                    best_rows = sheet_rows
-                    header_idx = idx
+                for r in sheet_rows[:20]:
+                    non_empty_count = len([c for c in r if c is not None and str(c).strip() != ""])
+                    if non_empty_count > max_count:
+                        max_count = non_empty_count
+                        best_sheet_name = sheet_name
+                        best_rows = sheet_rows
 
         if not best_rows:
-            return {"sheets": sheets, "headers": [], "rows": [], "total_rows": 0}
+            return {"sheets": sheets, "headers": [], "rows": [], "total_rows": 0, "orientation": "HORIZONTAL"}
+
+        # Run orientation detection
+        from app.application.services.excel_header_extractor import ExcelHeaderExtractor
+        orient_info = ExcelHeaderExtractor.detect_orientation(
+            [list(r) for r in best_rows[:50]], specified_orientation=specified_orientation
+        )
+        orientation = orient_info["orientation"]
+
+        if orientation == "VERTICAL":
+            headers: list[str] = []
+            single_row_vals: list[Any] = []
+            seen_fields = set()
+
+            for r in best_rows:
+                if not r:
+                    continue
+                cell_a = str(r[0]).strip() if len(r) > 0 and r[0] is not None else ""
+                cell_b = r[1] if len(r) > 1 else None
+
+                if cell_a:
+                    if cell_a in seen_fields:
+                        logger.warning("[VERTICAL PARSER] Duplicate field '%s' detected in Column A.", cell_a)
+                    else:
+                        seen_fields.add(cell_a)
+                    headers.append(cell_a)
+                    single_row_vals.append(cell_b)
+
+            return {
+                "sheets": sheets,
+                "selected_sheet": best_sheet_name,
+                "headers": headers,
+                "rows": [single_row_vals] if headers else [],
+                "total_rows": 1 if headers else 0,
+                "orientation": "VERTICAL",
+                "orientation_info": orient_info,
+            }
+
+        # HORIZONTAL Mode
+        header_idx = 0
+        max_count = 0
+        for idx, r in enumerate(best_rows[:20]):
+            non_empty_count = len([c for c in r if c is not None and str(c).strip() != ""])
+            if non_empty_count > max_count:
+                max_count = non_empty_count
+                header_idx = idx
 
         header_row = best_rows[header_idx]
         headers = [str(cell).strip() if cell is not None else "" for cell in header_row]
@@ -95,7 +147,6 @@ class ImportEngineService:
             if len(row_vals) < len(headers):
                 row_vals.extend([None] * (len(headers) - len(row_vals)))
 
-            # Skip entirely empty rows
             if any(cell is not None and str(cell).strip() != "" for cell in row_vals):
                 data_rows.append(row_vals)
 
@@ -105,6 +156,8 @@ class ImportEngineService:
             "headers": headers,
             "rows": data_rows,
             "total_rows": len(data_rows),
+            "orientation": "HORIZONTAL",
+            "orientation_info": orient_info,
         }
 
     def auto_map_columns(
@@ -137,6 +190,37 @@ class ImportEngineService:
             mapping[header] = matched_key
 
         return mapping
+
+    @staticmethod
+    def _normalize_column_mapping(
+        custom_mapping: dict[str, Any], schema: EntityImportSchema, headers: list[str]
+    ) -> dict[str, str]:
+        """
+        Normalizes any custom_mapping dict (whether Excel->DB, DB->Excel, or Ollama dict)
+        into a consistent {excel_header: db_field_key} mapping dict.
+        """
+        column_mapping: dict[str, str] = {}
+        schema_keys = {col.key for col in schema.columns}
+        schema_key_map = {col.key.lower(): col.key for col in schema.columns}
+
+        for k, v in custom_mapping.items():
+            if isinstance(v, dict):
+                excel_col = v.get("excel")
+                if excel_col:
+                    column_mapping[str(excel_col)] = k
+            elif isinstance(v, str):
+                # Check if k is a DB field key
+                if k in schema_keys or k.lower() in schema_key_map:
+                    resolved_key = schema_key_map.get(k.lower(), k)
+                    column_mapping[v] = resolved_key
+                # Or check if v is a DB field key
+                elif v in schema_keys or v.lower() in schema_key_map:
+                    resolved_key = schema_key_map.get(v.lower(), v)
+                    column_mapping[k] = resolved_key
+                else:
+                    column_mapping[k] = v
+
+        return column_mapping
 
     async def _get_schema(self, entity_type: str) -> EntityImportSchema:
         lower_type = entity_type.lower().strip()
@@ -179,19 +263,23 @@ class ImportEngineService:
         file_name: str,
         entity_type: str,
         custom_mapping: dict[str, str] | None = None,
+        orientation: str | None = None,
+        sheet_name: str | None = None,
     ) -> dict[str, Any]:
         """
         Parses the Excel file, validates header schema and row values,
         checks for duplicates, and produces a complete validation preview report.
         """
         schema = await self._get_schema(entity_type)
-        parsed = self.parse_excel_file(file_bytes)
+        parsed = self.parse_excel_file(file_bytes, specified_orientation=orientation, specified_sheet_name=sheet_name)
         headers = parsed["headers"]
         data_rows = parsed["rows"]
+        parsed_orientation = parsed.get("orientation", "HORIZONTAL")
+        parsed_orientation_info = parsed.get("orientation_info", {})
 
         # Step 1: Mapping setup
         if custom_mapping:
-            column_mapping = custom_mapping
+            column_mapping = self._normalize_column_mapping(custom_mapping, schema, headers)
         else:
             column_mapping = self.auto_map_columns(headers, schema)
 
@@ -422,6 +510,8 @@ class ImportEngineService:
             "validation_errors": validation_errors,
             "normalization_warnings": normalization_warnings,
             "preview_rows": preview_rows,
+            "orientation": parsed_orientation,
+            "orientation_info": parsed_orientation_info,
         }
 
     async def execute_import(
@@ -434,6 +524,8 @@ class ImportEngineService:
         strategy: str = "skip_invalid",  # skip_invalid | rollback_all
         user_id: uuid.UUID | None = None,
         user_email: str | None = None,
+        orientation: str | None = None,
+        sheet_name: str | None = None,
     ) -> dict[str, Any]:
         """
         Executes database import with transactional safety, audit logging,
@@ -451,6 +543,8 @@ class ImportEngineService:
             file_name=file_name,
             entity_type=entity_type,
             custom_mapping=column_mapping,
+            orientation=orientation,
+            sheet_name=sheet_name,
         )
 
         validation_errors = preview["validation_errors"]
@@ -468,7 +562,11 @@ class ImportEngineService:
                 f"Import aborted: {len(validation_errors)} error(s) detected and 'Rollback All' strategy was selected."
             )
 
-        parsed = self.parse_excel_file(file_bytes)
+        parsed = self.parse_excel_file(
+            file_bytes,
+            specified_orientation=orientation,
+            specified_sheet_name=sheet_name,
+        )
         data_rows = parsed["rows"]
         headers = parsed["headers"]
         schema = await self._get_schema(entity_type)
@@ -866,6 +964,11 @@ class ImportEngineService:
             )
 
             tmpl = await uow.templates.get_by_code(entity_type.upper())
+            if tmpl is None:
+                try:
+                    tmpl = await uow.templates.get(uuid.UUID(entity_type.strip()))
+                except (ValueError, AttributeError):
+                    pass
 
             project_payload: dict[str, Any] = {
                 "code": str(code),
@@ -945,11 +1048,15 @@ class ImportEngineService:
                 return None, f"Expected numeric value for '{spec.label}', got '{val_str}'"
 
         elif field_type == "enum":
-            clean_enum = val_str.lower().replace(" ", "_")
-            if spec.enum_values and clean_enum not in spec.enum_values:
+            clean_val = val_str.strip()
+            if spec.enum_values:
+                clean_clean = clean_val.lower().replace(" ", "_")
+                matched_enum = next((ev for ev in spec.enum_values if ev.lower().replace(" ", "_") == clean_clean), None)
+                if matched_enum is not None:
+                    return matched_enum, None
                 allowed = ", ".join(spec.enum_values)
                 return None, f"Invalid value '{val_str}'. Allowed values: {allowed}"
-            return clean_enum, None
+            return clean_val, None
 
         elif field_type == "date":
             # For date types, if DataNormalizer returned a date, it was already handled above.

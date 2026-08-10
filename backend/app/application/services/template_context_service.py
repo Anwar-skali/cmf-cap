@@ -132,6 +132,18 @@ class TemplateContextService:
                         if excel_cfg.get("importAlias") and excel_cfg.get("importAlias") not in aliases:
                             aliases.append(excel_cfg.get("importAlias"))
 
+                    default_common_aliases = {
+                        "unique_id": ["project code", "code", "unique id", "unique_id", "ref", "project ref"],
+                        "part_name": ["part name", "project name", "name", "title"],
+                        "part_number": ["part number", "part_number", "pn", "part no"],
+                        "supplier_name": ["supplier", "supplier name", "company", "vendor"],
+                        "cat_evaluation": ["gor", "cat", "cat evaluation", "cat_evaluation"],
+                    }
+                    if key in default_common_aliases:
+                        for alias_candidate in default_common_aliases[key]:
+                            if alias_candidate not in aliases:
+                                aliases.append(alias_candidate)
+
                     validation = ""
                     if fld.get("options"):
                         validation = f"Allowed options: {', '.join(str(o) for o in fld.get('options'))}"

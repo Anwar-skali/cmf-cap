@@ -94,12 +94,20 @@ export async function previewImport(
   file: File,
   entityType: string,
   customMapping?: Record<string, string>,
+  orientation?: string,
+  sheetName?: string,
 ): Promise<ImportPreviewReport> {
   const formData = new FormData();
   formData.append('file', file);
   formData.append('entity_type', entityType);
   if (customMapping) {
     formData.append('custom_mapping_json', JSON.stringify(customMapping));
+  }
+  if (orientation) {
+    formData.append('orientation', orientation.toLowerCase());
+  }
+  if (sheetName) {
+    formData.append('sheet_name', sheetName);
   }
 
   // Use api.upload() so FormData is sent correctly with auth headers
@@ -112,6 +120,8 @@ export async function executeImport(
   columnMapping: Record<string, string>,
   mode: 'insert' | 'upsert' = 'insert',
   strategy: 'skip_invalid' | 'rollback_all' = 'skip_invalid',
+  orientation?: string,
+  sheetName?: string,
 ): Promise<ImportExecutionResult> {
   const formData = new FormData();
   formData.append('file', file);
@@ -119,6 +129,12 @@ export async function executeImport(
   formData.append('mode', mode);
   formData.append('strategy', strategy);
   formData.append('column_mapping_json', JSON.stringify(columnMapping));
+  if (orientation) {
+    formData.append('orientation', orientation.toLowerCase());
+  }
+  if (sheetName) {
+    formData.append('sheet_name', sheetName);
+  }
 
   // Use api.upload() so FormData is sent correctly with auth headers
   return api.upload<ImportExecutionResult>('/import/execute', formData);
@@ -249,6 +265,10 @@ export interface WorksheetScore {
   maxColumns: number;
   keywordHits: number;
   isDashboardName: boolean;
+  classification: 'PROJECT_DATA' | 'SUMMARY' | 'PIVOT_TABLE' | 'KPI' | 'REFERENCE_DATA' | 'EMPTY' | 'UNKNOWN';
+  pivotIndicators: number;
+  projectFieldMatches: number;
+  structureSimilarity: number;
   preview: string[];
 }
 
@@ -291,6 +311,7 @@ export interface ExtractedHeaders {
   sheetScores?: WorksheetScore[];
   rowPreviews?: RowPreview[];
   extractionDurationMs?: number;
+  orientation?: string;
 }
 
 export interface WorkbookScanResult {
@@ -317,11 +338,13 @@ export async function extractExcelHeaders(
   file: File,
   headerRow?: number,
   sheetName?: string,
+  orientation?: string,
 ): Promise<ExtractedHeaders> {
   const formData = new FormData();
   formData.append('file', file);
   if (headerRow != null) formData.append('header_row', String(headerRow));
   if (sheetName) formData.append('sheet_name', sheetName);
+  if (orientation) formData.append('orientation', orientation);
   return api.upload<ExtractedHeaders>('/import/extract-headers', formData);
 }
 
@@ -332,12 +355,14 @@ export async function generateOllamaMapping(
   file?: File,
   headerRow?: number,
   sheetName?: string,
+  orientation?: string,
 ): Promise<OllamaMappingResult> {
   const formData = new FormData();
   formData.append('template_identifier', templateIdentifier);
   formData.append('headers_json', JSON.stringify(excelHeaders));
   if (headerRow != null) formData.append('header_row', String(headerRow));
   if (sheetName) formData.append('sheet_name', sheetName);
+  if (orientation) formData.append('orientation', orientation);
   // Only attach file if headers are empty
   if (file && excelHeaders.length === 0) formData.append('file', file);
   return api.upload<OllamaMappingResult>('/import/ollama-map', formData);

@@ -111,7 +111,9 @@ class ProjectFilter(BaseModel):
     buyer_id: Any | None = None
     sqd_id: Any | None = None
     capacity_manager_id: Any | None = None
+    template_id: Any | None = None
     skip: int = Field(default=0, ge=0)
     limit: int = Field(default=20, ge=1, le=100)
     sort_by: str | None = "created_at"
     sort_desc: bool = True
+

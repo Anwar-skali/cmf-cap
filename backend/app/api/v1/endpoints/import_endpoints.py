@@ -93,13 +93,13 @@ async def extract_excel_headers(
     file: UploadFile = File(...),
     header_row: int | None = Form(None),
     sheet_name: str | None = Form(None),
+    orientation: str | None = Form(None),
     current_user: User = Depends(get_current_active_user),
 ) -> dict[str, Any]:
     """
     Parses the uploaded Excel file and returns ONLY column headers.
-    Automatically detects the correct worksheet and header row (scans top 20 rows).
-    Optionally accepts user-specified sheet_name and header_row (1-based) overrides.
-    No row data is read or retained. Safe for LLM usage.
+    Automatically detects worksheet, header row, and orientation (HORIZONTAL vs VERTICAL).
+    Optionally accepts user-specified sheet_name, header_row, and orientation overrides.
     """
     start_t = time.perf_counter()
     if not file.filename.endswith((".xlsx", ".xls", ".xlsm")):
@@ -109,17 +109,16 @@ async def extract_excel_headers(
         )
     contents = await file.read()
     try:
-        headers, detected_row, header_conf, sheet_used, sheet_conf, row_previews, duration_ms = ExcelHeaderExtractor.extract_headers_with_details(
-            contents, specified_header_row=header_row, specified_sheet_name=sheet_name
+        headers, detected_row, header_conf, sheet_used, sheet_conf, row_previews, duration_ms, orient_info = ExcelHeaderExtractor.extract_headers_with_details(
+            contents, specified_header_row=header_row, specified_sheet_name=sheet_name, specified_orientation=orientation
         )
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
     logger.info(
-        "[HEADER DETECTION] File: '%s' | Sheet: '%s' (%.1f%%) | Row: %d (%.1f%%) | Headers: %d | Elapsed: %.2f ms",
-        file.filename, sheet_used, sheet_conf, detected_row, header_conf, len(headers), duration_ms
+        "[HEADER DETECTION] File: '%s' | Sheet: '%s' (%.1f%%) | Orient: %s (%.1f%%) | Headers: %d | Elapsed: %.2f ms",
+        file.filename, sheet_used, sheet_conf, orient_info["orientation"], orient_info["orientation_confidence"], len(headers), duration_ms
     )
-    logger.debug("[DETECTED HEADERS] %r", headers)
     return {
         "file_name": file.filename,
         "header_count": len(headers),
@@ -130,6 +129,11 @@ async def extract_excel_headers(
         "header_confidence": header_conf,
         "row_previews": row_previews,
         "extraction_duration_ms": duration_ms,
+        "orientation": orient_info["orientation"],
+        "orientation_confidence": orient_info["orientation_confidence"],
+        "field_column": orient_info["field_column"],
+        "value_column": orient_info["value_column"],
+        "orientation_reason": orient_info["reason"],
     }
 
 
@@ -139,21 +143,13 @@ async def ollama_semantic_map(
     headers_json: str = Form("[]"),
     header_row: int | None = Form(None),
     sheet_name: str | None = Form(None),
+    orientation: str | None = Form(None),
     file: UploadFile | None = File(None),
     current_user: User = Depends(get_current_active_user),
     uow: UnitOfWork = Depends(get_unit_of_work),
 ) -> dict[str, Any]:
     """
     Performs RAG-powered semantic mapping between Excel headers and template database fields.
-
-    Accepts:
-      - template_identifier: template code (e.g. 'K9') or UUID or entity_type (e.g. 'projects')
-      - headers_json: JSON-serialized list of Excel column header strings
-      - sheet_name (optional): worksheet name override
-      - header_row (optional): 1-based row index override for header detection
-      - file (optional): if provided, extract headers from file instead of headers_json
-
-    Returns a mapping dict with confidence scores and source attribution.
     """
     total_start = time.perf_counter()
     header_start = time.perf_counter()
@@ -163,8 +159,9 @@ async def ollama_semantic_map(
     sheet_used = sheet_name or ""
     sheet_confidence = 90.0
     row_previews: list[dict] = []
+    orient_info = {"orientation": "HORIZONTAL", "orientation_confidence": 90.0, "field_column": "", "value_column": "", "reason": ""}
 
-    # Resolve headers (prefer headers_json if provided to avoid re-reading file bytes)
+    # Resolve headers
     excel_headers: list[str] = []
     if headers_json and headers_json.strip() != "[]":
         try:
@@ -177,16 +174,16 @@ async def ollama_semantic_map(
     if not excel_headers and file is not None and file.filename:
         contents = await file.read()
         try:
-            excel_headers, detected_header_row, header_confidence, sheet_used, sheet_confidence, row_previews, excel_read_ms = ExcelHeaderExtractor.extract_headers_with_details(
-                contents, specified_header_row=header_row, specified_sheet_name=sheet_name
+            excel_headers, detected_header_row, header_confidence, sheet_used, sheet_confidence, row_previews, excel_read_ms, orient_info = ExcelHeaderExtractor.extract_headers_with_details(
+                contents, specified_header_row=header_row, specified_sheet_name=sheet_name, specified_orientation=orientation
             )
         except Exception as e:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     else:
         excel_read_ms = round((time.perf_counter() - header_start) * 1000, 2)
 
-    logger.info("[OLLAMA MAP DEBUG] Sheet: '%s' (%.1f%%) | Detected Header Row: %d (%.1f%%) | Headers (%d): %r",
-                sheet_used, sheet_confidence, detected_header_row, header_confidence, len(excel_headers), excel_headers)
+    logger.info("[OLLAMA MAP DEBUG] Sheet: '%s' | Orient: %s | Headers (%d): %r",
+                sheet_used, orient_info.get("orientation"), len(excel_headers), excel_headers)
 
     header_resolution_ms = round((time.perf_counter() - header_start) * 1000, 2)
 
@@ -209,39 +206,18 @@ async def ollama_semantic_map(
             detail=f"Template '{template_identifier}' has no field definitions to map against.",
         )
 
-    # Normalize headers (lowercased version for debug)
-    normalized_headers = [h.lower().strip().replace("_", " ") for h in excel_headers]
-    template_field_keys = [f.key for f in template_context.fields]
-    template_field_labels = [f.label for f in template_context.fields if f.label]
-
-    logger.info("[OLLAMA MAP DEBUG] Normalized Headers: %r", normalized_headers)
-    logger.info("[OLLAMA MAP DEBUG] Fields sent to Ollama (%d): %r",
-                len(template_field_keys), template_field_keys)
-
-    # Run Ollama RAG mapping (with graceful fuzzy fallback)
+    # Run Ollama RAG mapping
     ollama_svc = OllamaMappingService()
     try:
         result = await ollama_svc.generate_mapping(template_context, excel_headers, excel_read_ms=excel_read_ms)
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Mapping service error: {e}")
 
-    logger.info("[OLLAMA MAP DEBUG] Final Mapping: %r", result.get("mapping", {}))
-
     total_duration_ms = round((time.perf_counter() - total_start) * 1000, 2)
     exec_times = result.get("execution_times", {})
     exec_times["total_mapping_ms"] = total_duration_ms
     exec_times["header_resolution_ms"] = header_resolution_ms
     exec_times["template_loading_ms"] = template_loading_ms
-
-    logger.info(
-        "AI Semantic Mapping Complete for Template '%s' in %.2f ms (Excel Read: %.2f ms, Prompt Build: %.2f ms, Ollama Call: %.2f ms, JSON Parse: %.2f ms)",
-        template_context.template_code,
-        total_duration_ms,
-        exec_times.get("excel_read_ms", 0.0),
-        exec_times.get("prompt_build_ms", 0.0),
-        exec_times.get("ollama_response_time_ms", 0.0),
-        exec_times.get("json_parse_ms", 0.0),
-    )
 
     return {
         "template_code": template_context.template_code,
@@ -259,6 +235,11 @@ async def ollama_semantic_map(
         "model": result.get("model", ""),
         "fallback_reason": result.get("fallback_reason"),
         "execution_times": exec_times,
+        "orientation": orient_info.get("orientation", "HORIZONTAL"),
+        "orientation_confidence": orient_info.get("orientation_confidence", 90.0),
+        "field_column": orient_info.get("field_column", ""),
+        "value_column": orient_info.get("value_column", ""),
+        "orientation_reason": orient_info.get("reason", ""),
         "field_definitions": [
             {
                 "key": f.key,
@@ -279,10 +260,6 @@ async def save_mapping_memory(
     mapping_json: str = Form(...),
     current_user: User = Depends(get_current_active_user),
 ) -> dict[str, Any]:
-    """
-    Saves user-confirmed header-to-field mappings into mapping memory cache.
-    mapping_json format: {\"db_field_key\": \"Excel Header Name\", ...}
-    """
     try:
         mapping = json.loads(mapping_json)
     except Exception:
@@ -320,6 +297,8 @@ async def preview_import(
     entity_type: str = Form(...),
     file: UploadFile = File(...),
     custom_mapping_json: str | None = Form(None),
+    orientation: str | None = Form(None),
+    sheet_name: str | None = Form(None),
     current_user: User = Depends(get_current_active_user),
     uow: UnitOfWork = Depends(get_unit_of_work),
 ) -> dict[str, Any]:
@@ -339,10 +318,6 @@ async def preview_import(
         )
 
     contents = await file.read()
-    logger.info(
-        "[IMPORT DEBUG] Preview request: file='%s' (%d bytes), template='%s'",
-        file.filename, len(contents), entity_type,
-    )
     service = ImportEngineService(uow)
 
     custom_mapping = None
@@ -358,22 +333,14 @@ async def preview_import(
             file_name=file.filename,
             entity_type=entity_type,
             custom_mapping=custom_mapping,
+            orientation=orientation,
+            sheet_name=sheet_name,
         )
         duration_ms = round((time.perf_counter() - start_t) * 1000, 2)
         report["preview_validation_ms"] = duration_ms
-        logger.info(
-            "[IMPORT DEBUG] Preview completed in %.2f ms (Total Rows: %d, Valid: %d, Errors: %d, Headers: %r)",
-            duration_ms,
-            report.get("total_rows", 0),
-            report.get("valid_rows_count", 0),
-            len(report.get("validation_errors", [])),
-            report.get("headers", [])[:5],
-        )
         return report
     except Exception as e:
         duration_ms = round((time.perf_counter() - start_t) * 1000, 2)
-        stack_trace_str = traceback.format_exc()
-        logger.error("[IMPORT DEBUG] Preview exception after %.2f ms: %s", duration_ms, str(e), exc_info=True)
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail={
@@ -385,10 +352,9 @@ async def preview_import(
                 "validation_errors": [],
                 "serializer_errors": [],
                 "execution_time_ms": duration_ms,
-                "stack_trace": stack_trace_str,
+                "stack_trace": traceback.format_exc(),
             },
         )
-
 
 
 @router.post("/execute", summary="Execute data import transaction")
@@ -397,6 +363,8 @@ async def execute_import(
     mode: str = Form("insert"),
     strategy: str = Form("skip_invalid"),
     column_mapping_json: str = Form(...),
+    orientation: str | None = Form(None),
+    sheet_name: str | None = Form(None),
     file: UploadFile = File(...),
     current_user: User = Depends(get_current_active_user),
     uow: UnitOfWork = Depends(get_unit_of_work),
@@ -409,28 +377,9 @@ async def execute_import(
     try:
         mapping = json.loads(column_mapping_json)
     except Exception as e:
-        logger.error("[IMPORT DEBUG] Failed to parse column_mapping_json: %s", str(e), exc_info=True)
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail={
-                "message": "Import failed",
-                "reason": f"Invalid column_mapping_json payload: {e}",
-                "request_payload": {
-                    "entity_type": entity_type,
-                    "mode": mode,
-                    "strategy": strategy,
-                    "column_mapping_json": column_mapping_json,
-                },
-                "uploaded_file": {
-                    "filename": file.filename,
-                    "size_bytes": len(contents),
-                },
-                "selected_template": entity_type,
-                "mapping_result": {},
-                "validation_errors": [],
-                "serializer_errors": [],
-                "stack_trace": traceback.format_exc(),
-            },
+            detail={"message": "Import failed", "reason": f"Invalid column_mapping_json payload: {e}"},
         )
 
     try:
@@ -443,61 +392,19 @@ async def execute_import(
             strategy=strategy,
             user_id=current_user.id,
             user_email=current_user.email,
-        )
-        duration_ms = round((time.perf_counter() - start_t) * 1000, 2)
-        logger.info(
-            "[IMPORT DEBUG] Excel import execution completed in %.2f ms (Imported: %d, Updated: %d, Skipped: %d)",
-            duration_ms,
-            result.get("imported_count", 0),
-            result.get("updated_count", 0),
-            result.get("skipped_count", 0),
+            orientation=orientation,
+            sheet_name=sheet_name,
         )
         return result
     except Exception as e:
         duration_ms = round((time.perf_counter() - start_t) * 1000, 2)
-        stack_trace_str = traceback.format_exc()
-        logger.error("[IMPORT DEBUG] Exception during execute_import after %.2f ms: %s", duration_ms, str(e), exc_info=True)
-
-        val_errors = []
-        ser_errors = []
-        rows_count = 0
-        headers_list = []
-        try:
-            preview = await service.preview_and_validate(
-                file_bytes=contents,
-                file_name=file.filename,
-                entity_type=entity_type,
-                custom_mapping=mapping,
-            )
-            val_errors = preview.get("validation_errors", [])
-            rows_count = preview.get("total_rows", 0)
-            headers_list = preview.get("headers", [])
-        except Exception:
-            pass
-
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail={
                 "message": "Import failed",
                 "reason": str(e),
-                "request_payload": {
-                    "entity_type": entity_type,
-                    "mode": mode,
-                    "strategy": strategy,
-                    "column_mapping": mapping,
-                },
-                "uploaded_file": {
-                    "filename": file.filename,
-                    "size_bytes": len(contents),
-                },
-                "selected_template": entity_type,
-                "mapping_result": mapping,
-                "rows_detected": rows_count,
-                "headers_detected": headers_list,
-                "validation_errors": val_errors,
-                "serializer_errors": ser_errors,
                 "execution_time_ms": duration_ms,
-                "stack_trace": stack_trace_str,
+                "stack_trace": traceback.format_exc(),
             },
         )
 

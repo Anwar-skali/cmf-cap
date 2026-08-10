@@ -328,6 +328,8 @@ class ProjectService:
             filters["sqd_id"] = filter.sqd_id
         if filter.capacity_manager_id is not None:
             filters["capacity_manager_id"] = filter.capacity_manager_id
+        if filter.template_id is not None:
+            filters["template_id"] = filter.template_id
         if filter.date_from is not None:
             filters.setdefault("start_date", {})["gte"] = filter.date_from
         if filter.date_to is not None:
