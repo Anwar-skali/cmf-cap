@@ -6,6 +6,7 @@ import { Project } from '@/types';
 import { getProjects, createProject } from '@/api/endpoints/projects';
 import { DynamicForm } from '@/components/template-engine/DynamicForm';
 import { ImportWizard } from '@/features/import/ImportWizard';
+import { StructureImportWizard } from '@/features/templates/StructureImportWizard';
 import { CrudFormHeader } from '@/components/layout/CrudFormHeader';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -29,16 +30,13 @@ import {
   X,
   ExternalLink,
   RefreshCw,
-  Building2,
-  Calendar,
-  Tag,
-  AlertTriangle,
+  LayoutTemplate,
 } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function TemplateStudioPage() {
   const navigate = useNavigate();
-  const { templates, activeTemplate, setActiveTemplate, isLoading: isTemplatesLoading } = useTemplate();
+  const { templates, activeTemplate, setActiveTemplate, isLoading: isTemplatesLoading, fetchTemplates } = useTemplate();
 
   // Selected Structure state (driven dynamically by DB templates)
   const [selectedStructureId, setSelectedStructureId] = useState<string>('');
@@ -59,6 +57,10 @@ export default function TemplateStudioPage() {
   const [showManualModal, setShowManualModal] = useState<boolean>(false);
   const [showImportModal, setShowImportModal] = useState<boolean>(false);
   const [isCreatingProject, setIsCreatingProject] = useState<boolean>(false);
+
+  // Modals for Project STRUCTURE creation/import (Pipeline A — no project record)
+  const [showStructureWizard, setShowStructureWizard] = useState<boolean>(false);
+  const [structureWizardMode, setStructureWizardMode] = useState<'excel' | 'json' | 'manual'>('excel');
 
   // Sync selected structure when templates load or change
   useEffect(() => {
@@ -248,6 +250,30 @@ export default function TemplateStudioPage() {
               className="bg-card hover:bg-accent border-slate-300 dark:border-slate-700 text-foreground font-bold rounded-full px-4 py-2 text-xs shadow-sm gap-1.5 cursor-pointer"
             >
               <FileSpreadsheet className="h-4 w-4 text-emerald-500" /> Import Projects
+            </Button>
+            <Button
+              onClick={() => {
+                setStructureWizardMode('excel');
+                setShowStructureWizard(true);
+              }}
+              size="sm"
+              variant="outline"
+              className="bg-card hover:bg-accent border-slate-300 dark:border-slate-700 text-foreground font-bold rounded-full px-4 py-2 text-xs shadow-sm gap-1.5 cursor-pointer"
+              title="Create a brand-new Project Structure from an Excel file, JSON schema, or manually — no project record is created."
+            >
+              <LayoutTemplate className="h-4 w-4 text-violet-500" /> Create Structure
+            </Button>
+            <Button
+              onClick={() => {
+                setStructureWizardMode('json');
+                setShowStructureWizard(true);
+              }}
+              size="sm"
+              variant="outline"
+              className="bg-card hover:bg-accent border-slate-300 dark:border-slate-700 text-foreground font-bold rounded-full px-4 py-2 text-xs shadow-sm gap-1.5 cursor-pointer"
+              title="Import an existing Project Structure from JSON schema or Excel workbook."
+            >
+              <Code2 className="h-4 w-4 text-sky-500" /> Import Structure
             </Button>
           </div>
         }
@@ -962,6 +988,49 @@ export default function TemplateStudioPage() {
                 setShowImportModal(false);
                 fetchStructureProjects();
                 toast.success(`Import complete! Refreshing ${selectedStructure.code} projects.`);
+              }}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: PROJECT STRUCTURE CREATE / IMPORT (Pipeline A — no project record) */}
+      {showStructureWizard && (
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto animate-fade-in">
+          <div className="bg-card border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 max-w-4xl w-full max-h-[92vh] overflow-y-auto shadow-2xl relative space-y-5">
+            <div className="flex items-center justify-between border-b border-border pb-4">
+              <div>
+                <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
+                  <LayoutTemplate className="h-5 w-5 text-violet-500" />
+                  {structureWizardMode === 'manual'
+                    ? 'Create Project Structure (Manual)'
+                    : structureWizardMode === 'json'
+                    ? 'Import Project Structure'
+                    : 'Create Project Structure from Excel'}
+                </h3>
+                <p className="text-xs text-muted-foreground">
+                  Define a new Template (sections, fields, orientation). No project record is created here — use Import
+                  Projects to load data into a structure.
+                </p>
+              </div>
+              <button
+                onClick={() => setShowStructureWizard(false)}
+                className="rounded-full p-2 text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <StructureImportWizard
+              initialMode={structureWizardMode}
+              onClose={() => setShowStructureWizard(false)}
+              onSaved={(created) => {
+                setShowStructureWizard(false);
+                fetchTemplates();
+                if (created?.id) {
+                  setSelectedStructureId(created.id);
+                  setActiveTemplate(created);
+                }
               }}
             />
           </div>

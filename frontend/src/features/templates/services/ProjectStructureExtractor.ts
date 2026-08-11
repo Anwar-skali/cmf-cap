@@ -1,6 +1,16 @@
 import * as XLSX from 'xlsx';
-import { ExcelHeaderExtractor, OrientationMode } from '@/features/import/services/ExcelHeaderExtractor';
-import { CMFTemplate, TemplateSection, TemplateField, FieldType } from '@/types/template';
+import {
+  ExcelHeaderExtractor,
+  OrientationMode,
+  WorksheetScore,
+} from '@/features/import/services/ExcelHeaderExtractor';
+import { TemplateSection, TemplateField, FieldGroup, FieldType, DropdownOption } from '@/types/template';
+
+export interface StructureRelationship {
+  from: string;
+  to: string;
+  type?: string;
+}
 
 export interface StructureExtractResult {
   code: string;
@@ -12,6 +22,11 @@ export interface StructureExtractResult {
   sections: TemplateSection[];
   detectedFieldCount: number;
   detectedModuleCount: number;
+  detectedTableCount?: number;
+  detectedRelationshipCount?: number;
+  relationships?: StructureRelationship[];
+  sheetScores?: WorksheetScore[];
+  detectedSheet?: string;
 }
 
 /** Helper: normalize raw strings into clean internalName keys (e.g. "Part Name" -> "part_name") */
@@ -40,7 +55,7 @@ function inferFieldType(val: any): FieldType {
     return 'integer';
   }
   if (/^-?\d+\.\d+$/.test(str)) {
-    return 'number';
+    return 'decimal';
   }
   if (str.length > 80 || str.includes('\n')) {
     return 'textarea';
@@ -61,6 +76,169 @@ function isRequiredByName(name: string): boolean {
   );
 }
 
+/** Maps common JSON schema field types onto the CMF FieldType vocabulary. */
+const JSON_FIELD_TYPE_MAP: Record<string, FieldType> = {
+  string: 'text',
+  text: 'text',
+  textarea: 'textarea',
+  longtext: 'textarea',
+  integer: 'integer',
+  int: 'integer',
+  number: 'decimal',
+  float: 'decimal',
+  double: 'decimal',
+  decimal: 'decimal',
+  money: 'currency',
+  currency: 'currency',
+  date: 'date',
+  datetime: 'date',
+  time: 'date',
+  week: 'week',
+  boolean: 'boolean',
+  bool: 'boolean',
+  email: 'email',
+  phone: 'phone',
+  telephone: 'phone',
+  dropdown: 'dropdown',
+  enum: 'dropdown',
+  select: 'dropdown',
+  multiselect: 'multiselect',
+  checkbox: 'checkbox',
+  radio: 'radio',
+  status: 'status',
+  cat_status: 'cat_status',
+  percentage: 'percentage',
+  file: 'file_upload',
+  file_upload: 'file_upload',
+  attachment: 'file_upload',
+  user: 'user',
+  supplier: 'supplier',
+  project: 'project',
+  calculated: 'calculated',
+  readonly: 'readonly',
+};
+
+function normalizeJsonFieldType(type: any): FieldType {
+  if (type == null) return 'text';
+  const key = String(type).trim().toLowerCase();
+  return JSON_FIELD_TYPE_MAP[key] || 'text';
+}
+
+function isRecord(value: any): value is Record<string, any> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+/**
+ * Normalizes the JSON structure `options` property onto the canonical CMF
+ * DropdownOption shape ({value, label, order?}). Accepts string arrays,
+ * object arrays, or a comma-separated string.
+ */
+function normalizeFieldOptions(raw: any): DropdownOption[] | undefined {
+  if (raw == null) return undefined;
+  if (Array.isArray(raw)) {
+    const options: DropdownOption[] = [];
+    raw.forEach((opt: any, i: number) => {
+      if (isRecord(opt)) {
+        const value = opt.value ?? opt.label;
+        if (value == null) return;
+        options.push({
+          value: String(value),
+          label: String(opt.label ?? value),
+          order: typeof opt.order === 'number' ? opt.order : i + 1,
+        });
+      } else if (opt != null && String(opt).trim() !== '') {
+        const text = String(opt).trim();
+        options.push({ value: text, label: text, order: i + 1 });
+      }
+    });
+    return options.length ? options : undefined;
+  }
+  if (typeof raw === 'string') {
+    const parts = raw
+      .split(',')
+      .map((p) => p.trim())
+      .filter(Boolean);
+    return parts.length ? parts.map((p, i) => ({ value: p, label: p, order: i + 1 })) : undefined;
+  }
+  return undefined;
+}
+
+/** Canonical CMF property for a field's initial value; honors `default` from JSON structures. */
+function normalizeFieldDefault(f: any): any {
+  return f.defaultValue !== undefined ? f.defaultValue : f.default !== undefined ? f.default : undefined;
+}
+
+/**
+ * Maps a hierarchical project-structure JSON (structure / modules -> tables ->
+ * fields / relationships) onto the existing sections -> groups -> fields shape.
+ * Generic — works for K0, K9, and arbitrary future structures.
+ * Returns null when the JSON is not in this layout.
+ */
+function extractHierarchicalStructure(parsed: any): {
+  sections: TemplateSection[];
+  fieldCount: number;
+  tableCount: number;
+  relationships: StructureRelationship[];
+} | null {
+  const modules: any[] = Array.isArray(parsed.modules) ? parsed.modules : [];
+  if (modules.length === 0) return null;
+
+  const sections: TemplateSection[] = [];
+  let fieldCount = 0;
+  let tableCount = 0;
+
+  modules.forEach((mod, modIdx) => {
+    const tables: any[] = Array.isArray(mod.tables) ? mod.tables : [];
+    const groups: FieldGroup[] = tables.map((tbl, tblIdx) => {
+      tableCount += 1;
+      const fields: TemplateField[] = (Array.isArray(tbl.fields) ? tbl.fields : []).map((f: any, fIdx: number) => {
+        fieldCount += 1;
+        const rawName = toInternalName(f.name || f.internalName || f.label || `field_${fIdx + 1}`);
+        const label = f.label || f.name || f.internalName || `Field ${fIdx + 1}`;
+        return {
+          id: f.id || `fld_${rawName}`,
+          internalName: rawName,
+          label,
+          type: normalizeJsonFieldType(f.type),
+          required: Boolean(f.required),
+          placeholder: f.placeholder || undefined,
+          helpText: f.helpText || f.description || undefined,
+          order: typeof f.order === 'number' ? f.order : fIdx + 1,
+          visible: f.visible !== false,
+          editable: f.editable !== false,
+          options: normalizeFieldOptions(f.options),
+          defaultValue: normalizeFieldDefault(f),
+        };
+      });
+
+      return {
+        id: tbl.id || `grp_${toInternalName(tbl.name || tbl.title || `table_${tblIdx + 1}`)}`,
+        name: tbl.name || tbl.title || `Table ${tblIdx + 1}`,
+        order: typeof tbl.order === 'number' ? tbl.order : tblIdx + 1,
+        fields,
+      };
+    });
+
+    sections.push({
+      id: mod.id || `sec_${toInternalName(mod.code || mod.name || `module_${modIdx + 1}`)}`,
+      name: mod.name || mod.code || `Module ${modIdx + 1}`,
+      order: typeof mod.order === 'number' ? mod.order : modIdx + 1,
+      description: mod.description || '',
+      groups,
+    });
+  });
+
+  const relationships: StructureRelationship[] = (Array.isArray(parsed.relationships) ? parsed.relationships : [])
+    .filter((r: any) => isRecord(r) && (r.from || r.to))
+    .map((r: any) => ({
+      from: String(r.from || ''),
+      to: String(r.to || ''),
+      type: r.type != null ? String(r.type) : undefined,
+    }));
+
+  return { sections, fieldCount, tableCount, relationships };
+}
+
 export class ProjectStructureExtractor {
   /**
    * Analyzes an uploaded Excel file to discover and build a NEW Project Structure.
@@ -72,21 +250,46 @@ export class ProjectStructureExtractor {
     specifiedOrientation: OrientationMode = 'AUTO',
     customName?: string,
     customCode?: string,
+    specifiedSheetName?: string,
   ): Promise<StructureExtractResult> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
 
-      reader.onload = (e) => {
+      reader.onload = async (e) => {
         try {
           const data = e.target?.result;
           if (!data) throw new Error('Failed to read Excel file payload.');
+
+          // Reuse the existing workbook-analysis service to obtain per-sheet
+          // scores, the recommended worksheet, and the resolved orientation.
+          // This is the SAME scoring engine used by the project import wizard —
+          // no duplicate analysis logic is introduced here.
+          let sheetScores: WorksheetScore[] = [];
+          let detectedSheetName = '';
+
+          try {
+            const pre = await ExcelHeaderExtractor.extractFromFile(
+              file,
+              undefined,
+              specifiedSheetName,
+              undefined,
+              specifiedOrientation,
+            );
+            sheetScores = pre.sheetScores || [];
+            detectedSheetName = pre.sheetName;
+          } catch (scanErr) {
+            console.warn('[STRUCTURE] Fallback workbook scan failed, using first sheet.', scanErr);
+          }
 
           const workbook = XLSX.read(data, { type: 'array', sheetRows: 100 });
           if (!workbook.SheetNames || workbook.SheetNames.length === 0) {
             throw new Error('No worksheets found in uploaded file.');
           }
 
-          const targetSheetName = workbook.SheetNames[0];
+          const targetSheetName =
+            specifiedSheetName && workbook.SheetNames.includes(specifiedSheetName)
+              ? specifiedSheetName
+              : detectedSheetName || workbook.SheetNames[0];
           const targetSheet = workbook.Sheets[targetSheetName];
           if (!targetSheet) throw new Error(`Worksheet '${targetSheetName}' not found.`);
 
@@ -95,9 +298,18 @@ export class ProjectStructureExtractor {
             throw new Error('Worksheet contains no populated rows.');
           }
 
-          // Orientation detection
-          const orientInfo = ExcelHeaderExtractor.detectOrientation(rows, undefined, specifiedOrientation);
-          const isVertical = orientInfo.orientation === 'VERTICAL';
+          // Orientation detection (existing engine, honors user override)
+          const orientationInfo = ExcelHeaderExtractor.detectOrientation(
+            rows,
+            undefined,
+            specifiedOrientation,
+          );
+          const isVertical =
+            specifiedOrientation === 'VERTICAL' ||
+            (specifiedOrientation !== 'HORIZONTAL' && orientationInfo.orientation === 'VERTICAL');
+          const resolvedOrientation = (isVertical ? 'VERTICAL' : 'HORIZONTAL') as
+            | 'VERTICAL'
+            | 'HORIZONTAL';
 
           const detectedFields: TemplateField[] = [];
 
@@ -178,11 +390,13 @@ export class ProjectStructureExtractor {
             name: formattedName,
             version: '1.0',
             status: 'PUBLISHED',
-            description: `Custom Project Structure extracted from file '${file.name}' (${orientInfo.orientation} mode).`,
-            orientation: orientInfo.orientation,
+            description: `Custom Project Structure extracted from file '${file.name}' (${resolvedOrientation} mode).`,
+            orientation: resolvedOrientation,
             sections,
             detectedFieldCount: detectedFields.length,
             detectedModuleCount: sections.length,
+            sheetScores,
+            detectedSheet: targetSheetName,
           });
         } catch (err: any) {
           reject(new Error(`Structure extraction failed: ${err?.message || 'Unknown error'}`));
@@ -196,93 +410,106 @@ export class ProjectStructureExtractor {
 
   /**
    * Parse a JSON schema file into a Project Structure.
+   * Recognizes the hierarchical layout (structure / modules -> tables -> fields /
+   * relationships) as well as an already-normalized CMF template (sections).
+   * Throws a structured error for unrecognized JSON shapes — it never flattens
+   * arbitrary top-level keys into fields.
    */
   static extractFromJson(jsonContent: string | object, fileFileName?: string): StructureExtractResult {
     const parsed = typeof jsonContent === 'string' ? JSON.parse(jsonContent) : jsonContent;
-    const rawSections = parsed.sections || parsed.schema_json?.sections || [];
-    let detectedFieldsCount = 0;
-
-    const sections: TemplateSection[] = (rawSections || []).map((sec: any, secIdx: number) => ({
-      id: sec.id || `sec_${secIdx + 1}`,
-      name: sec.name || `Module ${secIdx + 1}`,
-      order: sec.order || secIdx + 1,
-      description: sec.description || '',
-      groups: (sec.groups || []).map((grp: any, grpIdx: number) => ({
-        id: grp.id || `grp_${grpIdx + 1}`,
-        name: grp.name || `Group ${grpIdx + 1}`,
-        order: grp.order || grpIdx + 1,
-        description: grp.description || '',
-        fields: (grp.fields || []).map((f: any, fIdx: number) => {
-          detectedFieldsCount++;
-          return {
-            id: f.id || `fld_${toInternalName(f.label || f.internalName || `field_${fIdx + 1}`)}`,
-            internalName: toInternalName(f.internalName || f.label || `field_${fIdx + 1}`),
-            label: f.label || f.internalName || `Field ${fIdx + 1}`,
-            type: f.type || 'text',
-            required: Boolean(f.required),
-            placeholder: f.placeholder,
-            helpText: f.helpText,
-            order: f.order || fIdx + 1,
-            visible: f.visible !== false,
-            editable: f.editable !== false,
-            options: f.options || [],
-          };
-        }),
-      })),
-    }));
-
-    // Fallback if no sections exist
-    if (sections.length === 0) {
-      const fallbackFields: TemplateField[] = [];
-      const keys = Object.keys(parsed);
-      keys.forEach((k, idx) => {
-        if (!['code', 'name', 'version', 'status', 'description'].includes(k)) {
-          const internalName = toInternalName(k);
-          fallbackFields.push({
-            id: `fld_${internalName}`,
-            internalName,
-            label: k,
-            type: inferFieldType(parsed[k]),
-            required: isRequiredByName(internalName),
-            order: idx + 1,
-            visible: true,
-            editable: true,
-          });
-        }
-      });
-
-      if (fallbackFields.length > 0) {
-        sections.push({
-          id: 'sec_general',
-          name: 'General Information',
-          order: 1,
-          groups: [
-            {
-              id: 'grp_attributes',
-              name: 'Structure Attributes',
-              order: 1,
-              fields: fallbackFields,
-            },
-          ],
-        });
-        detectedFieldsCount = fallbackFields.length;
-      }
+    if (!isRecord(parsed)) {
+      throw new Error('Invalid Project Structure JSON: expected a JSON object.');
     }
 
-    const code = (parsed.code || (fileFileName ? fileFileName.replace(/\.[^/.]+$/, '') : 'JSON_STRUCT')).toUpperCase();
-    const name = parsed.name || (fileFileName ? fileFileName.replace(/\.[^/.]+$/, '') : 'JSON Structure');
+    // ── 1. Hierarchical layout: modules -> tables -> fields ──────────────
+    const hierarchical = extractHierarchicalStructure(parsed);
+    if (hierarchical) {
+      const meta = isRecord(parsed.structure) ? parsed.structure : parsed;
+      const code = String(meta.code || parsed.code || (fileFileName ? fileFileName.replace(/\.[^/.]+$/, '') : 'JSON_STRUCT')).toUpperCase();
+      const name = meta.name || parsed.name || (fileFileName ? fileFileName.replace(/\.[^/.]+$/, '') : 'JSON Structure');
+      return {
+        code,
+        name,
+        version: String(meta.version || parsed.version || '1.0'),
+        status: (meta.status || parsed.status) === 'DRAFT' ? 'DRAFT' : 'PUBLISHED',
+        description: meta.description || parsed.description || `Project structure imported from JSON with ${hierarchical.fieldCount} fields.`,
+        orientation: 'HORIZONTAL',
+        sections: hierarchical.sections,
+        detectedFieldCount: hierarchical.fieldCount,
+        detectedModuleCount: hierarchical.sections.length,
+        detectedTableCount: hierarchical.tableCount,
+        detectedRelationshipCount: hierarchical.relationships.length,
+        relationships: hierarchical.relationships,
+      };
+    }
 
-    return {
-      code,
-      name,
-      version: parsed.version || '1.0',
-      status: parsed.status === 'DRAFT' ? 'DRAFT' : 'PUBLISHED',
-      description: parsed.description || 'Project structure imported from JSON schema.',
-      orientation: 'VERTICAL',
-      sections,
-      detectedFieldCount: detectedFieldsCount,
-      detectedModuleCount: sections.length,
-    };
+    // ── 2. Already-normalized CMF template: sections / schema_json ───────
+    const rawSections = parsed.sections || parsed.schema_json?.sections;
+    if (Array.isArray(rawSections)) {
+      let detectedFieldsCount = 0;
+
+      const sections: TemplateSection[] = rawSections.map((sec: any, secIdx: number) => ({
+        id: sec.id || `sec_${secIdx + 1}`,
+        name: sec.name || `Module ${secIdx + 1}`,
+        order: sec.order || secIdx + 1,
+        description: sec.description || '',
+        groups: (sec.groups || []).map((grp: any, grpIdx: number) => ({
+          id: grp.id || `grp_${grpIdx + 1}`,
+          name: grp.name || `Group ${grpIdx + 1}`,
+          order: grp.order || grpIdx + 1,
+          description: grp.description || '',
+          fields: (grp.fields || []).map((f: any, fIdx: number) => {
+            detectedFieldsCount++;
+            return {
+              id: f.id || `fld_${toInternalName(f.label || f.internalName || `field_${fIdx + 1}`)}`,
+              internalName: toInternalName(f.internalName || f.label || `field_${fIdx + 1}`),
+              label: f.label || f.internalName || `Field ${fIdx + 1}`,
+              type: normalizeJsonFieldType(f.type),
+              required: Boolean(f.required),
+              placeholder: f.placeholder,
+              helpText: f.helpText,
+              order: f.order || fIdx + 1,
+              visible: f.visible !== false,
+              editable: f.editable !== false,
+              options: normalizeFieldOptions(f.options),
+              defaultValue: normalizeFieldDefault(f),
+            };
+          }),
+        })),
+      }));
+
+      const code = (parsed.code || (fileFileName ? fileFileName.replace(/\.[^/.]+$/, '') : 'JSON_STRUCT')).toUpperCase();
+      const name = parsed.name || (fileFileName ? fileFileName.replace(/\.[^/.]+$/, '') : 'JSON Structure');
+
+      const relationships: StructureRelationship[] = (Array.isArray(parsed.relationships) ? parsed.relationships : [])
+        .filter((r: any) => isRecord(r) && (r.from || r.to))
+        .map((r: any) => ({
+          from: String(r.from || ''),
+          to: String(r.to || ''),
+          type: r.type != null ? String(r.type) : undefined,
+        }));
+
+      return {
+        code,
+        name,
+        version: parsed.version || '1.0',
+        status: parsed.status === 'DRAFT' ? 'DRAFT' : 'PUBLISHED',
+        description: parsed.description || 'Project structure imported from JSON schema.',
+        orientation: 'VERTICAL',
+        sections,
+        detectedFieldCount: detectedFieldsCount,
+        detectedModuleCount: sections.length,
+        detectedTableCount: sections.reduce((acc, sec) => acc + sec.groups.length, 0),
+        detectedRelationshipCount: relationships.length,
+        relationships,
+      };
+    }
+
+    // ── 3. Unrecognized shape → structured error, never flat fields ──────
+    throw new Error(
+      'Invalid Project Structure JSON: expected a "modules" array (modules → tables → fields) or a "sections" array. Got: ' +
+        Object.keys(parsed).join(', '),
+    );
   }
 
   /**

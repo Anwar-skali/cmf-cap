@@ -288,6 +288,7 @@ export const FieldRenderer: React.FC<FieldRendererProps> = ({
 
       case 'dropdown':
       case 'status':
+      case 'cat_status':
         return (
           <select
             id={field.internalName}
@@ -303,6 +304,37 @@ export const FieldRenderer: React.FC<FieldRendererProps> = ({
               </option>
             ))}
           </select>
+        );
+
+      case 'multiselect':
+        return (
+          <div className="space-y-1.5 py-1">
+            {field.options?.map((opt: DropdownOption) => (
+              <label
+                key={opt.value}
+                className="flex items-center gap-2 text-xs font-medium text-foreground cursor-pointer"
+              >
+                <input
+                  type="checkbox"
+                  value={opt.value}
+                  checked={Array.isArray(value) && value.includes(opt.value)}
+                  onChange={(e) => {
+                    const arr = Array.isArray(value) ? [...value] : [];
+                    const idx = arr.indexOf(opt.value);
+                    if (e.target.checked && idx < 0) arr.push(opt.value);
+                    if (!e.target.checked && idx >= 0) arr.splice(idx, 1);
+                    onChange(arr);
+                  }}
+                  disabled={!isEditable}
+                  className="h-4 w-4 rounded border-input text-primary bg-background focus:ring-primary"
+                />
+                <span>{opt.label}</span>
+              </label>
+            ))}
+            {!field.options?.length && (
+              <span className="text-[11px] text-muted-foreground">No options configured for this field.</span>
+            )}
+          </div>
         );
 
       case 'radio':

@@ -15,6 +15,259 @@ from app.application.dto.templates import (
 from app.application.interfaces.services import IUnitOfWork
 from app.core.exceptions import BadRequestException, ConflictException, NotFoundException
 
+# Maps generic JSON schema field types onto the CMF field-type vocabulary.
+_JSON_FIELD_TYPE_MAP: dict[str, str] = {
+    "string": "text",
+    "text": "text",
+    "textarea": "textarea",
+    "longtext": "textarea",
+    "integer": "integer",
+    "int": "integer",
+    "number": "decimal",
+    "float": "decimal",
+    "double": "decimal",
+    "decimal": "decimal",
+    "money": "currency",
+    "currency": "currency",
+    "date": "date",
+    "datetime": "date",
+    "time": "date",
+    "week": "week",
+    "boolean": "boolean",
+    "bool": "boolean",
+    "email": "email",
+    "phone": "phone",
+    "telephone": "phone",
+    "dropdown": "dropdown",
+    "enum": "dropdown",
+    "select": "dropdown",
+    "multiselect": "multiselect",
+    "checkbox": "checkbox",
+    "radio": "radio",
+    "status": "status",
+    "cat_status": "cat_status",
+    "percentage": "percentage",
+    "file": "file_upload",
+    "file_upload": "file_upload",
+    "attachment": "file_upload",
+    "user": "user",
+    "supplier": "supplier",
+    "project": "project",
+    "calculated": "calculated",
+    "readonly": "readonly",
+}
+
+
+def _slugify(name: str) -> str:
+    return re.sub(r"[^a-zA-Z0-9_]+", "_", str(name).lower()).strip("_")
+
+
+def _map_json_type(raw_type: Any) -> str:
+    if raw_type is None:
+        return "text"
+    return _JSON_FIELD_TYPE_MAP.get(str(raw_type).strip().lower(), "text")
+
+
+# Field types whose inputs render as selectable choices in the project form.
+# Required fields of these types are unusable unless they carry options or a default.
+SELECTABLE_FIELD_TYPES: set[str] = {"status", "dropdown", "radio", "multiselect", "cat_status"}
+
+
+def _normalize_field_options(raw: Any) -> list[dict[str, Any]] | None:
+    """
+    Normalize the JSON structure `options` property onto the CMF DropdownOption shape
+    ({value, label, order?}). Accepts string arrays, object arrays, or a comma-separated string.
+    """
+    if raw is None:
+        return None
+    if isinstance(raw, list):
+        options: list[dict[str, Any]] = []
+        for i, opt in enumerate(raw):
+            if isinstance(opt, dict):
+                value = opt.get("value") or opt.get("label")
+                if value is None:
+                    continue
+                options.append(
+                    {
+                        "value": str(value),
+                        "label": str(opt.get("label") or value),
+                        "order": opt.get("order") if isinstance(opt.get("order"), int) else i + 1,
+                    }
+                )
+            elif opt is not None and str(opt).strip() != "":
+                text = str(opt).strip()
+                options.append({"value": text, "label": text, "order": i + 1})
+        return options or None
+    if isinstance(raw, str):
+        parts = [p.strip() for p in raw.split(",") if p.strip()]
+        return [{"value": p, "label": p, "order": i + 1} for i, p in enumerate(parts)] or None
+    return None
+
+
+def _normalize_structure_field(f: Any, field_index: int) -> dict[str, Any]:
+    """Normalize a single field dict against the CMF TemplateField shape."""
+    if not isinstance(f, dict):
+        raise ValueError(f"Invalid Project Structure JSON: field #{field_index + 1} must be an object.")
+    name = f.get("name") or f.get("internalName") or f.get("label") or f"field_{field_index + 1}"
+    internal = _slugify(name)
+    default_value = f.get("default")
+    if default_value is None:
+        default_value = f.get("defaultValue")
+    return {
+        "id": str(f.get("id") or f"fld_{internal}"),
+        "internalName": internal,
+        "label": str(f.get("label") or f.get("name") or f.get("internalName") or f"Field {field_index + 1}"),
+        "type": _map_json_type(f.get("type")),
+        "required": bool(f.get("required", False)),
+        "placeholder": f.get("placeholder"),
+        "helpText": f.get("helpText") or f.get("description"),
+        "order": f.get("order") if isinstance(f.get("order"), int) else field_index + 1,
+        "visible": f.get("visible", True) is not False,
+        "editable": f.get("editable", True) is not False,
+        "options": _normalize_field_options(f.get("options")),
+        "defaultValue": default_value,
+    }
+
+
+def _normalize_project_structure_json(raw: dict[str, Any]) -> dict[str, Any]:
+    """
+    Normalizes a JSON project-structure definition onto the CMF template shape
+    (sections -> groups -> fields) while preserving the hierarchical source
+    layout: structure metadata, modules -> tables -> fields, relationships.
+
+    Recognized layouts:
+      1. Hierarchical:  { structure: {...}, modules: [{ code, name, tables: [{ name, fields }] }], relationships: [...] }
+      2. Flat CMF:      { sections: [ ... ] }  (stored as-is)
+
+    Anything else raises ValueError with a clear, structured reason — top-level
+    JSON keys are NEVER turned into fields.
+    """
+    if not isinstance(raw, dict):
+        raise ValueError("Invalid Project Structure JSON: expected a JSON object.")
+
+    # ── 1. Hierarchical layout ────────────────────────────────────────────────
+    modules = raw.get("modules")
+    if isinstance(modules, list) and modules:
+        sections: list[dict[str, Any]] = []
+        table_count = 0
+        field_count = 0
+
+        for mod_index, mod in enumerate(modules):
+            if not isinstance(mod, dict):
+                raise ValueError(f"Invalid Project Structure JSON: module #{mod_index + 1} must be an object.")
+            tables = mod.get("tables")
+            if not isinstance(tables, list):
+                mod_ref = mod.get("code") or mod.get("name") or mod_index + 1
+                raise ValueError(
+                    f"Invalid Project Structure JSON: module '{mod_ref}' must contain a 'tables' array."
+                )
+
+            groups: list[dict[str, Any]] = []
+            for tbl_index, tbl in enumerate(tables):
+                if not isinstance(tbl, dict):
+                    raise ValueError(f"Invalid Project Structure JSON: table #{tbl_index + 1} must be an object.")
+                raw_fields = tbl.get("fields")
+                if not isinstance(raw_fields, list):
+                    raise ValueError(
+                        f"Invalid Project Structure JSON: table '{tbl.get('name') or tbl_index + 1}' must contain a 'fields' array."
+                    )
+
+                fields: list[dict[str, Any]] = []
+                for f_index, f in enumerate(raw_fields):
+                    field_count += 1
+                    fields.append(_normalize_structure_field(f, f_index))
+                table_count += 1
+                groups.append(
+                    {
+                        "id": str(
+                            tbl.get("id")
+                            or f"grp_{_slugify(tbl.get('name') or tbl.get('title') or f'table_{tbl_index + 1}')}"
+                        ),
+                        "name": tbl.get("name") or tbl.get("title") or f"Table {tbl_index + 1}",
+                        "order": tbl.get("order") if isinstance(tbl.get("order"), int) else tbl_index + 1,
+                        "fields": fields,
+                    }
+                )
+
+            sections.append(
+                {
+                    "id": str(
+                        mod.get("id")
+                        or f"sec_{_slugify(mod.get('code') or mod.get('name') or f'module_{mod_index + 1}')}"
+                    ),
+                    "name": mod.get("name") or mod.get("code") or f"Module {mod_index + 1}",
+                    "order": mod.get("order") if isinstance(mod.get("order"), int) else mod_index + 1,
+                    "description": mod.get("description") or "",
+                    "groups": groups,
+                }
+            )
+
+        meta = raw.get("structure") if isinstance(raw.get("structure"), dict) else raw
+        relationships = raw.get("relationships")
+        normalized: dict[str, Any] = {
+            "code": str(meta.get("code") or raw.get("code") or "JSON_STRUCT").upper().strip(),
+            "name": str(meta.get("name") or raw.get("name") or "JSON Structure"),
+            "version": str(meta.get("version") or raw.get("version") or "1.0"),
+            "status": str(meta.get("status") or raw.get("status") or "DRAFT"),
+            "description": meta.get("description")
+            or raw.get("description")
+            or f"Project structure imported from JSON with {field_count} fields.",
+            "orientation": "HORIZONTAL",
+            "modules": len(sections),
+            "tables": table_count,
+            "fieldCount": field_count,
+            "sections": sections,
+        }
+        if isinstance(relationships, list):
+            normalized["relationships"] = [
+                r for r in relationships if isinstance(r, dict) and (r.get("from") or r.get("to"))
+            ]
+        return normalized
+
+    # ── 2. Already-normalized CMF template ────────────────────────────────────
+    if isinstance(raw.get("sections"), list):
+        return raw
+
+    # ── 3. Unrecognized shape ── structured error, never flat fields ─────────
+    raise ValueError(
+        "Invalid Project Structure JSON: expected a 'modules' array (modules → tables → fields) "
+        f"or a 'sections' array. Got: {', '.join(str(k) for k in raw.keys())}"
+    )
+
+
+def validate_structure_selectable_fields(schema_json: dict[str, Any]) -> list[str]:
+    """
+    Validates a Project Structure schema for project-creation readiness.
+
+    Required selectable fields (status, dropdown, radio, multiselect, cat_status)
+    must have at least one option OR a default value; otherwise a project form
+    cannot be created from the structure. Returns a list of human-readable problems.
+    """
+    problems: list[str] = []
+    sections = schema_json.get("sections", [])
+    if not isinstance(sections, list):
+        return problems
+    for sec in sections:
+        groups = sec.get("groups", []) if isinstance(sec, dict) else []
+        for grp in groups:
+            fields = grp.get("fields", []) if isinstance(grp, dict) else []
+            for fld in fields:
+                if not isinstance(fld, dict):
+                    continue
+                field_type = str(fld.get("type", "")).strip().lower()
+                if field_type not in SELECTABLE_FIELD_TYPES:
+                    continue
+                if not fld.get("required"):
+                    continue
+                options = fld.get("options") or []
+                has_default = fld.get("defaultValue") is not None
+                if not options and not has_default:
+                    label = fld.get("label") or fld.get("internalName") or "Unnamed field"
+                    problems.append(
+                        f"Required {field_type} field '{label}' has no options and no default value."
+                    )
+    return problems
+
 
 class TemplateService:
     def __init__(self, uow: IUnitOfWork) -> None:
@@ -91,6 +344,13 @@ class TemplateService:
         if existing is not None:
             raise ConflictException(f"Template code '{code}' already exists")
 
+        if data.status.upper() == "PUBLISHED" and data.schema_json:
+            problems = validate_structure_selectable_fields(data.schema_json)
+            if problems:
+                raise BadRequestException(
+                    "Cannot publish Project Structure: " + "; ".join(problems)
+                )
+
         payload = {
             "code": code,
             "name": data.name,
@@ -108,6 +368,14 @@ class TemplateService:
         tmpl = await self._uow.templates.get(id)
         if tmpl is None:
             raise NotFoundException("Template not found")
+
+        resulting_status = data.status if data.status is not None else tmpl.status
+        if resulting_status.upper() == "PUBLISHED" and data.schema_json is not None:
+            problems = validate_structure_selectable_fields(data.schema_json)
+            if problems:
+                raise BadRequestException(
+                    "Cannot publish Project Structure: " + "; ".join(problems)
+                )
 
         update_dict: dict[str, Any] = {}
         if data.name is not None:
@@ -168,6 +436,12 @@ class TemplateService:
         if tmpl is None:
             raise NotFoundException("Template not found")
 
+        problems = validate_structure_selectable_fields(tmpl.schema_json or {})
+        if problems:
+            raise BadRequestException(
+                "Cannot publish Project Structure: " + "; ".join(problems)
+            )
+
         updated = await self._uow.templates.update(id, {"status": "PUBLISHED"})
         await self._uow.commit()
         return self._build_response(updated)
@@ -187,11 +461,16 @@ class TemplateService:
         return res
 
     async def import_template_json(self, raw_json: dict[str, Any]) -> TemplateResponse:
-        code = raw_json.get("code") or f"TMPL_{uuid.uuid4().hex[:6].upper()}"
-        code = code.upper().strip()
+        try:
+            schema_json = _normalize_project_structure_json(raw_json)
+        except ValueError as exc:
+            raise BadRequestException(str(exc))
 
-        name = raw_json.get("name") or f"Imported Template {code}"
-        version = str(raw_json.get("version", "1.0"))
+        code = schema_json.get("code") or f"TMPL_{uuid.uuid4().hex[:6].upper()}"
+        code = str(code).upper().strip()
+
+        name = schema_json.get("name") or f"Imported Template {code}"
+        version = str(schema_json.get("version", "1.0"))
 
         existing = await self._uow.templates.get_by_code(code)
         if existing is not None:
@@ -200,7 +479,7 @@ class TemplateService:
                 existing.id,
                 UpdateTemplateRequest(
                     name=name,
-                    schema_json=raw_json,
+                    schema_json=schema_json,
                     change_log="Imported updated JSON definition",
                 ),
             )
@@ -211,8 +490,8 @@ class TemplateService:
                 name=name,
                 version=version,
                 status="DRAFT",
-                description=raw_json.get("description"),
-                schema_json=raw_json,
+                description=schema_json.get("description"),
+                schema_json=schema_json,
             )
         )
 

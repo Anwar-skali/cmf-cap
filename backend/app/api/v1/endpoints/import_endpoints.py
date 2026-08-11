@@ -6,6 +6,7 @@ import logging
 import time
 import traceback
 import uuid
+import zipfile
 from typing import Any
 
 import openpyxl
@@ -88,6 +89,74 @@ async def get_import_templates(
     ]
 
 
+@router.post("/scan-workbook", summary="Score all worksheets without extracting headers")
+async def scan_workbook(
+    file: UploadFile = File(...),
+    orientation: str | None = Form(None),
+    current_user: User = Depends(get_current_active_user),
+) -> dict[str, Any]:
+    """
+    Scans every worksheet in an uploaded Excel workbook and returns per-sheet
+    classification, confidence, and orientation. Used by Step 2 (Workbook
+    Analysis) so the user can choose the correct worksheet.
+    This endpoint never crashes the backend: analysis exceptions are converted
+    into a structured 400 response with a useful diagnostic message.
+    """
+    start_t = time.perf_counter()
+    if not file.filename.endswith((".xlsx", ".xls", ".xlsm")):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail={
+                "message": "Workbook scan failed",
+                "reason": "Invalid file format. Please upload an Excel file (.xlsx, .xls, .xlsm).",
+                "uploaded_file": {"filename": file.filename},
+            },
+        )
+
+    contents = await file.read()
+
+    # Backend must remain alive: any unexpected analysis exception is surfaced
+    # as a structured error response with the real reason preserved in logs.
+    try:
+        result = ExcelHeaderExtractor.extract_workbook_info(
+            contents, specified_orientation=orientation
+        )
+    except (ValueError, OSError, zipfile.BadZipFile) as e:
+        logger.warning("[WORKBOOK SCAN] Malformed workbook '%s': %s", file.filename, e)
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail={
+                "message": "Workbook scan failed",
+                "reason": str(e),
+                "uploaded_file": {"filename": file.filename},
+                "orientation": orientation or "AUTO",
+            },
+        )
+    except Exception as e:
+        logger.exception("[WORKBOOK SCAN] Unexpected error scanning '%s': %s", file.filename, e)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail={
+                "message": "Workbook scan failed",
+                "reason": f"Unexpected analysis error: {e}",
+                "uploaded_file": {"filename": file.filename},
+                "orientation": orientation or "AUTO",
+            },
+        )
+
+    duration_ms = round((time.perf_counter() - start_t) * 1000, 2)
+    logger.info(
+        "[WORKBOOK SCAN] File: '%s' | Sheets: %d | Best: '%s' | Elapsed: %.2f ms",
+        file.filename, len(result["sheets"]), result["detected_sheet"], duration_ms,
+    )
+    return {
+        "file_name": file.filename,
+        "sheets": result["sheets"],
+        "detected_sheet": result["detected_sheet"],
+        "scan_duration_ms": duration_ms,
+    }
+
+
 @router.post("/extract-headers", summary="Extract only column headers from an Excel file")
 async def extract_excel_headers(
     file: UploadFile = File(...),
@@ -105,7 +174,12 @@ async def extract_excel_headers(
     if not file.filename.endswith((".xlsx", ".xls", ".xlsm")):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Invalid file format. Please upload an Excel file (.xlsx, .xls, .xlsm).",
+            detail={
+                "message": "Header extraction failed",
+                "reason": "Invalid file format. Please upload an Excel file (.xlsx, .xls, .xlsm).",
+                "uploaded_file": {"filename": file.filename},
+                "orientation": orientation or "AUTO",
+            },
         )
     contents = await file.read()
     try:
@@ -113,7 +187,16 @@ async def extract_excel_headers(
             contents, specified_header_row=header_row, specified_sheet_name=sheet_name, specified_orientation=orientation
         )
     except Exception as e:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+        logger.exception("[HEADER DETECTION] Failed analyzing '%s': %s", file.filename, e)
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail={
+                "message": "Header extraction failed",
+                "reason": str(e),
+                "uploaded_file": {"filename": file.filename},
+                "orientation": orientation or "AUTO",
+            },
+        )
 
     logger.info(
         "[HEADER DETECTION] File: '%s' | Sheet: '%s' (%.1f%%) | Orient: %s (%.1f%%) | Headers: %d | Elapsed: %.2f ms",
