@@ -1141,7 +1141,7 @@ export function ImportWizard({
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div
-                        className={`flex h-10 w-10 items-center justify-center rounded-lg text-sm font-extrabold ${
+                        className={`flex h-10 min-w-10 max-w-28 items-center justify-center rounded-lg text-xs font-extrabold px-2 shrink-0 truncate ${
                           selectedTemplate?.id === tmpl.id
                             ? 'bg-primary text-primary-foreground'
                             : 'bg-muted text-muted-foreground'

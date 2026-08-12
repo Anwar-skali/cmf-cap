@@ -791,8 +791,8 @@ export function StructureImportWizard({ initialMode = 'excel', onClose, onSaved 
             {extractResult && (
               <div className="rounded-xl border border-blue-500/30 bg-blue-50 dark:bg-blue-950/20 p-4 space-y-3">
                 <div className="flex items-center justify-between flex-wrap gap-2">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600/15 text-blue-600 font-black text-sm border border-blue-500/30">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="flex h-10 min-w-10 max-w-32 items-center justify-center rounded-xl bg-blue-600/15 text-blue-600 font-black text-xs border border-blue-500/30 px-2 shrink-0 truncate">
                       {deriveCode()}
                     </div>
                     <div>

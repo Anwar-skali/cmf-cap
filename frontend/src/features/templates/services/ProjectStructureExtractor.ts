@@ -188,8 +188,43 @@ function extractHierarchicalStructure(parsed: any): {
   let tableCount = 0;
 
   modules.forEach((mod, modIdx) => {
+    const groups: FieldGroup[] = [];
+
+    // 1. Direct fields under module (e.g. mod.fields)
+    if (Array.isArray(mod.fields) && mod.fields.length > 0) {
+      tableCount += 1;
+      const modName = mod.name || mod.code || `Module ${modIdx + 1}`;
+      const fields: TemplateField[] = mod.fields.map((f: any, fIdx: number) => {
+        fieldCount += 1;
+        const rawName = toInternalName(f.name || f.internalName || f.label || `field_${fIdx + 1}`);
+        const label = f.label || f.name || f.internalName || `Field ${fIdx + 1}`;
+        return {
+          id: f.id || `fld_${rawName}`,
+          internalName: rawName,
+          label,
+          type: normalizeJsonFieldType(f.type),
+          required: Boolean(f.required),
+          placeholder: f.placeholder || undefined,
+          helpText: f.helpText || f.description || undefined,
+          order: typeof f.order === 'number' ? f.order : fIdx + 1,
+          visible: f.visible !== false,
+          editable: f.editable !== false,
+          options: normalizeFieldOptions(f.options),
+          defaultValue: normalizeFieldDefault(f),
+        };
+      });
+
+      groups.push({
+        id: `grp_${toInternalName(modName)}`,
+        name: modName,
+        order: 1,
+        fields,
+      });
+    }
+
+    // 2. Tables under module (e.g. mod.tables)
     const tables: any[] = Array.isArray(mod.tables) ? mod.tables : [];
-    const groups: FieldGroup[] = tables.map((tbl, tblIdx) => {
+    tables.forEach((tbl, tblIdx) => {
       tableCount += 1;
       const fields: TemplateField[] = (Array.isArray(tbl.fields) ? tbl.fields : []).map((f: any, fIdx: number) => {
         fieldCount += 1;
@@ -211,12 +246,12 @@ function extractHierarchicalStructure(parsed: any): {
         };
       });
 
-      return {
+      groups.push({
         id: tbl.id || `grp_${toInternalName(tbl.name || tbl.title || `table_${tblIdx + 1}`)}`,
         name: tbl.name || tbl.title || `Table ${tblIdx + 1}`,
-        order: typeof tbl.order === 'number' ? tbl.order : tblIdx + 1,
+        order: typeof tbl.order === 'number' ? tbl.order : groups.length + 1,
         fields,
-      };
+      });
     });
 
     sections.push({
@@ -427,13 +462,17 @@ export class ProjectStructureExtractor {
       const meta = isRecord(parsed.structure) ? parsed.structure : parsed;
       const code = String(meta.code || parsed.code || (fileFileName ? fileFileName.replace(/\.[^/.]+$/, '') : 'JSON_STRUCT')).toUpperCase();
       const name = meta.name || parsed.name || (fileFileName ? fileFileName.replace(/\.[^/.]+$/, '') : 'JSON Structure');
+      const rawOrient = meta.orientation || parsed.orientation;
+      const orientation: 'VERTICAL' | 'HORIZONTAL' =
+        rawOrient === 'VERTICAL' || rawOrient === 'HORIZONTAL' ? rawOrient : 'HORIZONTAL';
+
       return {
         code,
         name,
         version: String(meta.version || parsed.version || '1.0'),
         status: (meta.status || parsed.status) === 'DRAFT' ? 'DRAFT' : 'PUBLISHED',
         description: meta.description || parsed.description || `Project structure imported from JSON with ${hierarchical.fieldCount} fields.`,
-        orientation: 'HORIZONTAL',
+        orientation,
         sections: hierarchical.sections,
         detectedFieldCount: hierarchical.fieldCount,
         detectedModuleCount: hierarchical.sections.length,
@@ -489,13 +528,17 @@ export class ProjectStructureExtractor {
           type: r.type != null ? String(r.type) : undefined,
         }));
 
+      const rawOrient = parsed.orientation || parsed.schema_json?.orientation;
+      const orientation: 'VERTICAL' | 'HORIZONTAL' =
+        rawOrient === 'VERTICAL' || rawOrient === 'HORIZONTAL' ? rawOrient : 'VERTICAL';
+
       return {
         code,
         name,
         version: parsed.version || '1.0',
         status: parsed.status === 'DRAFT' ? 'DRAFT' : 'PUBLISHED',
         description: parsed.description || 'Project structure imported from JSON schema.',
-        orientation: 'VERTICAL',
+        orientation,
         sections,
         detectedFieldCount: detectedFieldsCount,
         detectedModuleCount: sections.length,

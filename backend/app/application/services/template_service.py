@@ -133,10 +133,10 @@ def _normalize_project_structure_json(raw: dict[str, Any]) -> dict[str, Any]:
     """
     Normalizes a JSON project-structure definition onto the CMF template shape
     (sections -> groups -> fields) while preserving the hierarchical source
-    layout: structure metadata, modules -> tables -> fields, relationships.
+    layout: structure metadata, modules -> tables -> fields (or direct module fields), relationships.
 
     Recognized layouts:
-      1. Hierarchical:  { structure: {...}, modules: [{ code, name, tables: [{ name, fields }] }], relationships: [...] }
+      1. Hierarchical:  { structure: {...}, modules: [{ code, name, fields: [...] or tables: [{ name, fields }] }], relationships: [...] }
       2. Flat CMF:      { sections: [ ... ] }  (stored as-is)
 
     Anything else raises ValueError with a clear, structured reason — top-level
@@ -155,38 +155,60 @@ def _normalize_project_structure_json(raw: dict[str, Any]) -> dict[str, Any]:
         for mod_index, mod in enumerate(modules):
             if not isinstance(mod, dict):
                 raise ValueError(f"Invalid Project Structure JSON: module #{mod_index + 1} must be an object.")
-            tables = mod.get("tables")
-            if not isinstance(tables, list):
-                mod_ref = mod.get("code") or mod.get("name") or mod_index + 1
-                raise ValueError(
-                    f"Invalid Project Structure JSON: module '{mod_ref}' must contain a 'tables' array."
-                )
-
+            
             groups: list[dict[str, Any]] = []
-            for tbl_index, tbl in enumerate(tables):
-                if not isinstance(tbl, dict):
-                    raise ValueError(f"Invalid Project Structure JSON: table #{tbl_index + 1} must be an object.")
-                raw_fields = tbl.get("fields")
-                if not isinstance(raw_fields, list):
-                    raise ValueError(
-                        f"Invalid Project Structure JSON: table '{tbl.get('name') or tbl_index + 1}' must contain a 'fields' array."
-                    )
 
+            # 1. Direct fields under module (e.g. mod.fields)
+            direct_fields = mod.get("fields")
+            if isinstance(direct_fields, list) and direct_fields:
+                mod_name = str(mod.get("name") or mod.get("code") or f"Module {mod_index + 1}")
                 fields: list[dict[str, Any]] = []
-                for f_index, f in enumerate(raw_fields):
+                for f_index, f in enumerate(direct_fields):
                     field_count += 1
                     fields.append(_normalize_structure_field(f, f_index))
                 table_count += 1
                 groups.append(
                     {
-                        "id": str(
-                            tbl.get("id")
-                            or f"grp_{_slugify(tbl.get('name') or tbl.get('title') or f'table_{tbl_index + 1}')}"
-                        ),
-                        "name": tbl.get("name") or tbl.get("title") or f"Table {tbl_index + 1}",
-                        "order": tbl.get("order") if isinstance(tbl.get("order"), int) else tbl_index + 1,
+                        "id": f"grp_{_slugify(mod_name)}",
+                        "name": mod_name,
+                        "order": 1,
                         "fields": fields,
                     }
+                )
+
+            # 2. Tables under module (e.g. mod.tables)
+            tables = mod.get("tables")
+            if isinstance(tables, list):
+                for tbl_index, tbl in enumerate(tables):
+                    if not isinstance(tbl, dict):
+                        raise ValueError(f"Invalid Project Structure JSON: table #{tbl_index + 1} must be an object.")
+                    raw_fields = tbl.get("fields")
+                    if not isinstance(raw_fields, list):
+                        raise ValueError(
+                            f"Invalid Project Structure JSON: table '{tbl.get('name') or tbl_index + 1}' must contain a 'fields' array."
+                        )
+
+                    fields: list[dict[str, Any]] = []
+                    for f_index, f in enumerate(raw_fields):
+                        field_count += 1
+                        fields.append(_normalize_structure_field(f, f_index))
+                    table_count += 1
+                    groups.append(
+                        {
+                            "id": str(
+                                tbl.get("id")
+                                or f"grp_{_slugify(tbl.get('name') or tbl.get('title') or f'table_{tbl_index + 1}')}"
+                            ),
+                            "name": tbl.get("name") or tbl.get("title") or f"Table {tbl_index + 1}",
+                            "order": tbl.get("order") if isinstance(tbl.get("order"), int) else len(groups) + 1,
+                            "fields": fields,
+                        }
+                    )
+
+            if not groups and not isinstance(tables, list) and not isinstance(direct_fields, list):
+                mod_ref = mod.get("code") or mod.get("name") or mod_index + 1
+                raise ValueError(
+                    f"Invalid Project Structure JSON: module '{mod_ref}' must contain a 'fields' or 'tables' array."
                 )
 
             sections.append(
@@ -204,6 +226,9 @@ def _normalize_project_structure_json(raw: dict[str, Any]) -> dict[str, Any]:
 
         meta = raw.get("structure") if isinstance(raw.get("structure"), dict) else raw
         relationships = raw.get("relationships")
+        raw_orient = meta.get("orientation") or raw.get("orientation")
+        orientation = raw_orient if raw_orient in ("VERTICAL", "HORIZONTAL") else "HORIZONTAL"
+
         normalized: dict[str, Any] = {
             "code": str(meta.get("code") or raw.get("code") or "JSON_STRUCT").upper().strip(),
             "name": str(meta.get("name") or raw.get("name") or "JSON Structure"),
@@ -212,7 +237,7 @@ def _normalize_project_structure_json(raw: dict[str, Any]) -> dict[str, Any]:
             "description": meta.get("description")
             or raw.get("description")
             or f"Project structure imported from JSON with {field_count} fields.",
-            "orientation": "HORIZONTAL",
+            "orientation": orientation,
             "modules": len(sections),
             "tables": table_count,
             "fieldCount": field_count,

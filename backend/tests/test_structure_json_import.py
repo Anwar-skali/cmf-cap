@@ -199,6 +199,101 @@ class TestNormalizeProjectStructureJson:
 
     def test_default_falls_back_to_defaultValue(self):
         raw = {
+            "code": "CMF_NORMALIZED",
+            "name": "Normalized",
+            "sections": [
+                {
+                    "name": "Quality",
+                    "groups": [
+                        {
+                            "name": "qa",
+                            "fields": [
+                                {
+                                    "internalName": "evaluation",
+                                    "label": "Evaluation",
+                                    "type": "status",
+                                    "required": True,
+                                    "options": [{"value": "GREEN", "label": "GREEN"}],
+                                    "defaultValue": "GREEN",
+                                }
+                            ],
+                        }
+                    ],
+                }
+            ],
+        }
+        normalized = _normalize_project_structure_json(raw)
+        field = normalized["sections"][0]["groups"][0]["fields"][0]
+        assert field["options"] == [{"value": "GREEN", "label": "GREEN"}]
+        assert field["defaultValue"] == "GREEN"
+
+    def test_direct_module_fields_normalization(self):
+        task1_json = {
+            "code": "TEST_CMF_STRUCTURE",
+            "name": "CMF Test Structure",
+            "version": "1.0",
+            "status": "DRAFT",
+            "description": "Test project structure",
+            "orientation": "VERTICAL",
+            "modules": [
+                {
+                    "name": "Project",
+                    "fields": [
+                        {"name": "project_code", "type": "text", "required": True},
+                        {"name": "project_name", "type": "text", "required": True},
+                        {"name": "customer", "type": "text", "required": True},
+                        {"name": "project_status", "type": "status", "required": True},
+                    ],
+                },
+                {
+                    "name": "Supplier",
+                    "fields": [
+                        {"name": "supplier_code", "type": "text", "required": True},
+                        {"name": "supplier_name", "type": "text", "required": True},
+                        {"name": "country", "type": "text", "required": False},
+                    ],
+                },
+                {
+                    "name": "Quality Assessment",
+                    "fields": [
+                        {"name": "assessment_date", "type": "date", "required": True},
+                        {"name": "quality_score", "type": "percentage", "required": True},
+                        {
+                            "name": "evaluation",
+                            "type": "dropdown",
+                            "required": True,
+                            "options": [
+                                {"label": "Passed", "value": "PASSED"},
+                                {"label": "Failed", "value": "FAILED"},
+                                {"label": "Pending", "value": "PENDING"},
+                            ],
+                        },
+                    ],
+                },
+            ],
+            "relationships": [
+                {"from": "Project", "to": "Supplier", "type": "many-to-one"},
+                {"from": "Project", "to": "Quality Assessment", "type": "one-to-many"},
+            ],
+        }
+
+        normalized = _normalize_project_structure_json(task1_json)
+
+        assert normalized["code"] == "TEST_CMF_STRUCTURE"
+        assert normalized["name"] == "CMF Test Structure"
+        assert normalized["orientation"] == "VERTICAL"
+        assert normalized["modules"] == 3
+        assert normalized["fieldCount"] == 10
+        assert len(normalized["relationships"]) == 2
+
+        # 3 sections, each having 1 default group
+        assert len(normalized["sections"]) == 3
+        sec_names = [s["name"] for s in normalized["sections"]]
+        assert sec_names == ["Project", "Supplier", "Quality Assessment"]
+
+        f_counts = [len(s["groups"][0]["fields"]) for s in normalized["sections"]]
+        assert f_counts == [4, 3, 3]
+        raw = {
             "structure": {"name": "S", "code": "S", "version": "1.0"},
             "modules": [
                 {

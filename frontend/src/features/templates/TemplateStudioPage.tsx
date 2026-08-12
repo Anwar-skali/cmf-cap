@@ -31,8 +31,10 @@ import {
   ExternalLink,
   RefreshCw,
   LayoutTemplate,
+  Trash2,
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { templatesApi } from '@/api/templates';
 
 export default function TemplateStudioPage() {
   const navigate = useNavigate();
@@ -61,6 +63,33 @@ export default function TemplateStudioPage() {
   // Modals for Project STRUCTURE creation/import (Pipeline A — no project record)
   const [showStructureWizard, setShowStructureWizard] = useState<boolean>(false);
   const [structureWizardMode, setStructureWizardMode] = useState<'excel' | 'json' | 'manual'>('excel');
+
+  // Delete structure state
+  const [structureToDelete, setStructureToDelete] = useState<CMFTemplate | null>(null);
+  const [isDeletingStructure, setIsDeletingStructure] = useState<boolean>(false);
+
+  const handleDeleteStructure = async () => {
+    if (!structureToDelete) return;
+    setIsDeletingStructure(true);
+    try {
+      await templatesApi.deleteTemplate(structureToDelete.id);
+      toast.success(`Project Structure "${structureToDelete.name}" deleted successfully!`);
+      const deletedId = structureToDelete.id;
+      setStructureToDelete(null);
+      await fetchTemplates();
+      if (selectedStructureId === deletedId) {
+        const remaining = templates.filter((t) => t.id !== deletedId);
+        if (remaining.length > 0) {
+          setSelectedStructureId(remaining[0].id);
+          setActiveTemplate(remaining[0]);
+        }
+      }
+    } catch (err: any) {
+      toast.error(err?.message || 'Failed to delete Project Structure.');
+    } finally {
+      setIsDeletingStructure(false);
+    }
+  };
 
   // Sync selected structure when templates load or change
   useEffect(() => {
@@ -281,8 +310,8 @@ export default function TemplateStudioPage() {
 
       {/* Global Structure Selection Header Bar */}
       <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-card p-4 sm:p-6 shadow-md flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600/10 text-blue-600 font-black text-xl border border-blue-500/20 shrink-0">
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="flex h-12 min-w-12 max-w-36 items-center justify-center rounded-2xl bg-blue-600/10 text-blue-600 font-black border border-blue-500/20 px-2 shrink-0 truncate text-xs sm:text-sm">
             {selectedStructure?.code || 'ST'}
           </div>
           <div>
@@ -413,20 +442,20 @@ export default function TemplateStudioPage() {
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600/10 text-blue-600 font-black text-xl border border-blue-500/20">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div className="flex h-12 min-w-12 max-w-36 items-center justify-center rounded-2xl bg-blue-600/10 text-blue-600 font-black border border-blue-500/20 px-2 shrink-0 truncate text-xs sm:text-sm">
                           {tmpl.code}
                         </div>
-                        <div>
-                          <h2 className="text-xl font-extrabold text-foreground">{tmpl.name}</h2>
-                          <p className="text-xs text-muted-foreground font-mono">
+                        <div className="min-w-0">
+                          <h2 className="text-xl font-extrabold text-foreground truncate">{tmpl.name}</h2>
+                          <p className="text-xs text-muted-foreground font-mono truncate">
                             Code: {tmpl.code} • Version {tmpl.version}
                           </p>
                         </div>
                       </div>
                       <Badge
                         variant="outline"
-                        className="border-emerald-500/40 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold rounded-full px-3 py-1"
+                        className="border-emerald-500/40 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold rounded-full px-3 py-1 shrink-0"
                       >
                         <CheckCircle2 className="h-3.5 w-3.5 mr-1" /> {tmpl.status || 'Published Standard'}
                       </Badge>
@@ -470,8 +499,8 @@ export default function TemplateStudioPage() {
                   </div>
 
                   {/* Card Actions */}
-                  <div className="pt-6 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-2">
+                  <div className="pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <Button
                         onClick={() => {
                           setSelectedStructureId(tmpl.id);
@@ -491,6 +520,15 @@ export default function TemplateStudioPage() {
                         className="rounded-full text-xs font-bold gap-1.5 border-slate-300 dark:border-slate-700"
                       >
                         <Download className="h-3.5 w-3.5" /> JSON
+                      </Button>
+                      <Button
+                        onClick={() => setStructureToDelete(tmpl)}
+                        variant="outline"
+                        size="sm"
+                        className="rounded-full text-xs font-bold gap-1.5 border-rose-200 dark:border-rose-900/50 text-rose-600 hover:text-rose-700 hover:bg-rose-50 dark:hover:bg-rose-950/40 cursor-pointer"
+                        title="Delete Structure"
+                      >
+                        <Trash2 className="h-3.5 w-3.5 text-rose-600" /> Delete
                       </Button>
                     </div>
 
@@ -1033,6 +1071,48 @@ export default function TemplateStudioPage() {
                 }
               }}
             />
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: DELETE STRUCTURE CONFIRMATION */}
+      {structureToDelete && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
+          <div className="bg-card border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-6">
+            <div className="flex items-center gap-3 text-rose-600">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-500/10 border border-rose-500/20 shrink-0">
+                <Trash2 className="h-6 w-6" />
+              </div>
+              <div>
+                <h3 className="text-lg font-extrabold text-foreground">Delete this structure?</h3>
+                <p className="text-xs text-muted-foreground font-mono mt-0.5">{structureToDelete.code}</p>
+              </div>
+            </div>
+
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              Are you sure you want to delete <strong className="text-foreground">{structureToDelete.name}</strong>? This action cannot be undone and will permanently remove this structure definition.
+            </p>
+
+            <div className="flex items-center justify-end gap-3 pt-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setStructureToDelete(null)}
+                disabled={isDeletingStructure}
+                className="rounded-full px-5 py-2 text-xs font-bold border-slate-300 dark:border-slate-700 cursor-pointer"
+              >
+                Cancel
+              </Button>
+              <Button
+                size="sm"
+                onClick={handleDeleteStructure}
+                disabled={isDeletingStructure}
+                className="bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-full px-5 py-2 text-xs shadow-md shadow-rose-500/20 gap-1.5 cursor-pointer"
+              >
+                {isDeletingStructure ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : <Trash2 className="h-3.5 w-3.5" />}
+                {isDeletingStructure ? 'Deleting...' : 'Delete Structure'}
+              </Button>
+            </div>
           </div>
         </div>
       )}

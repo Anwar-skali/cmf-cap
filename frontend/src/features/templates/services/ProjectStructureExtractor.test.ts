@@ -250,4 +250,86 @@ describe('ProjectStructureExtractor.extractFromJson', () => {
     );
     expect(() => ProjectStructureExtractor.extractFromJson('not json')).toThrow();
   });
+
+  it('correctly extracts fields directly under modules (Task 1 structure)', () => {
+    const task1Json = {
+      code: 'TEST_CMF_STRUCTURE',
+      name: 'CMF Test Structure',
+      version: '1.0',
+      status: 'DRAFT',
+      description: 'Test project structure',
+      orientation: 'VERTICAL',
+      modules: [
+        {
+          name: 'Project',
+          fields: [
+            { name: 'project_code', type: 'text', required: true },
+            { name: 'project_name', type: 'text', required: true },
+            { name: 'customer', type: 'text', required: true },
+            { name: 'project_status', type: 'status', required: true },
+          ],
+        },
+        {
+          name: 'Supplier',
+          fields: [
+            { name: 'supplier_code', type: 'text', required: true },
+            { name: 'supplier_name', type: 'text', required: true },
+            { name: 'country', type: 'text', required: false },
+          ],
+        },
+        {
+          name: 'Quality Assessment',
+          fields: [
+            { name: 'assessment_date', type: 'date', required: true },
+            { name: 'quality_score', type: 'percentage', required: true },
+            {
+              name: 'evaluation',
+              type: 'dropdown',
+              required: true,
+              options: [
+                { label: 'Passed', value: 'PASSED' },
+                { label: 'Failed', value: 'FAILED' },
+                { label: 'Pending', value: 'PENDING' },
+              ],
+            },
+          ],
+        },
+      ],
+      relationships: [
+        { from: 'Project', to: 'Supplier', type: 'many-to-one' },
+        { from: 'Project', to: 'Quality Assessment', type: 'one-to-many' },
+      ],
+    };
+
+    const result = ProjectStructureExtractor.extractFromJson(task1Json);
+
+    expect(result.code).toBe('TEST_CMF_STRUCTURE');
+    expect(result.name).toBe('CMF Test Structure');
+    expect(result.version).toBe('1.0');
+    expect(result.status).toBe('DRAFT');
+    expect(result.orientation).toBe('VERTICAL');
+
+    // Expected: 3 sections, 10 fields total
+    expect(result.detectedModuleCount).toBe(3);
+    expect(result.detectedFieldCount).toBe(10);
+    expect(result.detectedRelationshipCount).toBe(2);
+
+    expect(result.sections[0].name).toBe('Project');
+    expect(result.sections[0].groups[0].fields.length).toBe(4);
+
+    expect(result.sections[1].name).toBe('Supplier');
+    expect(result.sections[1].groups[0].fields.length).toBe(3);
+
+    expect(result.sections[2].name).toBe('Quality Assessment');
+    expect(result.sections[2].groups[0].fields.length).toBe(3);
+
+    const evaluationField = result.sections[2].groups[0].fields.find((f) => f.internalName === 'evaluation');
+    expect(evaluationField).toBeDefined();
+    expect(evaluationField?.type).toBe('dropdown');
+    expect(evaluationField?.options).toEqual([
+      { value: 'PASSED', label: 'Passed', order: 1 },
+      { value: 'FAILED', label: 'Failed', order: 2 },
+      { value: 'PENDING', label: 'Pending', order: 3 },
+    ]);
+  });
 });

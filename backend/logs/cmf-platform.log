@@ -23433,3 +23433,1670 @@ sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed
 2026-08-09 20:29:55,910 - app.main - INFO - GET /api/v1/suppliers
 2026-08-09 20:29:56,128 - app.main - INFO - GET /api/v1/suppliers -> 200
 2026-08-09 20:32:42,782 - app.main - INFO - Shutting down CMF Platform API
+2026-08-10 12:55:58,150 - app.main - INFO - Starting CMF Platform API
+2026-08-10 12:55:58,166 - app.main - INFO - Database tables created (SQLite)
+2026-08-10 12:56:50,966 - app.main - INFO - GET /api/v1/auth/me
+2026-08-10 12:56:51,024 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-10 12:56:51,029 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-10 12:56:51,049 - app.main - INFO - GET /api/v1/auth/me
+2026-08-10 12:56:51,054 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-10 12:56:51,058 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-10 12:56:51,064 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-10 12:56:51,589 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-10 12:56:51,608 - app.main - INFO - GET /api/v1/auth/me
+2026-08-10 12:56:51,674 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-10 12:56:51,688 - app.main - INFO - GET /api/v1/auth/me
+2026-08-10 12:56:51,759 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-10 12:56:51,837 - app.main - INFO - GET /api/v1/templates
+2026-08-10 12:56:51,913 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-10 12:56:51,927 - app.main - INFO - GET /api/v1/templates
+2026-08-10 12:56:52,126 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-10 12:56:52,161 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-10 12:56:52,165 - app.main - INFO - GET /api/v1/projects
+2026-08-10 12:56:52,803 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 12:56:53,072 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-10 12:57:04,528 - app.main - INFO - GET /api/v1/projects
+2026-08-10 12:57:04,758 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 12:57:04,778 - app.main - INFO - GET /api/v1/projects
+2026-08-10 12:57:04,998 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 12:57:34,148 - app.main - INFO - GET /docs
+2026-08-10 12:57:34,153 - app.main - INFO - GET /docs -> 404
+2026-08-10 12:58:08,881 - app.main - INFO - GET /openapi.json
+2026-08-10 12:58:08,884 - app.main - INFO - GET /openapi.json -> 404
+2026-08-10 13:00:00,025 - app.main - INFO - POST /api/v1/auth/login
+2026-08-10 13:00:00,540 - app.main - WARNING - UnauthorizedException: Invalid email or password
+2026-08-10 13:00:00,542 - app.main - INFO - POST /api/v1/auth/login -> 401
+2026-08-10 13:03:06,447 - app.main - INFO - POST /api/v1/auth/login
+2026-08-10 13:03:07,082 - app.main - ERROR - Unhandled exception: UPDATE statement on table 'users' expected to update 1 row(s); 0 were matched.
+  + Exception Group Traceback (most recent call last):
+  |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 77, in collapse_excgroups
+  |     yield
+  |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 186, in __call__
+  |     async with anyio.create_task_group() as task_group:
+  |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 815, in __aexit__
+  |     raise BaseExceptionGroup(
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    |     await self.app(scope, receive, _send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    |     with collapse_excgroups():
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    |     self.gen.throw(typ, value, traceback)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    |     raise exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 135, in rate_limit_middleware
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    |     raise app_exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    |     with collapse_excgroups():
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    |     self.gen.throw(typ, value, traceback)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    |     raise exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 110, in logging_middleware
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    |     raise app_exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    |     with collapse_excgroups():
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    |     self.gen.throw(typ, value, traceback)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    |     raise exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 99, in request_id_middleware
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    |     raise app_exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    |     await self.app(scope, receive, send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    |     with collapse_excgroups():
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    |     self.gen.throw(typ, value, traceback)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    |     raise exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 72, in strip_trailing_slash_middleware
+    |     return await call_next(request)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    |     raise app_exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    |     raise exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 735, in app
+    |     await route.handle(scope, receive, send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    |     await self.app(scope, receive, send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    |     raise exc
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    |     response = await f(request)
+    |                ^^^^^^^^^^^^^^^^
+    |   File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 222, in __aexit__
+    |     await self.gen.athrow(typ, value, traceback)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\deps.py", line 42, in get_db
+    |     yield session
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 301, in app
+    |     raw_response = await run_endpoint_function(
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    |     return await dependant.call(**values)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\v1\endpoints\auth.py", line 45, in login
+    |     return await auth_service.login(
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\auth_service.py", line 76, in login
+    |     await self._uow.activity_logs.create({
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\app\infrastructure\persistence\repositories\base.py", line 64, in create
+    |     await self._session.flush()
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 786, in flush
+    |     await greenlet_spawn(self.sync_session.flush, objects=objects)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 203, in greenlet_spawn
+    |     result = context.switch(value)
+    |              ^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4353, in flush
+    |     self._flush(objects)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4488, in _flush
+    |     with util.safe_reraise():
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 122, in __exit__
+    |     raise exc_value.with_traceback(exc_tb)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4449, in _flush
+    |     flush_context.execute()
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 465, in execute
+    |     rec.execute(self)
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 641, in execute
+    |     util.preloaded.orm_persistence.save_obj(
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 86, in save_obj
+    |     _emit_update_statements(
+    |   File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 949, in _emit_update_statements
+    |     raise orm_exc.StaleDataError(
+    | sqlalchemy.orm.exc.StaleDataError: UPDATE statement on table 'users' expected to update 1 row(s); 0 were matched.
+    +------------------------------------
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 135, in rate_limit_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 110, in logging_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 99, in request_id_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 72, in strip_trailing_slash_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 222, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\deps.py", line 42, in get_db
+    yield session
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\v1\endpoints\auth.py", line 45, in login
+    return await auth_service.login(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\auth_service.py", line 76, in login
+    await self._uow.activity_logs.create({
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\infrastructure\persistence\repositories\base.py", line 64, in create
+    await self._session.flush()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 786, in flush
+    await greenlet_spawn(self.sync_session.flush, objects=objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 203, in greenlet_spawn
+    result = context.switch(value)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4353, in flush
+    self._flush(objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4488, in _flush
+    with util.safe_reraise():
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 122, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4449, in _flush
+    flush_context.execute()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 465, in execute
+    rec.execute(self)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 641, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 86, in save_obj
+    _emit_update_statements(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 949, in _emit_update_statements
+    raise orm_exc.StaleDataError(
+sqlalchemy.orm.exc.StaleDataError: UPDATE statement on table 'users' expected to update 1 row(s); 0 were matched.
+2026-08-10 13:09:17,917 - app.main - INFO - POST /api/v1/auth/login
+2026-08-10 13:09:19,437 - app.main - INFO - POST /api/v1/auth/login -> 200
+2026-08-10 13:11:09,585 - app.main - INFO - GET /api/v1/templates
+2026-08-10 13:11:09,700 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-10 13:11:39,184 - app.main - INFO - POST /api/v1/import/scan-workbook
+2026-08-10 13:11:39,281 - app.application.services.excel_header_extractor - INFO - [ORIENTATION DETECTED] VERTICAL (Conf: 70.0%) | Field Col: A | Value Col: B | Reason: 4 recognized project fields in Column A, 6 values in Column B.
+2026-08-10 13:11:39,285 - app.application.services.excel_header_extractor - INFO - [WORKBOOK SCAN] 1 sheets scanned in 35.98 ms. Best sheet: 'CMF K9 Output' (score=112.0)
+2026-08-10 13:11:39,288 - app.api.v1.endpoints.import_endpoints - INFO - [WORKBOOK SCAN] File: 'vert.xlsx' | Sheets: 1 | Best: 'CMF K9 Output' | Elapsed: 38.62 ms
+2026-08-10 13:11:39,296 - app.main - INFO - POST /api/v1/import/scan-workbook -> 200
+2026-08-10 13:11:39,737 - app.main - INFO - POST /api/v1/import/scan-workbook
+2026-08-10 13:11:39,808 - app.main - INFO - POST /api/v1/import/scan-workbook -> 400
+2026-08-10 13:12:31,481 - app.main - INFO - POST /api/v1/import/scan-workbook
+2026-08-10 13:12:31,542 - app.api.v1.endpoints.import_endpoints - ERROR - [WORKBOOK SCAN] Unexpected error scanning 'corrupt.xlsx': File is not a zip file
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\excel_header_extractor.py", line 433, in extract_workbook_info
+    workbook = openpyxl.load_workbook(io.BytesIO(file_bytes), read_only=True, data_only=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\openpyxl\reader\excel.py", line 346, in load_workbook
+    reader = ExcelReader(filename, read_only, keep_vba,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\openpyxl\reader\excel.py", line 123, in __init__
+    self.archive = _validate_archive(fn)
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\openpyxl\reader\excel.py", line 95, in _validate_archive
+    archive = ZipFile(filename, 'r')
+              ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\zipfile.py", line 1299, in __init__
+    self._RealGetContents()
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\zipfile.py", line 1366, in _RealGetContents
+    raise BadZipFile("File is not a zip file")
+zipfile.BadZipFile: File is not a zip file
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\v1\endpoints\import_endpoints.py", line 120, in scan_workbook
+    result = ExcelHeaderExtractor.extract_workbook_info(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\excel_header_extractor.py", line 435, in extract_workbook_info
+    workbook = openpyxl.load_workbook(io.BytesIO(file_bytes), data_only=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\openpyxl\reader\excel.py", line 346, in load_workbook
+    reader = ExcelReader(filename, read_only, keep_vba,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\openpyxl\reader\excel.py", line 123, in __init__
+    self.archive = _validate_archive(fn)
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\openpyxl\reader\excel.py", line 95, in _validate_archive
+    archive = ZipFile(filename, 'r')
+              ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\zipfile.py", line 1299, in __init__
+    self._RealGetContents()
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\zipfile.py", line 1366, in _RealGetContents
+    raise BadZipFile("File is not a zip file")
+zipfile.BadZipFile: File is not a zip file
+2026-08-10 13:12:31,661 - app.main - INFO - POST /api/v1/import/scan-workbook -> 500
+2026-08-10 13:12:32,023 - app.main - INFO - POST /api/v1/import/extract-headers
+2026-08-10 13:12:32,087 - app.main - INFO - POST /api/v1/import/extract-headers -> 400
+2026-08-10 13:12:32,570 - app.main - INFO - POST /api/v1/templates
+2026-08-10 13:12:32,579 - app.main - WARNING - Validation error: [{'type': 'json_invalid', 'loc': ['body', 7], 'msg': 'JSON decode error', 'input': {}, 'ctx': {'error': 'Expecting property name enclosed in double quotes'}}]
+2026-08-10 13:12:32,586 - app.main - INFO - POST /api/v1/templates -> 422
+2026-08-10 13:14:27,682 - app.main - INFO - Shutting down CMF Platform API
+2026-08-10 13:14:34,610 - app.main - INFO - Starting CMF Platform API
+2026-08-10 13:14:34,631 - app.main - INFO - Database tables created (SQLite)
+2026-08-10 13:15:42,346 - app.main - INFO - Shutting down CMF Platform API
+2026-08-10 13:15:49,483 - app.main - INFO - Starting CMF Platform API
+2026-08-10 13:15:49,503 - app.main - INFO - Database tables created (SQLite)
+2026-08-10 13:16:44,012 - app.main - INFO - Shutting down CMF Platform API
+2026-08-10 13:16:51,183 - app.main - INFO - Starting CMF Platform API
+2026-08-10 13:16:51,204 - app.main - INFO - Database tables created (SQLite)
+2026-08-10 13:18:47,733 - app.main - INFO - Shutting down CMF Platform API
+2026-08-10 13:18:55,224 - app.main - INFO - Starting CMF Platform API
+2026-08-10 13:18:55,239 - app.main - INFO - Database tables created (SQLite)
+2026-08-10 13:20:37,702 - app.main - INFO - POST /api/v1/import/scan-workbook
+2026-08-10 13:20:38,165 - app.api.v1.endpoints.import_endpoints - WARNING - [WORKBOOK SCAN] Malformed workbook 'corrupt.xlsx': File is not a zip file
+2026-08-10 13:20:38,173 - app.main - INFO - POST /api/v1/import/scan-workbook -> 400
+2026-08-10 13:20:38,504 - app.main - INFO - POST /api/v1/import/scan-workbook
+2026-08-10 13:20:38,580 - app.api.v1.endpoints.import_endpoints - WARNING - [WORKBOOK SCAN] Malformed workbook 'corrupt.xlsx': File is not a zip file
+2026-08-10 13:20:38,589 - app.main - INFO - POST /api/v1/import/scan-workbook -> 400
+2026-08-10 13:20:38,998 - app.main - INFO - POST /api/v1/import/extract-headers
+2026-08-10 13:20:39,090 - app.main - INFO - POST /api/v1/import/extract-headers -> 400
+2026-08-10 13:20:39,402 - app.main - INFO - POST /api/v1/templates
+2026-08-10 13:20:39,588 - app.main - INFO - POST /api/v1/templates -> 200
+2026-08-10 13:21:39,959 - app.main - INFO - GET /api/v1/templates
+2026-08-10 13:21:40,120 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-10 13:21:40,389 - app.main - INFO - GET /api/v1/templates/code/SMOKE_STRUCT
+2026-08-10 13:21:40,443 - app.main - INFO - GET /api/v1/templates/code/SMOKE_STRUCT -> 200
+2026-08-10 13:21:41,097 - app.main - INFO - POST /api/v1/import/scan-workbook
+2026-08-10 13:21:41,194 - app.application.services.excel_header_extractor - INFO - [ORIENTATION DETECTED] HORIZONTAL (Conf: 85.0%) | Field Col:  | Value Col:  | Reason: Standard horizontal table row layout detected.
+2026-08-10 13:21:41,200 - app.application.services.excel_header_extractor - INFO - [SHEET ANALYSIS] Sheet: 'Data' | Class: PROJECT_DATA | Orient: HORIZONTAL | Cols: 5 | Rows: 4 | Field Matches: 5 | Score: 41.0 | Conf: 8.0%
+2026-08-10 13:21:41,203 - app.application.services.excel_header_extractor - INFO - [WORKBOOK SCAN] 1 sheets scanned in 45.85 ms. Best sheet: 'Data' (score=41.0)
+2026-08-10 13:21:41,206 - app.api.v1.endpoints.import_endpoints - INFO - [WORKBOOK SCAN] File: 'horiz.xlsx' | Sheets: 1 | Best: 'Data' | Elapsed: 48.39 ms
+2026-08-10 13:21:41,216 - app.main - INFO - POST /api/v1/import/scan-workbook -> 200
+2026-08-10 13:21:41,577 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-10 13:21:41,652 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 3 published templates in 27.68 ms
+2026-08-10 13:21:41,657 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-10 13:22:17,744 - app.main - INFO - DELETE /api/v1/templates/4ff275f5-4a36-4624-ae05-a6dfd5c4917d
+2026-08-10 13:22:17,838 - app.main - INFO - DELETE /api/v1/templates/4ff275f5-4a36-4624-ae05-a6dfd5c4917d -> 200
+2026-08-10 13:26:27,504 - app.main - INFO - Shutting down CMF Platform API
+2026-08-10 15:42:19,155 - app.main - INFO - Starting CMF Platform API
+2026-08-10 15:42:19,162 - app.main - INFO - Database tables created (SQLite)
+2026-08-10 15:42:58,166 - app.main - INFO - GET /api/v1/auth/me
+2026-08-10 15:42:58,188 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-10 15:42:58,192 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-10 15:42:58,203 - app.main - INFO - GET /api/v1/auth/me
+2026-08-10 15:42:58,205 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-10 15:42:58,207 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-10 15:42:58,209 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-10 15:42:58,412 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-10 15:42:58,424 - app.main - INFO - GET /api/v1/auth/me
+2026-08-10 15:42:58,459 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-10 15:42:58,467 - app.main - INFO - GET /api/v1/auth/me
+2026-08-10 15:42:58,505 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-10 15:42:58,535 - app.main - INFO - GET /api/v1/templates
+2026-08-10 15:42:58,571 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-10 15:42:58,579 - app.main - INFO - GET /api/v1/templates
+2026-08-10 15:42:58,672 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-10 15:42:58,695 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-10 15:42:58,696 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:42:58,966 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:42:59,118 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-10 15:43:07,407 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:43:07,507 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:43:07,521 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:43:07,639 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:44:57,202 - app.main - INFO - POST /api/v1/templates
+2026-08-10 15:44:57,281 - app.main - INFO - POST /api/v1/templates -> 200
+2026-08-10 15:44:57,299 - app.main - INFO - GET /api/v1/templates
+2026-08-10 15:44:57,308 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:44:57,361 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-10 15:44:57,369 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:47:16,516 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:47:16,625 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:47:24,089 - app.main - INFO - GET /api/v1/parts
+2026-08-10 15:47:24,189 - app.main - INFO - GET /api/v1/parts -> 200
+2026-08-10 15:47:26,034 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:47:26,148 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:47:28,658 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-10 15:47:28,659 - app.main - INFO - GET /api/v1/documents
+2026-08-10 15:47:28,716 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 3 published templates in 14.45 ms
+2026-08-10 15:47:28,719 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-10 15:47:28,730 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-10 15:47:28,759 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-10 15:47:28,777 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 3 published templates in 10.99 ms
+2026-08-10 15:47:28,780 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-10 15:47:42,350 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-10 15:47:42,387 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Sheet: 'K9_Clean' | Orient: HORIZONTAL | Headers (24): ['Unique_ID', 'Supplier Name', 'Project', 'Buyer', 'Country', 'Location', 'Part Number', 'Part Name', 'Commodity', 'Plant', 'Roadmap Volume', 'Weekly Capacity', 'Contracted Capacity', 'Available Capacity', 'Lead Time', 'CAT1 Forecasted Date', 'CAT2 Forecasted Date', 'CAT3 Forecasted Date', 'GOR', 'APQP Status', 'SQE', 'SQM', 'Comments', 'Status']
+2026-08-10 15:47:42,402 - app.application.services.ollama_mapping_service - INFO - [OLLAMA] Configured timeout: 30.0s, default model: llama3.2:1b, url: http://localhost:11434
+2026-08-10 15:47:42,404 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Template: 'K9' (CMF K9 Project Template), Fields: 35, Headers: 24
+2026-08-10 15:47:42,903 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-10 15:47:43,246 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-10 15:48:06,975 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2026-08-10 15:48:06,979 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] LLM Raw Response: '{"Unique_ID": "unique_id", "Supplier Name": "supplier_name", "Project": "project", "Buyer": "buyer", "Country": "country", "Location": "location", "Part Number": "part_number", "Part Name": "part_name", "Commodity": "commodity", "Plant": "plant", "Roadmap Volume": "roadmap_volume", "Weekly Capacity": "weekly_capacity", "Contracted Capacity": "contracted_capacity", "Available Capacity": "available_capacity", "Lead Time": "lead_time", "CAT1 Forecasted Date": "cat1_forecast_date_cw", "CAT2 Forecast'
+2026-08-10 15:48:06,982 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Final Mapping Summary (0/35 fields mapped via LLM):
+  unique_id: excel='Unique_ID' conf=0.99 src=exact_match
+  apqp: excel='APQP Status' conf=0.85 src=fuzzy_fallback
+  part_name: excel='Part Name' conf=0.99 src=exact_match
+  use_case: excel='None' conf=0.0 src=none
+  part_info: excel='None' conf=0.0 src=none
+  part_number: excel='Part Number' conf=0.99 src=exact_match
+  supplier_info: excel='None' conf=0.0 src=none
+  supplier_name: excel='Supplier Name' conf=0.99 src=exact_match
+  manufacturing_cofor: excel='None' conf=0.0 src=none
+  production_location: excel='Location' conf=0.85 src=fuzzy_fallback
+  stakeholder: excel='None' conf=0.0 src=none
+  buyer: excel='Buyer' conf=0.99 src=exact_match
+  capacity: excel='Weekly Capacity' conf=0.85 src=fuzzy_fallback
+  scr_link_docinfo: excel='None' conf=0.0 src=none
+  gst_no: excel='None' conf=0.0 src=none
+  contracted_capacity: excel='Contracted Capacity' conf=0.99 src=exact_match
+  fete: excel='None' conf=0.0 src=none
+  tko_fete_link_sharepoint: excel='None' conf=0.0 src=none
+  capacity_standard: excel='None' conf=0.0 src=none
+  fete_tko_letter_doc: excel='None' conf=0.0 src=none
+  technical_manager: excel='None' conf=0.0 src=none
+  k9_sck: excel='None' conf=0.0 src=none
+  cat1_forecast_date_cw: excel='CAT1 Forecasted Date' conf=0.85 src=fuzzy_fallback
+  cat2_forecast_date: excel='CAT2 Forecasted Date' conf=0.99 src=exact_match
+  cat3_forecast_date: excel='CAT3 Forecasted Date' conf=0.99 src=exact_match
+  cat1_2_3_type: excel='None' conf=0.0 src=none
+  weekly_capacity_measured: excel='None' conf=0.0 src=none
+  estimated_target: excel='None' conf=0.0 src=none
+  cat_evaluation: excel='GOR' conf=0.96 src=alias_match
+  shared_folder_link: excel='None' conf=0.0 src=none
+  comments: excel='Comments' conf=0.99 src=exact_match
+  sqe: excel='SQE' conf=0.99 src=exact_match
+  sqm: excel='SQM' conf=0.99 src=exact_match
+  team: excel='None' conf=0.0 src=none
+  family_multiplier: excel='None' conf=0.0 src=none
+2026-08-10 15:48:06,983 - app.application.services.ollama_mapping_service - INFO - 
+==================== [OLLAMA LLM METRICS] ====================
+  - Model:             llama3.2:1b
+  - Prompt Size:       2684 chars
+  - Prompt Tokens:     700
+  - Completion Tokens: 150
+  - Inference Time:    12250.92 ms
+  - JSON Parse Time:   0.09 ms
+  - Excel Read Time:   0.04 ms
+  - Total Mapping:     24578.28 ms
+  - LLM Mapped Fields: 0/35 (Active: False)
+==============================================================
+2026-08-10 15:48:06,985 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-10 15:48:18,001 - app.main - INFO - POST /api/v1/import/preview
+2026-08-10 15:48:18,091 - app.main - INFO - POST /api/v1/import/preview -> 200
+2026-08-10 15:48:20,183 - app.main - INFO - POST /api/v1/import/execute
+2026-08-10 15:48:20,204 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Starting execution for file 'K9_Clean_Validation_Test.xlsx' with template 'K9'
+2026-08-10 15:48:20,205 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Selected template: 'K9'
+2026-08-10 15:48:20,205 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Uploaded filename: 'K9_Clean_Validation_Test.xlsx' (5360 bytes)
+2026-08-10 15:48:20,206 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Mapped fields: {'Unique_ID': 'unique_id', 'APQP Status': 'apqp', 'Part Name': 'part_name', 'Part Number': 'part_number', 'Supplier Name': 'supplier_name', 'Location': 'production_location', 'Buyer': 'buyer', 'Weekly Capacity': 'capacity', 'Contracted Capacity': 'contracted_capacity', 'CAT1 Forecasted Date': 'cat1_forecast_date_cw', 'CAT2 Forecasted Date': 'cat2_forecast_date', 'CAT3 Forecasted Date': 'cat3_forecast_date', 'GOR': 'cat_evaluation', 'Comments': 'comments', 'SQE': 'sqe', 'SQM': 'sqm'}
+2026-08-10 15:48:20,207 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Import mode: 'insert', strategy: 'skip_invalid'
+2026-08-10 15:48:20,244 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Validation summary: Total Rows=1, Valid=0, Errors=2
+2026-08-10 15:48:20,260 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Rows detected: 1
+2026-08-10 15:48:20,260 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Headers detected: ['Unique_ID', 'Supplier Name', 'Project', 'Buyer', 'Country', 'Location', 'Part Number', 'Part Name', 'Commodity', 'Plant', 'Roadmap Volume', 'Weekly Capacity', 'Contracted Capacity', 'Available Capacity', 'Lead Time', 'CAT1 Forecasted Date', 'CAT2 Forecasted Date', 'CAT3 Forecasted Date', 'GOR', 'APQP Status', 'SQE', 'SQM', 'Comments', 'Status']
+2026-08-10 15:48:20,261 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Database transaction: Starting transaction session...
+2026-08-10 15:48:20,261 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Serializer errors count: 0
+2026-08-10 15:48:20,289 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Database transaction: Committed successfully (Imported: 0, Updated: 0, Skipped: 1, Failed: 0)
+2026-08-10 15:48:20,290 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Execution time: 57 ms
+2026-08-10 15:48:20,292 - app.main - INFO - POST /api/v1/import/execute -> 200
+2026-08-10 15:48:20,301 - app.main - INFO - POST /api/v1/import/save-mapping-memory
+2026-08-10 15:48:20,406 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:unique_id -> unique_id
+2026-08-10 15:48:20,406 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:apqp status -> apqp
+2026-08-10 15:48:20,407 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:part name -> part_name
+2026-08-10 15:48:20,408 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:part number -> part_number
+2026-08-10 15:48:20,409 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:supplier name -> supplier_name
+2026-08-10 15:48:20,410 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:location -> production_location
+2026-08-10 15:48:20,410 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:buyer -> buyer
+2026-08-10 15:48:20,411 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:weekly capacity -> capacity
+2026-08-10 15:48:20,412 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:contracted capacity -> contracted_capacity
+2026-08-10 15:48:20,413 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:cat1 forecasted date -> cat1_forecast_date_cw
+2026-08-10 15:48:20,413 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:cat2 forecasted date -> cat2_forecast_date
+2026-08-10 15:48:20,414 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:cat3 forecasted date -> cat3_forecast_date
+2026-08-10 15:48:20,415 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:gor -> cat_evaluation
+2026-08-10 15:48:20,415 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:comments -> comments
+2026-08-10 15:48:20,416 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:sqe -> sqe
+2026-08-10 15:48:20,416 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:sqm -> sqm
+2026-08-10 15:48:20,419 - app.main - INFO - POST /api/v1/import/save-mapping-memory -> 200
+2026-08-10 15:48:23,666 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:48:23,774 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:48:28,673 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-10 15:48:28,675 - app.main - INFO - GET /api/v1/documents
+2026-08-10 15:48:28,755 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 3 published templates in 30.53 ms
+2026-08-10 15:48:28,758 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-10 15:48:28,773 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-10 15:48:28,781 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-10 15:48:28,807 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 3 published templates in 8.08 ms
+2026-08-10 15:48:28,809 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-10 15:49:08,070 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-10 15:49:08,098 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Sheet: 'CMF K9 SCV' | Orient: HORIZONTAL | Headers (64): ['Unique_ID', 'APQP', 'Part name', 'Désignation Pièces (Commodity variant) LI description', 'Type de consultation : RFQ, carry-over, FETE\r\nVérifier avec un référent Achats tous les cas et les codifications habituelles', 'New\r\nC/O', 'Use case', 'Part\r\nInformation', 'Part number', 'Quantity', 'Supplier information', 'Supplier name', 'Manufacturing COFOR', 'Production location', 'Stakeholder', 'Buyer', 'Purchasing \r\nManager', 'GM', 'SQE', 'Capacity', 'SCR\r\nLink to DocInfo', 'GST No.', 'Mix', 'Calculated Weekly Capacity (parts/week)', 'Contracted Capacity', 'Comment', 'FETE', 'TKO or FETE \r\nLink to Sharepoint', 'Capacity\r\nStandard\r\n(parts/week)', 'Capacity\r\nStandard + Extra\r\n(parts/week)2', 'FETE or TKO letter document', 'SQME (from column AV)', 'SQM', 'SQD Team', 'Run Assessment: \r\nAsked / Not Asked', 'FORECASTED DATE \r\nCAT\r\n(format : CW202X)', 'CAT1/2/3', 'REQUESTED TO SUPPLIER', 'Run Observation \r\nStandard+Extra Capacity', 'Estimated Target\r\nStandard+Extra Capacity', 'ASSESSMENT DATE (CW202X)', 'CAPACITY STEP DATE', 'STATUS (COMPARISON WITH SCR):\r\nGREEN\r\nORANGE\r\nRED\r\nOPEN', 'Rescheduled or Follow-up Date \r\n(including Next Step)', 'ONSITE AUDIT (OSA) /\r\nSELF ASSESMENT AUDIT (SAA)', 'DocInfo\r\nLink', 'COMMENTS ON ASSESSMENT & ACTIONS PLAN', 'SQD', 'Technical Manager', 'WEEKLY CAPACITY TO MEASURE\r\nIf Carry-Over=TOTAL veh Capacity', 'K9 SCK', 'CAT1 FORECASTED DATE\r\nCW', 'CAT2 FORECASTED DATE', 'CAT3 FORECASTED DATE', 'CAT1/2/3 TYPE', 'WEEKLY CAPACITY MEASURED', 'ESTIMATED TARGET', 'CAT1/2/3 EVALUATION (G;O;R)', 'SHARED FOLDER - link', 'Comments', 'SQE', 'SQM', 'TEAM', 'FAMILY_MULTIPLIER']
+2026-08-10 15:49:08,111 - app.application.services.ollama_mapping_service - INFO - [OLLAMA] Configured timeout: 30.0s, default model: llama3.2:1b, url: http://localhost:11434
+2026-08-10 15:49:08,112 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Template: 'K9' (CMF K9 Project Template), Fields: 35, Headers: 64
+2026-08-10 15:49:08,417 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-10 15:49:08,747 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-10 15:49:31,540 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2026-08-10 15:49:31,544 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] LLM Raw Response: '{"Unique_ID": "unique_id", "APQP": "apqp", "Part_name": "part_name", "Désignation Pièces (Commodity variant) LI description": "description", "Type de consultation : RFQ, carry-over, FETE": "fete", "New": "new", "C/O": "c/o", "Use case": "use_case", "Part Information": "part_info", "Part number": "part_number", "Quantity": "quantity", "Supplier information": "supplier_info", "Supplier name": "supplier_name", "Manufacturing COFOR": "manufacturing_cofor", "Production location": "production_location'
+2026-08-10 15:49:31,549 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Final Mapping Summary (0/35 fields mapped via LLM):
+  unique_id: excel='Unique_ID' conf=0.99 src=mapping_memory
+  apqp: excel='APQP' conf=0.99 src=exact_match
+  part_name: excel='Part name' conf=0.99 src=mapping_memory
+  use_case: excel='Use case' conf=0.99 src=exact_match
+  part_info: excel='None' conf=0.0 src=none
+  part_number: excel='Part number' conf=0.99 src=mapping_memory
+  supplier_info: excel='Supplier information' conf=0.99 src=exact_match
+  supplier_name: excel='Supplier name' conf=0.99 src=mapping_memory
+  manufacturing_cofor: excel='Manufacturing COFOR' conf=0.99 src=exact_match
+  production_location: excel='Production location' conf=0.99 src=exact_match
+  stakeholder: excel='Stakeholder' conf=0.99 src=exact_match
+  buyer: excel='Buyer' conf=0.99 src=mapping_memory
+  capacity: excel='Capacity' conf=0.99 src=exact_match
+  scr_link_docinfo: excel='None' conf=0.0 src=none
+  gst_no: excel='GST No.' conf=0.99 src=exact_match
+  contracted_capacity: excel='Contracted Capacity' conf=0.99 src=mapping_memory
+  fete: excel='FETE' conf=0.99 src=exact_match
+  tko_fete_link_sharepoint: excel='None' conf=0.0 src=none
+  capacity_standard: excel='None' conf=0.0 src=none
+  fete_tko_letter_doc: excel='FETE or TKO letter document' conf=0.99 src=exact_match
+  technical_manager: excel='Technical Manager' conf=0.99 src=exact_match
+  k9_sck: excel='K9 SCK' conf=0.99 src=exact_match
+  cat1_forecast_date_cw: excel='None' conf=0.0 src=none
+  cat2_forecast_date: excel='CAT2 FORECASTED DATE' conf=0.99 src=mapping_memory
+  cat3_forecast_date: excel='CAT3 FORECASTED DATE' conf=0.99 src=mapping_memory
+  cat1_2_3_type: excel='CAT1/2/3 TYPE' conf=0.99 src=exact_match
+  weekly_capacity_measured: excel='WEEKLY CAPACITY MEASURED' conf=0.99 src=exact_match
+  estimated_target: excel='ESTIMATED TARGET' conf=0.99 src=exact_match
+  cat_evaluation: excel='CAT1/2/3' conf=0.85 src=fuzzy_fallback
+  shared_folder_link: excel='None' conf=0.0 src=none
+  comments: excel='Comments' conf=0.99 src=mapping_memory
+  sqe: excel='SQE' conf=0.99 src=mapping_memory
+  sqm: excel='SQM' conf=0.99 src=mapping_memory
+  team: excel='TEAM' conf=0.99 src=exact_match
+  family_multiplier: excel='FAMILY_MULTIPLIER' conf=0.99 src=exact_match
+2026-08-10 15:49:31,549 - app.application.services.ollama_mapping_service - INFO - 
+==================== [OLLAMA LLM METRICS] ====================
+  - Model:             llama3.2:1b
+  - Prompt Size:       3985 chars
+  - Prompt Tokens:     1140
+  - Completion Tokens: 150
+  - Inference Time:    12876.05 ms
+  - JSON Parse Time:   0.16 ms
+  - Excel Read Time:   0.05 ms
+  - Total Mapping:     23436.66 ms
+  - LLM Mapped Fields: 0/35 (Active: False)
+==============================================================
+2026-08-10 15:49:31,552 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-10 15:50:04,956 - app.main - INFO - POST /api/v1/import/preview
+2026-08-10 15:50:17,368 - app.main - INFO - POST /api/v1/import/preview -> 200
+2026-08-10 15:50:21,193 - app.main - INFO - POST /api/v1/import/execute
+2026-08-10 15:50:21,230 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Starting execution for file 'CMF_K9_SCV.xlsm' with template 'K9'
+2026-08-10 15:50:21,231 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Selected template: 'K9'
+2026-08-10 15:50:21,231 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Uploaded filename: 'CMF_K9_SCV.xlsm' (1335067 bytes)
+2026-08-10 15:50:21,232 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Mapped fields: {'Unique_ID': 'unique_id', 'APQP': 'apqp', 'Part name': 'part_name', 'Use case': 'use_case', 'Part number': 'part_number', 'Supplier information': 'supplier_info', 'Supplier name': 'supplier_name', 'Manufacturing COFOR': 'manufacturing_cofor', 'Production location': 'production_location', 'Stakeholder': 'stakeholder', 'Buyer': 'buyer', 'Capacity': 'capacity', 'GST No.': 'gst_no', 'Contracted Capacity': 'contracted_capacity', 'FETE': 'fete', 'FETE or TKO letter document': 'fete_tko_letter_doc', 'Technical Manager': 'technical_manager', 'K9 SCK': 'k9_sck', 'CAT2 FORECASTED DATE': 'cat2_forecast_date', 'CAT3 FORECASTED DATE': 'cat3_forecast_date', 'CAT1/2/3 TYPE': 'cat1_2_3_type', 'WEEKLY CAPACITY MEASURED': 'weekly_capacity_measured', 'ESTIMATED TARGET': 'estimated_target', 'CAT1/2/3': 'cat_evaluation', 'Comments': 'comments', 'SQE': 'sqe', 'SQM': 'sqm', 'TEAM': 'team', 'FAMILY_MULTIPLIER': 'family_multiplier'}
+2026-08-10 15:50:21,233 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Import mode: 'insert', strategy: 'skip_invalid'
+2026-08-10 15:50:33,575 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Validation summary: Total Rows=114, Valid=0, Errors=228
+2026-08-10 15:50:48,383 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Rows detected: 114
+2026-08-10 15:50:48,384 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Headers detected: ['Unique_ID', 'APQP', 'Part name', 'Désignation Pièces (Commodity variant) LI description', 'Type de consultation : RFQ, carry-over, FETE\nVérifier avec un référent Achats tous les cas et les codifications habituelles', 'New\nC/O', 'Use case', 'Part\nInformation', 'Part number', 'Quantity', 'Supplier information', 'Supplier name', 'Manufacturing COFOR', 'Production location', 'Stakeholder', 'Buyer', 'Purchasing \nManager', 'GM', 'SQE', 'Capacity', 'SCR\nLink to DocInfo', 'GST No.', 'Mix', 'Calculated Weekly Capacity (parts/week)', 'Contracted Capacity', 'Comment', 'FETE', 'TKO or FETE \nLink to Sharepoint', 'Capacity\nStandard\n(parts/week)', 'Capacity\nStandard + Extra\n(parts/week)2', 'FETE or TKO letter document', 'SQME (from column AV)', 'SQM', 'SQD Team', 'Run Assessment: \nAsked / Not Asked', 'FORECASTED DATE \nCAT\n(format : CW202X)', 'CAT1/2/3', 'REQUESTED TO SUPPLIER', 'Run Observation \nStandard+Extra Capacity', 'Estimated Target\nStandard+Extra Capacity', 'ASSESSMENT DATE (CW202X)', 'CAPACITY STEP DATE', 'STATUS (COMPARISON WITH SCR):\nGREEN\nORANGE\nRED\nOPEN', 'Rescheduled or Follow-up Date \n(including Next Step)', 'ONSITE AUDIT (OSA) /\nSELF ASSESMENT AUDIT (SAA)', 'DocInfo\nLink', 'COMMENTS ON ASSESSMENT & ACTIONS PLAN', 'SQD', 'Technical Manager', 'WEEKLY CAPACITY TO MEASURE\nIf Carry-Over=TOTAL veh Capacity', 'K9 SCK', 'CAT1 FORECASTED DATE\nCW', 'CAT2 FORECASTED DATE', 'CAT3 FORECASTED DATE', 'CAT1/2/3 TYPE', 'WEEKLY CAPACITY MEASURED', 'ESTIMATED TARGET', 'CAT1/2/3 EVALUATION (G;O;R)', 'SHARED FOLDER - link', 'Comments', 'SQE', 'SQM', 'TEAM', 'FAMILY_MULTIPLIER']
+2026-08-10 15:50:48,385 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Database transaction: Starting transaction session...
+2026-08-10 15:50:48,386 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Serializer errors count: 0
+2026-08-10 15:50:48,403 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Database transaction: Committed successfully (Imported: 0, Updated: 0, Skipped: 114, Failed: 0)
+2026-08-10 15:50:48,404 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Execution time: 27155 ms
+2026-08-10 15:50:48,409 - app.main - INFO - POST /api/v1/import/execute -> 200
+2026-08-10 15:50:48,422 - app.main - INFO - POST /api/v1/import/save-mapping-memory
+2026-08-10 15:50:48,443 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:unique_id -> unique_id
+2026-08-10 15:50:48,444 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:apqp -> apqp
+2026-08-10 15:50:48,444 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:part name -> part_name
+2026-08-10 15:50:48,445 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:use case -> use_case
+2026-08-10 15:50:48,446 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:part number -> part_number
+2026-08-10 15:50:48,447 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:supplier information -> supplier_info
+2026-08-10 15:50:48,448 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:supplier name -> supplier_name
+2026-08-10 15:50:48,449 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:manufacturing cofor -> manufacturing_cofor
+2026-08-10 15:50:48,450 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:production location -> production_location
+2026-08-10 15:50:48,451 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:stakeholder -> stakeholder
+2026-08-10 15:50:48,451 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:buyer -> buyer
+2026-08-10 15:50:48,453 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:capacity -> capacity
+2026-08-10 15:50:48,454 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:gst no. -> gst_no
+2026-08-10 15:50:48,455 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:contracted capacity -> contracted_capacity
+2026-08-10 15:50:48,456 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:fete -> fete
+2026-08-10 15:50:48,457 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:fete or tko letter document -> fete_tko_letter_doc
+2026-08-10 15:50:48,457 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:technical manager -> technical_manager
+2026-08-10 15:50:48,458 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:k9 sck -> k9_sck
+2026-08-10 15:50:48,458 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:cat2 forecasted date -> cat2_forecast_date
+2026-08-10 15:50:48,459 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:cat3 forecasted date -> cat3_forecast_date
+2026-08-10 15:50:48,460 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:cat1/2/3 type -> cat1_2_3_type
+2026-08-10 15:50:48,460 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:weekly capacity measured -> weekly_capacity_measured
+2026-08-10 15:50:48,461 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:estimated target -> estimated_target
+2026-08-10 15:50:48,463 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:cat1/2/3 -> cat_evaluation
+2026-08-10 15:50:48,465 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:comments -> comments
+2026-08-10 15:50:48,467 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:sqe -> sqe
+2026-08-10 15:50:48,467 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:sqm -> sqm
+2026-08-10 15:50:48,469 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:team -> team
+2026-08-10 15:50:48,470 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:family_multiplier -> family_multiplier
+2026-08-10 15:50:48,473 - app.main - INFO - POST /api/v1/import/save-mapping-memory -> 200
+2026-08-10 15:50:53,155 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:50:53,368 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:51:01,865 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:51:01,984 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:51:15,342 - app.main - INFO - DELETE /api/v1/projects/f29d1457-722a-446a-a834-512ac11b6a1f
+2026-08-10 15:51:15,405 - app.main - INFO - DELETE /api/v1/projects/f29d1457-722a-446a-a834-512ac11b6a1f -> 200
+2026-08-10 15:51:15,416 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:51:15,554 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:51:15,564 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:51:15,676 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:51:19,316 - app.main - INFO - DELETE /api/v1/projects/53221ad6-3745-465c-8229-0ffd27533a92
+2026-08-10 15:51:19,377 - app.main - INFO - DELETE /api/v1/projects/53221ad6-3745-465c-8229-0ffd27533a92 -> 200
+2026-08-10 15:51:19,391 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:51:19,535 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:51:19,547 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:51:19,665 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:51:21,874 - app.main - INFO - DELETE /api/v1/projects/4b031f6b-559c-4e94-8c23-31173aee89c7
+2026-08-10 15:51:21,957 - app.main - INFO - DELETE /api/v1/projects/4b031f6b-559c-4e94-8c23-31173aee89c7 -> 200
+2026-08-10 15:51:21,979 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:51:22,193 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:51:22,209 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:51:22,407 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:51:54,154 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:51:54,279 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:52:02,889 - app.main - INFO - DELETE /api/v1/projects/b87eba73-cec9-4b09-b061-a0df4750bf3d
+2026-08-10 15:52:02,953 - app.main - INFO - DELETE /api/v1/projects/b87eba73-cec9-4b09-b061-a0df4750bf3d -> 200
+2026-08-10 15:52:02,968 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:52:03,105 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:52:03,115 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:52:03,267 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:52:05,533 - app.main - INFO - DELETE /api/v1/projects/9b628693-1316-44bd-bc76-035d6a9eaef7
+2026-08-10 15:52:05,598 - app.main - INFO - DELETE /api/v1/projects/9b628693-1316-44bd-bc76-035d6a9eaef7 -> 200
+2026-08-10 15:52:05,618 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:52:05,784 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:52:05,797 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:52:05,960 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:52:08,453 - app.main - INFO - DELETE /api/v1/projects/89a0cc59-bda8-4cdc-9ad1-55dd674f1b0b
+2026-08-10 15:52:08,526 - app.main - INFO - DELETE /api/v1/projects/89a0cc59-bda8-4cdc-9ad1-55dd674f1b0b -> 200
+2026-08-10 15:52:08,538 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:52:08,685 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:52:08,697 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:52:08,870 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:52:10,797 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:52:10,969 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:52:10,984 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:52:11,107 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:52:24,996 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:52:25,028 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:52:33,149 - app.main - INFO - POST /api/v1/projects
+2026-08-10 15:52:33,246 - app.main - INFO - POST /api/v1/projects -> 200
+2026-08-10 15:52:33,271 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:52:33,345 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:52:36,353 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:52:36,465 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:52:42,936 - app.main - INFO - GET /api/v1/projects/a18a7b4a-62f5-473f-a8b9-385ee966805b
+2026-08-10 15:52:42,974 - app.main - INFO - GET /api/v1/projects/a18a7b4a-62f5-473f-a8b9-385ee966805b -> 200
+2026-08-10 15:52:48,149 - app.main - INFO - GET /api/v1/suppliers
+2026-08-10 15:52:48,155 - app.main - INFO - GET /api/v1/users
+2026-08-10 15:52:48,157 - app.main - INFO - GET /api/v1/projects/a18a7b4a-62f5-473f-a8b9-385ee966805b
+2026-08-10 15:52:48,299 - app.main - INFO - GET /api/v1/projects/a18a7b4a-62f5-473f-a8b9-385ee966805b -> 200
+2026-08-10 15:52:48,320 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-10 15:52:48,344 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-10 15:52:58,212 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:52:58,334 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:54:36,362 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:54:36,475 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:54:42,367 - app.main - INFO - GET /api/v1/parts
+2026-08-10 15:54:42,437 - app.main - INFO - GET /api/v1/parts -> 200
+2026-08-10 15:54:43,427 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:54:43,535 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:55:54,755 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:55:54,856 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:55:57,528 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:55:57,586 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:55:57,594 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:55:57,626 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:55:59,621 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-10 15:55:59,649 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 3 published templates in 9.04 ms
+2026-08-10 15:55:59,652 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-10 15:55:59,662 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-10 15:55:59,703 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 3 published templates in 10.55 ms
+2026-08-10 15:55:59,709 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-10 15:56:01,112 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:56:01,156 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:57:24,403 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:57:24,505 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 15:57:27,612 - app.main - INFO - GET /api/v1/projects
+2026-08-10 15:57:27,647 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 16:00:26,762 - app.main - INFO - GET /api/v1/projects
+2026-08-10 16:00:26,868 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 16:00:48,170 - app.main - INFO - GET /api/v1/auth/me
+2026-08-10 16:00:48,431 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-10 16:00:48,457 - app.main - INFO - GET /api/v1/auth/me
+2026-08-10 16:00:48,567 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-10 16:00:48,577 - app.main - INFO - GET /api/v1/templates
+2026-08-10 16:00:48,652 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-10 16:00:48,700 - app.main - INFO - GET /api/v1/templates
+2026-08-10 16:00:48,807 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-10 16:00:48,834 - app.main - INFO - GET /api/v1/projects
+2026-08-10 16:00:49,171 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 16:02:34,893 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-10 16:02:34,934 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 3 published templates in 9.74 ms
+2026-08-10 16:02:34,938 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-10 16:02:34,962 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-10 16:02:35,127 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 3 published templates in 33.85 ms
+2026-08-10 16:02:35,145 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-10 16:03:08,769 - app.main - INFO - GET /api/v1/projects
+2026-08-10 16:03:08,891 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 16:05:05,768 - app.main - INFO - POST /api/v1/templates
+2026-08-10 16:05:05,892 - app.main - INFO - POST /api/v1/templates -> 200
+2026-08-10 16:05:05,952 - app.main - INFO - GET /api/v1/templates
+2026-08-10 16:05:06,006 - app.main - INFO - GET /api/v1/projects
+2026-08-10 16:05:06,083 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 16:05:06,096 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-10 16:05:29,997 - app.main - INFO - GET /api/v1/projects
+2026-08-10 16:05:30,140 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 16:06:15,345 - app.main - INFO - POST /api/v1/projects
+2026-08-10 16:06:15,426 - app.main - INFO - POST /api/v1/projects -> 200
+2026-08-10 16:06:15,527 - app.main - INFO - GET /api/v1/projects/1c5acdf8-f104-4fd4-bad8-9dbfcdc4c665
+2026-08-10 16:06:15,587 - app.main - INFO - GET /api/v1/projects/1c5acdf8-f104-4fd4-bad8-9dbfcdc4c665 -> 200
+2026-08-10 16:06:15,690 - app.main - INFO - GET /api/v1/suppliers
+2026-08-10 16:06:15,696 - app.main - INFO - GET /api/v1/users
+2026-08-10 16:06:15,898 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-10 16:06:15,944 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-10 16:06:20,736 - app.main - INFO - GET /api/v1/projects
+2026-08-10 16:06:20,875 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 16:06:53,092 - app.main - INFO - GET /api/v1/suppliers
+2026-08-10 16:06:53,093 - app.main - INFO - GET /api/v1/projects/1c5acdf8-f104-4fd4-bad8-9dbfcdc4c665
+2026-08-10 16:06:53,158 - app.main - INFO - GET /api/v1/projects/1c5acdf8-f104-4fd4-bad8-9dbfcdc4c665 -> 200
+2026-08-10 16:06:53,217 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-10 16:06:54,882 - app.main - INFO - GET /api/v1/projects
+2026-08-10 16:06:55,022 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 16:07:12,972 - app.main - INFO - GET /api/v1/projects
+2026-08-10 16:07:13,036 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 16:07:13,051 - app.main - INFO - GET /api/v1/projects
+2026-08-10 16:07:13,102 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 16:10:30,376 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-10 16:10:30,411 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 4 published templates in 14.16 ms
+2026-08-10 16:10:30,417 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-10 16:10:30,449 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-10 16:10:30,535 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 4 published templates in 21.56 ms
+2026-08-10 16:10:30,544 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-10 16:10:35,411 - app.main - INFO - GET /api/v1/projects
+2026-08-10 16:10:35,449 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 16:11:16,527 - app.main - INFO - GET /api/v1/projects
+2026-08-10 16:11:16,710 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 16:11:26,075 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-10 16:11:26,079 - app.main - INFO - GET /api/v1/documents
+2026-08-10 16:11:26,184 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 4 published templates in 56.40 ms
+2026-08-10 16:11:26,190 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-10 16:11:26,249 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-10 16:11:26,271 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-10 16:11:26,324 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 4 published templates in 16.52 ms
+2026-08-10 16:11:26,327 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-10 16:11:32,849 - app.main - INFO - GET /api/v1/projects
+2026-08-10 16:11:33,020 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 16:11:38,238 - app.main - INFO - GET /api/v1/projects
+2026-08-10 16:11:38,288 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 16:11:38,303 - app.main - INFO - GET /api/v1/projects
+2026-08-10 16:11:38,367 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 16:12:17,309 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-10 16:12:17,311 - app.main - INFO - GET /api/v1/projects
+2026-08-10 16:12:17,691 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 16:12:17,837 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-10 16:12:29,848 - app.main - INFO - GET /api/v1/projects
+2026-08-10 16:12:29,884 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 16:12:29,896 - app.main - INFO - GET /api/v1/projects
+2026-08-10 16:12:30,481 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 16:14:08,572 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-10 16:14:08,575 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-10 16:14:08,588 - app.main - INFO - GET /api/v1/documents
+2026-08-10 16:14:08,593 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-10 16:14:08,598 - app.main - INFO - GET /api/v1/import/import-templates -> 401
+2026-08-10 16:14:08,605 - app.main - INFO - GET /api/v1/documents -> 401
+2026-08-10 16:14:08,624 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-10 16:14:08,635 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-10 16:14:08,646 - app.main - INFO - GET /api/v1/import/import-templates -> 401
+2026-08-10 16:14:08,650 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-10 16:14:08,733 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-10 16:14:08,757 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-10 16:14:08,760 - app.main - INFO - GET /api/v1/documents
+2026-08-10 16:14:08,843 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 4 published templates in 17.15 ms
+2026-08-10 16:14:08,846 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-10 16:14:08,858 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-10 16:14:08,865 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-10 16:14:08,900 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 4 published templates in 9.36 ms
+2026-08-10 16:14:08,903 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-10 16:14:11,407 - app.main - INFO - GET /api/v1/projects
+2026-08-10 16:14:11,442 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 16:14:11,452 - app.main - INFO - GET /api/v1/projects
+2026-08-10 16:14:11,505 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 16:14:26,615 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-10 16:14:26,670 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 4 published templates in 12.51 ms
+2026-08-10 16:14:26,673 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-10 16:14:26,685 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-10 16:14:26,725 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 4 published templates in 10.38 ms
+2026-08-10 16:14:26,733 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-10 16:14:30,925 - app.main - INFO - GET /api/v1/projects
+2026-08-10 16:14:31,091 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 16:14:47,440 - app.main - INFO - GET /api/v1/projects
+2026-08-10 16:14:47,645 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 16:14:47,669 - app.main - INFO - GET /api/v1/projects
+2026-08-10 16:14:47,796 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-10 20:29:49,670 - app.main - INFO - Shutting down CMF Platform API
+2026-08-11 09:51:50,281 - app.main - INFO - Starting CMF Platform API
+2026-08-11 09:51:50,297 - app.main - INFO - Database tables created (SQLite)
+2026-08-11 09:53:18,689 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 09:53:18,726 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-11 09:53:18,730 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-11 09:53:18,761 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 09:53:18,763 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-11 09:53:18,770 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-11 09:53:18,775 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-11 09:53:19,202 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-11 09:53:19,229 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 09:53:19,358 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 09:53:19,382 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 09:53:19,504 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 09:53:19,618 - app.main - INFO - GET /api/v1/templates
+2026-08-11 09:53:19,806 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 09:53:19,824 - app.main - INFO - GET /api/v1/templates
+2026-08-11 09:53:20,005 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 09:53:20,027 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-11 09:53:20,037 - app.main - INFO - GET /api/v1/projects
+2026-08-11 09:53:20,793 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 09:53:21,213 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-11 09:53:28,148 - app.main - INFO - GET /api/v1/projects
+2026-08-11 09:53:28,433 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 09:53:28,451 - app.main - INFO - GET /api/v1/projects
+2026-08-11 09:53:28,672 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 09:55:04,814 - app.main - INFO - POST /api/v1/templates
+2026-08-11 09:55:04,988 - app.main - INFO - POST /api/v1/templates -> 200
+2026-08-11 09:55:05,016 - app.main - INFO - GET /api/v1/templates
+2026-08-11 09:55:05,036 - app.main - INFO - GET /api/v1/projects
+2026-08-11 09:55:05,169 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 09:55:05,174 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 09:55:55,945 - app.main - INFO - GET /api/v1/projects
+2026-08-11 09:55:56,218 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 10:03:37,263 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 10:03:37,401 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 10:03:37,438 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 10:03:37,583 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 10:03:37,944 - app.main - INFO - GET /api/v1/templates
+2026-08-11 10:03:38,101 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 10:03:38,119 - app.main - INFO - GET /api/v1/templates
+2026-08-11 10:03:38,204 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 10:03:38,481 - app.main - INFO - GET /api/v1/suppliers
+2026-08-11 10:03:38,550 - app.main - INFO - GET /api/v1/users
+2026-08-11 10:03:38,764 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-11 10:03:38,829 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-11 10:05:59,148 - app.main - INFO - GET /api/v1/parts
+2026-08-11 10:05:59,346 - app.main - INFO - GET /api/v1/parts -> 200
+2026-08-11 10:06:00,328 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-11 10:06:00,338 - app.main - INFO - GET /api/v1/projects
+2026-08-11 10:06:01,801 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 10:06:02,207 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-11 10:06:07,787 - app.main - INFO - GET /api/v1/risks
+2026-08-11 10:06:07,968 - app.main - INFO - GET /api/v1/risks -> 200
+2026-08-11 10:06:11,494 - app.main - INFO - GET /api/v1/projects
+2026-08-11 10:06:11,787 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 10:06:11,813 - app.main - INFO - GET /api/v1/projects
+2026-08-11 10:06:12,084 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 10:31:06,150 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 10:31:06,157 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-11 10:31:06,160 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-11 10:31:06,232 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 10:31:06,239 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-11 10:31:06,248 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-11 10:31:06,305 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-11 10:31:06,501 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-11 10:31:06,545 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 10:31:06,625 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 10:31:06,640 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 10:31:06,719 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 10:31:06,882 - app.main - INFO - GET /api/v1/templates
+2026-08-11 10:31:06,960 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 10:31:06,974 - app.main - INFO - GET /api/v1/templates
+2026-08-11 10:31:07,047 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 10:31:07,506 - app.main - INFO - GET /api/v1/projects
+2026-08-11 10:31:07,732 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 10:44:05,680 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 10:44:05,786 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 10:44:05,801 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 10:44:05,895 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 10:44:05,968 - app.main - INFO - GET /api/v1/templates
+2026-08-11 10:44:06,047 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 10:44:06,066 - app.main - INFO - GET /api/v1/templates
+2026-08-11 10:44:06,168 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 10:44:06,242 - app.main - INFO - GET /api/v1/projects
+2026-08-11 10:44:06,562 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 11:36:17,969 - app.main - INFO - POST /api/v1/templates
+2026-08-11 11:36:18,024 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-11 11:36:18,037 - app.main - INFO - POST /api/v1/templates -> 401
+2026-08-11 11:36:32,743 - app.main - INFO - POST /api/v1/templates
+2026-08-11 11:36:32,768 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-11 11:36:32,776 - app.main - INFO - POST /api/v1/templates -> 401
+2026-08-11 11:36:37,801 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 11:36:37,813 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-11 11:36:37,818 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-11 11:36:37,841 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 11:36:37,848 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-11 11:36:37,856 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-11 11:36:37,878 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-11 11:36:38,102 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-11 11:36:38,133 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 11:36:38,266 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 11:36:38,292 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 11:36:38,442 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 11:36:38,567 - app.main - INFO - GET /api/v1/templates
+2026-08-11 11:36:38,704 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 11:36:38,749 - app.main - INFO - GET /api/v1/templates
+2026-08-11 11:36:38,869 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 11:36:38,959 - app.main - INFO - GET /api/v1/projects
+2026-08-11 11:36:39,300 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 11:36:53,398 - app.main - INFO - POST /api/v1/templates
+2026-08-11 11:36:53,598 - app.main - INFO - POST /api/v1/templates -> 200
+2026-08-11 11:36:53,628 - app.main - INFO - GET /api/v1/templates
+2026-08-11 11:36:53,659 - app.main - INFO - GET /api/v1/projects
+2026-08-11 11:36:53,744 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 11:36:53,778 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 11:48:17,080 - app.main - INFO - Shutting down CMF Platform API
+2026-08-11 11:48:26,137 - app.main - INFO - Starting CMF Platform API
+2026-08-11 11:48:26,162 - app.main - INFO - Database tables created (SQLite)
+2026-08-11 11:48:55,382 - app.main - INFO - Shutting down CMF Platform API
+2026-08-11 11:49:04,199 - app.main - INFO - Starting CMF Platform API
+2026-08-11 11:49:04,225 - app.main - INFO - Database tables created (SQLite)
+2026-08-11 11:49:09,135 - app.main - INFO - Shutting down CMF Platform API
+2026-08-11 11:49:17,284 - app.main - INFO - Starting CMF Platform API
+2026-08-11 11:49:17,310 - app.main - INFO - Database tables created (SQLite)
+2026-08-11 11:49:45,792 - app.main - INFO - Shutting down CMF Platform API
+2026-08-11 11:49:55,443 - app.main - INFO - Starting CMF Platform API
+2026-08-11 11:49:55,462 - app.main - INFO - Database tables created (SQLite)
+2026-08-11 11:50:08,355 - app.main - INFO - Shutting down CMF Platform API
+2026-08-11 11:50:17,682 - app.main - INFO - Starting CMF Platform API
+2026-08-11 11:50:17,715 - app.main - INFO - Database tables created (SQLite)
+2026-08-11 12:00:43,064 - app.main - INFO - Shutting down CMF Platform API
+2026-08-11 12:00:51,572 - app.main - INFO - Starting CMF Platform API
+2026-08-11 12:00:51,601 - app.main - INFO - Database tables created (SQLite)
+2026-08-11 12:01:02,830 - app.main - INFO - Shutting down CMF Platform API
+2026-08-11 12:01:11,878 - app.main - INFO - Starting CMF Platform API
+2026-08-11 12:01:11,903 - app.main - INFO - Database tables created (SQLite)
+2026-08-11 12:03:49,959 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 12:03:50,394 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 12:03:50,411 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 12:03:50,484 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 12:03:50,673 - app.main - INFO - GET /api/v1/templates
+2026-08-11 12:03:50,776 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 12:03:50,807 - app.main - INFO - GET /api/v1/templates
+2026-08-11 12:03:50,894 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 12:03:51,316 - app.main - INFO - GET /api/v1/projects
+2026-08-11 12:03:51,813 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 12:07:26,313 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 12:07:26,329 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-11 12:07:26,343 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-11 12:07:26,395 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 12:07:26,419 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-11 12:07:26,425 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-11 12:07:26,489 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-11 12:07:26,691 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-11 12:07:26,731 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 12:07:26,841 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 12:07:26,863 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 12:07:26,973 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 12:07:27,273 - app.main - INFO - GET /api/v1/templates
+2026-08-11 12:07:27,390 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 12:07:27,436 - app.main - INFO - GET /api/v1/templates
+2026-08-11 12:07:27,539 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 12:07:28,161 - app.main - INFO - GET /api/v1/projects
+2026-08-11 12:07:28,456 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 12:10:50,023 - app.main - INFO - Shutting down CMF Platform API
+2026-08-11 12:11:01,500 - app.main - INFO - Starting CMF Platform API
+2026-08-11 12:11:01,518 - app.main - INFO - Database tables created (SQLite)
+2026-08-11 12:11:01,538 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 12:11:01,976 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 12:11:02,003 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 12:11:02,094 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 12:11:02,150 - app.main - INFO - GET /api/v1/templates
+2026-08-11 12:11:02,248 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 12:11:02,278 - app.main - INFO - GET /api/v1/templates
+2026-08-11 12:11:02,373 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 12:11:02,622 - app.main - INFO - GET /api/v1/projects
+2026-08-11 12:11:03,080 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 12:16:21,668 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 12:16:21,772 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 12:16:21,787 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 12:16:21,867 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 12:16:21,946 - app.main - INFO - GET /api/v1/templates
+2026-08-11 12:16:22,039 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 12:16:22,061 - app.main - INFO - GET /api/v1/templates
+2026-08-11 12:16:22,168 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 12:16:22,271 - app.main - INFO - GET /api/v1/projects
+2026-08-11 12:16:22,551 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 12:16:56,991 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 12:16:57,098 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 12:16:57,117 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 12:16:57,202 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 12:16:57,227 - app.main - INFO - GET /api/v1/templates
+2026-08-11 12:16:57,302 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 12:16:57,333 - app.main - INFO - GET /api/v1/templates
+2026-08-11 12:16:57,426 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 12:16:57,488 - app.main - INFO - GET /api/v1/projects
+2026-08-11 12:16:57,791 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 12:17:00,688 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-11 12:17:00,761 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 6 published templates in 23.43 ms
+2026-08-11 12:17:00,770 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-11 12:17:00,797 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-11 12:17:00,896 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 6 published templates in 25.76 ms
+2026-08-11 12:17:00,902 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-11 12:23:50,100 - app.main - INFO - GET /api/v1/projects
+2026-08-11 12:23:50,571 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 12:23:53,300 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 12:23:53,526 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 12:23:53,572 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 12:23:53,678 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 12:23:53,742 - app.main - INFO - GET /api/v1/templates
+2026-08-11 12:23:53,806 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 12:23:53,830 - app.main - INFO - GET /api/v1/templates
+2026-08-11 12:23:53,943 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 12:23:54,040 - app.main - INFO - GET /api/v1/projects
+2026-08-11 12:23:54,317 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 12:28:34,884 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 12:28:35,070 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 12:28:35,084 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 12:28:35,155 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 12:28:35,231 - app.main - INFO - GET /api/v1/templates
+2026-08-11 12:28:35,298 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 12:28:35,320 - app.main - INFO - GET /api/v1/templates
+2026-08-11 12:28:35,412 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 12:28:35,507 - app.main - INFO - GET /api/v1/projects
+2026-08-11 12:28:35,801 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 12:28:40,057 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-11 12:28:40,066 - app.main - INFO - GET /api/v1/documents
+2026-08-11 12:28:40,145 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 6 published templates in 29.16 ms
+2026-08-11 12:28:40,159 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-11 12:28:40,182 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-11 12:28:40,262 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-11 12:28:40,299 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 6 published templates in 41.68 ms
+2026-08-11 12:28:40,308 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-11 12:28:41,909 - app.main - INFO - GET /api/v1/projects
+2026-08-11 12:28:42,330 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 12:28:42,364 - app.main - INFO - GET /api/v1/projects
+2026-08-11 12:28:42,787 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 12:28:44,413 - app.main - INFO - GET /api/v1/projects
+2026-08-11 12:28:44,653 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 12:28:48,029 - app.main - INFO - GET /api/v1/projects
+2026-08-11 12:28:48,285 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 12:28:48,302 - app.main - INFO - GET /api/v1/projects
+2026-08-11 12:28:48,703 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 12:28:52,183 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-11 12:28:52,308 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 6 published templates in 46.96 ms
+2026-08-11 12:28:52,326 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-11 12:28:52,370 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-11 12:28:52,504 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 6 published templates in 35.19 ms
+2026-08-11 12:28:52,514 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-11 12:28:53,635 - app.main - INFO - GET /api/v1/projects
+2026-08-11 12:28:53,955 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 12:36:26,969 - app.main - INFO - GET /api/v1/projects
+2026-08-11 12:36:27,389 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 12:36:27,412 - app.main - INFO - GET /api/v1/projects
+2026-08-11 12:36:27,875 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 12:36:43,414 - app.main - INFO - Shutting down CMF Platform API
+2026-08-11 12:36:50,563 - app.main - INFO - Starting CMF Platform API
+2026-08-11 12:36:50,579 - app.main - INFO - Database tables created (SQLite)
+2026-08-11 12:42:25,851 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 12:42:25,893 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-11 12:42:25,898 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-11 12:42:25,919 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 12:42:25,926 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-11 12:42:25,933 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-11 12:42:25,955 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-11 12:42:26,307 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-11 12:42:26,326 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 12:42:26,399 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 12:42:26,417 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 12:42:26,519 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 12:42:26,640 - app.main - INFO - GET /api/v1/templates
+2026-08-11 12:42:26,727 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 12:42:26,752 - app.main - INFO - GET /api/v1/templates
+2026-08-11 12:42:26,959 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 12:42:27,135 - app.main - INFO - GET /api/v1/projects
+2026-08-11 12:42:27,457 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 12:44:55,589 - app.main - INFO - Starting CMF Platform API
+2026-08-11 12:44:55,605 - app.main - INFO - Database tables created (SQLite)
+2026-08-11 12:45:14,052 - app.main - INFO - Shutting down CMF Platform API
+2026-08-11 12:46:51,823 - app.main - INFO - Starting CMF Platform API
+2026-08-11 12:46:51,837 - app.main - INFO - Database tables created (SQLite)
+2026-08-11 12:48:18,781 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 12:48:19,111 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 12:48:19,129 - app.main - INFO - GET /api/v1/auth/me
+2026-08-11 12:48:19,211 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-11 12:48:19,269 - app.main - INFO - GET /api/v1/templates
+2026-08-11 12:48:19,344 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 12:48:19,359 - app.main - INFO - GET /api/v1/templates
+2026-08-11 12:48:19,441 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 12:48:19,571 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-11 12:48:19,574 - app.main - INFO - GET /api/v1/projects
+2026-08-11 12:48:20,339 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 12:48:20,841 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-11 12:48:25,918 - app.main - INFO - GET /api/v1/projects
+2026-08-11 12:48:26,251 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 12:48:26,385 - app.main - INFO - GET /api/v1/projects
+2026-08-11 12:48:26,572 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 12:50:12,322 - app.main - INFO - POST /api/v1/templates
+2026-08-11 12:50:12,583 - app.main - INFO - POST /api/v1/templates -> 200
+2026-08-11 12:50:12,639 - app.main - INFO - GET /api/v1/templates
+2026-08-11 12:50:12,676 - app.main - INFO - GET /api/v1/projects
+2026-08-11 12:50:12,838 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 12:50:12,871 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-11 12:50:43,392 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-11 12:50:43,397 - app.main - INFO - GET /api/v1/projects
+2026-08-11 12:50:44,074 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 12:50:44,607 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-11 12:50:45,572 - app.main - INFO - GET /api/v1/projects
+2026-08-11 12:50:45,639 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 12:50:45,660 - app.main - INFO - GET /api/v1/projects
+2026-08-11 12:50:45,741 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-11 12:55:27,382 - app.main - INFO - Shutting down CMF Platform API
+2026-08-12 10:30:38,408 - app.main - INFO - Starting CMF Platform API
+2026-08-12 10:30:38,434 - app.main - INFO - Database tables created (SQLite)
+2026-08-12 10:33:54,868 - app.main - INFO - GET /api/v1/auth/me
+2026-08-12 10:33:54,942 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-12 10:33:54,948 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-12 10:33:54,972 - app.main - INFO - GET /api/v1/auth/me
+2026-08-12 10:33:54,976 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-12 10:33:54,979 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-12 10:33:54,987 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-12 10:33:55,439 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-12 10:33:55,468 - app.main - INFO - GET /api/v1/auth/me
+2026-08-12 10:33:55,589 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-12 10:33:55,610 - app.main - INFO - GET /api/v1/auth/me
+2026-08-12 10:33:55,677 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-12 10:33:55,744 - app.main - INFO - GET /api/v1/templates
+2026-08-12 10:33:55,832 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-12 10:33:55,848 - app.main - INFO - GET /api/v1/templates
+2026-08-12 10:33:56,085 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-12 10:33:56,172 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-12 10:33:56,180 - app.main - INFO - GET /api/v1/projects
+2026-08-12 10:33:57,067 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 10:33:57,559 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-12 10:33:59,934 - app.main - INFO - GET /api/v1/projects
+2026-08-12 10:34:00,129 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 10:34:00,150 - app.main - INFO - GET /api/v1/projects
+2026-08-12 10:34:00,425 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 10:34:11,520 - app.main - INFO - DELETE /api/v1/templates/5ccf9af7-a2f9-486e-b579-eef1e1ae5670
+2026-08-12 10:34:11,644 - app.main - INFO - DELETE /api/v1/templates/5ccf9af7-a2f9-486e-b579-eef1e1ae5670 -> 200
+2026-08-12 10:34:11,685 - app.main - INFO - GET /api/v1/templates
+2026-08-12 10:34:11,764 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-12 10:34:17,160 - app.main - INFO - DELETE /api/v1/templates/f94907ad-2e65-4e71-b7ee-2e6108d8a567
+2026-08-12 10:34:17,396 - app.main - INFO - DELETE /api/v1/templates/f94907ad-2e65-4e71-b7ee-2e6108d8a567 -> 200
+2026-08-12 10:34:17,454 - app.main - INFO - GET /api/v1/templates
+2026-08-12 10:34:17,555 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-12 10:34:21,841 - app.main - INFO - DELETE /api/v1/templates/e68e284a-2676-4e9a-8d4a-36a2a3a32b1a
+2026-08-12 10:34:21,976 - app.main - INFO - DELETE /api/v1/templates/e68e284a-2676-4e9a-8d4a-36a2a3a32b1a -> 200
+2026-08-12 10:34:22,039 - app.main - INFO - GET /api/v1/templates
+2026-08-12 10:34:22,125 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-12 10:37:19,221 - app.main - INFO - POST /api/v1/templates
+2026-08-12 10:37:19,460 - app.main - INFO - POST /api/v1/templates -> 200
+2026-08-12 10:37:19,512 - app.main - INFO - GET /api/v1/templates
+2026-08-12 10:37:19,548 - app.main - INFO - GET /api/v1/projects
+2026-08-12 10:37:19,645 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 10:37:19,655 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-12 10:37:28,685 - app.main - INFO - DELETE /api/v1/templates/14b00168-c902-4d8f-bacb-082f5f7f75f5
+2026-08-12 10:37:28,820 - app.main - INFO - DELETE /api/v1/templates/14b00168-c902-4d8f-bacb-082f5f7f75f5 -> 200
+2026-08-12 10:37:28,865 - app.main - INFO - GET /api/v1/templates
+2026-08-12 10:37:28,968 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-12 10:38:38,744 - app.main - INFO - POST /api/v1/projects
+2026-08-12 10:38:39,008 - app.main - INFO - POST /api/v1/projects -> 200
+2026-08-12 10:38:39,070 - app.main - INFO - GET /api/v1/projects
+2026-08-12 10:38:39,196 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 10:38:49,647 - app.main - INFO - GET /api/v1/projects/3cf3a6cb-a853-4855-95d4-fbfa16e87069
+2026-08-12 10:38:49,799 - app.main - INFO - GET /api/v1/projects/3cf3a6cb-a853-4855-95d4-fbfa16e87069 -> 200
+2026-08-12 10:38:50,008 - app.main - INFO - GET /api/v1/suppliers
+2026-08-12 10:38:50,013 - app.main - INFO - GET /api/v1/users
+2026-08-12 10:38:50,215 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-12 10:38:50,318 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-12 10:38:57,546 - app.main - INFO - GET /api/v1/projects
+2026-08-12 10:38:58,139 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 10:39:56,978 - app.main - INFO - GET /api/v1/projects
+2026-08-12 10:39:57,506 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 10:40:00,209 - app.main - INFO - GET /api/v1/documents
+2026-08-12 10:40:00,221 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-12 10:40:00,327 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 4 published templates in 39.38 ms
+2026-08-12 10:40:00,338 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-12 10:40:00,370 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-12 10:40:00,404 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-12 10:40:00,487 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 4 published templates in 27.46 ms
+2026-08-12 10:40:00,495 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-12 10:40:27,163 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-12 10:40:27,264 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Sheet: 'Projects' | Orient: HORIZONTAL | Headers (13): ['project_code', 'project_name', 'customer', 'project_status', 'start_date', 'supplier_code', 'supplier_name', 'country', 'supplier_status', 'assessment_date', 'quality_score', 'evaluation', 'comments']
+2026-08-12 10:40:27,312 - app.application.services.ollama_mapping_service - INFO - [OLLAMA] Configured timeout: 30.0s, default model: llama3.2:1b, url: http://localhost:11434
+2026-08-12 10:40:27,316 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Template: 'CMF_EXAMPLE' (cmf-anwar), Fields: 13, Headers: 13
+2026-08-12 10:40:28,092 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 10:40:28,489 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 10:40:32,373 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-12 10:40:32,427 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Sheet: 'Projects' | Orient: HORIZONTAL | Headers (13): ['project_code', 'project_name', 'customer', 'project_status', 'start_date', 'supplier_code', 'supplier_name', 'country', 'supplier_status', 'assessment_date', 'quality_score', 'evaluation', 'comments']
+2026-08-12 10:40:32,451 - app.application.services.ollama_mapping_service - INFO - [OLLAMA] Configured timeout: 30.0s, default model: llama3.2:1b, url: http://localhost:11434
+2026-08-12 10:40:32,452 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Template: 'CMF_EXAMPLE' (cmf-anwar), Fields: 13, Headers: 13
+2026-08-12 10:40:32,767 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 10:40:33,098 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 10:40:53,172 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2026-08-12 10:40:53,180 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] LLM Raw Response: '{"project_code": "ABC123", "project_name": "Sample Project", "customer": "John Doe", "project_status": "In Progress", "start_date": "2022-01-01", "supplier_code": "001234", "supplier_name": "ABC Inc.", "country": "USA", "supplier_status": "Active", "assessment_date": "2022-02-01", "quality_score": 8, "evaluation": "Pass", "comments": "This is a sample project."}'
+2026-08-12 10:40:53,186 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Final Mapping Summary (0/13 fields mapped via LLM):
+  project_code: excel='project_code' conf=0.99 src=exact_match
+  project_name: excel='project_name' conf=0.99 src=exact_match
+  customer: excel='customer' conf=0.99 src=exact_match
+  project_status: excel='project_status' conf=0.99 src=exact_match
+  start_date: excel='start_date' conf=0.99 src=exact_match
+  supplier_code: excel='supplier_code' conf=0.99 src=exact_match
+  supplier_name: excel='supplier_name' conf=0.99 src=exact_match
+  country: excel='country' conf=0.99 src=exact_match
+  supplier_status: excel='supplier_status' conf=0.99 src=exact_match
+  assessment_date: excel='assessment_date' conf=0.99 src=exact_match
+  quality_score: excel='quality_score' conf=0.99 src=exact_match
+  evaluation: excel='evaluation' conf=0.99 src=exact_match
+  comments: excel='comments' conf=0.99 src=exact_match
+2026-08-12 10:40:53,187 - app.application.services.ollama_mapping_service - INFO - 
+==================== [OLLAMA LLM METRICS] ====================
+  - Model:             llama3.2:1b
+  - Prompt Size:       767 chars
+  - Prompt Tokens:     238
+  - Completion Tokens: 109
+  - Inference Time:    10453.52 ms
+  - JSON Parse Time:   0.25 ms
+  - Excel Read Time:   0.04 ms
+  - Total Mapping:     20732.97 ms
+  - LLM Mapped Fields: 0/13 (Active: False)
+==============================================================
+2026-08-12 10:40:53,194 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-12 10:40:58,522 - app.application.services.ollama_mapping_service - WARNING - [OLLAMA MAP] Request to Ollama timed out after 30.0s. Automatically switched to deterministic fuzzy mapping.
+2026-08-12 10:40:58,525 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Final Mapping Summary (0/13 fields mapped via LLM):
+  project_code: excel='project_code' conf=0.99 src=exact_match
+  project_name: excel='project_name' conf=0.99 src=exact_match
+  customer: excel='customer' conf=0.99 src=exact_match
+  project_status: excel='project_status' conf=0.99 src=exact_match
+  start_date: excel='start_date' conf=0.99 src=exact_match
+  supplier_code: excel='supplier_code' conf=0.99 src=exact_match
+  supplier_name: excel='supplier_name' conf=0.99 src=exact_match
+  country: excel='country' conf=0.99 src=exact_match
+  supplier_status: excel='supplier_status' conf=0.99 src=exact_match
+  assessment_date: excel='assessment_date' conf=0.99 src=exact_match
+  quality_score: excel='quality_score' conf=0.99 src=exact_match
+  evaluation: excel='evaluation' conf=0.99 src=exact_match
+  comments: excel='comments' conf=0.99 src=exact_match
+2026-08-12 10:40:58,527 - app.application.services.ollama_mapping_service - INFO - 
+==================== [OLLAMA LLM METRICS] ====================
+  - Model:             llama3.2:1b
+  - Prompt Size:       767 chars
+  - Prompt Tokens:     0
+  - Completion Tokens: 0
+  - Inference Time:    30406.42 ms
+  - JSON Parse Time:   0.00 ms
+  - Excel Read Time:   0.10 ms
+  - Total Mapping:     31208.14 ms
+  - LLM Mapped Fields: 0/13 (Active: False)
+==============================================================
+2026-08-12 10:40:58,536 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-12 10:41:05,429 - app.main - INFO - POST /api/v1/import/preview
+2026-08-12 10:41:05,538 - app.main - INFO - POST /api/v1/import/preview -> 200
+2026-08-12 10:41:07,081 - app.main - INFO - POST /api/v1/import/execute
+2026-08-12 10:41:07,184 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Starting execution for file 'CMF_TEST_002_Project_Import.xlsx' with template 'CMF_EXAMPLE'
+2026-08-12 10:41:07,188 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Selected template: 'CMF_EXAMPLE'
+2026-08-12 10:41:07,191 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Uploaded filename: 'CMF_TEST_002_Project_Import.xlsx' (5435 bytes)
+2026-08-12 10:41:07,193 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Mapped fields: {'project_code': 'project_code', 'project_name': 'project_name', 'customer': 'customer', 'project_status': 'project_status', 'start_date': 'start_date', 'supplier_code': 'supplier_code', 'supplier_name': 'supplier_name', 'country': 'country', 'supplier_status': 'supplier_status', 'assessment_date': 'assessment_date', 'quality_score': 'quality_score', 'evaluation': 'evaluation', 'comments': 'comments'}
+2026-08-12 10:41:07,196 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Import mode: 'insert', strategy: 'skip_invalid'
+2026-08-12 10:41:07,306 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Validation summary: Total Rows=3, Valid=3, Errors=0
+2026-08-12 10:41:07,389 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Rows detected: 3
+2026-08-12 10:41:07,391 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Headers detected: ['project_code', 'project_name', 'customer', 'project_status', 'start_date', 'supplier_code', 'supplier_name', 'country', 'supplier_status', 'assessment_date', 'quality_score', 'evaluation', 'comments']
+2026-08-12 10:41:07,393 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Database transaction: Starting transaction session...
+2026-08-12 10:41:07,806 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Serializer errors count: 0
+2026-08-12 10:41:07,884 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Database transaction: Committed successfully (Imported: 3, Updated: 0, Skipped: 0, Failed: 0)
+2026-08-12 10:41:07,889 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Execution time: 622 ms
+2026-08-12 10:41:07,895 - app.main - INFO - POST /api/v1/import/execute -> 200
+2026-08-12 10:41:07,933 - app.main - INFO - POST /api/v1/import/save-mapping-memory
+2026-08-12 10:41:08,029 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_EXAMPLE:project_code -> project_code
+2026-08-12 10:41:08,033 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_EXAMPLE:project_name -> project_name
+2026-08-12 10:41:08,036 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_EXAMPLE:customer -> customer
+2026-08-12 10:41:08,039 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_EXAMPLE:project_status -> project_status
+2026-08-12 10:41:08,042 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_EXAMPLE:start_date -> start_date
+2026-08-12 10:41:08,044 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_EXAMPLE:supplier_code -> supplier_code
+2026-08-12 10:41:08,047 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_EXAMPLE:supplier_name -> supplier_name
+2026-08-12 10:41:08,051 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_EXAMPLE:country -> country
+2026-08-12 10:41:08,054 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_EXAMPLE:supplier_status -> supplier_status
+2026-08-12 10:41:08,057 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_EXAMPLE:assessment_date -> assessment_date
+2026-08-12 10:41:08,059 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_EXAMPLE:quality_score -> quality_score
+2026-08-12 10:41:08,061 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_EXAMPLE:evaluation -> evaluation
+2026-08-12 10:41:08,064 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_EXAMPLE:comments -> comments
+2026-08-12 10:41:08,078 - app.main - INFO - POST /api/v1/import/save-mapping-memory -> 200
+2026-08-12 10:41:10,665 - app.main - INFO - GET /api/v1/projects
+2026-08-12 10:41:11,187 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 10:41:18,710 - app.main - INFO - GET /api/v1/projects/13d96bd4-4a0c-4c9a-b0b9-fa74ba02e6a2
+2026-08-12 10:41:18,773 - app.main - INFO - GET /api/v1/projects/13d96bd4-4a0c-4c9a-b0b9-fa74ba02e6a2 -> 200
+2026-08-12 10:41:18,860 - app.main - INFO - GET /api/v1/suppliers
+2026-08-12 10:41:18,863 - app.main - INFO - GET /api/v1/users
+2026-08-12 10:41:19,035 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-12 10:41:19,100 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-12 10:41:25,714 - app.main - INFO - GET /api/v1/projects
+2026-08-12 10:41:26,192 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 10:44:52,733 - app.main - INFO - GET /api/v1/projects
+2026-08-12 10:44:53,103 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 10:44:57,553 - app.main - INFO - GET /api/v1/projects
+2026-08-12 10:44:57,637 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 10:44:57,665 - app.main - INFO - GET /api/v1/projects
+2026-08-12 10:44:57,771 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 10:47:13,762 - app.main - INFO - POST /api/v1/templates
+2026-08-12 10:47:13,930 - app.main - INFO - POST /api/v1/templates -> 200
+2026-08-12 10:47:13,967 - app.main - INFO - GET /api/v1/templates
+2026-08-12 10:47:13,992 - app.main - INFO - GET /api/v1/projects
+2026-08-12 10:47:14,157 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 10:47:14,172 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-12 10:47:20,569 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-12 10:47:20,574 - app.main - INFO - GET /api/v1/documents
+2026-08-12 10:47:20,785 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 59.05 ms
+2026-08-12 10:47:20,804 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-12 10:47:20,834 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-12 10:47:20,847 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-12 10:47:20,941 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 26.66 ms
+2026-08-12 10:47:20,949 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-12 10:48:27,201 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-12 10:48:27,285 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Sheet: 'Détails1' | Orient: HORIZONTAL | Headers (82): ['CMF LINE N°', 'TYPE sourcing', 'N° SOURCING (RFQ, SP, …)', 'APQP GRID', 'SP name', 'part description', 'PART NUMBER', 'PROCESS PART COEFFICIENT', 'F1H', 'Carry-Over Adapted', 'SUPPLIER NAME', 'SUPPLIER NAME2', 'LOCATION', 'COFOR', 'CQC Name/ECR OWNER', 'SQME Name', 'SQ Manager', 'BUYER', 'SQ COMMENT & CAT SCHEDULE', 'WEEKLY CAPACITY CONTRACTED\r\n(Parts/Week)', 'CAPACITY STEP\r\n(Parts/Week)', 'LEAD TIME to implement Capacity Step\r\n(MONTH)', 'INVESTMENT impact of Capacity Step\r\n(EURO)', 'YEAR OF MAX NEED', 'VOR\r\nSupplier Capacity Contracted regarding Buyer Capacity Requested', 'SCR Sharepoint link', 'MIX (%)', 'LAST WEEKLY CAPACITY REQUESTED', 'CAPACITY STEP (parts/week)', 'PEAK YEAR', 'Comments of the capacity manager', 'TKO DATE', 'USE KEY STATUT AFTER GT CAPACITY (Effective Date)', 'GT CAPACITY \r\nDone date', 'GT CAPACITY COLOR', 'APQP Grid Project\r\n(Project Wave x)', 'WEEKLY CAPACITY TO MEASURE', 'CAT1 FORECASTED DATE\r\n(YYCWxx)', 'CAT2 FORECASTED DATE\r\n(YYCWxx)', 'LAST CAT DATE DONE', 'CAT Type1', 'WEEKLY CAPACITY MEASURED', 'WEEKLY CAPACITY ESTIMATED', 'CAT 1 COTATION', 'CAT Type2', 'CAT Type3', 'WEEKLY CAPACITY MEASURED 2', 'WEEKLY CAPACITY ESTIMATED4', 'CAT 2 COTATION', 'https://docinfogroupe.stellantis.com/ead/dom/view.action?domId=1002260051', 'Comments', 'GST/ECR', 'lead of the line', 'FON5', 'FON6', 'FON7', 'FON8', 'FON9', 'escalation need', 'Colonna1', 'Comment CM', 'Column1', 'SCR TO RECALCULATE', 'Colonne2', 'Colonne3', 'Colonne4', 'Colonne5', 'Colonne6', 'Colonne7', 'Colonne8', 'Colonne9', 'Colonne10', 'Colonne11', 'Colonne12', 'Colonne13', 'Colonne14', 'Colonne15', 'Colonne16', 'Colonne17', 'CAT 3 ONSITE', 'CAT 3 NEED', 'CAT-3 TYPE']
+2026-08-12 10:48:27,325 - app.application.services.ollama_mapping_service - INFO - [OLLAMA] Configured timeout: 30.0s, default model: llama3.2:1b, url: http://localhost:11434
+2026-08-12 10:48:27,328 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Template: 'CMF_SF' (SC & CMP + F1H Carry Over CMF V1), Fields: 82, Headers: 82
+2026-08-12 10:48:27,692 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 10:48:28,051 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 10:48:41,331 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-12 10:48:41,365 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Sheet: 'Détails1' | Orient: HORIZONTAL | Headers (82): ['CMF LINE N°', 'TYPE sourcing', 'N° SOURCING (RFQ, SP, …)', 'APQP GRID', 'SP name', 'part description', 'PART NUMBER', 'PROCESS PART COEFFICIENT', 'F1H', 'Carry-Over Adapted', 'SUPPLIER NAME', 'SUPPLIER NAME2', 'LOCATION', 'COFOR', 'CQC Name/ECR OWNER', 'SQME Name', 'SQ Manager', 'BUYER', 'SQ COMMENT & CAT SCHEDULE', 'WEEKLY CAPACITY CONTRACTED\r\n(Parts/Week)', 'CAPACITY STEP\r\n(Parts/Week)', 'LEAD TIME to implement Capacity Step\r\n(MONTH)', 'INVESTMENT impact of Capacity Step\r\n(EURO)', 'YEAR OF MAX NEED', 'VOR\r\nSupplier Capacity Contracted regarding Buyer Capacity Requested', 'SCR Sharepoint link', 'MIX (%)', 'LAST WEEKLY CAPACITY REQUESTED', 'CAPACITY STEP (parts/week)', 'PEAK YEAR', 'Comments of the capacity manager', 'TKO DATE', 'USE KEY STATUT AFTER GT CAPACITY (Effective Date)', 'GT CAPACITY \r\nDone date', 'GT CAPACITY COLOR', 'APQP Grid Project\r\n(Project Wave x)', 'WEEKLY CAPACITY TO MEASURE', 'CAT1 FORECASTED DATE\r\n(YYCWxx)', 'CAT2 FORECASTED DATE\r\n(YYCWxx)', 'LAST CAT DATE DONE', 'CAT Type1', 'WEEKLY CAPACITY MEASURED', 'WEEKLY CAPACITY ESTIMATED', 'CAT 1 COTATION', 'CAT Type2', 'CAT Type3', 'WEEKLY CAPACITY MEASURED 2', 'WEEKLY CAPACITY ESTIMATED4', 'CAT 2 COTATION', 'https://docinfogroupe.stellantis.com/ead/dom/view.action?domId=1002260051', 'Comments', 'GST/ECR', 'lead of the line', 'FON5', 'FON6', 'FON7', 'FON8', 'FON9', 'escalation need', 'Colonna1', 'Comment CM', 'Column1', 'SCR TO RECALCULATE', 'Colonne2', 'Colonne3', 'Colonne4', 'Colonne5', 'Colonne6', 'Colonne7', 'Colonne8', 'Colonne9', 'Colonne10', 'Colonne11', 'Colonne12', 'Colonne13', 'Colonne14', 'Colonne15', 'Colonne16', 'Colonne17', 'CAT 3 ONSITE', 'CAT 3 NEED', 'CAT-3 TYPE']
+2026-08-12 10:48:41,381 - app.application.services.ollama_mapping_service - INFO - [OLLAMA] Configured timeout: 30.0s, default model: llama3.2:1b, url: http://localhost:11434
+2026-08-12 10:48:41,382 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Template: 'CMF_SF' (SC & CMP + F1H Carry Over CMF V1), Fields: 82, Headers: 82
+2026-08-12 10:48:41,668 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 10:48:41,970 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 10:48:58,099 - app.application.services.ollama_mapping_service - WARNING - [OLLAMA MAP] Request to Ollama timed out after 30.0s. Automatically switched to deterministic fuzzy mapping.
+2026-08-12 10:48:58,120 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Final Mapping Summary (0/82 fields mapped via LLM):
+  cmf_line_n: excel='CMF LINE N°' conf=0.99 src=exact_match
+  type_sourcing: excel='TYPE sourcing' conf=0.99 src=exact_match
+  n_sourcing_rfq_sp: excel='N° SOURCING (RFQ, SP, …)' conf=0.99 src=exact_match
+  apqp_grid: excel='APQP GRID' conf=0.99 src=exact_match
+  sp_name: excel='SP name' conf=0.99 src=exact_match
+  part_description: excel='part description' conf=0.99 src=exact_match
+  part_number: excel='PART NUMBER' conf=0.99 src=exact_match
+  process_part_coefficient: excel='PROCESS PART COEFFICIENT' conf=0.99 src=exact_match
+  f1h: excel='F1H' conf=0.99 src=exact_match
+  carry_over_adapted: excel='Carry-Over Adapted' conf=0.99 src=exact_match
+  supplier_name: excel='SUPPLIER NAME' conf=0.99 src=exact_match
+  supplier_name2: excel='SUPPLIER NAME2' conf=0.99 src=exact_match
+  location: excel='LOCATION' conf=0.99 src=exact_match
+  cofor: excel='COFOR' conf=0.99 src=exact_match
+  cqc_name_ecr_owner: excel='CQC Name/ECR OWNER' conf=0.99 src=exact_match
+  sqme_name: excel='SQME Name' conf=0.99 src=exact_match
+  sq_manager: excel='SQ Manager' conf=0.99 src=exact_match
+  buyer: excel='BUYER' conf=0.99 src=exact_match
+  sq_comment_cat_schedule: excel='SQ COMMENT & CAT SCHEDULE' conf=0.99 src=exact_match
+  weekly_capacity_contracted_parts_week: excel='None' conf=0.0 src=none
+  capacity_step_parts_week: excel='CAPACITY STEP (parts/week)' conf=0.99 src=exact_match
+  lead_time_to_implement_capacity_step_month: excel='None' conf=0.0 src=none
+  investment_impact_of_capacity_step_euro: excel='None' conf=0.0 src=none
+  year_of_max_need: excel='YEAR OF MAX NEED' conf=0.99 src=exact_match
+  vor_supplier_capacity_contracted_regarding_buyer_capacity_requested: excel='None' conf=0.0 src=none
+  scr_sharepoint_link: excel='SCR Sharepoint link' conf=0.99 src=exact_match
+  mix: excel='MIX (%)' conf=0.99 src=exact_match
+  last_weekly_capacity_requested: excel='LAST WEEKLY CAPACITY REQUESTED' conf=0.99 src=exact_match
+  peak_year: excel='PEAK YEAR' conf=0.99 src=exact_match
+  comments_of_the_capacity_manager: excel='Comments of the capacity manager' conf=0.99 src=exact_match
+  tko_date: excel='TKO DATE' conf=0.99 src=exact_match
+  use_key_statut_after_gt_capacity_effective_date: excel='USE KEY STATUT AFTER GT CAPACITY (Effective Date)' conf=0.99 src=exact_match
+  gt_capacity_done_date: excel='None' conf=0.0 src=none
+  gt_capacity_color: excel='GT CAPACITY COLOR' conf=0.99 src=exact_match
+  apqp_grid_project_project_wave_x: excel='None' conf=0.0 src=none
+  weekly_capacity_to_measure: excel='WEEKLY CAPACITY TO MEASURE' conf=0.99 src=exact_match
+  cat1_forecasted_date_yycwxx: excel='None' conf=0.0 src=none
+  cat2_forecasted_date_yycwxx: excel='None' conf=0.0 src=none
+  last_cat_date_done: excel='LAST CAT DATE DONE' conf=0.99 src=exact_match
+  cat_type1: excel='CAT Type1' conf=0.99 src=exact_match
+  weekly_capacity_measured: excel='WEEKLY CAPACITY MEASURED' conf=0.99 src=exact_match
+  weekly_capacity_estimated: excel='WEEKLY CAPACITY ESTIMATED' conf=0.99 src=exact_match
+  cat_1_cotation: excel='CAT 1 COTATION' conf=0.99 src=exact_match
+  cat_type2: excel='CAT Type2' conf=0.99 src=exact_match
+  cat_type3: excel='CAT Type3' conf=0.99 src=exact_match
+  weekly_capacity_measured_2: excel='WEEKLY CAPACITY MEASURED 2' conf=0.99 src=exact_match
+  weekly_capacity_estimated4: excel='WEEKLY CAPACITY ESTIMATED4' conf=0.99 src=exact_match
+  cat_2_cotation: excel='CAT 2 COTATION' conf=0.99 src=exact_match
+  https_docinfogroupe_stellantis_com_ead_dom_view_action_domid_1002260051: excel='https://docinfogroupe.stellantis.com/ead/dom/view.action?domId=1002260051' conf=0.99 src=exact_match
+  comments: excel='Comments' conf=0.99 src=exact_match
+  gst_ecr: excel='GST/ECR' conf=0.99 src=exact_match
+  lead_of_the_line: excel='lead of the line' conf=0.99 src=exact_match
+  fon5: excel='FON5' conf=0.99 src=exact_match
+  fon6: excel='FON6' conf=0.99 src=exact_match
+  fon7: excel='FON7' conf=0.99 src=exact_match
+  fon8: excel='FON8' conf=0.99 src=exact_match
+  fon9: excel='FON9' conf=0.99 src=exact_match
+  escalation_need: excel='escalation need' conf=0.99 src=exact_match
+  colonna1: excel='Colonna1' conf=0.99 src=exact_match
+  comment_cm: excel='Comment CM' conf=0.99 src=exact_match
+  column1: excel='Column1' conf=0.99 src=exact_match
+  scr_to_recalculate: excel='SCR TO RECALCULATE' conf=0.99 src=exact_match
+  colonne2: excel='Colonne2' conf=0.99 src=exact_match
+  colonne3: excel='Colonne3' conf=0.99 src=exact_match
+  colonne4: excel='Colonne4' conf=0.99 src=exact_match
+  colonne5: excel='Colonne5' conf=0.99 src=exact_match
+  colonne6: excel='Colonne6' conf=0.99 src=exact_match
+  colonne7: excel='Colonne7' conf=0.99 src=exact_match
+  colonne8: excel='Colonne8' conf=0.99 src=exact_match
+  colonne9: excel='Colonne9' conf=0.99 src=exact_match
+  colonne10: excel='Colonne10' conf=0.99 src=exact_match
+  colonne11: excel='Colonne11' conf=0.99 src=exact_match
+  colonne12: excel='Colonne12' conf=0.99 src=exact_match
+  colonne13: excel='Colonne13' conf=0.99 src=exact_match
+  colonne14: excel='Colonne14' conf=0.99 src=exact_match
+  colonne15: excel='Colonne15' conf=0.99 src=exact_match
+  colonne16: excel='Colonne16' conf=0.99 src=exact_match
+  colonne17: excel='Colonne17' conf=0.99 src=exact_match
+  cat_3_onsite: excel='CAT 3 ONSITE' conf=0.99 src=exact_match
+  cat_3_need: excel='CAT 3 NEED' conf=0.99 src=exact_match
+  cat_3_type: excel='CAT-3 TYPE' conf=0.99 src=exact_match
+2026-08-12 10:48:58,121 - app.application.services.ollama_mapping_service - INFO - 
+==================== [OLLAMA LLM METRICS] ====================
+  - Model:             llama3.2:1b
+  - Prompt Size:       4012 chars
+  - Prompt Tokens:     0
+  - Completion Tokens: 0
+  - Inference Time:    30386.50 ms
+  - JSON Parse Time:   0.00 ms
+  - Excel Read Time:   0.15 ms
+  - Total Mapping:     30792.18 ms
+  - LLM Mapped Fields: 0/82 (Active: False)
+==============================================================
+2026-08-12 10:48:58,132 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-12 10:49:11,979 - app.application.services.ollama_mapping_service - WARNING - [OLLAMA MAP] Request to Ollama timed out after 30.0s. Automatically switched to deterministic fuzzy mapping.
+2026-08-12 10:49:12,004 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Final Mapping Summary (0/82 fields mapped via LLM):
+  cmf_line_n: excel='CMF LINE N°' conf=0.99 src=exact_match
+  type_sourcing: excel='TYPE sourcing' conf=0.99 src=exact_match
+  n_sourcing_rfq_sp: excel='N° SOURCING (RFQ, SP, …)' conf=0.99 src=exact_match
+  apqp_grid: excel='APQP GRID' conf=0.99 src=exact_match
+  sp_name: excel='SP name' conf=0.99 src=exact_match
+  part_description: excel='part description' conf=0.99 src=exact_match
+  part_number: excel='PART NUMBER' conf=0.99 src=exact_match
+  process_part_coefficient: excel='PROCESS PART COEFFICIENT' conf=0.99 src=exact_match
+  f1h: excel='F1H' conf=0.99 src=exact_match
+  carry_over_adapted: excel='Carry-Over Adapted' conf=0.99 src=exact_match
+  supplier_name: excel='SUPPLIER NAME' conf=0.99 src=exact_match
+  supplier_name2: excel='SUPPLIER NAME2' conf=0.99 src=exact_match
+  location: excel='LOCATION' conf=0.99 src=exact_match
+  cofor: excel='COFOR' conf=0.99 src=exact_match
+  cqc_name_ecr_owner: excel='CQC Name/ECR OWNER' conf=0.99 src=exact_match
+  sqme_name: excel='SQME Name' conf=0.99 src=exact_match
+  sq_manager: excel='SQ Manager' conf=0.99 src=exact_match
+  buyer: excel='BUYER' conf=0.99 src=exact_match
+  sq_comment_cat_schedule: excel='SQ COMMENT & CAT SCHEDULE' conf=0.99 src=exact_match
+  weekly_capacity_contracted_parts_week: excel='None' conf=0.0 src=none
+  capacity_step_parts_week: excel='CAPACITY STEP (parts/week)' conf=0.99 src=exact_match
+  lead_time_to_implement_capacity_step_month: excel='None' conf=0.0 src=none
+  investment_impact_of_capacity_step_euro: excel='None' conf=0.0 src=none
+  year_of_max_need: excel='YEAR OF MAX NEED' conf=0.99 src=exact_match
+  vor_supplier_capacity_contracted_regarding_buyer_capacity_requested: excel='None' conf=0.0 src=none
+  scr_sharepoint_link: excel='SCR Sharepoint link' conf=0.99 src=exact_match
+  mix: excel='MIX (%)' conf=0.99 src=exact_match
+  last_weekly_capacity_requested: excel='LAST WEEKLY CAPACITY REQUESTED' conf=0.99 src=exact_match
+  peak_year: excel='PEAK YEAR' conf=0.99 src=exact_match
+  comments_of_the_capacity_manager: excel='Comments of the capacity manager' conf=0.99 src=exact_match
+  tko_date: excel='TKO DATE' conf=0.99 src=exact_match
+  use_key_statut_after_gt_capacity_effective_date: excel='USE KEY STATUT AFTER GT CAPACITY (Effective Date)' conf=0.99 src=exact_match
+  gt_capacity_done_date: excel='None' conf=0.0 src=none
+  gt_capacity_color: excel='GT CAPACITY COLOR' conf=0.99 src=exact_match
+  apqp_grid_project_project_wave_x: excel='None' conf=0.0 src=none
+  weekly_capacity_to_measure: excel='WEEKLY CAPACITY TO MEASURE' conf=0.99 src=exact_match
+  cat1_forecasted_date_yycwxx: excel='None' conf=0.0 src=none
+  cat2_forecasted_date_yycwxx: excel='None' conf=0.0 src=none
+  last_cat_date_done: excel='LAST CAT DATE DONE' conf=0.99 src=exact_match
+  cat_type1: excel='CAT Type1' conf=0.99 src=exact_match
+  weekly_capacity_measured: excel='WEEKLY CAPACITY MEASURED' conf=0.99 src=exact_match
+  weekly_capacity_estimated: excel='WEEKLY CAPACITY ESTIMATED' conf=0.99 src=exact_match
+  cat_1_cotation: excel='CAT 1 COTATION' conf=0.99 src=exact_match
+  cat_type2: excel='CAT Type2' conf=0.99 src=exact_match
+  cat_type3: excel='CAT Type3' conf=0.99 src=exact_match
+  weekly_capacity_measured_2: excel='WEEKLY CAPACITY MEASURED 2' conf=0.99 src=exact_match
+  weekly_capacity_estimated4: excel='WEEKLY CAPACITY ESTIMATED4' conf=0.99 src=exact_match
+  cat_2_cotation: excel='CAT 2 COTATION' conf=0.99 src=exact_match
+  https_docinfogroupe_stellantis_com_ead_dom_view_action_domid_1002260051: excel='https://docinfogroupe.stellantis.com/ead/dom/view.action?domId=1002260051' conf=0.99 src=exact_match
+  comments: excel='Comments' conf=0.99 src=exact_match
+  gst_ecr: excel='GST/ECR' conf=0.99 src=exact_match
+  lead_of_the_line: excel='lead of the line' conf=0.99 src=exact_match
+  fon5: excel='FON5' conf=0.99 src=exact_match
+  fon6: excel='FON6' conf=0.99 src=exact_match
+  fon7: excel='FON7' conf=0.99 src=exact_match
+  fon8: excel='FON8' conf=0.99 src=exact_match
+  fon9: excel='FON9' conf=0.99 src=exact_match
+  escalation_need: excel='escalation need' conf=0.99 src=exact_match
+  colonna1: excel='Colonna1' conf=0.99 src=exact_match
+  comment_cm: excel='Comment CM' conf=0.99 src=exact_match
+  column1: excel='Column1' conf=0.99 src=exact_match
+  scr_to_recalculate: excel='SCR TO RECALCULATE' conf=0.99 src=exact_match
+  colonne2: excel='Colonne2' conf=0.99 src=exact_match
+  colonne3: excel='Colonne3' conf=0.99 src=exact_match
+  colonne4: excel='Colonne4' conf=0.99 src=exact_match
+  colonne5: excel='Colonne5' conf=0.99 src=exact_match
+  colonne6: excel='Colonne6' conf=0.99 src=exact_match
+  colonne7: excel='Colonne7' conf=0.99 src=exact_match
+  colonne8: excel='Colonne8' conf=0.99 src=exact_match
+  colonne9: excel='Colonne9' conf=0.99 src=exact_match
+  colonne10: excel='Colonne10' conf=0.99 src=exact_match
+  colonne11: excel='Colonne11' conf=0.99 src=exact_match
+  colonne12: excel='Colonne12' conf=0.99 src=exact_match
+  colonne13: excel='Colonne13' conf=0.99 src=exact_match
+  colonne14: excel='Colonne14' conf=0.99 src=exact_match
+  colonne15: excel='Colonne15' conf=0.99 src=exact_match
+  colonne16: excel='Colonne16' conf=0.99 src=exact_match
+  colonne17: excel='Colonne17' conf=0.99 src=exact_match
+  cat_3_onsite: excel='CAT 3 ONSITE' conf=0.99 src=exact_match
+  cat_3_need: excel='CAT 3 NEED' conf=0.99 src=exact_match
+  cat_3_type: excel='CAT-3 TYPE' conf=0.99 src=exact_match
+2026-08-12 10:49:12,007 - app.application.services.ollama_mapping_service - INFO - 
+==================== [OLLAMA LLM METRICS] ====================
+  - Model:             llama3.2:1b
+  - Prompt Size:       4012 chars
+  - Prompt Tokens:     0
+  - Completion Tokens: 0
+  - Inference Time:    30304.32 ms
+  - JSON Parse Time:   0.00 ms
+  - Excel Read Time:   0.08 ms
+  - Total Mapping:     30620.88 ms
+  - LLM Mapped Fields: 0/82 (Active: False)
+==============================================================
+2026-08-12 10:49:12,021 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-12 10:49:30,032 - app.main - INFO - POST /api/v1/import/preview
+2026-08-12 10:51:08,760 - app.main - INFO - POST /api/v1/import/preview -> 200
+2026-08-12 10:51:13,109 - app.main - INFO - POST /api/v1/import/execute
+2026-08-12 10:51:13,269 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Starting execution for file 'SC & CMP + F1H Carry Over_CMF_V1.xlsx' with template 'CMF_SF'
+2026-08-12 10:51:13,271 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Selected template: 'CMF_SF'
+2026-08-12 10:51:13,274 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Uploaded filename: 'SC & CMP + F1H Carry Over_CMF_V1.xlsx' (1958821 bytes)
+2026-08-12 10:51:13,276 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Mapped fields: {'CMF LINE N°': 'cmf_line_n', 'TYPE sourcing': 'type_sourcing', 'N° SOURCING (RFQ, SP, …)': 'n_sourcing_rfq_sp', 'APQP GRID': 'apqp_grid', 'SP name': 'sp_name', 'part description': 'part_description', 'PART NUMBER': 'part_number', 'PROCESS PART COEFFICIENT': 'process_part_coefficient', 'F1H': 'f1h', 'Carry-Over Adapted': 'carry_over_adapted', 'SUPPLIER NAME': 'supplier_name', 'SUPPLIER NAME2': 'supplier_name2', 'LOCATION': 'location', 'COFOR': 'cofor', 'CQC Name/ECR OWNER': 'cqc_name_ecr_owner', 'SQME Name': 'sqme_name', 'SQ Manager': 'sq_manager', 'BUYER': 'buyer', 'SQ COMMENT & CAT SCHEDULE': 'sq_comment_cat_schedule', 'CAPACITY STEP (parts/week)': 'capacity_step_parts_week', 'YEAR OF MAX NEED': 'year_of_max_need', 'SCR Sharepoint link': 'scr_sharepoint_link', 'MIX (%)': 'mix', 'LAST WEEKLY CAPACITY REQUESTED': 'last_weekly_capacity_requested', 'PEAK YEAR': 'peak_year', 'Comments of the capacity manager': 'comments_of_the_capacity_manager', 'TKO DATE': 'tko_date', 'USE KEY STATUT AFTER GT CAPACITY (Effective Date)': 'use_key_statut_after_gt_capacity_effective_date', 'GT CAPACITY COLOR': 'gt_capacity_color', 'WEEKLY CAPACITY TO MEASURE': 'weekly_capacity_to_measure', 'LAST CAT DATE DONE': 'last_cat_date_done', 'CAT Type1': 'cat_type1', 'WEEKLY CAPACITY MEASURED': 'weekly_capacity_measured', 'WEEKLY CAPACITY ESTIMATED': 'weekly_capacity_estimated', 'CAT 1 COTATION': 'cat_1_cotation', 'CAT Type2': 'cat_type2', 'CAT Type3': 'cat_type3', 'WEEKLY CAPACITY MEASURED 2': 'weekly_capacity_measured_2', 'WEEKLY CAPACITY ESTIMATED4': 'weekly_capacity_estimated4', 'CAT 2 COTATION': 'cat_2_cotation', 'https://docinfogroupe.stellantis.com/ead/dom/view.action?domId=1002260051': 'https_docinfogroupe_stellantis_com_ead_dom_view_action_domid_1002260051', 'Comments': 'comments', 'GST/ECR': 'gst_ecr', 'lead of the line': 'lead_of_the_line', 'FON5': 'fon5', 'FON6': 'fon6', 'FON7': 'fon7', 'FON8': 'fon8', 'FON9': 'fon9', 'escalation need': 'escalation_need', 'Colonna1': 'colonna1', 'Comment CM': 'comment_cm', 'Column1': 'column1', 'SCR TO RECALCULATE': 'scr_to_recalculate', 'Colonne2': 'colonne2', 'Colonne3': 'colonne3', 'Colonne4': 'colonne4', 'Colonne5': 'colonne5', 'Colonne6': 'colonne6', 'Colonne7': 'colonne7', 'Colonne8': 'colonne8', 'Colonne9': 'colonne9', 'Colonne10': 'colonne10', 'Colonne11': 'colonne11', 'Colonne12': 'colonne12', 'Colonne13': 'colonne13', 'Colonne14': 'colonne14', 'Colonne15': 'colonne15', 'Colonne16': 'colonne16', 'Colonne17': 'colonne17', 'CAT 3 ONSITE': 'cat_3_onsite', 'CAT 3 NEED': 'cat_3_need', 'CAT-3 TYPE': 'cat_3_type'}
+2026-08-12 10:51:13,279 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Import mode: 'insert', strategy: 'skip_invalid'
+2026-08-12 10:52:56,104 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Validation summary: Total Rows=9, Valid=9, Errors=0
+2026-08-12 10:54:45,282 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Rows detected: 9
+2026-08-12 10:54:45,283 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Headers detected: ['CMF LINE N°', 'TYPE sourcing', 'N° SOURCING (RFQ, SP, …)', 'APQP GRID', 'SP name', 'part description', 'PART NUMBER', 'PROCESS PART COEFFICIENT', 'F1H', 'Carry-Over Adapted', 'SUPPLIER NAME', 'SUPPLIER NAME2', 'LOCATION', 'COFOR', 'CQC Name/ECR OWNER', 'SQME Name', 'SQ Manager', 'BUYER', 'SQ COMMENT & CAT SCHEDULE', 'WEEKLY CAPACITY CONTRACTED\n(Parts/Week)', 'CAPACITY STEP\n(Parts/Week)', 'LEAD TIME to implement Capacity Step\n(MONTH)', 'INVESTMENT impact of Capacity Step\n(EURO)', 'YEAR OF MAX NEED', 'VOR\nSupplier Capacity Contracted regarding Buyer Capacity Requested', 'SCR Sharepoint link', 'MIX (%)', 'LAST WEEKLY CAPACITY REQUESTED', 'CAPACITY STEP (parts/week)', 'PEAK YEAR', 'Comments of the capacity manager', 'TKO DATE', 'USE KEY STATUT AFTER GT CAPACITY (Effective Date)', 'GT CAPACITY \nDone date', 'GT CAPACITY COLOR', 'APQP Grid Project\n(Project Wave x)', 'WEEKLY CAPACITY TO MEASURE', 'CAT1 FORECASTED DATE\n(YYCWxx)', 'CAT2 FORECASTED DATE\n(YYCWxx)', 'LAST CAT DATE DONE', 'CAT Type1', 'WEEKLY CAPACITY MEASURED', 'WEEKLY CAPACITY ESTIMATED', 'CAT 1 COTATION', 'CAT Type2', 'CAT Type3', 'WEEKLY CAPACITY MEASURED 2', 'WEEKLY CAPACITY ESTIMATED4', 'CAT 2 COTATION', 'https://docinfogroupe.stellantis.com/ead/dom/view.action?domId=1002260051', 'Comments', 'GST/ECR', 'lead of the line', 'FON5', 'FON6', 'FON7', 'FON8', 'FON9', 'escalation need', 'Colonna1', 'Comment CM', 'Column1', 'SCR TO RECALCULATE', 'Colonne2', 'Colonne3', 'Colonne4', 'Colonne5', 'Colonne6', 'Colonne7', 'Colonne8', 'Colonne9', 'Colonne10', 'Colonne11', 'Colonne12', 'Colonne13', 'Colonne14', 'Colonne15', 'Colonne16', 'Colonne17', 'CAT 3 ONSITE', 'CAT 3 NEED', 'CAT-3 TYPE']
+2026-08-12 10:54:45,285 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Database transaction: Starting transaction session...
+2026-08-12 10:54:46,083 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Serializer errors count: 0
+2026-08-12 10:54:46,103 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Database transaction: Committed successfully (Imported: 9, Updated: 0, Skipped: 0, Failed: 0)
+2026-08-12 10:54:46,105 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Execution time: 212814 ms
+2026-08-12 10:54:46,110 - app.main - INFO - POST /api/v1/import/execute -> 200
+2026-08-12 10:54:46,125 - app.main - INFO - POST /api/v1/import/save-mapping-memory
+2026-08-12 10:54:46,158 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:cmf line n° -> cmf_line_n
+2026-08-12 10:54:46,159 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:type sourcing -> type_sourcing
+2026-08-12 10:54:46,161 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:n° sourcing (rfq, sp, …) -> n_sourcing_rfq_sp
+2026-08-12 10:54:46,161 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:apqp grid -> apqp_grid
+2026-08-12 10:54:46,162 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:sp name -> sp_name
+2026-08-12 10:54:46,163 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:part description -> part_description
+2026-08-12 10:54:46,164 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:part number -> part_number
+2026-08-12 10:54:46,164 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:process part coefficient -> process_part_coefficient
+2026-08-12 10:54:46,165 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:f1h -> f1h
+2026-08-12 10:54:46,166 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:carry-over adapted -> carry_over_adapted
+2026-08-12 10:54:46,167 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:supplier name -> supplier_name
+2026-08-12 10:54:46,168 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:supplier name2 -> supplier_name2
+2026-08-12 10:54:46,168 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:location -> location
+2026-08-12 10:54:46,169 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:cofor -> cofor
+2026-08-12 10:54:46,170 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:cqc name/ecr owner -> cqc_name_ecr_owner
+2026-08-12 10:54:46,171 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:sqme name -> sqme_name
+2026-08-12 10:54:46,172 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:sq manager -> sq_manager
+2026-08-12 10:54:46,173 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:buyer -> buyer
+2026-08-12 10:54:46,174 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:sq comment & cat schedule -> sq_comment_cat_schedule
+2026-08-12 10:54:46,175 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:capacity step (parts/week) -> capacity_step_parts_week
+2026-08-12 10:54:46,176 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:year of max need -> year_of_max_need
+2026-08-12 10:54:46,177 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:scr sharepoint link -> scr_sharepoint_link
+2026-08-12 10:54:46,178 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:mix (%) -> mix
+2026-08-12 10:54:46,178 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:last weekly capacity requested -> last_weekly_capacity_requested
+2026-08-12 10:54:46,179 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:peak year -> peak_year
+2026-08-12 10:54:46,179 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:comments of the capacity manager -> comments_of_the_capacity_manager
+2026-08-12 10:54:46,181 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:tko date -> tko_date
+2026-08-12 10:54:46,182 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:use key statut after gt capacity (effective date) -> use_key_statut_after_gt_capacity_effective_date
+2026-08-12 10:54:46,183 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:gt capacity color -> gt_capacity_color
+2026-08-12 10:54:46,184 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:weekly capacity to measure -> weekly_capacity_to_measure
+2026-08-12 10:54:46,185 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:last cat date done -> last_cat_date_done
+2026-08-12 10:54:46,187 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:cat type1 -> cat_type1
+2026-08-12 10:54:46,188 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:weekly capacity measured -> weekly_capacity_measured
+2026-08-12 10:54:46,189 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:weekly capacity estimated -> weekly_capacity_estimated
+2026-08-12 10:54:46,190 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:cat 1 cotation -> cat_1_cotation
+2026-08-12 10:54:46,190 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:cat type2 -> cat_type2
+2026-08-12 10:54:46,191 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:cat type3 -> cat_type3
+2026-08-12 10:54:46,192 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:weekly capacity measured 2 -> weekly_capacity_measured_2
+2026-08-12 10:54:46,193 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:weekly capacity estimated4 -> weekly_capacity_estimated4
+2026-08-12 10:54:46,194 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:cat 2 cotation -> cat_2_cotation
+2026-08-12 10:54:46,195 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:https://docinfogroupe.stellantis.com/ead/dom/view.action?domid=1002260051 -> https_docinfogroupe_stellantis_com_ead_dom_view_action_domid_1002260051
+2026-08-12 10:54:46,196 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:comments -> comments
+2026-08-12 10:54:46,197 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:gst/ecr -> gst_ecr
+2026-08-12 10:54:46,198 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:lead of the line -> lead_of_the_line
+2026-08-12 10:54:46,199 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:fon5 -> fon5
+2026-08-12 10:54:46,200 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:fon6 -> fon6
+2026-08-12 10:54:46,201 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:fon7 -> fon7
+2026-08-12 10:54:46,202 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:fon8 -> fon8
+2026-08-12 10:54:46,203 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:fon9 -> fon9
+2026-08-12 10:54:46,204 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:escalation need -> escalation_need
+2026-08-12 10:54:46,205 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:colonna1 -> colonna1
+2026-08-12 10:54:46,206 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:comment cm -> comment_cm
+2026-08-12 10:54:46,206 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:column1 -> column1
+2026-08-12 10:54:46,207 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:scr to recalculate -> scr_to_recalculate
+2026-08-12 10:54:46,208 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:colonne2 -> colonne2
+2026-08-12 10:54:46,208 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:colonne3 -> colonne3
+2026-08-12 10:54:46,210 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:colonne4 -> colonne4
+2026-08-12 10:54:46,210 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:colonne5 -> colonne5
+2026-08-12 10:54:46,211 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:colonne6 -> colonne6
+2026-08-12 10:54:46,212 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:colonne7 -> colonne7
+2026-08-12 10:54:46,214 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:colonne8 -> colonne8
+2026-08-12 10:54:46,215 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:colonne9 -> colonne9
+2026-08-12 10:54:46,215 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:colonne10 -> colonne10
+2026-08-12 10:54:46,216 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:colonne11 -> colonne11
+2026-08-12 10:54:46,217 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:colonne12 -> colonne12
+2026-08-12 10:54:46,218 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:colonne13 -> colonne13
+2026-08-12 10:54:46,219 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:colonne14 -> colonne14
+2026-08-12 10:54:46,220 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:colonne15 -> colonne15
+2026-08-12 10:54:46,221 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:colonne16 -> colonne16
+2026-08-12 10:54:46,222 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:colonne17 -> colonne17
+2026-08-12 10:54:46,223 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:cat 3 onsite -> cat_3_onsite
+2026-08-12 10:54:46,223 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:cat 3 need -> cat_3_need
+2026-08-12 10:54:46,224 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:cat-3 type -> cat_3_type
