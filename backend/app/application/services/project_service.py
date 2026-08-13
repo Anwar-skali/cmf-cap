@@ -14,6 +14,7 @@ from app.application.dto.projects import (
     UpdateProjectRequest,
 )
 from app.application.interfaces.services import ICacheService, IUnitOfWork
+from app.application.services.template_service import role_field_sets_from_schema
 from app.core.exceptions import ConflictException, ForbiddenException, NotFoundException
 from app.domain.enums import ActivityAction, ProjectStatus
 
@@ -178,7 +179,15 @@ class ProjectService:
         inner_data["workflow_step"] = calculate_workflow_step(inner_data, _tmpl_code)
         project_data["data"] = inner_data
 
-        project = await self._uow.projects.create(project_data)
+        project = None
+        # Recreating a code that was previously deleted: the unique `code` is
+        # still held by a soft-deleted row. Revive it instead of INSERTing a
+        # duplicate (which would violate the UNIQUE index).
+        stale = await self._uow.projects.get_by_code_including_deleted(code)
+        if stale is not None:
+            project = await self._uow.projects.revive(stale.id, project_data)
+        else:
+            project = await self._uow.projects.create(project_data)
 
         await self._uow.activity_logs.create({
             "user_id": user_id,
@@ -223,6 +232,7 @@ class ProjectService:
 
             # Determine template code from the project's template
             _tmpl_code: str | None = None
+            _tmpl_obj = None
             if project.template_id:
                 _tmpl_obj = await self._uow.templates.get(project.template_id)
                 if _tmpl_obj:
@@ -233,6 +243,14 @@ class ProjectService:
             buyer_fields = _get_role_fields(_tmpl_code, "buyer")
             capacity_fields = _get_role_fields(_tmpl_code, "capacity_manager")
             sqd_fields = _get_role_fields(_tmpl_code, "sqd")
+
+            # Prefer the role sections defined in the template schema itself so
+            # imported structures (with arbitrary codes) enforce the same role
+            # boundaries as seeded K0/K9. Union keeps the legacy code-keyed sets.
+            schema_sets = role_field_sets_from_schema(_tmpl_obj.schema_json if _tmpl_obj else None)
+            buyer_fields |= schema_sets.get("buyer") or set()
+            capacity_fields |= schema_sets.get("capacity_manager") or set()
+            sqd_fields |= schema_sets.get("sqd") or set()
 
             # Check only keys in incoming_data that are NEW or MODIFIED compared to existing project.data
             existing_data = project.data or {}
@@ -470,8 +488,8 @@ class ProjectService:
     async def _generate_project_code(self) -> str:
         import uuid as _uuid
         code = f"PRJ-{_uuid.uuid4().hex[:8].upper()}"
-        existing = await self._uow.projects.get_by_code(code)
+        existing = await self._uow.projects.get_by_code_including_deleted(code)
         while existing is not None:
             code = f"PRJ-{_uuid.uuid4().hex[:8].upper()}"
-            existing = await self._uow.projects.get_by_code(code)
+            existing = await self._uow.projects.get_by_code_including_deleted(code)
         return code

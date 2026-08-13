@@ -80,6 +80,15 @@ def _count_fields(sections):
     return sum(len(fld) for sec in sections for grp in sec["groups"] for fld in [grp["fields"]])
 
 
+def _flatten_fields(normalized):
+    return {
+        f["internalName"]: f
+        for sec in normalized["sections"]
+        for grp in sec["groups"]
+        for f in grp["fields"]
+    }
+
+
 class TestNormalizeProjectStructureJson:
     def test_hierarchical_layout_preserves_hierarchy(self):
         normalized = _normalize_project_structure_json(HIERARCHICAL_STRUCTURE_JSON)
@@ -90,28 +99,34 @@ class TestNormalizeProjectStructureJson:
         assert normalized["version"] == "1.0"
         assert normalized["status"] == "DRAFT"
 
-        # 3 modules -> 3 sections
+        # 3 modules are reorganized into the role sections the Manuel Project
+        # workflow expects (Buyer + SQD for this fixture; General for leftovers).
         assert len(normalized["sections"]) == 3
-        assert [s["name"] for s in normalized["sections"]] == [
-            "Project Management",
-            "Supplier Management",
-            "Quality Management",
-        ]
-
-        # 3 tables -> 3 groups, names preserved
-        tables = [grp for sec in normalized["sections"] for grp in sec["groups"]]
-        assert len(tables) == 3
-        assert [t["name"] for t in tables] == ["project", "supplier", "quality_assessment"]
+        assert [s["id"] for s in normalized["sections"]] == ["sec_buyer", "sec_sqd", "sec_general"]
+        assert [s["name"] for s in normalized["sections"]] == ["Buyer", "SQD", "General"]
 
         # 11 fields, top-level keys NOT treated as fields
-        fields = [f for t in tables for f in t["fields"]]
-        assert len(fields) == 11
-        names = [f["internalName"] for f in fields]
+        by_name = _flatten_fields(normalized)
+        assert len(by_name) == 11
+        names = list(by_name)
         assert "modules" not in names and "tables" not in names and "relationships" not in names
         assert "project_code" in names and "evaluation" in names
 
+        # Fields are distributed under the correct role sections.
+        def section_of(field_name):
+            return next(
+                sec["id"]
+                for sec in normalized["sections"]
+                if any(f["internalName"] == field_name for grp in sec["groups"] for f in grp["fields"])
+            )
+
+        assert section_of("supplier_code") == "sec_buyer"
+        assert section_of("supplier_name") == "sec_buyer"
+        assert section_of("quality_score") == "sec_sqd"
+        assert section_of("evaluation") == "sec_sqd"
+        assert section_of("project_code") == "sec_general"
+
         # Types mapped onto CMF vocabulary
-        by_name = {f["internalName"]: f for f in fields}
         assert by_name["project_code"]["type"] == "text"
         assert by_name["quality_score"]["type"] == "percentage"
         assert by_name["assessment_date"]["type"] == "date"
@@ -176,7 +191,7 @@ class TestNormalizeProjectStructureJson:
             ],
         }
         normalized = _normalize_project_structure_json(raw)
-        by_name = {f["internalName"]: f for grp in normalized["sections"][0]["groups"] for f in grp["fields"]}
+        by_name = _flatten_fields(normalized)
 
         evaluation = by_name["evaluation"]
         assert evaluation["type"] == "status"
@@ -286,13 +301,15 @@ class TestNormalizeProjectStructureJson:
         assert normalized["fieldCount"] == 10
         assert len(normalized["relationships"]) == 2
 
-        # 3 sections, each having 1 default group
+        # Reorganized into role sections (Buyer/SQD) + General for leftovers.
         assert len(normalized["sections"]) == 3
         sec_names = [s["name"] for s in normalized["sections"]]
-        assert sec_names == ["Project", "Supplier", "Quality Assessment"]
+        assert sec_names == ["Buyer", "SQD", "General"]
 
-        f_counts = [len(s["groups"][0]["fields"]) for s in normalized["sections"]]
-        assert f_counts == [4, 3, 3]
+        by_name = _flatten_fields(normalized)
+        assert len(by_name) == 10
+        assert by_name["supplier_code"]["required"] is True
+        assert by_name["country"]["required"] is False
         raw = {
             "structure": {"name": "S", "code": "S", "version": "1.0"},
             "modules": [

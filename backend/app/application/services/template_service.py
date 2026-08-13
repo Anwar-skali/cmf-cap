@@ -62,6 +62,213 @@ def _slugify(name: str) -> str:
     return re.sub(r"[^a-zA-Z0-9_]+", "_", str(name).lower()).strip("_")
 
 
+# ── Business-role classification ────────────────────────────────────────────
+# The CMF Manuel Project workflow organizes fields into three role sections:
+# Buyer, Capacity Manager, and SQD. These keyword sets mirror the frontend
+# ProjectStructureExtractor so both import paths classify identically.
+ROLE_FIELD_KEYWORDS: dict[str, dict[str, set[str]]] = {
+    "buyer": {
+        "name": {"buyer", "part", "supplier", "package", "rfq", "price", "currency"},
+        "label": {"buyer", "part", "supplier"},
+    },
+    "capacity_manager": {
+        "name": {"capacity", "volume", "weekly", "shift", "tooling"},
+        "label": {"capacity", "volume"},
+    },
+    "sqd": {
+        "name": {"sqd", "sqe", "sqm", "apqp", "ppap", "quality", "audit", "eval", "cat"},
+        "label": {"quality", "apqp", "eval"},
+    },
+}
+
+ALL_ROLE_NAMES: list[str] = ["buyer", "capacity_manager", "sqd"]
+ROLE_VIEW_ROLES: list[str] = ["buyer", "capacity_manager", "sqd", "admin", "viewer"]
+
+# Canonical role-section descriptors (role, section id, name, description).
+_ROLE_SECTION_SPECS: list[tuple[str, str, str, str]] = [
+    (
+        "buyer",
+        "sec_buyer",
+        "Buyer",
+        "Purchasing, RFQ packages, and commercial attributes.",
+    ),
+    (
+        "capacity_manager",
+        "sec_capacity_manager",
+        "Capacity Manager",
+        "Weekly capacity, volume requirements, and tooling assessment.",
+    ),
+    (
+        "sqd",
+        "sec_sqd",
+        "SQD",
+        "Supplier quality development, APQP status, and quality ratings.",
+    ),
+]
+
+
+def _canonical_role(value: Any) -> str | None:
+    """Map an arbitrary role label (e.g. 'CAPACITY MANAGER', 'buyer') to a canonical role name."""
+    v = str(value).strip().lower().replace("-", "_").replace(" ", "_")
+    if v in ("buyer", "purchasing"):
+        return "buyer"
+    if v in ("capacity_manager", "capacity", "capacitymanager"):
+        return "capacity_manager"
+    if v in ("sqd", "quality", "quality_lead", "sqd_team"):
+        return "sqd"
+    return None
+
+
+def _section_role(sec: dict[str, Any]) -> str | None:
+    """Return the canonical role for a section id/name, or None when it is not a role section."""
+    sid = str(sec.get("id") or "").lower()
+    sname = str(sec.get("name") or "").lower()
+    if "sqd" in sid or "sqd" in sname:
+        return "sqd"
+    if "capacity" in sid or "capacity" in sname:
+        return "capacity_manager"
+    if "buyer" in sid or "buyer" in sname:
+        return "buyer"
+    return None
+
+
+def _classify_field_role(field: dict[str, Any]) -> str:
+    """
+    Determine the business role responsible for a field.
+    Precedence: explicit permissions -> role keywords in internalName/label -> 'general'.
+    """
+    perms = field.get("permissions")
+    if isinstance(perms, dict):
+        edit = perms.get("rolesAllowedToEdit") or []
+        roles = [r for r in edit if r in ALL_ROLE_NAMES]
+        if len(roles) == 1:
+            return roles[0]
+
+    name = str(field.get("internalName") or field.get("name") or "").lower()
+    label = str(field.get("label") or "").lower()
+    for role, kws in ROLE_FIELD_KEYWORDS.items():
+        if any(kw in name for kw in kws["name"]):
+            return role
+        if any(kw in label for kw in kws["label"]):
+            return role
+    return "general"
+
+
+def role_field_sets_from_schema(schema_json: dict[str, Any] | None) -> dict[str, set[str]]:
+    """
+    Derive the per-role field sets (internalNames) from a template schema's role
+    sections. Used by the backend role-edit boundaries so imported structures
+    enforce the same Buyer / Capacity Manager / SQD permissions as seeded ones.
+    """
+    result: dict[str, set[str]] = {role: set() for role in ALL_ROLE_NAMES}
+    if not isinstance(schema_json, dict):
+        return result
+    sections = schema_json.get("sections")
+    if not isinstance(sections, list):
+        return result
+    for sec in sections:
+        role = _section_role(sec) if isinstance(sec, dict) else None
+        if role is None:
+            continue
+        groups = sec.get("groups", [])
+        if not isinstance(groups, list):
+            continue
+        for grp in groups:
+            if not isinstance(grp, dict):
+                continue
+            fields = grp.get("fields", [])
+            if not isinstance(fields, list):
+                continue
+            for fld in fields:
+                if isinstance(fld, dict) and fld.get("internalName"):
+                    result[role].add(str(fld["internalName"]))
+    return result
+
+
+def _bucket_sections_into_roles(sections: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """
+    Reorganize hierarchical (modules -> tables -> fields) sections into the CMF
+    role sections the Manuel Project workflow expects: Buyer, Capacity Manager,
+    SQD, plus a General section for unclassified fields. Field-level role and
+    permissions metadata is preserved and takes precedence over name heuristics.
+    """
+    buckets: dict[str, dict[str, list[dict[str, Any]]]] = {}
+    for sec in sections:
+        groups = sec.get("groups", []) if isinstance(sec, dict) else []
+        for grp in groups:
+            if not isinstance(grp, dict):
+                continue
+            gname = str(grp.get("name") or "General")
+            fields = grp.get("fields", []) if isinstance(grp, list) else grp.get("fields", [])
+            if not isinstance(fields, list):
+                continue
+            for fld in fields:
+                role = _classify_field_role(fld)
+                buckets.setdefault(role, {})
+                buckets[role].setdefault(gname, []).append(fld)
+
+    result: list[dict[str, Any]] = []
+    for role, sec_id, sec_name, sec_desc in _ROLE_SECTION_SPECS:
+        groups_by_name = buckets.get(role)
+        if not groups_by_name:
+            continue
+        groups: list[dict[str, Any]] = []
+        gidx = 0
+        for gname, fields in groups_by_name.items():
+            if not fields:
+                continue
+            gidx += 1
+            groups.append(
+                {
+                    "id": f"grp_{role}_{gidx}",
+                    "name": gname,
+                    "order": gidx,
+                    "fields": fields,
+                }
+            )
+        result.append(
+            {
+                "id": sec_id,
+                "name": sec_name,
+                "order": len(result) + 1,
+                "description": sec_desc,
+                "permissions": {
+                    "rolesAllowedToEdit": [role, "admin"],
+                    "rolesAllowedToView": list(ROLE_VIEW_ROLES),
+                },
+                "groups": groups,
+            }
+        )
+
+    general_by_name = buckets.get("general")
+    if general_by_name:
+        groups = []
+        gidx = 0
+        for gname, fields in general_by_name.items():
+            if not fields:
+                continue
+            gidx += 1
+            groups.append(
+                {
+                    "id": f"grp_general_{gidx}",
+                    "name": gname,
+                    "order": gidx,
+                    "fields": fields,
+                }
+            )
+        result.append(
+            {
+                "id": "sec_general",
+                "name": "General",
+                "order": len(result) + 1,
+                "description": "General information not assigned to a specific role.",
+                "groups": groups,
+            }
+        )
+
+    return result
+
+
 def _map_json_type(raw_type: Any) -> str:
     if raw_type is None:
         return "text"
@@ -113,7 +320,29 @@ def _normalize_structure_field(f: Any, field_index: int) -> dict[str, Any]:
     default_value = f.get("default")
     if default_value is None:
         default_value = f.get("defaultValue")
-    return {
+
+    # Preserve explicit role/permission metadata so the role distinction survives
+    # the import (the Manuel Project workflow relies on it).
+    permissions: dict[str, Any] | None = None
+    raw_permissions = f.get("permissions")
+    if isinstance(raw_permissions, dict):
+        edit = raw_permissions.get("rolesAllowedToEdit")
+        view = raw_permissions.get("rolesAllowedToView")
+        permissions = {
+            "rolesAllowedToEdit": edit if isinstance(edit, list) else None,
+            "rolesAllowedToView": view if isinstance(view, list) else None,
+        }
+    raw_role = f.get("role") or f.get("fieldRole") or f.get("owner")
+    canonical_role = _canonical_role(raw_role) if raw_role is not None else None
+    if canonical_role is not None:
+        permissions = permissions or {}
+        edit = permissions.get("rolesAllowedToEdit")
+        if not edit:
+            permissions["rolesAllowedToEdit"] = [canonical_role, "admin"]
+        if not permissions.get("rolesAllowedToView"):
+            permissions["rolesAllowedToView"] = list(ROLE_VIEW_ROLES)
+
+    normalized: dict[str, Any] = {
         "id": str(f.get("id") or f"fld_{internal}"),
         "internalName": internal,
         "label": str(f.get("label") or f.get("name") or f.get("internalName") or f"Field {field_index + 1}"),
@@ -127,6 +356,9 @@ def _normalize_structure_field(f: Any, field_index: int) -> dict[str, Any]:
         "options": _normalize_field_options(f.get("options")),
         "defaultValue": default_value,
     }
+    if permissions:
+        normalized["permissions"] = permissions
+    return normalized
 
 
 def _normalize_project_structure_json(raw: dict[str, Any]) -> dict[str, Any]:
@@ -229,6 +461,11 @@ def _normalize_project_structure_json(raw: dict[str, Any]) -> dict[str, Any]:
         raw_orient = meta.get("orientation") or raw.get("orientation")
         orientation = raw_orient if raw_orient in ("VERTICAL", "HORIZONTAL") else "HORIZONTAL"
 
+        # Reorganize module/table sections into the role sections the Manuel
+        # Project workflow expects (Buyer / Capacity Manager / SQD). This is what
+        # makes automatically-distributed data usable per business role.
+        role_sections = _bucket_sections_into_roles(sections)
+
         normalized: dict[str, Any] = {
             "code": str(meta.get("code") or raw.get("code") or "JSON_STRUCT").upper().strip(),
             "name": str(meta.get("name") or raw.get("name") or "JSON Structure"),
@@ -241,7 +478,7 @@ def _normalize_project_structure_json(raw: dict[str, Any]) -> dict[str, Any]:
             "modules": len(sections),
             "tables": table_count,
             "fieldCount": field_count,
-            "sections": sections,
+            "sections": role_sections,
         }
         if isinstance(relationships, list):
             normalized["relationships"] = [
@@ -327,6 +564,13 @@ class TemplateService:
                 return updated
             return existing
 
+        # Respect explicit deletions. If a row (even a soft-deleted one) still
+        # occupies the unique `code`, seeding must NOT resurrect it — otherwise a
+        # user who deleted K0 would see it come back on the next list call.
+        # Recreation goes through create/import, which revives the row on purpose.
+        if await self._uow.templates.get_by_code_including_deleted(code.upper()) is not None:
+            return None
+
         template_data = {
             "code": code.upper(),
             "name": schema_json.get("name", f"CMF {code} Project Template"),
@@ -384,6 +628,19 @@ class TemplateService:
             "status": data.status,
             "schema_json": data.schema_json,
         }
+
+        # Recreating a code that was previously deleted: the unique `code` is
+        # still held by a soft-deleted row. Revive it with the new payload
+        # instead of INSERTing a duplicate (which would violate the UNIQUE index).
+        soft_deleted = await self._uow.templates.get_by_code_including_deleted(code)
+        if soft_deleted is not None:
+            revived = await self._uow.templates.revive(soft_deleted.id, payload)
+            await self._uow.templates.create_version(
+                revived.id, data.version, data.schema_json, "Recreated template"
+            )
+            await self._uow.commit()
+            return self._build_response(revived)
+
         tmpl = await self._uow.templates.create(payload)
         await self._uow.templates.create_version(tmpl.id, data.version, data.schema_json, "Created template")
         await self._uow.commit()
@@ -481,6 +738,15 @@ class TemplateService:
         return self._build_response(updated)
 
     async def delete_template(self, id: uuid.UUID | str) -> bool:
+        tmpl = await self._uow.templates.get(id)
+        if tmpl is None:
+            await self._uow.commit()
+            return False
+
+        # Soft-delete dependent projects so the structure's data disappears with
+        # it and re-importing the structure later never collides with orphaned
+        # records (the import engine would otherwise revive stale project rows).
+        await self._uow.projects.soft_delete_by_template(tmpl.id)
         res = await self._uow.templates.delete(id)
         await self._uow.commit()
         return res

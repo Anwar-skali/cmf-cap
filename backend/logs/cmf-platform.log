@@ -27293,3 +27293,2251 @@ sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed
 [parameters: ('20dc6bc29d2e4f2bb6098c6517417865', 'K0', 'CMF K0 Project Template', 'CMF K0 automotive project template structured into three role-based business modules: Buyer, Capacity Manager, and SQD.', '1.0', 'PUBLISHED', '{"code": "K0", "name": "CMF K0 Project Template", "version": "1.0", "status": "PUBLISHED", "description": "CMF K0 automotive project template structu ... (25746 characters truncated) ... art_number", "defaultSortDesc": false, "defaultPageSize": 20, "quickFilterFields": ["part_number", "part_name", "nominated_supplier", "cat_rating"]}}', None)]
 (Background on this error at: https://sqlalche.me/e/20/gkpj)
 2026-08-12 13:05:50,992 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 10:25:50,949 - app.main - INFO - Starting CMF Platform API
+2026-08-13 10:25:50,979 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 10:26:31,963 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 10:26:32,051 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-13 10:26:32,075 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-13 10:26:32,120 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 10:26:32,123 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-13 10:26:32,127 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-13 10:26:32,136 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-13 10:26:32,589 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-13 10:26:32,616 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 10:26:32,771 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 10:26:32,794 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 10:26:32,997 - app.main - INFO - GET /api/v1/templates
+2026-08-13 10:26:33,088 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 10:26:33,157 - app.main - ERROR - Unhandled exception: (sqlite3.IntegrityError) UNIQUE constraint failed: templates.code
+[SQL: INSERT INTO templates (id, code, name, description, version, status, schema_json, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('b5d4eff85f39497b97961027e842b089', 'K0', 'CMF K0 Project Template', 'CMF K0 automotive project template structured into three role-based business modules: Buyer, Capacity Manager, and SQD.', '1.0', 'PUBLISHED', '{"code": "K0", "name": "CMF K0 Project Template", "version": "1.0", "status": "PUBLISHED", "description": "CMF K0 automotive project template structu ... (25746 characters truncated) ... art_number", "defaultSortDesc": false, "defaultPageSize": 20, "quickFilterFields": ["part_number", "part_name", "nominated_supplier", "cat_rating"]}}', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 183, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 343, in _handle_exception
+    raise error
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 165, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 40, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 32, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 160, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 63, in _connection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: templates.code
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 135, in rate_limit_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 110, in logging_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 99, in request_id_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 72, in strip_trailing_slash_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 222, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\deps.py", line 42, in get_db
+    yield session
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\v1\endpoints\templates.py", line 30, in list_templates
+    return await service.get_templates()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 348, in get_templates
+    await self.seed_k9_if_missing()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 344, in seed_k9_if_missing
+    await self.seed_template_by_code("K0", "k0_template.json")
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 338, in seed_template_by_code
+    tmpl = await self._uow.templates.create(template_data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\infrastructure\persistence\repositories\base.py", line 64, in create
+    await self._session.flush()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 786, in flush
+    await greenlet_spawn(self.sync_session.flush, objects=objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 203, in greenlet_spawn
+    result = context.switch(value)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4353, in flush
+    self._flush(objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4488, in _flush
+    with util.safe_reraise():
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 122, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4449, in _flush
+    flush_context.execute()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 465, in execute
+    rec.execute(self)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 641, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 94, in save_obj
+    _emit_insert_statements(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1234, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 183, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 343, in _handle_exception
+    raise error
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 165, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 40, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 32, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 160, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 63, in _connection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: templates.code
+[SQL: INSERT INTO templates (id, code, name, description, version, status, schema_json, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('b5d4eff85f39497b97961027e842b089', 'K0', 'CMF K0 Project Template', 'CMF K0 automotive project template structured into three role-based business modules: Buyer, Capacity Manager, and SQD.', '1.0', 'PUBLISHED', '{"code": "K0", "name": "CMF K0 Project Template", "version": "1.0", "status": "PUBLISHED", "description": "CMF K0 automotive project template structu ... (25746 characters truncated) ... art_number", "defaultSortDesc": false, "defaultPageSize": 20, "quickFilterFields": ["part_number", "part_name", "nominated_supplier", "cat_rating"]}}', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-08-13 10:26:34,548 - app.main - INFO - GET /api/v1/templates
+2026-08-13 10:26:34,614 - app.main - ERROR - Unhandled exception: (sqlite3.IntegrityError) UNIQUE constraint failed: templates.code
+[SQL: INSERT INTO templates (id, code, name, description, version, status, schema_json, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('0e8250adf3184142aee72689699ffc07', 'K0', 'CMF K0 Project Template', 'CMF K0 automotive project template structured into three role-based business modules: Buyer, Capacity Manager, and SQD.', '1.0', 'PUBLISHED', '{"code": "K0", "name": "CMF K0 Project Template", "version": "1.0", "status": "PUBLISHED", "description": "CMF K0 automotive project template structu ... (25746 characters truncated) ... art_number", "defaultSortDesc": false, "defaultPageSize": 20, "quickFilterFields": ["part_number", "part_name", "nominated_supplier", "cat_rating"]}}', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 183, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 343, in _handle_exception
+    raise error
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 165, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 40, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 32, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 160, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 63, in _connection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: templates.code
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 135, in rate_limit_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 110, in logging_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 99, in request_id_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 72, in strip_trailing_slash_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 222, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\deps.py", line 42, in get_db
+    yield session
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\v1\endpoints\templates.py", line 30, in list_templates
+    return await service.get_templates()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 348, in get_templates
+    await self.seed_k9_if_missing()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 344, in seed_k9_if_missing
+    await self.seed_template_by_code("K0", "k0_template.json")
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 338, in seed_template_by_code
+    tmpl = await self._uow.templates.create(template_data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\infrastructure\persistence\repositories\base.py", line 64, in create
+    await self._session.flush()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 786, in flush
+    await greenlet_spawn(self.sync_session.flush, objects=objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 203, in greenlet_spawn
+    result = context.switch(value)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4353, in flush
+    self._flush(objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4488, in _flush
+    with util.safe_reraise():
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 122, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4449, in _flush
+    flush_context.execute()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 465, in execute
+    rec.execute(self)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 641, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 94, in save_obj
+    _emit_insert_statements(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1234, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 183, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 343, in _handle_exception
+    raise error
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 165, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 40, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 32, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 160, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 63, in _connection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: templates.code
+[SQL: INSERT INTO templates (id, code, name, description, version, status, schema_json, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('0e8250adf3184142aee72689699ffc07', 'K0', 'CMF K0 Project Template', 'CMF K0 automotive project template structured into three role-based business modules: Buyer, Capacity Manager, and SQD.', '1.0', 'PUBLISHED', '{"code": "K0", "name": "CMF K0 Project Template", "version": "1.0", "status": "PUBLISHED", "description": "CMF K0 automotive project template structu ... (25746 characters truncated) ... art_number", "defaultSortDesc": false, "defaultPageSize": 20, "quickFilterFields": ["part_number", "part_name", "nominated_supplier", "cat_rating"]}}', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-08-13 10:26:41,955 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:26:41,966 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-13 10:26:43,347 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:26:43,954 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-13 10:26:52,074 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:26:52,233 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:27:48,380 - app.main - INFO - GET /api/v1/parts
+2026-08-13 10:27:48,843 - app.main - INFO - GET /api/v1/parts -> 200
+2026-08-13 10:28:09,034 - app.main - INFO - DELETE /api/v1/parts/09945442-1b53-42fe-bcd8-5b4bc022861c
+2026-08-13 10:28:09,308 - app.main - INFO - DELETE /api/v1/parts/09945442-1b53-42fe-bcd8-5b4bc022861c -> 200
+2026-08-13 10:28:09,332 - app.main - INFO - GET /api/v1/parts
+2026-08-13 10:28:09,543 - app.main - INFO - GET /api/v1/parts -> 200
+2026-08-13 10:28:16,113 - app.main - INFO - GET /api/v1/suppliers
+2026-08-13 10:28:16,291 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-13 10:28:19,253 - app.main - INFO - GET /api/v1/capacity
+2026-08-13 10:28:19,622 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-08-13 10:28:21,150 - app.main - INFO - GET /api/v1/risks
+2026-08-13 10:28:21,334 - app.main - INFO - GET /api/v1/risks -> 200
+2026-08-13 10:29:09,929 - app.main - INFO - GET /api/v1/documents
+2026-08-13 10:29:09,931 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-13 10:29:10,045 - app.main - ERROR - Unhandled exception: (sqlite3.IntegrityError) UNIQUE constraint failed: templates.code
+[SQL: INSERT INTO templates (id, code, name, description, version, status, schema_json, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('872e858e91d94dc5ac4d8667df7e8d76', 'K0', 'CMF K0 Project Template', 'CMF K0 automotive project template structured into three role-based business modules: Buyer, Capacity Manager, and SQD.', '1.0', 'PUBLISHED', '{"code": "K0", "name": "CMF K0 Project Template", "version": "1.0", "status": "PUBLISHED", "description": "CMF K0 automotive project template structu ... (25746 characters truncated) ... art_number", "defaultSortDesc": false, "defaultPageSize": 20, "quickFilterFields": ["part_number", "part_name", "nominated_supplier", "cat_rating"]}}', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 183, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 343, in _handle_exception
+    raise error
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 165, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 40, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 32, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 160, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 63, in _connection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: templates.code
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 135, in rate_limit_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 110, in logging_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 99, in request_id_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 72, in strip_trailing_slash_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 222, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\deps.py", line 42, in get_db
+    yield session
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\v1\endpoints\import_endpoints.py", line 75, in get_import_templates
+    result = await svc.get_templates()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 348, in get_templates
+    await self.seed_k9_if_missing()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 344, in seed_k9_if_missing
+    await self.seed_template_by_code("K0", "k0_template.json")
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 338, in seed_template_by_code
+    tmpl = await self._uow.templates.create(template_data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\infrastructure\persistence\repositories\base.py", line 64, in create
+    await self._session.flush()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 786, in flush
+    await greenlet_spawn(self.sync_session.flush, objects=objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 203, in greenlet_spawn
+    result = context.switch(value)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4353, in flush
+    self._flush(objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4488, in _flush
+    with util.safe_reraise():
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 122, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4449, in _flush
+    flush_context.execute()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 465, in execute
+    rec.execute(self)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 641, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 94, in save_obj
+    _emit_insert_statements(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1234, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 183, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 343, in _handle_exception
+    raise error
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 165, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 40, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 32, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 160, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 63, in _connection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: templates.code
+[SQL: INSERT INTO templates (id, code, name, description, version, status, schema_json, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('872e858e91d94dc5ac4d8667df7e8d76', 'K0', 'CMF K0 Project Template', 'CMF K0 automotive project template structured into three role-based business modules: Buyer, Capacity Manager, and SQD.', '1.0', 'PUBLISHED', '{"code": "K0", "name": "CMF K0 Project Template", "version": "1.0", "status": "PUBLISHED", "description": "CMF K0 automotive project template structu ... (25746 characters truncated) ... art_number", "defaultSortDesc": false, "defaultPageSize": 20, "quickFilterFields": ["part_number", "part_name", "nominated_supplier", "cat_rating"]}}', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-08-13 10:29:10,176 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-13 10:29:10,247 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-13 10:29:10,356 - app.main - ERROR - Unhandled exception: (sqlite3.IntegrityError) UNIQUE constraint failed: templates.code
+[SQL: INSERT INTO templates (id, code, name, description, version, status, schema_json, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('979bf01108aa4621bd8a4bae95b14c54', 'K0', 'CMF K0 Project Template', 'CMF K0 automotive project template structured into three role-based business modules: Buyer, Capacity Manager, and SQD.', '1.0', 'PUBLISHED', '{"code": "K0", "name": "CMF K0 Project Template", "version": "1.0", "status": "PUBLISHED", "description": "CMF K0 automotive project template structu ... (25746 characters truncated) ... art_number", "defaultSortDesc": false, "defaultPageSize": 20, "quickFilterFields": ["part_number", "part_name", "nominated_supplier", "cat_rating"]}}', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 183, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 343, in _handle_exception
+    raise error
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 165, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 40, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 32, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 160, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 63, in _connection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: templates.code
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 135, in rate_limit_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 110, in logging_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 99, in request_id_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 72, in strip_trailing_slash_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 222, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\deps.py", line 42, in get_db
+    yield session
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\v1\endpoints\import_endpoints.py", line 75, in get_import_templates
+    result = await svc.get_templates()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 348, in get_templates
+    await self.seed_k9_if_missing()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 344, in seed_k9_if_missing
+    await self.seed_template_by_code("K0", "k0_template.json")
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 338, in seed_template_by_code
+    tmpl = await self._uow.templates.create(template_data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\infrastructure\persistence\repositories\base.py", line 64, in create
+    await self._session.flush()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 786, in flush
+    await greenlet_spawn(self.sync_session.flush, objects=objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 203, in greenlet_spawn
+    result = context.switch(value)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4353, in flush
+    self._flush(objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4488, in _flush
+    with util.safe_reraise():
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 122, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4449, in _flush
+    flush_context.execute()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 465, in execute
+    rec.execute(self)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 641, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 94, in save_obj
+    _emit_insert_statements(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1234, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 183, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 343, in _handle_exception
+    raise error
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 165, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 40, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 32, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 160, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 63, in _connection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: templates.code
+[SQL: INSERT INTO templates (id, code, name, description, version, status, schema_json, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('979bf01108aa4621bd8a4bae95b14c54', 'K0', 'CMF K0 Project Template', 'CMF K0 automotive project template structured into three role-based business modules: Buyer, Capacity Manager, and SQD.', '1.0', 'PUBLISHED', '{"code": "K0", "name": "CMF K0 Project Template", "version": "1.0", "status": "PUBLISHED", "description": "CMF K0 automotive project template structu ... (25746 characters truncated) ... art_number", "defaultSortDesc": false, "defaultPageSize": 20, "quickFilterFields": ["part_number", "part_name", "nominated_supplier", "cat_rating"]}}', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-08-13 10:29:19,123 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:29:19,346 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:30:14,899 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:30:15,076 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:30:33,694 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:30:33,891 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:30:35,528 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:30:35,548 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-13 10:30:36,911 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:30:37,442 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-13 10:30:57,292 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:30:57,505 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:34:36,032 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:34:36,197 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:34:44,243 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:34:44,453 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:34:54,753 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 10:34:54,842 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 10:34:54,855 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 10:34:54,935 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 10:34:55,024 - app.main - INFO - GET /api/v1/templates
+2026-08-13 10:34:55,112 - app.main - ERROR - Unhandled exception: (sqlite3.IntegrityError) UNIQUE constraint failed: templates.code
+[SQL: INSERT INTO templates (id, code, name, description, version, status, schema_json, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('4d3e90ab30b44e34a269dd80b54a1c7a', 'K0', 'CMF K0 Project Template', 'CMF K0 automotive project template structured into three role-based business modules: Buyer, Capacity Manager, and SQD.', '1.0', 'PUBLISHED', '{"code": "K0", "name": "CMF K0 Project Template", "version": "1.0", "status": "PUBLISHED", "description": "CMF K0 automotive project template structu ... (25746 characters truncated) ... art_number", "defaultSortDesc": false, "defaultPageSize": 20, "quickFilterFields": ["part_number", "part_name", "nominated_supplier", "cat_rating"]}}', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 183, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 343, in _handle_exception
+    raise error
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 165, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 40, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 32, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 160, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 63, in _connection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: templates.code
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 135, in rate_limit_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 110, in logging_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 99, in request_id_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 72, in strip_trailing_slash_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 222, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\deps.py", line 42, in get_db
+    yield session
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\v1\endpoints\templates.py", line 30, in list_templates
+    return await service.get_templates()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 348, in get_templates
+    await self.seed_k9_if_missing()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 344, in seed_k9_if_missing
+    await self.seed_template_by_code("K0", "k0_template.json")
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 338, in seed_template_by_code
+    tmpl = await self._uow.templates.create(template_data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\infrastructure\persistence\repositories\base.py", line 64, in create
+    await self._session.flush()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 786, in flush
+    await greenlet_spawn(self.sync_session.flush, objects=objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 203, in greenlet_spawn
+    result = context.switch(value)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4353, in flush
+    self._flush(objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4488, in _flush
+    with util.safe_reraise():
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 122, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4449, in _flush
+    flush_context.execute()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 465, in execute
+    rec.execute(self)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 641, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 94, in save_obj
+    _emit_insert_statements(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1234, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 183, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 343, in _handle_exception
+    raise error
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 165, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 40, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 32, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 160, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 63, in _connection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: templates.code
+[SQL: INSERT INTO templates (id, code, name, description, version, status, schema_json, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('4d3e90ab30b44e34a269dd80b54a1c7a', 'K0', 'CMF K0 Project Template', 'CMF K0 automotive project template structured into three role-based business modules: Buyer, Capacity Manager, and SQD.', '1.0', 'PUBLISHED', '{"code": "K0", "name": "CMF K0 Project Template", "version": "1.0", "status": "PUBLISHED", "description": "CMF K0 automotive project template structu ... (25746 characters truncated) ... art_number", "defaultSortDesc": false, "defaultPageSize": 20, "quickFilterFields": ["part_number", "part_name", "nominated_supplier", "cat_rating"]}}', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-08-13 10:34:55,158 - app.main - INFO - GET /api/v1/templates
+2026-08-13 10:34:55,256 - app.main - ERROR - Unhandled exception: (sqlite3.IntegrityError) UNIQUE constraint failed: templates.code
+[SQL: INSERT INTO templates (id, code, name, description, version, status, schema_json, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('81631666d7e84f8f9e893780083992db', 'K0', 'CMF K0 Project Template', 'CMF K0 automotive project template structured into three role-based business modules: Buyer, Capacity Manager, and SQD.', '1.0', 'PUBLISHED', '{"code": "K0", "name": "CMF K0 Project Template", "version": "1.0", "status": "PUBLISHED", "description": "CMF K0 automotive project template structu ... (25746 characters truncated) ... art_number", "defaultSortDesc": false, "defaultPageSize": 20, "quickFilterFields": ["part_number", "part_name", "nominated_supplier", "cat_rating"]}}', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 183, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 343, in _handle_exception
+    raise error
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 165, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 40, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 32, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 160, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 63, in _connection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: templates.code
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 135, in rate_limit_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 110, in logging_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 99, in request_id_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 72, in strip_trailing_slash_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 222, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\deps.py", line 42, in get_db
+    yield session
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\v1\endpoints\templates.py", line 30, in list_templates
+    return await service.get_templates()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 348, in get_templates
+    await self.seed_k9_if_missing()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 344, in seed_k9_if_missing
+    await self.seed_template_by_code("K0", "k0_template.json")
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 338, in seed_template_by_code
+    tmpl = await self._uow.templates.create(template_data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\infrastructure\persistence\repositories\base.py", line 64, in create
+    await self._session.flush()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 786, in flush
+    await greenlet_spawn(self.sync_session.flush, objects=objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 203, in greenlet_spawn
+    result = context.switch(value)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4353, in flush
+    self._flush(objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4488, in _flush
+    with util.safe_reraise():
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 122, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4449, in _flush
+    flush_context.execute()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 465, in execute
+    rec.execute(self)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 641, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 94, in save_obj
+    _emit_insert_statements(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1234, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 183, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 343, in _handle_exception
+    raise error
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 165, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 40, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 32, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 160, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 63, in _connection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: templates.code
+[SQL: INSERT INTO templates (id, code, name, description, version, status, schema_json, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('81631666d7e84f8f9e893780083992db', 'K0', 'CMF K0 Project Template', 'CMF K0 automotive project template structured into three role-based business modules: Buyer, Capacity Manager, and SQD.', '1.0', 'PUBLISHED', '{"code": "K0", "name": "CMF K0 Project Template", "version": "1.0", "status": "PUBLISHED", "description": "CMF K0 automotive project template structu ... (25746 characters truncated) ... art_number", "defaultSortDesc": false, "defaultPageSize": 20, "quickFilterFields": ["part_number", "part_name", "nominated_supplier", "cat_rating"]}}', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-08-13 10:34:55,395 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:34:55,397 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-13 10:34:56,059 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:34:56,299 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-13 10:37:01,124 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:37:01,337 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:38:21,836 - app.main - INFO - GET /api/v1/health
+2026-08-13 10:38:21,844 - app.main - INFO - GET /api/v1/health -> 200
+2026-08-13 10:39:27,320 - app.main - INFO - GET /api/v1/templates
+2026-08-13 10:39:27,407 - app.main - ERROR - Unhandled exception: (sqlite3.IntegrityError) UNIQUE constraint failed: templates.code
+[SQL: INSERT INTO templates (id, code, name, description, version, status, schema_json, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('3b29f72220ae45a1bf01624c5bb62fbc', 'K0', 'CMF K0 Project Template', 'CMF K0 automotive project template structured into three role-based business modules: Buyer, Capacity Manager, and SQD.', '1.0', 'PUBLISHED', '{"code": "K0", "name": "CMF K0 Project Template", "version": "1.0", "status": "PUBLISHED", "description": "CMF K0 automotive project template structu ... (25746 characters truncated) ... art_number", "defaultSortDesc": false, "defaultPageSize": 20, "quickFilterFields": ["part_number", "part_name", "nominated_supplier", "cat_rating"]}}', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 183, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 343, in _handle_exception
+    raise error
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 165, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 40, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 32, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 160, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 63, in _connection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: templates.code
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 135, in rate_limit_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 110, in logging_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 99, in request_id_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 72, in strip_trailing_slash_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 222, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\deps.py", line 42, in get_db
+    yield session
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\v1\endpoints\templates.py", line 30, in list_templates
+    return await service.get_templates()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 348, in get_templates
+    await self.seed_k9_if_missing()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 344, in seed_k9_if_missing
+    await self.seed_template_by_code("K0", "k0_template.json")
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 338, in seed_template_by_code
+    tmpl = await self._uow.templates.create(template_data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\infrastructure\persistence\repositories\base.py", line 64, in create
+    await self._session.flush()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 786, in flush
+    await greenlet_spawn(self.sync_session.flush, objects=objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 203, in greenlet_spawn
+    result = context.switch(value)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4353, in flush
+    self._flush(objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4488, in _flush
+    with util.safe_reraise():
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 122, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4449, in _flush
+    flush_context.execute()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 465, in execute
+    rec.execute(self)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 641, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 94, in save_obj
+    _emit_insert_statements(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1234, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 183, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 343, in _handle_exception
+    raise error
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 165, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 40, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 32, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 160, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 63, in _connection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: templates.code
+[SQL: INSERT INTO templates (id, code, name, description, version, status, schema_json, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('3b29f72220ae45a1bf01624c5bb62fbc', 'K0', 'CMF K0 Project Template', 'CMF K0 automotive project template structured into three role-based business modules: Buyer, Capacity Manager, and SQD.', '1.0', 'PUBLISHED', '{"code": "K0", "name": "CMF K0 Project Template", "version": "1.0", "status": "PUBLISHED", "description": "CMF K0 automotive project template structu ... (25746 characters truncated) ... art_number", "defaultSortDesc": false, "defaultPageSize": 20, "quickFilterFields": ["part_number", "part_name", "nominated_supplier", "cat_rating"]}}', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-08-13 10:39:29,503 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:39:29,924 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:41:18,056 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 10:41:24,860 - app.main - INFO - Starting CMF Platform API
+2026-08-13 10:41:24,883 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 10:41:31,744 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 10:41:38,203 - app.main - INFO - Starting CMF Platform API
+2026-08-13 10:41:38,220 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 10:41:45,319 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 10:41:52,933 - app.main - INFO - Starting CMF Platform API
+2026-08-13 10:41:52,958 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 10:42:56,766 - app.main - INFO - GET /api/v1/templates
+2026-08-13 10:42:57,239 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 10:42:59,331 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:42:59,744 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:43:47,765 - app.main - INFO - GET /api/v1/templates
+2026-08-13 10:43:47,850 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 10:43:49,906 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:43:50,056 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:44:07,567 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:44:07,741 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:44:11,035 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 10:44:11,253 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 10:44:11,268 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 10:44:11,372 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 10:44:11,427 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:44:11,432 - app.main - INFO - GET /api/v1/templates
+2026-08-13 10:44:11,749 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 10:44:11,766 - app.main - INFO - GET /api/v1/templates
+2026-08-13 10:44:11,795 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:44:11,907 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 10:44:11,938 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:44:12,065 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:44:20,076 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:44:20,449 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:44:20,469 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:44:20,861 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:47:00,145 - app.main - INFO - POST /api/v1/templates/import
+2026-08-13 10:47:00,279 - app.main - INFO - POST /api/v1/templates/import -> 200
+2026-08-13 10:47:02,317 - app.main - INFO - GET /api/v1/templates
+2026-08-13 10:47:02,414 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 10:47:29,713 - app.main - INFO - DELETE /api/v1/templates/7c7ac43e-7603-4664-80de-a0ec9fe9f938
+2026-08-13 10:47:29,755 - app.main - INFO - DELETE /api/v1/templates/7c7ac43e-7603-4664-80de-a0ec9fe9f938 -> 200
+2026-08-13 10:47:31,786 - app.main - INFO - GET /api/v1/templates/8de8d5bc-477b-4b94-b40d-e888fee4ff1b
+2026-08-13 10:47:31,831 - app.main - WARNING - NotFoundException: Template not found
+2026-08-13 10:47:31,838 - app.main - INFO - GET /api/v1/templates/8de8d5bc-477b-4b94-b40d-e888fee4ff1b -> 404
+2026-08-13 10:47:33,864 - app.main - INFO - GET /api/v1/templates/code/K9
+2026-08-13 10:47:33,904 - app.main - INFO - GET /api/v1/templates/code/K9 -> 200
+2026-08-13 10:47:35,928 - app.main - INFO - GET /api/v1/projects/bdaf88f1-c49a-4d89-8f5f-8a4b9066b17f
+2026-08-13 10:47:35,991 - app.main - WARNING - NotFoundException: Project not found
+2026-08-13 10:47:35,996 - app.main - INFO - GET /api/v1/projects/bdaf88f1-c49a-4d89-8f5f-8a4b9066b17f -> 404
+2026-08-13 10:47:38,029 - app.main - INFO - GET /api/v1/templates
+2026-08-13 10:47:38,120 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 10:48:04,813 - app.main - INFO - GET /api/v1/templates/8de8d5bc-4773-4b94-b40d-e888fee4ff1b
+2026-08-13 10:48:04,866 - app.main - INFO - GET /api/v1/templates/8de8d5bc-4773-4b94-b40d-e888fee4ff1b -> 200
+2026-08-13 10:48:06,917 - app.main - INFO - GET /api/v1/projects/efc5b1b2-9acc-47e4-8930-4318a217e95a
+2026-08-13 10:48:07,005 - app.main - INFO - GET /api/v1/projects/efc5b1b2-9acc-47e4-8930-4318a217e95a -> 200
+2026-08-13 10:49:54,273 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:49:54,572 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:50:00,937 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:50:01,134 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:50:06,591 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-13 10:50:06,597 - app.main - INFO - GET /api/v1/documents
+2026-08-13 10:50:06,826 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 34.65 ms
+2026-08-13 10:50:06,832 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-13 10:50:06,845 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-13 10:50:06,854 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-13 10:50:06,916 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 16.49 ms
+2026-08-13 10:50:06,920 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-13 10:50:08,754 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 10:50:08,951 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 10:50:08,982 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 10:50:09,202 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 10:50:09,267 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-13 10:50:09,273 - app.main - INFO - GET /api/v1/documents
+2026-08-13 10:50:09,284 - app.main - INFO - GET /api/v1/templates
+2026-08-13 10:50:09,701 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 218.49 ms
+2026-08-13 10:50:09,712 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-13 10:50:09,734 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-13 10:50:09,744 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 10:50:09,772 - app.main - INFO - GET /api/v1/templates
+2026-08-13 10:50:09,799 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-13 10:50:09,880 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 44.37 ms
+2026-08-13 10:50:09,885 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-13 10:50:09,915 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 10:51:53,581 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-13 10:51:53,670 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Sheet: 'Pilot Sheet (Suivi)' | Orient: HORIZONTAL | Headers (47): ['Part Number', 'Index', 'Description', 'Coef.', 'Serial Piece Price', 'Mass Purchase\r\n(Coef. x Price per part)', 'RU', 'NOA', 'Make Battery (LP)', 'Make Battery (LP)', '', '', '', '', 'libre', 'Supplier name', 'Vendor COFOR', 'Manufacturer COFOR', 'Combined COFOR', 'Tango order', 'EI status', 'Comments', 'Week\r\nProject Target', 'Forecast\r\nWeek', 'Completed\r\nWeek', 'Week\r\nProject Target', 'Forecast\r\nWeek', 'Completed\r\nWeek', 'Week\r\nProject Target', 'Forecast\r\nWeek', 'Completed\r\nWeek', 'Quality', 'Supply Chain', 'Global Purchasing', 'CPL', 'RCPI', 'Minimum Quality status acted', 'Mass inquired', 'Packaging readiness, UNLweb \r\nvalidated', 'TANGO contract validated', 'Supplier capability confirmed', 'IT CPL (CORAIL,) setting', 'FCLA Validates', 'PLE created', 'EDI opened', 'UM logistic flow validated', 'Manufacturing process validated']
+2026-08-13 10:51:53,702 - app.application.services.ollama_mapping_service - INFO - [OLLAMA] Configured timeout: 30.0s, default model: llama3.2:1b, url: http://localhost:11434
+2026-08-13 10:51:53,705 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Template: 'K0' (CMF K0 Project Template), Fields: 66, Headers: 47
+2026-08-13 10:51:54,422 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-13 10:51:54,782 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-13 10:52:24,828 - app.application.services.ollama_mapping_service - WARNING - [OLLAMA MAP] Request to Ollama timed out after 30.0s. Automatically switched to deterministic fuzzy mapping.
+2026-08-13 10:52:24,841 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Final Mapping Summary (0/66 fields mapped via LLM):
+  line_item: excel='None' conf=0.0 src=none
+  components_package_rfq: excel='None' conf=0.0 src=none
+  tazebao_id_dev_system_no: excel='None' conf=0.0 src=none
+  gst_source_package_number: excel='None' conf=0.0 src=none
+  part_number: excel='Part Number' conf=0.99 src=exact_match
+  part_name: excel='None' conf=0.0 src=none
+  comments: excel='Comments' conf=0.99 src=exact_match
+  make_or_buy: excel='None' conf=0.0 src=none
+  other_platform_impacted: excel='None' conf=0.0 src=none
+  development_type: excel='None' conf=0.0 src=none
+  status_resourcing: excel='None' conf=0.0 src=none
+  original_vehicle_co_parts: excel='None' conf=0.0 src=none
+  supplier_name_co_parts: excel='Supplier name' conf=0.85 src=fuzzy_fallback
+  new_supplier_yn: excel='None' conf=0.0 src=none
+  nominated_supplier: excel='None' conf=0.0 src=none
+  manufacturing_cofor: excel='None' conf=0.0 src=none
+  supplier_location: excel='None' conf=0.0 src=none
+  ppm: excel='None' conf=0.0 src=none
+  commodity_buyer: excel='None' conf=0.0 src=none
+  program_buyer: excel='None' conf=0.0 src=none
+  gm_commodity: excel='None' conf=0.0 src=none
+  pur_manager: excel='None' conf=0.0 src=none
+  ga: excel='None' conf=0.0 src=none
+  pur_area: excel='None' conf=0.0 src=none
+  lead_engineer_hordain: excel='None' conf=0.0 src=none
+  e_port: excel='None' conf=0.0 src=none
+  tofas: excel='None' conf=0.0 src=none
+  eko: excel='None' conf=0.0 src=none
+  lfp_66_kwh: excel='None' conf=0.0 src=none
+  nmc_82_kwh: excel='None' conf=0.0 src=none
+  quantity_parts_per_vehicle: excel='None' conf=0.0 src=none
+  weekly_capacity_requested_gst: excel='None' conf=0.0 src=none
+  capacity_step_requested_gst: excel='None' conf=0.0 src=none
+  calculation_date_gst: excel='None' conf=0.0 src=none
+  weekly_capacity_requested_tko: excel='None' conf=0.0 src=none
+  capacity_step_requested_tko: excel='None' conf=0.0 src=none
+  scr_date_tko: excel='None' conf=0.0 src=none
+  scr_tko_link: excel='None' conf=0.0 src=none
+  weekly_capacity_latest_ltos: excel='None' conf=0.0 src=none
+  capacity_step_latest_ltos: excel='None' conf=0.0 src=none
+  date_latest_ltos: excel='None' conf=0.0 src=none
+  calculation_link: excel='None' conf=0.0 src=none
+  contracted_capacity: excel='None' conf=0.0 src=none
+  contracted_capacity_step: excel='None' conf=0.0 src=none
+  capacity_sizing_ok: excel='None' conf=0.0 src=none
+  new_scr_calculation_done: excel='None' conf=0.0 src=none
+  contracted_capacity_ok: excel='None' conf=0.0 src=none
+  capacity_comments: excel='None' conf=0.0 src=none
+  capacity_workshop_date: excel='None' conf=0.0 src=none
+  capacity_workshop_comment: excel='None' conf=0.0 src=none
+  sqvl: excel='None' conf=0.0 src=none
+  sqme_manufacturing: excel='None' conf=0.0 src=none
+  apqp_grid: excel='None' conf=0.0 src=none
+  run_assessment: excel='None' conf=0.0 src=none
+  cat_forecast_date: excel='None' conf=0.0 src=none
+  cat_forecast_calendar_week: excel='None' conf=0.0 src=none
+  cat_real_date: excel='None' conf=0.0 src=none
+  cat_real_calendar_week: excel='None' conf=0.0 src=none
+  last_cat: excel='None' conf=0.0 src=none
+  requested_supplier_weekly_capacity: excel='None' conf=0.0 src=none
+  cat_run_observation: excel='None' conf=0.0 src=none
+  number_production_days: excel='None' conf=0.0 src=none
+  number_production_shifts: excel='None' conf=0.0 src=none
+  cat_rating: excel='None' conf=0.0 src=none
+  cat_link: excel='None' conf=0.0 src=none
+  cat_comment: excel='None' conf=0.0 src=none
+2026-08-13 10:52:24,841 - app.application.services.ollama_mapping_service - INFO - 
+==================== [OLLAMA LLM METRICS] ====================
+  - Model:             llama3.2:1b
+  - Prompt Size:       5038 chars
+  - Prompt Tokens:     0
+  - Completion Tokens: 0
+  - Inference Time:    30391.69 ms
+  - JSON Parse Time:   0.00 ms
+  - Excel Read Time:   0.19 ms
+  - Total Mapping:     31134.78 ms
+  - LLM Mapped Fields: 0/66 (Active: False)
+==============================================================
+2026-08-13 10:52:24,847 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-13 10:52:41,466 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:52:41,674 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:52:44,651 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-13 10:52:44,662 - app.main - INFO - GET /api/v1/documents
+2026-08-13 10:52:44,918 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 52.81 ms
+2026-08-13 10:52:44,933 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-13 10:52:44,961 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-13 10:52:44,993 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-13 10:52:45,066 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 22.07 ms
+2026-08-13 10:52:45,073 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-13 10:52:46,772 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:52:46,977 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:52:46,993 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:52:47,201 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:52:50,377 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:52:50,446 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:53:18,400 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-13 10:53:18,418 - app.main - INFO - GET /api/v1/documents
+2026-08-13 10:53:18,617 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 46.94 ms
+2026-08-13 10:53:18,626 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-13 10:53:18,635 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-13 10:53:18,642 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-13 10:53:18,705 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 17.10 ms
+2026-08-13 10:53:18,709 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-13 10:53:20,670 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:53:20,764 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:53:20,779 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:53:20,858 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:53:30,097 - app.main - INFO - DELETE /api/v1/templates/c8d78c5a-3dd0-4adf-afea-f9b88b2a2f9b
+2026-08-13 10:53:30,265 - app.main - INFO - DELETE /api/v1/templates/c8d78c5a-3dd0-4adf-afea-f9b88b2a2f9b -> 200
+2026-08-13 10:53:30,311 - app.main - INFO - GET /api/v1/templates
+2026-08-13 10:53:30,473 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 10:53:30,592 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:53:30,716 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:53:40,593 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 10:53:40,751 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 10:53:40,766 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 10:53:40,895 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 10:53:40,913 - app.main - INFO - GET /api/v1/templates
+2026-08-13 10:53:41,006 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 10:53:41,028 - app.main - INFO - GET /api/v1/templates
+2026-08-13 10:53:41,123 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 10:53:41,174 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:53:41,480 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:53:48,908 - app.main - INFO - DELETE /api/v1/templates/c8d78c5a-3dd0-4adf-afea-f9b88b2a2f9b
+2026-08-13 10:53:49,040 - app.main - INFO - DELETE /api/v1/templates/c8d78c5a-3dd0-4adf-afea-f9b88b2a2f9b -> 200
+2026-08-13 10:53:49,075 - app.main - INFO - GET /api/v1/templates
+2026-08-13 10:53:49,300 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 10:53:52,516 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:53:52,700 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:57:15,831 - app.main - INFO - GET /api/v1/templates
+2026-08-13 10:57:15,929 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 10:57:17,974 - app.main - INFO - DELETE /api/v1/templates/c8d78c5a-3dd0-4adf-afea-f9b88b2a2f9b
+2026-08-13 10:57:18,056 - app.main - INFO - DELETE /api/v1/templates/c8d78c5a-3dd0-4adf-afea-f9b88b2a2f9b -> 200
+2026-08-13 10:57:20,086 - app.main - INFO - GET /api/v1/templates
+2026-08-13 10:57:20,258 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 10:57:22,292 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-13 10:57:22,372 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 31.55 ms
+2026-08-13 10:57:22,379 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-13 10:59:26,030 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 10:59:26,036 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-13 10:59:26,039 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-13 10:59:26,051 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 10:59:26,055 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-13 10:59:26,058 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-13 10:59:26,077 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-13 10:59:26,227 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-13 10:59:26,331 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 10:59:26,426 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 10:59:26,439 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 10:59:26,528 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 10:59:26,624 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:59:26,632 - app.main - INFO - GET /api/v1/templates
+2026-08-13 10:59:26,751 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 10:59:26,769 - app.main - INFO - GET /api/v1/templates
+2026-08-13 10:59:26,886 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 10:59:26,913 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 10:59:27,085 - app.main - INFO - GET /api/v1/projects
+2026-08-13 10:59:27,286 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:00:43,081 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 11:00:50,355 - app.main - INFO - Starting CMF Platform API
+2026-08-13 11:00:50,376 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 11:04:09,428 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 11:04:10,402 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 11:04:10,427 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 11:04:10,543 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 11:04:12,529 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:04:12,538 - app.main - INFO - GET /api/v1/templates
+2026-08-13 11:04:12,888 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 11:04:12,912 - app.main - INFO - GET /api/v1/templates
+2026-08-13 11:04:12,983 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:04:13,030 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 11:04:13,046 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:04:13,192 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:04:43,833 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 11:04:51,188 - app.main - INFO - Starting CMF Platform API
+2026-08-13 11:04:51,204 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 11:04:53,958 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 11:05:01,497 - app.main - INFO - Starting CMF Platform API
+2026-08-13 11:05:01,510 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 11:05:56,449 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 11:06:03,018 - app.main - INFO - Starting CMF Platform API
+2026-08-13 11:06:03,035 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 11:06:06,650 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 11:06:12,425 - app.main - INFO - Starting CMF Platform API
+2026-08-13 11:06:12,439 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 11:06:15,722 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 11:06:22,495 - app.main - INFO - Starting CMF Platform API
+2026-08-13 11:06:22,521 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 11:06:54,105 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 11:07:00,193 - app.main - INFO - Starting CMF Platform API
+2026-08-13 11:07:00,207 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 11:07:03,719 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 11:07:09,731 - app.main - INFO - Starting CMF Platform API
+2026-08-13 11:07:09,747 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 11:08:41,503 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 11:08:48,257 - app.main - INFO - Starting CMF Platform API
+2026-08-13 11:08:48,274 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 11:09:03,800 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 11:09:10,781 - app.main - INFO - Starting CMF Platform API
+2026-08-13 11:09:10,797 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 11:09:15,711 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 11:09:21,977 - app.main - INFO - Starting CMF Platform API
+2026-08-13 11:09:21,994 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 11:09:28,604 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:09:29,096 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:09:30,399 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:09:30,540 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:09:40,989 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:09:41,255 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:09:46,143 - app.main - INFO - GET /api/v1/parts
+2026-08-13 11:09:46,405 - app.main - INFO - GET /api/v1/parts -> 200
+2026-08-13 11:09:49,308 - app.main - INFO - GET /api/v1/risks
+2026-08-13 11:09:49,562 - app.main - INFO - GET /api/v1/risks -> 200
+2026-08-13 11:09:58,117 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:09:58,366 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:09:58,379 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:09:58,605 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:13:06,041 - app.main - INFO - GET /api/v1/health
+2026-08-13 11:13:06,045 - app.main - INFO - GET /api/v1/health -> 200
+2026-08-13 11:14:42,486 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 11:14:42,679 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 11:14:42,703 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 11:14:42,862 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 11:14:43,019 - app.main - INFO - GET /api/v1/templates
+2026-08-13 11:14:43,197 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 11:14:43,210 - app.main - INFO - GET /api/v1/templates
+2026-08-13 11:14:43,282 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 11:14:43,318 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:14:43,575 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:14:52,965 - app.main - INFO - DELETE /api/v1/templates/c8d78c5a-3dd0-4adf-afea-f9b88b2a2f9b
+2026-08-13 11:14:53,166 - app.main - INFO - DELETE /api/v1/templates/c8d78c5a-3dd0-4adf-afea-f9b88b2a2f9b -> 200
+2026-08-13 11:14:53,205 - app.main - INFO - GET /api/v1/templates
+2026-08-13 11:14:53,286 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 11:14:57,583 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 11:14:57,760 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 11:14:57,784 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 11:14:57,928 - app.main - INFO - GET /api/v1/templates
+2026-08-13 11:14:57,942 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 11:14:58,053 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 11:14:58,072 - app.main - INFO - GET /api/v1/templates
+2026-08-13 11:14:58,123 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:14:58,152 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 11:14:58,423 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:15:03,264 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:15:03,497 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:15:09,137 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:15:09,433 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:15:09,448 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:15:10,016 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:15:12,881 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 11:15:12,969 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 11:15:12,979 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 11:15:13,060 - app.main - INFO - GET /api/v1/templates
+2026-08-13 11:15:13,073 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 11:15:13,154 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 11:15:13,169 - app.main - INFO - GET /api/v1/templates
+2026-08-13 11:15:13,251 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 11:15:13,306 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:15:13,576 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:27:59,782 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 11:28:08,870 - app.main - INFO - Starting CMF Platform API
+2026-08-13 11:28:08,891 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 11:28:44,158 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 11:28:53,113 - app.main - INFO - Starting CMF Platform API
+2026-08-13 11:28:53,131 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 11:29:18,827 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 11:29:27,547 - app.main - INFO - Starting CMF Platform API
+2026-08-13 11:29:27,563 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 11:29:41,551 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 11:29:48,026 - app.main - INFO - Starting CMF Platform API
+2026-08-13 11:29:48,039 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 11:29:51,993 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 11:29:58,252 - app.main - INFO - Starting CMF Platform API
+2026-08-13 11:29:58,270 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 11:30:02,007 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 11:30:40,609 - app.main - INFO - Starting CMF Platform API
+2026-08-13 11:30:40,627 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 11:30:45,322 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 11:30:54,442 - app.main - INFO - Starting CMF Platform API
+2026-08-13 11:30:54,465 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 11:31:26,924 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 11:31:36,412 - app.main - INFO - Starting CMF Platform API
+2026-08-13 11:31:36,428 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 11:31:38,826 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 11:31:46,036 - app.main - INFO - Starting CMF Platform API
+2026-08-13 11:31:46,060 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 11:32:13,276 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 11:32:21,724 - app.main - INFO - Starting CMF Platform API
+2026-08-13 11:32:21,760 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 11:33:33,596 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 11:33:42,696 - app.main - INFO - Starting CMF Platform API
+2026-08-13 11:33:42,730 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 11:35:27,919 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 11:35:36,814 - app.main - INFO - Starting CMF Platform API
+2026-08-13 11:35:36,840 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 11:35:40,003 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 11:35:48,786 - app.main - INFO - Starting CMF Platform API
+2026-08-13 11:35:48,804 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 11:35:56,111 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 11:36:04,546 - app.main - INFO - Starting CMF Platform API
+2026-08-13 11:36:04,565 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 11:37:19,785 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 11:37:19,832 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-13 11:37:19,839 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-13 11:37:19,855 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 11:37:19,862 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-13 11:37:19,872 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-13 11:37:19,880 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-13 11:37:20,555 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-13 11:37:20,612 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 11:37:20,750 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 11:37:20,781 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 11:37:21,161 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 11:37:21,186 - app.main - INFO - GET /api/v1/templates
+2026-08-13 11:37:21,326 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 11:37:21,346 - app.main - INFO - GET /api/v1/templates
+2026-08-13 11:37:21,460 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 11:37:21,735 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:37:22,268 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:40:30,293 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 11:40:30,533 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 11:40:30,555 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 11:40:30,695 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 11:40:31,067 - app.main - INFO - GET /api/v1/templates
+2026-08-13 11:40:31,226 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 11:40:31,256 - app.main - INFO - GET /api/v1/templates
+2026-08-13 11:40:31,425 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 11:40:32,039 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:40:32,636 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:40:46,585 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 11:40:46,749 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 11:40:46,775 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 11:40:46,943 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 11:40:47,148 - app.main - INFO - GET /api/v1/templates
+2026-08-13 11:40:47,295 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 11:40:47,321 - app.main - INFO - GET /api/v1/templates
+2026-08-13 11:40:47,484 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 11:40:47,859 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:40:48,312 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:41:01,665 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 11:41:01,780 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 11:41:01,795 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 11:41:01,889 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 11:41:02,014 - app.main - INFO - GET /api/v1/templates
+2026-08-13 11:41:02,109 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 11:41:02,120 - app.main - INFO - GET /api/v1/templates
+2026-08-13 11:41:02,211 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 11:41:02,352 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:41:02,607 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:41:16,834 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 11:41:17,100 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 11:41:17,114 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 11:41:17,241 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 11:41:17,327 - app.main - INFO - GET /api/v1/templates
+2026-08-13 11:41:17,424 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 11:41:17,435 - app.main - INFO - GET /api/v1/templates
+2026-08-13 11:41:17,518 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 11:41:17,638 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:41:17,888 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:43:02,188 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 11:43:02,300 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 11:43:02,312 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 11:43:02,407 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 11:43:02,526 - app.main - INFO - GET /api/v1/templates
+2026-08-13 11:43:02,650 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 11:43:02,667 - app.main - INFO - GET /api/v1/templates
+2026-08-13 11:43:02,773 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 11:43:03,067 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:43:03,397 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:45:52,777 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 11:46:05,853 - app.main - INFO - Starting CMF Platform API
+2026-08-13 11:46:05,878 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 11:46:25,650 - app.main - INFO - Shutting down CMF Platform API
+2026-08-13 11:46:35,492 - app.main - INFO - Starting CMF Platform API
+2026-08-13 11:46:35,516 - app.main - INFO - Database tables created (SQLite)
+2026-08-13 11:52:19,014 - app.main - INFO - GET /api/v1/health
+2026-08-13 11:52:19,037 - app.main - INFO - GET /api/v1/health -> 200
+2026-08-13 11:52:47,227 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:52:47,230 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-13 11:52:48,480 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:52:48,797 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-13 11:54:12,483 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:54:12,845 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:54:15,818 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 11:54:15,951 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 11:54:15,964 - app.main - INFO - GET /api/v1/auth/me
+2026-08-13 11:54:16,057 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-13 11:54:16,131 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:54:16,134 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-13 11:54:16,137 - app.main - INFO - GET /api/v1/templates
+2026-08-13 11:54:16,480 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 11:54:16,530 - app.main - INFO - GET /api/v1/templates
+2026-08-13 11:54:17,161 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 11:54:17,400 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:54:17,788 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-13 11:54:22,593 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:54:22,835 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:54:22,853 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:54:23,265 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:55:16,411 - app.main - INFO - POST /api/v1/templates
+2026-08-13 11:55:16,687 - app.main - INFO - POST /api/v1/templates -> 200
+2026-08-13 11:55:16,724 - app.main - INFO - GET /api/v1/templates
+2026-08-13 11:55:16,751 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:55:16,879 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:55:16,899 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 11:55:21,933 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:55:21,939 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-13 11:55:22,560 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:55:22,753 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-13 11:55:24,675 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:55:24,758 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:55:24,789 - app.main - INFO - GET /api/v1/projects
+2026-08-13 11:55:24,917 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 11:55:43,813 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-13 11:55:43,816 - app.main - INFO - GET /api/v1/documents
+2026-08-13 11:55:43,967 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 47.28 ms
+2026-08-13 11:55:43,979 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-13 11:55:43,996 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-13 11:55:44,008 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-13 11:55:44,080 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 20.30 ms
+2026-08-13 11:55:44,086 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-13 11:56:54,849 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-13 11:56:54,959 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Sheet: 'Pilot Sheet (Suivi)' | Orient: HORIZONTAL | Headers (47): ['Part Number', 'Index', 'Description', 'Coef.', 'Serial Piece Price', 'Mass Purchase\r\n(Coef. x Price per part)', 'RU', 'NOA', 'Make Battery (LP)', 'Make Battery (LP)', '', '', '', '', 'libre', 'Supplier name', 'Vendor COFOR', 'Manufacturer COFOR', 'Combined COFOR', 'Tango order', 'EI status', 'Comments', 'Week\r\nProject Target', 'Forecast\r\nWeek', 'Completed\r\nWeek', 'Week\r\nProject Target', 'Forecast\r\nWeek', 'Completed\r\nWeek', 'Week\r\nProject Target', 'Forecast\r\nWeek', 'Completed\r\nWeek', 'Quality', 'Supply Chain', 'Global Purchasing', 'CPL', 'RCPI', 'Minimum Quality status acted', 'Mass inquired', 'Packaging readiness, UNLweb \r\nvalidated', 'TANGO contract validated', 'Supplier capability confirmed', 'IT CPL (CORAIL,) setting', 'FCLA Validates', 'PLE created', 'EDI opened', 'UM logistic flow validated', 'Manufacturing process validated']
+2026-08-13 11:56:55,007 - app.application.services.ollama_mapping_service - INFO - [OLLAMA] Configured timeout: 30.0s, default model: llama3.2:1b, url: http://localhost:11434
+2026-08-13 11:56:55,011 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Template: 'CMF_K0' (k0), Fields: 47, Headers: 47
+2026-08-13 11:56:55,782 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-13 11:56:56,153 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-13 11:57:26,193 - app.application.services.ollama_mapping_service - WARNING - [OLLAMA MAP] Request to Ollama timed out after 30.0s. Automatically switched to deterministic fuzzy mapping.
+2026-08-13 11:57:26,201 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Final Mapping Summary (0/47 fields mapped via LLM):
+  part_number: excel='Part Number' conf=0.99 src=exact_match
+  serial_piece_price: excel='Serial Piece Price' conf=0.99 src=exact_match
+  supplier_name: excel='Supplier name' conf=0.99 src=exact_match
+  supplier_capability_confirmed: excel='Supplier capability confirmed' conf=0.99 src=exact_match
+  quality: excel='Quality' conf=0.99 src=exact_match
+  minimum_quality_status_acted: excel='Minimum Quality status acted' conf=0.99 src=exact_match
+  index: excel='Index' conf=0.99 src=exact_match
+  description: excel='Description' conf=0.99 src=exact_match
+  coef: excel='Coef.' conf=0.85 src=fuzzy_fallback
+  mass_purchase: excel='Mass Purchase
+(Coef. x Price per part)' conf=0.85 src=fuzzy_fallback
+  ru: excel='RU' conf=0.99 src=exact_match
+  noa: excel='NOA' conf=0.99 src=exact_match
+  make_battery_lp_1: excel='None' conf=0.0 src=none
+  make_battery_lp_2: excel='None' conf=0.0 src=none
+  ref_column_k: excel='None' conf=0.0 src=none
+  ref_column_l: excel='None' conf=0.0 src=none
+  ref_column_m: excel='None' conf=0.0 src=none
+  ref_column_n: excel='None' conf=0.0 src=none
+  libre: excel='libre' conf=0.99 src=exact_match
+  vendor_cofor: excel='Vendor COFOR' conf=0.99 src=exact_match
+  manufacturer_cofor: excel='Manufacturer COFOR' conf=0.99 src=exact_match
+  combined_cofor: excel='Combined COFOR' conf=0.99 src=exact_match
+  tango_order: excel='Tango order' conf=0.99 src=exact_match
+  ei_status: excel='EI status' conf=0.99 src=exact_match
+  comments: excel='Comments' conf=0.99 src=exact_match
+  week_project_target_1: excel='None' conf=0.0 src=none
+  forecast_week_1: excel='None' conf=0.0 src=none
+  completed_week_1: excel='None' conf=0.0 src=none
+  week_project_target_2: excel='None' conf=0.0 src=none
+  forecast_week_2: excel='None' conf=0.0 src=none
+  completed_week_2: excel='None' conf=0.0 src=none
+  week_project_target_3: excel='None' conf=0.0 src=none
+  forecast_week_3: excel='None' conf=0.0 src=none
+  completed_week_3: excel='None' conf=0.0 src=none
+  supply_chain: excel='Supply Chain' conf=0.99 src=exact_match
+  global_purchasing: excel='Global Purchasing' conf=0.99 src=exact_match
+  cpl: excel='CPL' conf=0.99 src=exact_match
+  rcpi: excel='RCPI' conf=0.99 src=exact_match
+  mass_inquired: excel='Mass inquired' conf=0.99 src=exact_match
+  packaging_readiness_unlweb_validated: excel='None' conf=0.0 src=none
+  tango_contract_validated: excel='TANGO contract validated' conf=0.99 src=exact_match
+  it_cpl_corail_setting: excel='None' conf=0.0 src=none
+  fcla_validates: excel='FCLA Validates' conf=0.99 src=exact_match
+  ple_created: excel='PLE created' conf=0.99 src=exact_match
+  edi_opened: excel='EDI opened' conf=0.99 src=exact_match
+  um_logistic_flow_validated: excel='UM logistic flow validated' conf=0.99 src=exact_match
+  manufacturing_process_validated: excel='Manufacturing process validated' conf=0.99 src=exact_match
+2026-08-13 11:57:26,203 - app.application.services.ollama_mapping_service - INFO - 
+==================== [OLLAMA LLM METRICS] ====================
+  - Model:             llama3.2:1b
+  - Prompt Size:       2247 chars
+  - Prompt Tokens:     0
+  - Completion Tokens: 0
+  - Inference Time:    30388.43 ms
+  - JSON Parse Time:   0.00 ms
+  - Excel Read Time:   0.08 ms
+  - Total Mapping:     31190.38 ms
+  - LLM Mapped Fields: 0/47 (Active: False)
+==============================================================
+2026-08-13 11:57:26,216 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-13 11:57:45,064 - app.main - INFO - POST /api/v1/import/preview
+2026-08-13 11:58:09,317 - app.main - INFO - POST /api/v1/import/preview -> 200
+2026-08-13 11:58:12,691 - app.main - INFO - POST /api/v1/import/execute
+2026-08-13 11:58:12,861 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Starting execution for file 'Suivi_Transfert_Make_Battery_Macro. 1.xlsm' with template 'CMF_K0'
+2026-08-13 11:58:12,864 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Selected template: 'CMF_K0'
+2026-08-13 11:58:12,867 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Uploaded filename: 'Suivi_Transfert_Make_Battery_Macro. 1.xlsm' (1089769 bytes)
+2026-08-13 11:58:12,869 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Mapped fields: {'Part Number': 'part_number', 'Serial Piece Price': 'serial_piece_price', 'Supplier name': 'supplier_name', 'Supplier capability confirmed': 'supplier_capability_confirmed', 'Quality': 'quality', 'Minimum Quality status acted': 'minimum_quality_status_acted', 'Index': 'index', 'Description': 'description', 'Coef.': 'coef', 'Mass Purchase\r\n(Coef. x Price per part)': 'mass_purchase', 'RU': 'ru', 'NOA': 'noa', 'libre': 'libre', 'Vendor COFOR': 'vendor_cofor', 'Manufacturer COFOR': 'manufacturer_cofor', 'Combined COFOR': 'combined_cofor', 'Tango order': 'tango_order', 'EI status': 'ei_status', 'Comments': 'comments', 'Supply Chain': 'supply_chain', 'Global Purchasing': 'global_purchasing', 'CPL': 'cpl', 'RCPI': 'rcpi', 'Mass inquired': 'mass_inquired', 'TANGO contract validated': 'tango_contract_validated', 'FCLA Validates': 'fcla_validates', 'PLE created': 'ple_created', 'EDI opened': 'edi_opened', 'UM logistic flow validated': 'um_logistic_flow_validated', 'Manufacturing process validated': 'manufacturing_process_validated'}
+2026-08-13 11:58:12,874 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Import mode: 'insert', strategy: 'skip_invalid'
+2026-08-13 11:58:37,082 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Validation summary: Total Rows=678, Valid=678, Errors=0
+2026-08-13 11:59:00,210 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Rows detected: 678
+2026-08-13 11:59:00,211 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Headers detected: ['Référence', 'Indice', 'Désignation', 'Coef.', 'Prix Pièce Série', 'Masse Achat\n(Coef. x Prix pièce)', 'RU', 'NOA', 'Make Battery (LP)', 'Make Battery (LP)', '#REF!', '#REF!', '#REF!', '#REF!', 'libre', 'Nom du fournisseur', 'COFOR Vendeur', 'COFOR Fabricant', 'COFOR Combiné', 'Commande Tango', 'Etat EI', 'Commentaires', 'Semaine\nCible Projet', 'Semaine\nPrévisionnelle', 'Semaine\nRéalisée', 'Semaine\nCible Projet', 'Semaine\nPrévisionnelle', 'Semaine\nRéalisée', 'Semaine\nCible Projet', 'Semaine\nPrévisionnelle', 'Semaine\nRéalisée', 'Quality', 'Supply Chain', 'Global Purchasing', 'CPL', 'RCPI', 'Etat Qualité minimum atteint', 'Poids renseignée', 'UNL WEB', 'Contrat Tango validé', 'Capacitaire fourrisseur confirmé', 'IT CPL parametrés.', 'FCLA Validée', 'PLE créé', 'EDI Ouvert', 'Flux logistique UM validé sur CORAIL', 'Process fabrication validé']
+2026-08-13 11:59:00,212 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Database transaction: Starting transaction session...
+2026-08-13 12:03:04,463 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Serializer errors count: 0
+2026-08-13 12:03:04,541 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Database transaction: Committed successfully (Imported: 678, Updated: 0, Skipped: 0, Failed: 0)
+2026-08-13 12:03:04,545 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Execution time: 291602 ms
+2026-08-13 12:03:04,563 - app.main - INFO - POST /api/v1/import/execute -> 200
+2026-08-13 12:03:04,609 - app.main - INFO - POST /api/v1/import/save-mapping-memory
+2026-08-13 12:03:04,716 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:part number -> part_number
+2026-08-13 12:03:04,720 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:serial piece price -> serial_piece_price
+2026-08-13 12:03:04,722 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:supplier name -> supplier_name
+2026-08-13 12:03:04,724 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:supplier capability confirmed -> supplier_capability_confirmed
+2026-08-13 12:03:04,726 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:quality -> quality
+2026-08-13 12:03:04,728 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:minimum quality status acted -> minimum_quality_status_acted
+2026-08-13 12:03:04,729 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:index -> index
+2026-08-13 12:03:04,730 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:description -> description
+2026-08-13 12:03:04,732 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:coef. -> coef
+2026-08-13 12:03:04,735 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:mass purchase
+(coef. x price per part) -> mass_purchase
+2026-08-13 12:03:04,737 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:ru -> ru
+2026-08-13 12:03:04,738 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:noa -> noa
+2026-08-13 12:03:04,740 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:libre -> libre
+2026-08-13 12:03:04,741 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:vendor cofor -> vendor_cofor
+2026-08-13 12:03:04,742 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:manufacturer cofor -> manufacturer_cofor
+2026-08-13 12:03:04,743 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:combined cofor -> combined_cofor
+2026-08-13 12:03:04,744 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:tango order -> tango_order
+2026-08-13 12:03:04,745 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:ei status -> ei_status
+2026-08-13 12:03:04,747 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:comments -> comments
+2026-08-13 12:03:04,750 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:supply chain -> supply_chain
+2026-08-13 12:03:04,752 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:global purchasing -> global_purchasing
+2026-08-13 12:03:04,754 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:cpl -> cpl
+2026-08-13 12:03:04,755 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:rcpi -> rcpi
+2026-08-13 12:03:04,756 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:mass inquired -> mass_inquired
+2026-08-13 12:03:04,757 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:tango contract validated -> tango_contract_validated
+2026-08-13 12:03:04,759 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:fcla validates -> fcla_validates
+2026-08-13 12:03:04,760 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:ple created -> ple_created
+2026-08-13 12:03:04,761 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:edi opened -> edi_opened
+2026-08-13 12:03:04,762 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:um logistic flow validated -> um_logistic_flow_validated
+2026-08-13 12:03:04,764 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_K0:manufacturing process validated -> manufacturing_process_validated
+2026-08-13 12:03:04,772 - app.main - INFO - POST /api/v1/import/save-mapping-memory -> 200
+2026-08-13 12:04:12,668 - app.main - INFO - GET /api/v1/projects
+2026-08-13 12:04:12,955 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 12:04:24,242 - app.main - INFO - GET /api/v1/projects/24034ef1-b483-4157-99bd-29d7a71a7237
+2026-08-13 12:04:24,344 - app.main - INFO - GET /api/v1/projects/24034ef1-b483-4157-99bd-29d7a71a7237 -> 200
+2026-08-13 12:04:24,623 - app.main - INFO - GET /api/v1/suppliers
+2026-08-13 12:04:24,634 - app.main - INFO - GET /api/v1/users
+2026-08-13 12:04:24,898 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-13 12:04:24,973 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-13 12:04:39,041 - app.main - INFO - GET /api/v1/projects
+2026-08-13 12:04:39,319 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 12:04:41,606 - app.main - INFO - GET /api/v1/projects
+2026-08-13 12:04:41,949 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 12:05:16,355 - app.main - INFO - GET /api/v1/projects
+2026-08-13 12:05:16,739 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 12:05:19,056 - app.main - INFO - GET /api/v1/projects
+2026-08-13 12:05:19,421 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 12:05:19,439 - app.main - INFO - GET /api/v1/projects
+2026-08-13 12:05:19,711 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 12:05:22,598 - app.main - INFO - DELETE /api/v1/templates/3f155fe6-d858-45a4-9baa-b090582e2f58
+2026-08-13 12:05:22,815 - app.main - INFO - DELETE /api/v1/templates/3f155fe6-d858-45a4-9baa-b090582e2f58 -> 200
+2026-08-13 12:05:22,862 - app.main - INFO - GET /api/v1/templates
+2026-08-13 12:05:22,998 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-13 12:05:23,110 - app.main - INFO - GET /api/v1/projects
+2026-08-13 12:05:23,250 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 12:05:24,830 - app.main - INFO - GET /api/v1/projects
+2026-08-13 12:05:24,978 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-13 12:05:28,536 - app.main - INFO - GET /api/v1/projects
+2026-08-13 12:05:28,865 - app.main - INFO - GET /api/v1/projects -> 200

@@ -4,7 +4,7 @@ import {
   OrientationMode,
   WorksheetScore,
 } from '@/features/import/services/ExcelHeaderExtractor';
-import { TemplateSection, TemplateField, FieldGroup, FieldType, DropdownOption } from '@/types/template';
+import { TemplateSection, TemplateField, FieldGroup, FieldType, DropdownOption, PermissionRule } from '@/types/template';
 
 export interface StructureRelationship {
   from: string;
@@ -168,6 +168,62 @@ function normalizeFieldDefault(f: any): any {
   return f.defaultValue !== undefined ? f.defaultValue : f.default !== undefined ? f.default : undefined;
 }
 
+/** Canonical role name, e.g. 'CAPACITY MANAGER' -> 'capacity_manager'. */
+function canonicalRole(value: any): 'buyer' | 'capacity_manager' | 'sqd' | null {
+  if (value == null) return null;
+  const v = String(value).trim().toLowerCase().replace(/[\s-]+/g, '_');
+  if (v === 'buyer' || v === 'purchasing') return 'buyer';
+  if (v === 'capacity_manager' || v === 'capacity' || v === 'capacitymanager') return 'capacity_manager';
+  if (v === 'sqd' || v === 'quality' || v === 'quality_lead' || v === 'sqd_team') return 'sqd';
+  return null;
+}
+
+const ALL_ROLES = ['buyer', 'capacity_manager', 'sqd'];
+const ROLE_VIEW_ROLES = ['buyer', 'capacity_manager', 'sqd', 'admin', 'viewer'];
+
+/**
+ * Preserves explicit role/permission metadata from a source field so the
+ * imported structure retains the role distinction required by Manuel Project.
+ */
+function normalizeFieldPermissions(f: any): PermissionRule | undefined {
+  const perms: PermissionRule = {};
+  const raw = f?.permissions;
+  if (isRecord(raw)) {
+    if (Array.isArray(raw.rolesAllowedToEdit)) perms.rolesAllowedToEdit = raw.rolesAllowedToEdit;
+    if (Array.isArray(raw.rolesAllowedToView)) perms.rolesAllowedToView = raw.rolesAllowedToView;
+  }
+  const role = canonicalRole(f?.role ?? f?.fieldRole ?? f?.owner);
+  if (role) {
+    if (!perms.rolesAllowedToEdit) perms.rolesAllowedToEdit = [role, 'admin'];
+    if (!perms.rolesAllowedToView) perms.rolesAllowedToView = [...ROLE_VIEW_ROLES];
+  }
+  return perms.rolesAllowedToEdit || perms.rolesAllowedToView ? perms : undefined;
+}
+
+/**
+ * Classifies a normalized field onto the business role responsible for it.
+ * Precedence: explicit permissions -> keyword match on name/label -> 'general'.
+ */
+function classifyFieldRole(f: TemplateField): 'buyer' | 'capacity_manager' | 'sqd' | 'general' {
+  const edit = f.permissions?.rolesAllowedToEdit ?? [];
+  const roles = edit.filter((r) => (ALL_ROLES as string[]).includes(r));
+  if (roles.length === 1) return roles[0] as 'buyer' | 'capacity_manager' | 'sqd';
+
+  const name = (f.internalName || '').toLowerCase();
+  const label = (f.label || '').toLowerCase();
+  const buyerName = ['buyer', 'part', 'supplier', 'package', 'rfq', 'price', 'currency'];
+  const buyerLabel = ['buyer', 'part', 'supplier'];
+  const capName = ['capacity', 'volume', 'weekly', 'shift', 'tooling'];
+  const capLabel = ['capacity', 'volume'];
+  const sqdName = ['sqd', 'sqe', 'sqm', 'apqp', 'ppap', 'quality', 'audit', 'eval', 'cat'];
+  const sqdLabel = ['quality', 'apqp', 'eval'];
+
+  if (buyerName.some((k) => name.includes(k)) || buyerLabel.some((k) => label.includes(k))) return 'buyer';
+  if (capName.some((k) => name.includes(k)) || capLabel.some((k) => label.includes(k))) return 'capacity_manager';
+  if (sqdName.some((k) => name.includes(k)) || sqdLabel.some((k) => label.includes(k))) return 'sqd';
+  return 'general';
+}
+
 /**
  * Maps a hierarchical project-structure JSON (structure / modules -> tables ->
  * fields / relationships) onto the existing sections -> groups -> fields shape.
@@ -211,6 +267,7 @@ function extractHierarchicalStructure(parsed: any): {
           editable: f.editable !== false,
           options: normalizeFieldOptions(f.options),
           defaultValue: normalizeFieldDefault(f),
+          permissions: normalizeFieldPermissions(f),
         };
       });
 
@@ -243,6 +300,7 @@ function extractHierarchicalStructure(parsed: any): {
           editable: f.editable !== false,
           options: normalizeFieldOptions(f.options),
           defaultValue: normalizeFieldDefault(f),
+          permissions: normalizeFieldPermissions(f),
         };
       });
 
@@ -473,7 +531,9 @@ export class ProjectStructureExtractor {
         status: (meta.status || parsed.status) === 'DRAFT' ? 'DRAFT' : 'PUBLISHED',
         description: meta.description || parsed.description || `Project structure imported from JSON with ${hierarchical.fieldCount} fields.`,
         orientation,
-        sections: hierarchical.sections,
+        // Bucket fields into the role sections the Manuel Project workflow
+        // renders (Buyer / Capacity Manager / SQD), preserving the role info.
+        sections: ProjectStructureExtractor.bucketIntoRoleSections(hierarchical.sections),
         detectedFieldCount: hierarchical.fieldCount,
         detectedModuleCount: hierarchical.sections.length,
         detectedTableCount: hierarchical.tableCount,
@@ -689,5 +749,81 @@ export class ProjectStructureExtractor {
     }
 
     return sections;
+  }
+
+  /**
+   * Reorganizes hierarchical (modules -> tables -> fields) sections into the CMF
+   * role sections the Manuel Project workflow expects: Buyer, Capacity Manager,
+   * SQD, plus a General section for unclassified fields. Field-level role and
+   * permissions metadata is preserved and takes precedence over name heuristics.
+   */
+  static bucketIntoRoleSections(sections: TemplateSection[]): TemplateSection[] {
+    const buckets: Record<string, Record<string, TemplateField[]>> = {};
+    (sections || []).forEach((sec) => {
+      (sec.groups || []).forEach((grp) => {
+        const gname = grp.name || 'General';
+        (grp.fields || []).forEach((fld) => {
+          const role = classifyFieldRole(fld);
+          buckets[role] = buckets[role] || {};
+          buckets[role][gname] = buckets[role][gname] || [];
+          buckets[role][gname].push(fld);
+        });
+      });
+    });
+
+    const specs: Array<{
+      role: string;
+      id: string;
+      name: string;
+      description: string;
+    }> = [
+      { role: 'buyer', id: 'sec_buyer', name: 'Buyer', description: 'Purchasing, RFQ packages, and commercial attributes.' },
+      { role: 'capacity_manager', id: 'sec_capacity_manager', name: 'Capacity Manager', description: 'Weekly capacity, volume requirements, and tooling assessment.' },
+      { role: 'sqd', id: 'sec_sqd', name: 'SQD', description: 'Supplier quality development, APQP status, and quality ratings.' },
+    ];
+
+    const result: TemplateSection[] = [];
+    specs.forEach((spec) => {
+      const groupsByName = buckets[spec.role];
+      if (!groupsByName) return;
+      const groups: FieldGroup[] = [];
+      let gidx = 0;
+      Object.entries(groupsByName).forEach(([gname, fields]) => {
+        if (!fields.length) return;
+        gidx += 1;
+        groups.push({ id: `grp_${spec.role}_${gidx}`, name: gname, order: gidx, fields });
+      });
+      result.push({
+        id: spec.id,
+        name: spec.name,
+        order: result.length + 1,
+        description: spec.description,
+        permissions: {
+          rolesAllowedToEdit: [spec.role, 'admin'],
+          rolesAllowedToView: [...ROLE_VIEW_ROLES],
+        },
+        groups,
+      });
+    });
+
+    const generalGroups = buckets['general'];
+    if (generalGroups) {
+      const groups: FieldGroup[] = [];
+      let gidx = 0;
+      Object.entries(generalGroups).forEach(([gname, fields]) => {
+        if (!fields.length) return;
+        gidx += 1;
+        groups.push({ id: `grp_general_${gidx}`, name: gname, order: gidx, fields });
+      });
+      result.push({
+        id: 'sec_general',
+        name: 'General',
+        order: result.length + 1,
+        description: 'General information not assigned to a specific role.',
+        groups,
+      });
+    }
+
+    return result;
   }
 }

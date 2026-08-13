@@ -22,6 +22,33 @@ class TemplateRepository(BaseRepository[Template]):
         result = await self._session.execute(stmt)
         return result.scalars().first()
 
+    async def get_by_code_including_deleted(self, code: str) -> Template | None:
+        stmt = select(Template).where(Template.code == code)
+        result = await self._session.execute(stmt)
+        return result.scalars().first()
+
+    async def undelete(self, id: uuid.UUID) -> Template | None:
+        obj = await self._session.get(Template, id)
+        if obj is None:
+            return None
+        obj.deleted_at = None
+        await self._session.flush()
+        await self._session.refresh(obj)
+        return obj
+
+    async def revive(self, id: uuid.UUID, data: dict[str, Any]) -> Template | None:
+        """Update a soft-deleted template's fields and restore it (deleted_at = NULL)."""
+        obj = await self._session.get(Template, id)
+        if obj is None:
+            return None
+        for key, value in data.items():
+            if hasattr(obj, key):
+                setattr(obj, key, value)
+        obj.deleted_at = None
+        await self._session.flush()
+        await self._session.refresh(obj)
+        return obj
+
     async def get_published(self, code: str) -> Template | None:
         stmt = (
             select(Template)

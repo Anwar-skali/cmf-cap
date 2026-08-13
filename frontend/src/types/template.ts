@@ -101,6 +101,7 @@ export interface TemplateSection {
   order?: number;
   icon?: string;
   description?: string;
+  permissions?: PermissionRule;
   groups: FieldGroup[];
 }
 

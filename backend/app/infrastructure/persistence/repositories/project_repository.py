@@ -4,7 +4,7 @@ import uuid
 from datetime import datetime, timezone
 from typing import Any
 
-from sqlalchemy import func, or_, select
+from sqlalchemy import func, or_, select, update
 
 from app.domain.enums import ProjectStatus
 from app.infrastructure.persistence.models.project import Project
@@ -21,6 +21,42 @@ class ProjectRepository(BaseRepository[Project]):
         )
         result = await self._session.execute(stmt)
         return result.scalars().first()
+
+    async def get_by_code_including_deleted(self, code: str) -> Project | None:
+        stmt = select(Project).where(Project.code == code)
+        result = await self._session.execute(stmt)
+        return result.scalars().first()
+
+    async def revive(self, id: uuid.UUID, data: dict[str, Any]) -> Project | None:
+        """Update a soft-deleted project's fields and restore it (deleted_at = NULL)."""
+        from sqlalchemy.orm.attributes import flag_modified
+
+        obj = await self._session.get(Project, id)
+        if obj is None:
+            return None
+        for key, value in data.items():
+            if hasattr(obj, key):
+                setattr(obj, key, value)
+        obj.deleted_at = None
+        if "data" in data:
+            flag_modified(obj, "data")
+        await self._session.flush()
+        await self._session.refresh(obj)
+        return obj
+
+    async def soft_delete_by_template(self, template_id: uuid.UUID) -> int:
+        """Soft-delete all live projects belonging to the given template."""
+        stmt = (
+            update(Project)
+            .where(
+                Project.template_id == template_id,
+                Project.deleted_at.is_(None),
+            )
+            .values(deleted_at=datetime.now(timezone.utc))
+        )
+        result = await self._session.execute(stmt)
+        await self._session.flush()
+        return result.rowcount or 0
 
     async def get_by_status(self, status: ProjectStatus) -> list[Project]:
         stmt = select(Project).where(

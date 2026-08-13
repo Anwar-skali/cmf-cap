@@ -72,18 +72,14 @@ describe('ProjectStructureExtractor.extractFromJson', () => {
     expect(result.status).toBe('DRAFT');
     expect(result.orientation).toBe('HORIZONTAL');
 
-    // 3 modules -> 3 sections
+    // 3 source modules are reorganized into the role sections the Manuel Project
+    // workflow renders (Buyer + SQD for this fixture; General for leftovers).
     expect(result.detectedModuleCount).toBe(3);
-    expect(result.sections.map((s) => s.name)).toEqual([
-      'Project Management',
-      'Supplier Management',
-      'Quality Management',
-    ]);
+    expect(result.sections.map((s) => s.id)).toEqual(['sec_buyer', 'sec_sqd', 'sec_general']);
+    expect(result.sections.map((s) => s.name)).toEqual(['Buyer', 'SQD', 'General']);
 
-    // 3 tables -> 3 groups
-    const tables = result.sections.flatMap((s) => s.groups);
+    // 3 source tables preserved as groups.
     expect(result.detectedTableCount).toBe(3);
-    expect(tables.map((t) => t.name)).toEqual(['project', 'supplier', 'quality_assessment']);
 
     // 11 fields — and no top-level 'modules'/'tables'/'relationships' pseudo-fields
     const fields = allFields(result);
@@ -95,6 +91,15 @@ describe('ProjectStructureExtractor.extractFromJson', () => {
     expect(names).not.toContain('relationships');
     expect(names).toContain('project_code');
     expect(names).toContain('evaluation');
+
+    // Fields are distributed under the correct role sections.
+    const sectionOf = (fieldName: string) =>
+      result.sections.find((s) => s.groups.some((g) => g.fields.some((f) => f.internalName === fieldName)))?.id;
+    expect(sectionOf('supplier_code')).toBe('sec_buyer');
+    expect(sectionOf('supplier_name')).toBe('sec_buyer');
+    expect(sectionOf('quality_score')).toBe('sec_sqd');
+    expect(sectionOf('evaluation')).toBe('sec_sqd');
+    expect(sectionOf('project_code')).toBe('sec_general');
 
     // 2 relationships, preserved verbatim
     expect(result.detectedRelationshipCount).toBe(2);
@@ -119,12 +124,19 @@ describe('ProjectStructureExtractor.extractFromJson', () => {
   it('keeps raw order of modules, tables, and fields through the nested shape', () => {
     const result = ProjectStructureExtractor.extractFromJson(CMF_SUPPLIER_JSON);
     expect(result.sections.map((s) => s.order)).toEqual([1, 2, 3]);
-    expect(result.sections.map((s) => s.groups.map((g) => g.order))).toEqual([[1], [1], [1]]);
-    expect(result.sections.map((s) => s.groups.map((g) => g.fields.map((f) => f.order)))).toEqual([
-      [[1, 2, 3, 4]],
-      [[1, 2, 3, 4]],
-      [[1, 2, 3]],
-    ]);
+
+    // Each role section preserves its groups; group ids are unique across sections.
+    const groupIds = result.sections.flatMap((s) => s.groups.map((g) => g.id));
+    expect(new Set(groupIds).size).toBe(groupIds.length);
+
+    // All 11 fields survive, preserving per-field order within each group.
+    expect(allFields(result)).toHaveLength(11);
+    result.sections.forEach((s) =>
+      s.groups.forEach((g) => {
+        const orders = g.fields.map((f) => f.order as number);
+        expect(orders).toEqual([...orders].sort((a, b) => a - b));
+      }),
+    );
   });
 
   it('preserves options (string + object form) and default values from JSON fields', () => {
@@ -241,6 +253,50 @@ describe('ProjectStructureExtractor.extractFromJson', () => {
     });
   });
 
+  it('preserves explicit role and permissions metadata on imported fields', () => {
+    const result = ProjectStructureExtractor.extractFromJson({
+      structure: { name: 'R', code: 'R', version: '1.0' },
+      modules: [
+        {
+          code: 'M',
+          name: 'Module',
+          tables: [
+            {
+              name: 'master',
+              fields: [
+                { name: 'capacity', label: 'Capacity', type: 'integer', role: 'CAPACITY_MANAGER' },
+                {
+                  name: 'quality_score',
+                  label: 'Quality Score',
+                  type: 'percentage',
+                  permissions: { rolesAllowedToEdit: ['sqd', 'admin'] },
+                },
+                { name: 'supplier_name', label: 'Supplier Name', type: 'text' },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+
+    const byName: Record<string, any> = Object.fromEntries(allFields(result).map((f) => [f.internalName, f]));
+
+    // Explicit `role` wins over name heuristics and is persisted as permissions.
+    expect(byName['capacity'].permissions.rolesAllowedToEdit).toEqual(['capacity_manager', 'admin']);
+    const sectionOf = (fieldName: string) =>
+      result.sections.find((s) => s.groups.some((g) => g.fields.some((f) => f.internalName === fieldName)))?.id;
+    expect(sectionOf('capacity')).toBe('sec_capacity_manager');
+
+    // Explicit permissions are preserved and drive classification.
+    expect(byName['quality_score'].permissions.rolesAllowedToEdit).toEqual(['sqd', 'admin']);
+    expect(sectionOf('quality_score')).toBe('sec_sqd');
+
+    // Name-based classification still works, and role sections carry permissions.
+    expect(sectionOf('supplier_name')).toBe('sec_buyer');
+    const buyerSection = result.sections.find((s) => s.id === 'sec_buyer');
+    expect(buyerSection?.permissions?.rolesAllowedToEdit).toEqual(['buyer', 'admin']);
+  });
+
   it('throws a structured error instead of flattening unknown top-level keys', () => {
     expect(() =>
       ProjectStructureExtractor.extractFromJson({ foo: 'bar', baz: 'qux', modules: 'not_a_list' }),
@@ -309,21 +365,20 @@ describe('ProjectStructureExtractor.extractFromJson', () => {
     expect(result.status).toBe('DRAFT');
     expect(result.orientation).toBe('VERTICAL');
 
-    // Expected: 3 sections, 10 fields total
+    // Expected: 3 source modules reorganized into role sections, 10 fields total
     expect(result.detectedModuleCount).toBe(3);
     expect(result.detectedFieldCount).toBe(10);
     expect(result.detectedRelationshipCount).toBe(2);
 
-    expect(result.sections[0].name).toBe('Project');
-    expect(result.sections[0].groups[0].fields.length).toBe(4);
+    expect(result.sections.map((s) => s.name)).toEqual(['Buyer', 'SQD', 'General']);
 
-    expect(result.sections[1].name).toBe('Supplier');
-    expect(result.sections[1].groups[0].fields.length).toBe(3);
+    const fields = allFields(result);
+    const byName = Object.fromEntries(fields.map((f) => [f.internalName, f]));
+    expect(fields.length).toBe(10);
+    expect(byName['supplier_code'].required).toBe(true);
+    expect(byName['country'].required).toBe(false);
 
-    expect(result.sections[2].name).toBe('Quality Assessment');
-    expect(result.sections[2].groups[0].fields.length).toBe(3);
-
-    const evaluationField = result.sections[2].groups[0].fields.find((f) => f.internalName === 'evaluation');
+    const evaluationField = byName['evaluation'];
     expect(evaluationField).toBeDefined();
     expect(evaluationField?.type).toBe('dropdown');
     expect(evaluationField?.options).toEqual([
