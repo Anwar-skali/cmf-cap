@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useProjectsQuery } from '@/hooks/queries/useProjectsQuery';
-import { useDeleteProjectMutation } from '@/hooks/mutations/useProjectMutations';
+import { useDeleteProjectMutation, useBulkDeleteProjectMutation } from '@/hooks/mutations/useProjectMutations';
 import { useTemplate } from '@/context/TemplateContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { DynamicFilterBar } from '@/components/template-engine/DynamicFilterBar';
 import { DynamicTable } from '@/components/template-engine/DynamicTable';
 import { Button } from '@/components/ui/button';
-import { Plus, Layers, FileSpreadsheet } from 'lucide-react';
+import { Pagination } from '@/components/ui/pagination';
+import { Plus, Layers, FileSpreadsheet, Trash2, AlertTriangle, RefreshCw } from 'lucide-react';
 import { toast } from 'sonner';
 
 function isProjectMatchingTemplate(p: any, template: { id: string; code: string } | null): boolean {
@@ -66,29 +67,66 @@ function isProjectMatchingTemplate(p: any, template: { id: string; code: string 
 export default function ProjectsPage() {
   const { t } = useLanguage();
   const { templates, activeTemplate, setActiveTemplate, isLoading: isTemplateLoading } = useTemplate();
-  const { data: projectsData, isLoading: isProjectsLoading, refetch } = useProjectsQuery();
-  const deleteMutation = useDeleteProjectMutation();
 
+  // Pagination & selection state
+  const [page, setPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(10);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [filters, setFilters] = useState<Record<string, any>>({});
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [showBulkDeleteConfirm, setShowBulkDeleteConfirm] = useState<boolean>(false);
 
   const currentTemplate = activeTemplate || templates[0];
 
+  const { data: projectsData, isLoading: isProjectsLoading, refetch } = useProjectsQuery({
+    page,
+    page_size: pageSize,
+    search: searchQuery,
+    template_id: currentTemplate?.id,
+  });
+
+  const deleteMutation = useDeleteProjectMutation();
+  const bulkDeleteMutation = useBulkDeleteProjectMutation();
+
+  // Reset page & selection when search/filters/template change
   const handleFilterChange = (key: string, value: any) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
+    setPage(1);
+    setSelectedIds([]);
+  };
+
+  const handleSearchChange = (query: string) => {
+    setSearchQuery(query);
+    setPage(1);
+    setSelectedIds([]);
   };
 
   const handleReset = () => {
     setSearchQuery('');
     setFilters({});
+    setPage(1);
+    setSelectedIds([]);
+  };
+
+  const handleTemplateChange = (templateId: string) => {
+    const selected = templates.find((t) => t.id === templateId);
+    if (selected) {
+      setActiveTemplate(selected);
+      setPage(1);
+      setSelectedIds([]);
+    }
   };
 
   const handleDelete = (id: string) => {
     if (!confirm('Are you sure you want to delete this project?')) return;
     deleteMutation.mutate(id, {
       onSuccess: () => {
-        toast.success('Project deleted');
-        refetch();
+        setSelectedIds((prev) => prev.filter((item) => item !== id));
+        if (filteredProjects.length === 1 && page > 1) {
+          setPage(page - 1);
+        } else {
+          refetch();
+        }
       },
       onError: (err: any) => {
         toast.error(err?.message || 'Failed to delete project');
@@ -96,8 +134,46 @@ export default function ProjectsPage() {
     });
   };
 
+  const handleToggleSelectAll = () => {
+    const currentItemIds = filteredProjects.map((p) => p.id);
+    const allSelectedOnPage = currentItemIds.length > 0 && currentItemIds.every((id) => selectedIds.includes(id));
+    if (allSelectedOnPage) {
+      setSelectedIds((prev) => prev.filter((id) => !currentItemIds.includes(id)));
+    } else {
+      setSelectedIds((prev) => Array.from(new Set([...prev, ...currentItemIds])));
+    }
+  };
+
+  const handleToggleSelectRow = (id: string) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
+
+  const handleBulkDeleteConfirm = () => {
+    if (selectedIds.length === 0) return;
+    bulkDeleteMutation.mutate(selectedIds, {
+      onSuccess: (res) => {
+        const deletedCount = res?.deleted_count || selectedIds.length;
+        setSelectedIds([]);
+        setShowBulkDeleteConfirm(false);
+        if (filteredProjects.length === deletedCount && page > 1) {
+          setPage(page - 1);
+        } else {
+          refetch();
+        }
+      },
+      onError: (err: any) => {
+        setShowBulkDeleteConfirm(false);
+      },
+    });
+  };
+
   // Filter projects dynamically by template, search, and custom filters
   const allProjects = projectsData?.items || [];
+  const totalProjects = projectsData?.total ?? allProjects.length;
+  const totalPages = projectsData?.total_pages ?? projectsData?.totalPages ?? Math.max(1, Math.ceil(totalProjects / pageSize));
+
   const filteredProjects = allProjects.filter((p) => {
     // Ensure template match (K0 vs K9)
     if (!isProjectMatchingTemplate(p, currentTemplate)) {
@@ -149,16 +225,25 @@ export default function ProjectsPage() {
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
+          {/* Bulk Delete Button when items selected */}
+          {selectedIds.length > 0 && (
+            <Button
+              variant="destructive"
+              size="sm"
+              onClick={() => setShowBulkDeleteConfirm(true)}
+              className="bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl shadow-xs gap-1.5 cursor-pointer animate-fade-in"
+            >
+              <Trash2 className="h-4 w-4" /> Delete Selected ({selectedIds.length})
+            </Button>
+          )}
+
           {/* Template Switcher */}
           <div className="flex items-center gap-2 bg-card border border-border px-3 py-1.5 rounded-xl shadow-xs">
             <Layers className="h-4 w-4 text-primary" />
             <span className="text-xs font-semibold text-muted-foreground">Template:</span>
             <select
               value={currentTemplate.id}
-              onChange={(e) => {
-                const selected = templates.find((t) => t.id === e.target.value);
-                if (selected) setActiveTemplate(selected);
-              }}
+              onChange={(e) => handleTemplateChange(e.target.value)}
               className="bg-transparent text-xs font-bold text-foreground focus:outline-none cursor-pointer"
             >
               {templates.map((t) => (
@@ -190,7 +275,7 @@ export default function ProjectsPage() {
         onFilterChange={handleFilterChange}
         onReset={handleReset}
         searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
+        onSearchChange={handleSearchChange}
       />
 
       {/* Dynamic Data Table Container */}
@@ -200,8 +285,72 @@ export default function ProjectsPage() {
           projects={filteredProjects}
           onDelete={handleDelete}
           isLoading={isProjectsLoading}
+          selectedIds={selectedIds}
+          onToggleSelectAll={handleToggleSelectAll}
+          onToggleSelectRow={handleToggleSelectRow}
         />
+
+        {/* Pagination Control Bar */}
+        <div className="p-4 border-t border-border bg-muted/20">
+          <Pagination
+            currentPage={page}
+            totalPages={totalPages}
+            total={totalProjects}
+            pageSize={pageSize}
+            onPageChange={(newPage) => {
+              setSelectedIds([]);
+              setPage(newPage);
+            }}
+            onPageSizeChange={(newSize) => {
+              setSelectedIds([]);
+              setPageSize(newSize);
+              setPage(1);
+            }}
+          />
+        </div>
       </div>
+
+      {/* Bulk Delete Confirmation Dialog */}
+      {showBulkDeleteConfirm && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
+          <div className="bg-card border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-6">
+            <div className="flex items-center gap-3 text-rose-600">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-500/10 border border-rose-500/20 shrink-0">
+                <AlertTriangle className="h-6 w-6" />
+              </div>
+              <div>
+                <h3 className="text-lg font-extrabold text-foreground">Delete {selectedIds.length} selected project(s)?</h3>
+                <p className="text-xs text-muted-foreground mt-0.5">Bulk Project Deletion</p>
+              </div>
+            </div>
+
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              Are you sure you want to delete <strong className="text-foreground">{selectedIds.length} selected project(s)</strong>? This action cannot be undone and will soft-delete these records from the platform.
+            </p>
+
+            <div className="flex items-center justify-end gap-3 pt-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowBulkDeleteConfirm(false)}
+                disabled={bulkDeleteMutation.isPending}
+                className="rounded-full px-5 py-2 text-xs font-bold border-slate-300 dark:border-slate-700 cursor-pointer"
+              >
+                Cancel
+              </Button>
+              <Button
+                size="sm"
+                onClick={handleBulkDeleteConfirm}
+                disabled={bulkDeleteMutation.isPending}
+                className="bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-full px-5 py-2 text-xs shadow-md shadow-rose-500/20 gap-1.5 cursor-pointer"
+              >
+                {bulkDeleteMutation.isPending ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : <Trash2 className="h-3.5 w-3.5" />}
+                {bulkDeleteMutation.isPending ? 'Deleting...' : `Delete ${selectedIds.length} Projects`}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

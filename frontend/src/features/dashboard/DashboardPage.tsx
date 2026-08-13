@@ -1,6 +1,4 @@
 import React from 'react';
-import { useDashboardStatsQuery } from '@/hooks/queries/useDashboardQuery';
-import { useProjectsQuery } from '@/hooks/queries/useProjectsQuery';
 import { useTemplate } from '@/context/TemplateContext';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useLanguage } from '@/context/LanguageContext';
@@ -12,29 +10,96 @@ import { ErrorState } from '@/components/ui/error-state';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
+import { useProjectsQuery } from '@/hooks/queries/useProjectsQuery';
+import {
+  useCmfDashboardData,
+  MOCK_CAPACITY_TREND,
+  MOCK_SQD_PIE,
+  MOCK_PROJECT_STATUS_BAR,
+} from '@/hooks/useCmfDashboardData';
 import {
   FolderKanban,
-  Users,
-  Building2,
-  Award,
   Gauge,
   ShieldCheck,
   PlusCircle,
   TrendingUp,
   Sparkles,
-  Info,
   ChevronRight,
   UserCheck,
+  BarChart3,
+  AlertTriangle,
+  CheckCircle2,
+  Clock,
+  Users,
+  Zap,
+  Activity,
+  Target,
+  Calendar,
 } from 'lucide-react';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
+  LineChart,
+  Line,
+} from 'recharts';
+
+const PIE_COLORS = ['#0066CC', '#ef4444', '#10b981', '#f59e0b'];
+
+// ─── Reusable section container (same card styling used in DynamicDashboard) ─
+function SectionCard({ title, subtitle, icon: Icon, children }: {
+  title: string;
+  subtitle?: string;
+  icon: React.ElementType;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-card p-6 shadow-md shadow-slate-900/5 space-y-4">
+      <div className="flex items-center gap-3 border-b border-border pb-3">
+        <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-blue-600">
+          <Icon className="h-4 w-4" />
+        </div>
+        <div>
+          <h3 className="text-base font-extrabold text-foreground">{title}</h3>
+          {subtitle && <p className="text-xs text-muted-foreground">{subtitle}</p>}
+        </div>
+      </div>
+      {children}
+    </div>
+  );
+}
+
+// ─── Mini stat row inside section cards ──────────────────────────────────────
+function StatRow({ label, value, color = 'text-foreground' }: {
+  label: string;
+  value: string | number;
+  color?: string;
+}) {
+  return (
+    <div className="flex items-center justify-between py-1.5 border-b border-slate-100 dark:border-slate-800 last:border-0">
+      <span className="text-xs text-muted-foreground font-medium">{label}</span>
+      <span className={`text-sm font-extrabold ${color}`}>{value}</span>
+    </div>
+  );
+}
 
 export default function DashboardPage() {
   const { t } = useLanguage();
   const navigate = useNavigate();
-  const { data: stats, isLoading, error, refetch } = useDashboardStatsQuery();
   const { activeTemplate, templates } = useTemplate();
   const { data: projectsData } = useProjectsQuery();
   const { roleMeta, isBuyer, isCapacityManager, isSQD, isAdmin } = usePermissions();
   const { state: authState } = useAuthStore();
+
+  const cmf = useCmfDashboardData();
 
   const currentUser = authState.user;
   const userName = currentUser
@@ -62,18 +127,19 @@ export default function DashboardPage() {
     }
     return true;
   });
+
   const RoleIcon = roleMeta.icon;
 
-  if (error) {
-    return <ErrorState title="Failed to load dashboard" message={error?.message} onRetry={refetch} />;
+  if (cmf.error) {
+    return <ErrorState title="Failed to load CMF dashboard" message={cmf.error?.message} onRetry={cmf.refetch} />;
   }
 
-  if (isLoading) {
+  if (cmf.isLoading) {
     return (
       <div className="space-y-6">
         <Skeleton className="h-44 w-full rounded-2xl" />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[...Array(4)].map((_, i) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+          {[...Array(6)].map((_, i) => (
             <Skeleton key={i} className="h-56 rounded-2xl" />
           ))}
         </div>
@@ -81,26 +147,19 @@ export default function DashboardPage() {
     );
   }
 
-  // Calculated Stats
-  const totalProjects = stats?.totalProjects ?? projectsList.length ?? 148;
-  const activeProjects = stats?.activeProjects ?? 24;
-  const capacityManagersCount = 12;
-  const sqdEvaluationsCount = stats?.pendingAssessments ? stats.pendingAssessments + 18 : 32;
-
   const welcomeTitle = userName
-    ? `${t('dashboard.welcome_title', 'Welcome to CMF')}, ${userName}!`
-    : `${t('dashboard.welcome_title', 'Welcome to CMF')}!`;
+    ? `${t('dashboard.welcome_title', 'CMF Command Center')}, ${userName}!`
+    : `${t('dashboard.welcome_title', 'CMF Command Center')}!`;
 
   return (
     <div className="space-y-8 animate-fade-in pb-16">
-      {/* Top Hero Dark Banner (LTOS Style Header) */}
+      {/* ── Top Hero Dark Banner (unchanged design) ─────────────────────── */}
       <div className="relative overflow-hidden rounded-3xl bg-[#0a101d] text-white p-6 sm:p-8 lg:p-10 shadow-xl border border-slate-800">
-        {/* Subtle Background Glow Accent */}
         <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-blue-600/10 blur-3xl pointer-events-none" />
         <div className="absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-indigo-600/10 blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col justify-between gap-6">
-          {/* Top Breadcrumb & User Role Info */}
+          {/* Breadcrumb & Role */}
           <div className="flex items-center justify-between">
             <nav className="flex items-center gap-2 text-xs font-semibold text-slate-400">
               <span className="hover:text-white transition-colors cursor-pointer" onClick={() => navigate('/')}>
@@ -124,7 +183,7 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* Main Title & Description Paragraph */}
+          {/* Title */}
           <div className="space-y-3 max-w-4xl">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white">
               {welcomeTitle}
@@ -137,7 +196,7 @@ export default function DashboardPage() {
             </p>
           </div>
 
-          {/* Header Quick Actions */}
+          {/* Quick Actions */}
           <div className="flex flex-wrap items-center gap-3 pt-2">
             {(isBuyer || isAdmin) && (
               <Button
@@ -174,79 +233,264 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Enterprise LTOS Cards Section for Values & Labels */}
+      {/* ── 6 CMF Top-Level KPI Cards ────────────────────────────────────── */}
       <div className="space-y-4">
         <div className="flex items-center justify-between px-1">
           <h2 className="text-lg font-bold tracking-tight text-foreground flex items-center gap-2">
             <Sparkles className="h-4.5 w-4.5 text-blue-600" />
-            <span>{t('dashboard.overview', 'Executive Overview & Key Metrics')}</span>
+            <span>{t('dashboard.overview', 'CMF Executive KPIs')}</span>
           </h2>
           <span className="text-xs font-semibold text-muted-foreground">
             {t('dashboard.updated_live', 'Updated live')} • {new Date().toLocaleTimeString()}
           </span>
         </div>
 
-        {/* 4 LTOS Value & Label Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
           <KPICard
             variant="ltos"
-            title={t('kpi.direct_materials', 'Direct Materials')}
-            value={totalProjects}
+            title="Total Projects"
+            value={cmf.totalProjects}
             icon={FolderKanban}
-            subtitle={t(
-              'kpi.direct_materials_sub',
-              'Visualize & explore the full list of Direct Materials created objects - both Standard and WHAT IF'
-            )}
-            trend={{ value: '+12%', isPositive: true }}
-            actionText={t('kpi.explore', 'Explore')}
+            subtitle="All active CMF projects tracked across structures"
+            trend={{ value: '+8 this month', isPositive: true }}
+            actionText="View All"
             onClickAction={() => navigate('/projects')}
           />
 
           <KPICard
             variant="ltos"
-            title={t('kpi.semico_sourcing', 'SemiCo & Sourcing')}
-            value={activeProjects}
-            icon={Users}
-            subtitle={t(
-              'kpi.semico_sourcing_sub',
-              'Get access to the Semiconductor master data table for commodities in Development and Production'
-            )}
-            trend={{ value: '+4 Active', isPositive: true }}
-            actionText={t('kpi.explore_sourcing', 'Explore Sourcing')}
-            onClickAction={() => navigate('/projects')}
-          />
-
-          <KPICard
-            variant="ltos"
-            title={t('dashboard.view_capacity_matrix', 'Capacity Matrix')}
-            value={capacityManagersCount}
-            icon={Building2}
-            subtitle={t(
-              'kpi.capacity_matrix_sub',
-              'Simulate volume estimation analysis for impacted Chip set and line sizing parameters'
-            )}
-            trend={{ value: '100% OK', isPositive: true }}
-            actionText={t('kpi.view_matrix', 'View Matrix')}
+            title="Total Capacity"
+            value={`${(cmf.totalCapacity / 1000).toFixed(1)}K`}
+            icon={Gauge}
+            subtitle="Available production capacity units across suppliers"
+            trend={{ value: 'Stable', isPositive: true }}
+            actionText="Capacity Matrix"
             onClickAction={() => navigate('/capacity')}
           />
 
           <KPICard
             variant="ltos"
-            title={t('kpi.sqd_assessments', 'SQD Evaluations')}
-            value={sqdEvaluationsCount}
-            icon={Award}
-            subtitle={t(
-              'kpi.sqd_evaluations_sub',
-              'Review quality evaluations, CAT ratings, and supplier risk audits across platforms'
-            )}
-            trend={{ value: 'GREEN Audit', isPositive: true }}
-            actionText={t('kpi.view_audits', 'View Audits')}
+            title="Utilization"
+            value={`${cmf.utilizationPct}%`}
+            icon={Activity}
+            subtitle="Current capacity utilization across all lines"
+            trend={{ value: cmf.utilizationPct > 85 ? 'High Load' : 'Healthy', isPositive: cmf.utilizationPct <= 85 }}
+            actionText="Details"
+            onClickAction={() => navigate('/capacity')}
+          />
+
+          <KPICard
+            variant="ltos"
+            title="Capacity Gap"
+            value={`${(cmf.capacityGap / 1000).toFixed(1)}K`}
+            icon={Zap}
+            subtitle="Allocated minus used — available buffer capacity"
+            trend={{ value: 'Buffer OK', isPositive: true }}
+            actionText="Analyse"
+            onClickAction={() => navigate('/capacity')}
+          />
+
+          <KPICard
+            variant="ltos"
+            title="Active Suppliers"
+            value={cmf.activeSuppliers}
+            icon={Users}
+            subtitle="Suppliers with active capacity assessments"
+            trend={{ value: '+2 this quarter', isPositive: true }}
+            actionText="Suppliers"
+            onClickAction={() => navigate('/suppliers')}
+          />
+
+          <KPICard
+            variant="ltos"
+            title="Projects at Risk"
+            value={cmf.projectsAtRisk}
+            icon={AlertTriangle}
+            subtitle="Projects flagged with open risks or capacity shortfalls"
+            trend={{ value: cmf.projectsAtRisk > 0 ? `${cmf.projectsAtRisk} open` : 'None', isPositive: cmf.projectsAtRisk === 0 }}
+            actionText="View Risks"
             onClickAction={() => navigate('/risks')}
           />
         </div>
       </div>
 
-      {/* Dynamic Template Dashboard Insights & Visual Analytics */}
+      {/* ── Four CMF Section Panels ──────────────────────────────────────── */}
+      <div className="space-y-4 pt-2">
+        <div className="flex items-center justify-between border-b border-border pb-3 px-1">
+          <h2 className="text-lg font-bold tracking-tight text-foreground flex items-center gap-2">
+            <TrendingUp className="h-5 w-5 text-blue-600" />
+            <span>CMF Analytics</span>
+          </h2>
+          {currentTemplate && (
+            <Badge variant="outline" className="border-border bg-card text-muted-foreground text-xs font-bold rounded-full px-3 py-1">
+              Active Structure: {currentTemplate.code} v{currentTemplate.version}
+            </Badge>
+          )}
+        </div>
+
+        {/* Row 1: Capacity Overview + Project Status */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+          {/* ── Capacity Overview ─────────────────────────────────────── */}
+          <SectionCard title="Capacity Overview" subtitle="Production capacity breakdown (units/week)" icon={Gauge}>
+            <div className="grid grid-cols-2 gap-3 mb-4">
+              {[
+                { label: 'Available Capacity', value: cmf.availableCapacity.toLocaleString(), color: 'text-blue-600' },
+                { label: 'Allocated Capacity', value: cmf.allocatedCapacity.toLocaleString(), color: 'text-amber-600' },
+                { label: 'Used Capacity',      value: cmf.usedCapacity.toLocaleString(),      color: 'text-emerald-600' },
+                { label: 'Remaining Capacity', value: cmf.remainingCapacity.toLocaleString(), color: 'text-slate-600 dark:text-slate-300' },
+              ].map(({ label, value, color }) => (
+                <div key={label} className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-3 space-y-0.5">
+                  <p className="text-[11px] text-muted-foreground font-medium">{label}</p>
+                  <p className={`text-lg font-extrabold ${color}`}>{value}</p>
+                </div>
+              ))}
+            </div>
+            {/* Utilization % bar */}
+            <div className="space-y-1.5">
+              <div className="flex justify-between text-xs font-semibold">
+                <span className="text-muted-foreground">Utilization</span>
+                <span className={cmf.utilizationPct > 90 ? 'text-rose-600' : cmf.utilizationPct > 75 ? 'text-amber-600' : 'text-emerald-600'}>
+                  {cmf.utilizationPct}%
+                </span>
+              </div>
+              <div className="h-2.5 w-full rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+                <div
+                  className={`h-full rounded-full transition-all ${
+                    cmf.utilizationPct > 90 ? 'bg-rose-500' : cmf.utilizationPct > 75 ? 'bg-amber-500' : 'bg-emerald-500'
+                  }`}
+                  style={{ width: `${cmf.utilizationPct}%` }}
+                />
+              </div>
+            </div>
+            {/* Monthly trend chart */}
+            <div className="h-48 w-full pt-2">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={MOCK_CAPACITY_TREND}>
+                  <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
+                  <XAxis dataKey="month" stroke="#888888" fontSize={11} />
+                  <YAxis stroke="#888888" fontSize={10} tickFormatter={(v) => `${(v / 1000).toFixed(0)}K`} />
+                  <Tooltip formatter={(v: number) => v.toLocaleString()} />
+                  <Legend fontSize={11} />
+                  <Line type="monotone" dataKey="available" stroke="#94a3b8" strokeWidth={1.5} dot={false} name="Available" strokeDasharray="4 2" />
+                  <Line type="monotone" dataKey="allocated" stroke="#f59e0b" strokeWidth={2} dot={false} name="Allocated" />
+                  <Line type="monotone" dataKey="used"      stroke="#0066CC" strokeWidth={2.5} dot={false} name="Used" />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </SectionCard>
+
+          {/* ── Project Status ────────────────────────────────────────── */}
+          <SectionCard title="Project Status" subtitle="Distribution of projects by current status" icon={Target}>
+            <div className="space-y-1 mb-2">
+              <StatRow label="Active"    value={cmf.activeProjects}    color="text-blue-600" />
+              <StatRow label="On Track"  value={cmf.projectsOnTrack}   color="text-emerald-600" />
+              <StatRow label="At Risk"   value={cmf.projectsAtRisk}    color="text-rose-600" />
+              <StatRow label="Delayed"   value={cmf.projectsDelayed}   color="text-amber-600" />
+              <StatRow label="Completed" value={cmf.projectsCompleted} color="text-slate-500 dark:text-slate-400" />
+            </div>
+            <div className="h-56 w-full pt-1">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={MOCK_PROJECT_STATUS_BAR} layout="vertical" margin={{ left: 10 }}>
+                  <CartesianGrid strokeDasharray="3 3" opacity={0.2} horizontal={false} />
+                  <XAxis type="number" stroke="#888888" fontSize={11} />
+                  <YAxis type="category" dataKey="name" stroke="#888888" fontSize={11} width={70} />
+                  <Tooltip />
+                  <Bar dataKey="count" radius={[0, 6, 6, 0]} name="Projects">
+                    {MOCK_PROJECT_STATUS_BAR.map((entry, index) => {
+                      const colors = ['#0066CC', '#10b981', '#ef4444', '#f59e0b', '#94a3b8'];
+                      return <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />;
+                    })}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </SectionCard>
+        </div>
+
+        {/* Row 2: SQD Overview + Buyer/Project Overview */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+          {/* ── SQD Overview ──────────────────────────────────────────── */}
+          <SectionCard title="SQD Overview" subtitle="Supplier Quality & Delivery performance" icon={ShieldCheck}>
+            <div className="grid grid-cols-2 gap-3 mb-2">
+              {[
+                { label: 'Open Quality Issues',    value: cmf.openQualityIssues,    icon: AlertTriangle, color: 'text-amber-600' },
+                { label: 'Critical Issues',        value: cmf.criticalQualityIssues, icon: AlertTriangle, color: 'text-rose-600' },
+                { label: 'Open Actions',           value: cmf.openActions,           icon: CheckCircle2,  color: 'text-blue-600' },
+                { label: 'Supplier Quality Status',value: cmf.supplierQualityStatus, icon: ShieldCheck,   color: cmf.supplierQualityStatus === 'GREEN' ? 'text-emerald-600' : cmf.supplierQualityStatus === 'YELLOW' ? 'text-amber-600' : 'text-rose-600' },
+              ].map(({ label, value, icon: RowIcon, color }) => (
+                <div key={label} className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-3 space-y-1 flex flex-col">
+                  <div className={`flex items-center gap-1.5 ${color}`}>
+                    <RowIcon className="h-3.5 w-3.5" />
+                    <p className="text-[11px] font-bold">{label}</p>
+                  </div>
+                  <p className={`text-xl font-extrabold ${color}`}>{value}</p>
+                </div>
+              ))}
+            </div>
+            <div className="h-52 w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={MOCK_SQD_PIE}
+                    dataKey="value"
+                    nameKey="name"
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={80}
+                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                  >
+                    {MOCK_SQD_PIE.map((_, index) => (
+                      <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                  <Legend fontSize={11} />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </SectionCard>
+
+          {/* ── Buyer / Project Overview ──────────────────────────────── */}
+          <SectionCard title="Buyer / Project Overview" subtitle="Project distribution by customer & buyer activity" icon={BarChart3}>
+            <div className="space-y-1 mb-3">
+              <StatRow label="Active Projects"       value={cmf.activeProjects}     color="text-blue-600" />
+              <StatRow label="Upcoming Milestones"   value={cmf.upcomingMilestones} color="text-amber-600" />
+              <StatRow label="Projects at Risk"      value={cmf.projectsAtRisk}     color="text-rose-600" />
+            </div>
+            <h4 className="text-xs font-extrabold text-muted-foreground uppercase tracking-wider mb-2">Projects by Customer</h4>
+            <div className="h-52 w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={cmf.projectsByCustomer} margin={{ left: -10 }}>
+                  <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
+                  <XAxis dataKey="customer" stroke="#888888" fontSize={10} tick={{ dy: 4 }} />
+                  <YAxis stroke="#888888" fontSize={11} />
+                  <Tooltip />
+                  <Bar dataKey="count" fill="#0066CC" radius={[6, 6, 0, 0]} name="Projects">
+                    {cmf.projectsByCustomer.map((_, index) => {
+                      const shades = ['#0066CC', '#0052A3', '#3385d6', '#1a73e8', '#64a8f0'];
+                      return <Cell key={`cell-${index}`} fill={shades[index % shades.length]} />;
+                    })}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="pt-2 flex flex-wrap gap-2">
+              {cmf.projectsByCustomer.map(({ customer, count }) => (
+                <span
+                  key={customer}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-[10px] font-bold px-2.5 py-0.5"
+                >
+                  <span className="font-black">{count}</span> {customer}
+                </span>
+              ))}
+            </div>
+          </SectionCard>
+        </div>
+      </div>
+
+      {/* ── Dynamic Template Dashboard (unchanged — shown when template is active) */}
       {currentTemplate && (
         <div className="space-y-4 pt-4">
           <div className="flex items-center justify-between border-b border-border pb-3 px-1">
@@ -267,5 +511,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-
-

@@ -27,3 +27,9 @@ export function deleteProject(id: string): Promise<void> {
 export function updateProjectStatus(id: string, status: string): Promise<Project> {
   return api.patch<Project>(API_ENDPOINTS.PROJECTS.STATUS(id), { status });
 }
+
+export function bulkDeleteProjects(projectIds: string[]): Promise<{ deleted_count: number; deleted_ids: string[] }> {
+  return api.post<{ deleted_count: number; deleted_ids: string[] }>(API_ENDPOINTS.PROJECTS.BULK_DELETE, {
+    project_ids: projectIds,
+  });
+}

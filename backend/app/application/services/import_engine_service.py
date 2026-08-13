@@ -203,22 +203,40 @@ class ImportEngineService:
         schema_keys = {col.key for col in schema.columns}
         schema_key_map = {col.key.lower(): col.key for col in schema.columns}
 
+        # Build lookup for Excel headers present in the uploaded file
+        header_map = {h.lower().strip(): h for h in headers if h}
+
         for k, v in custom_mapping.items():
             if isinstance(v, dict):
                 excel_col = v.get("excel")
                 if excel_col:
                     column_mapping[str(excel_col)] = k
             elif isinstance(v, str):
-                # Check if k is a DB field key
-                if k in schema_keys or k.lower() in schema_key_map:
-                    resolved_key = schema_key_map.get(k.lower(), k)
-                    column_mapping[v] = resolved_key
-                # Or check if v is a DB field key
-                elif v in schema_keys or v.lower() in schema_key_map:
-                    resolved_key = schema_key_map.get(v.lower(), v)
-                    column_mapping[k] = resolved_key
+                clean_k = str(k).strip()
+                clean_v = str(v).strip()
+
+                k_is_header = clean_k in headers or clean_k.lower() in header_map
+                v_is_header = clean_v in headers or clean_v.lower() in header_map
+
+                exact_k_header = header_map.get(clean_k.lower(), clean_k) if k_is_header else clean_k
+                exact_v_header = header_map.get(clean_v.lower(), clean_v) if v_is_header else clean_v
+
+                k_is_db = clean_k in schema_keys or clean_k.lower() in schema_key_map
+                v_is_db = clean_v in schema_keys or clean_v.lower() in schema_key_map
+
+                resolved_k_db = schema_key_map.get(clean_k.lower(), clean_k) if k_is_db else clean_k
+                resolved_v_db = schema_key_map.get(clean_v.lower(), clean_v) if v_is_db else clean_v
+
+                if k_is_header and v_is_db:
+                    column_mapping[exact_k_header] = resolved_v_db
+                elif v_is_header and k_is_db:
+                    column_mapping[exact_v_header] = resolved_k_db
+                elif k_is_header:
+                    column_mapping[exact_k_header] = resolved_v_db
+                elif v_is_header:
+                    column_mapping[exact_v_header] = resolved_k_db
                 else:
-                    column_mapping[k] = v
+                    column_mapping[clean_k] = resolved_v_db if v_is_db else clean_v
 
         return column_mapping
 
@@ -587,7 +605,7 @@ class ImportEngineService:
             if err.get("error_type") == "DuplicateInDatabase" and err["row_index"] > 0
         }
         val_error_map = {
-            err["row_index"]: err["message"]
+            err["row_index"]: err
             for err in validation_errors
             if err.get("error_type") not in ("DuplicateInFile", "DuplicateInDatabase") and err["row_index"] > 0
         }
@@ -635,10 +653,15 @@ class ImportEngineService:
                 if row_idx in val_error_map:
                     skipped_count += 1
                     validation_errors_count += 1
+                    err_info = val_error_map[row_idx]
+                    col_name = err_info.get("column_name", "")
                     skipped_details.append({
                         "row_index": row_idx,
-                        "reason": "Validation error",
-                        "message": val_error_map[row_idx],
+                        "reason": f"Validation error: {col_name}" if col_name else "Validation error",
+                        "message": err_info.get("message", "Validation error"),
+                        "column_name": col_name,
+                        "field_key": err_info.get("field_key"),
+                        "raw_value": err_info.get("raw_value"),
                     })
                     continue
 
@@ -982,14 +1005,20 @@ class ImportEngineService:
                 project_payload["template_version"] = tmpl.version
 
             code_str = str(code).strip()
-            existing = await uow.projects.get_by_code(code_str)
-            if not existing:
-                # Also check all projects in case code matches case-insensitively or is stored in data dict
-                all_projects = await uow.projects.get_multi(limit=5000)
+            from sqlalchemy import select
+            from app.infrastructure.persistence.models.project import Project as ProjectModel
+
+            stmt = select(ProjectModel).where(ProjectModel.code == code_str)
+            res = await uow.session.execute(stmt)
+            existing_obj = res.scalars().first()
+
+            if not existing_obj:
+                all_stmt = select(ProjectModel)
+                all_res = await uow.session.execute(all_stmt)
                 clean_target = code_str.lower()
-                for p in all_projects:
+                for p in all_res.scalars().all():
                     if p.code and p.code.strip().lower() == clean_target:
-                        existing = p
+                        existing_obj = p
                         break
                     if p.data and isinstance(p.data, dict):
                         if (
@@ -997,12 +1026,34 @@ class ImportEngineService:
                             or str(p.data.get("code", "")).strip().lower() == clean_target
                             or str(p.data.get("part_number", "")).strip().lower() == clean_target
                         ):
-                            existing = p
+                            existing_obj = p
                             break
 
-            if existing:
-                if mode == "upsert":
-                    await uow.projects.update(existing.id, project_payload)
+            if existing_obj:
+                is_soft_deleted = existing_obj.deleted_at is not None
+                if mode == "upsert" or is_soft_deleted:
+                    # Directly update fields on the ORM object.
+                    # We CANNOT use uow.projects.update() here because:
+                    #   (a) it calls get() which filters deleted_at IS NULL — soft-deleted
+                    #       records would not be found and update() returns None silently.
+                    #   (b) its data_dict strips None values, so deleted_at=None would
+                    #       never be applied and the record would remain soft-deleted.
+                    from sqlalchemy.orm.attributes import flag_modified
+                    from datetime import datetime
+
+                    for field, value in project_payload.items():
+                        if hasattr(existing_obj, field):
+                            setattr(existing_obj, field, value)
+
+                    # Explicitly restore soft-deleted record
+                    existing_obj.deleted_at = None
+                    existing_obj.updated_at = datetime.utcnow()
+
+                    if hasattr(existing_obj, "data") and "data" in project_payload:
+                        flag_modified(existing_obj, "data")
+
+                    uow.session.add(existing_obj)
+                    await uow.session.flush()
                     return True, True
                 else:
                     return False, False

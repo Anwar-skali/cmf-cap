@@ -9,6 +9,9 @@ interface DynamicTableProps {
   projects: Project[];
   onDelete?: (id: string) => void;
   isLoading?: boolean;
+  selectedIds?: string[];
+  onToggleSelectAll?: () => void;
+  onToggleSelectRow?: (id: string) => void;
 }
 
 // Curated column definitions for CMF K9 template
@@ -34,6 +37,9 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
   projects,
   onDelete,
   isLoading = false,
+  selectedIds = [],
+  onToggleSelectAll,
+  onToggleSelectRow,
 }) => {
   const templateCode = template?.code?.toUpperCase();
 
@@ -231,12 +237,25 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
     );
   }
 
+  const isAllSelected = projects.length > 0 && projects.every((p) => selectedIds.includes(p.id));
+
   return (
     <div className="rounded-xl border border-border bg-card shadow-sm overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full text-left text-xs border-collapse">
           <thead>
             <tr className="border-b border-border bg-muted/40 text-muted-foreground font-semibold">
+              {onToggleSelectRow && (
+                <th className="px-4 py-3 w-10 text-center">
+                  <input
+                    type="checkbox"
+                    checked={isAllSelected}
+                    onChange={onToggleSelectAll}
+                    className="rounded border-slate-300 dark:border-slate-700 text-primary focus:ring-primary h-4 w-4 cursor-pointer accent-primary"
+                    title="Select all on current page"
+                  />
+                </th>
+              )}
               <th className="px-4 py-3 font-bold whitespace-nowrap">Code</th>
               <th className="px-4 py-3 font-bold whitespace-nowrap">Project Name</th>
               {visibleColumns.map((col) => (
@@ -252,13 +271,28 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
             </tr>
           </thead>
           <tbody className="divide-y divide-border/60">
-            {projects.map((project) => (
-              <tr key={project.id} className="hover:bg-muted/30 transition-colors">
-                <td className="px-4 py-3 font-mono font-bold text-primary whitespace-nowrap">
-                  <Link to={`/projects/${project.id}`} className="hover:underline">
-                    {project.code}
-                  </Link>
-                </td>
+            {projects.map((project) => {
+              const isSelected = selectedIds.includes(project.id);
+              return (
+                <tr
+                  key={project.id}
+                  className={`hover:bg-muted/30 transition-colors ${isSelected ? 'bg-primary/10 dark:bg-primary/20' : ''}`}
+                >
+                  {onToggleSelectRow && (
+                    <td className="px-4 py-3 text-center">
+                      <input
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={() => onToggleSelectRow(project.id)}
+                        className="rounded border-slate-300 dark:border-slate-700 text-primary focus:ring-primary h-4 w-4 cursor-pointer accent-primary"
+                      />
+                    </td>
+                  )}
+                  <td className="px-4 py-3 font-mono font-bold text-primary whitespace-nowrap">
+                    <Link to={`/projects/${project.id}`} className="hover:underline">
+                      {project.code}
+                    </Link>
+                  </td>
                 <td className="px-4 py-3 font-semibold text-foreground whitespace-nowrap max-w-[200px]">
                   <Link to={`/projects/${project.id}`} className="hover:text-primary truncate block">
                     {getProjectDisplayName(project)}
@@ -301,8 +335,9 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
                   </div>
                 </td>
               </tr>
-            ))}
-          </tbody>
+            );
+          })}
+        </tbody>
         </table>
       </div>
     </div>

@@ -7,6 +7,8 @@ from typing import Any
 from fastapi import APIRouter, Depends, Query
 
 from app.application.dto.projects import (
+    BulkDeleteProjectsRequest,
+    BulkDeleteProjectsResponse,
     CreateProjectRequest,
     ProjectFilter,
     ProjectListResponse,
@@ -46,6 +48,8 @@ async def list_projects(
     template_id: uuid.UUID | None = Query(None),
     skip: int = Query(0, ge=0),
     limit: int = Query(20, ge=1, le=100),
+    page: int | None = Query(None, ge=1),
+    page_size: int | None = Query(None, ge=1, le=100),
     sort_by: str | None = Query("created_at"),
     sort_desc: bool = Query(True),
     current_user: User = Depends(get_current_active_user),
@@ -62,10 +66,25 @@ async def list_projects(
         template_id=template_id,
         skip=skip,
         limit=limit,
+        page=page,
+        page_size=page_size,
         sort_by=sort_by,
         sort_desc=sort_desc,
     )
     return await project_service.get_projects(filter_data)
+
+
+@router.post(
+    "/bulk-delete",
+    response_model=BulkDeleteProjectsResponse,
+    summary="Bulk delete projects (soft delete)",
+)
+async def bulk_delete_projects(
+    data: BulkDeleteProjectsRequest,
+    current_user: User = Depends(get_current_active_user),
+    project_service: ProjectService = Depends(get_project_service),
+) -> Any:
+    return await project_service.bulk_delete_projects(data.project_ids, user_id=current_user.id)
 
 
 @router.post(

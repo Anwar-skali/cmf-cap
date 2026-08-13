@@ -4,6 +4,8 @@ import uuid
 from typing import Any
 
 from app.application.dto.projects import (
+    BulkDeleteProjectsRequest,
+    BulkDeleteProjectsResponse,
     CreateProjectRequest,
     ProjectFilter,
     ProjectListResponse,
@@ -318,7 +320,40 @@ class ProjectService:
 
         return result
 
+    async def bulk_delete_projects(
+        self,
+        project_ids: list[uuid.UUID],
+        user_id: uuid.UUID | None = None,
+    ) -> BulkDeleteProjectsResponse:
+        deleted_ids: list[uuid.UUID] = []
+        for pid in project_ids:
+            project = await self._uow.projects.get(pid)
+            if project is not None:
+                success = await self._uow.projects.delete(pid)
+                if success:
+                    deleted_ids.append(pid)
+                    await self._uow.activity_logs.create({
+                        "user_id": user_id,
+                        "action": ActivityAction.DELETE.value,
+                        "resource_type": "project",
+                        "resource_id": str(pid),
+                        "details": {"code": project.code, "name": project.name, "bulk": True},
+                    })
+
+        if deleted_ids:
+            await self._uow.commit()
+            if self._cache is not None:
+                await self._cache.delete("dashboard:stats")
+
+        return BulkDeleteProjectsResponse(deleted_count=len(deleted_ids), deleted_ids=deleted_ids)
+
     async def get_projects(self, filter: ProjectFilter) -> ProjectListResponse:
+        import math
+
+        if filter.page is not None and filter.page_size is not None:
+            filter.skip = (filter.page - 1) * filter.page_size
+            filter.limit = filter.page_size
+
         filters: dict[str, Any] = {}
         if filter.status is not None:
             filters["status"] = filter.status
@@ -350,12 +385,20 @@ class ProjectService:
                 filters=filters,
             )
 
+        limit = filter.limit or 20
+        skip = filter.skip or 0
+        current_page = (skip // limit) + 1 if limit > 0 else 1
+        total_pages = math.ceil(total / limit) if limit > 0 and total > 0 else 1
+
         responses = [await self._build_response(p) for p in items]
         return ProjectListResponse(
             items=responses,
             total=total,
-            skip=filter.skip,
-            limit=filter.limit,
+            skip=skip,
+            limit=limit,
+            page=current_page,
+            page_size=limit,
+            total_pages=total_pages,
         )
 
     async def update_status(self, id: uuid.UUID, data: ProjectStatusUpdateRequest, user_id: uuid.UUID | None = None) -> ProjectResponse:

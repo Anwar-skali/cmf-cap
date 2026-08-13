@@ -25100,3 +25100,2196 @@ zipfile.BadZipFile: File is not a zip file
 2026-08-12 10:54:46,223 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:cat 3 onsite -> cat_3_onsite
 2026-08-12 10:54:46,223 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:cat 3 need -> cat_3_need
 2026-08-12 10:54:46,224 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for CMF_SF:cat-3 type -> cat_3_type
+2026-08-12 10:54:46,228 - app.main - INFO - POST /api/v1/import/save-mapping-memory -> 200
+2026-08-12 10:56:06,466 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-12 10:56:06,477 - app.main - INFO - GET /api/v1/projects
+2026-08-12 10:56:07,158 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 10:56:07,528 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-12 10:56:17,333 - app.main - INFO - GET /api/v1/projects
+2026-08-12 10:56:17,594 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 10:56:33,237 - app.main - INFO - GET /api/v1/projects/efc5b1b2-9acc-47e4-8930-4318a217e95a
+2026-08-12 10:56:33,363 - app.main - INFO - GET /api/v1/projects/efc5b1b2-9acc-47e4-8930-4318a217e95a -> 200
+2026-08-12 10:56:33,739 - app.main - INFO - GET /api/v1/suppliers
+2026-08-12 10:56:33,744 - app.main - INFO - GET /api/v1/users
+2026-08-12 10:56:34,086 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-12 10:56:34,167 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-12 10:57:02,552 - app.main - INFO - GET /api/v1/projects/efc5b1b2-9acc-47e4-8930-4318a217e95a
+2026-08-12 10:57:02,660 - app.main - INFO - GET /api/v1/projects/efc5b1b2-9acc-47e4-8930-4318a217e95a -> 200
+2026-08-12 10:57:35,400 - app.main - INFO - GET /api/v1/projects/efc5b1b2-9acc-47e4-8930-4318a217e95a
+2026-08-12 10:57:35,558 - app.main - INFO - GET /api/v1/projects/efc5b1b2-9acc-47e4-8930-4318a217e95a -> 200
+2026-08-12 10:57:41,246 - app.main - INFO - GET /api/v1/projects/efc5b1b2-9acc-47e4-8930-4318a217e95a
+2026-08-12 10:57:41,362 - app.main - INFO - GET /api/v1/projects/efc5b1b2-9acc-47e4-8930-4318a217e95a -> 200
+2026-08-12 10:57:47,933 - app.main - INFO - GET /api/v1/projects/efc5b1b2-9acc-47e4-8930-4318a217e95a
+2026-08-12 10:57:48,075 - app.main - INFO - GET /api/v1/projects/efc5b1b2-9acc-47e4-8930-4318a217e95a -> 200
+2026-08-12 10:58:25,463 - app.main - INFO - GET /api/v1/projects/efc5b1b2-9acc-47e4-8930-4318a217e95a
+2026-08-12 10:58:25,582 - app.main - INFO - GET /api/v1/projects/efc5b1b2-9acc-47e4-8930-4318a217e95a -> 200
+2026-08-12 10:58:40,374 - app.main - INFO - GET /api/v1/projects/efc5b1b2-9acc-47e4-8930-4318a217e95a
+2026-08-12 10:58:40,456 - app.main - INFO - GET /api/v1/projects/efc5b1b2-9acc-47e4-8930-4318a217e95a -> 200
+2026-08-12 10:58:44,471 - app.main - INFO - GET /api/v1/projects
+2026-08-12 10:58:44,867 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 10:58:57,220 - app.main - INFO - GET /api/v1/projects/4a1abdf4-edc6-4957-b4be-5f5e42ec1d53
+2026-08-12 10:58:57,334 - app.main - INFO - GET /api/v1/projects/4a1abdf4-edc6-4957-b4be-5f5e42ec1d53 -> 200
+2026-08-12 10:58:57,707 - app.main - INFO - GET /api/v1/suppliers
+2026-08-12 10:58:57,712 - app.main - INFO - GET /api/v1/users
+2026-08-12 10:58:58,069 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-12 10:58:58,148 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-12 10:59:27,395 - app.main - INFO - GET /api/v1/projects/4a1abdf4-edc6-4957-b4be-5f5e42ec1d53
+2026-08-12 10:59:27,515 - app.main - INFO - GET /api/v1/projects/4a1abdf4-edc6-4957-b4be-5f5e42ec1d53 -> 200
+2026-08-12 10:59:32,590 - app.main - INFO - GET /api/v1/projects
+2026-08-12 10:59:32,730 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 10:59:32,916 - app.main - INFO - GET /api/v1/projects
+2026-08-12 10:59:33,102 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:02:31,694 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:02:31,707 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-12 11:02:32,754 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:02:33,086 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-12 11:02:37,854 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:02:38,164 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:02:48,893 - app.main - INFO - GET /api/v1/risks
+2026-08-12 11:02:49,135 - app.main - INFO - GET /api/v1/risks -> 200
+2026-08-12 11:02:52,193 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:02:52,379 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:04:09,975 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:04:09,979 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-12 11:04:09,983 - app.main - INFO - GET /api/v1/projects -> 401
+2026-08-12 11:04:10,013 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-12 11:04:10,169 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-12 11:04:10,189 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:04:10,477 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:04:32,398 - app.main - INFO - DELETE /api/v1/projects/f34bbfa3-3780-402b-914a-548f5829f801
+2026-08-12 11:04:32,646 - app.main - INFO - DELETE /api/v1/projects/f34bbfa3-3780-402b-914a-548f5829f801 -> 200
+2026-08-12 11:04:32,681 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:04:33,138 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:04:33,167 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:04:33,554 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:04:39,133 - app.main - INFO - DELETE /api/v1/projects/596cbdf8-0cb2-4dbc-9227-21986617b5aa
+2026-08-12 11:04:39,366 - app.main - INFO - DELETE /api/v1/projects/596cbdf8-0cb2-4dbc-9227-21986617b5aa -> 200
+2026-08-12 11:04:39,405 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:04:39,750 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:04:39,765 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:04:39,985 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:04:41,580 - app.main - INFO - DELETE /api/v1/projects/0f40edcc-cc5e-4916-9a7b-15bd8466300f
+2026-08-12 11:04:41,840 - app.main - INFO - DELETE /api/v1/projects/0f40edcc-cc5e-4916-9a7b-15bd8466300f -> 200
+2026-08-12 11:04:41,916 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:04:42,241 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:04:42,263 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:04:42,576 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:04:44,109 - app.main - INFO - DELETE /api/v1/projects/90b4f53f-692e-49c4-a623-bc42f379dcb3
+2026-08-12 11:04:44,332 - app.main - INFO - DELETE /api/v1/projects/90b4f53f-692e-49c4-a623-bc42f379dcb3 -> 200
+2026-08-12 11:04:44,372 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:04:44,742 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:04:44,766 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:04:45,088 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:06:36,584 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:06:36,891 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:06:39,577 - app.main - INFO - GET /api/v1/auth/me
+2026-08-12 11:06:39,666 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-12 11:06:39,683 - app.main - INFO - GET /api/v1/auth/me
+2026-08-12 11:06:39,769 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-12 11:06:39,835 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:06:39,844 - app.main - INFO - GET /api/v1/templates
+2026-08-12 11:06:39,968 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-12 11:06:39,992 - app.main - INFO - GET /api/v1/templates
+2026-08-12 11:06:40,213 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-12 11:06:40,349 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:09:52,891 - app.main - INFO - Shutting down CMF Platform API
+2026-08-12 11:09:59,063 - app.main - INFO - Starting CMF Platform API
+2026-08-12 11:09:59,084 - app.main - INFO - Database tables created (SQLite)
+2026-08-12 11:09:59,846 - app.main - INFO - Shutting down CMF Platform API
+2026-08-12 11:10:05,352 - app.main - INFO - Starting CMF Platform API
+2026-08-12 11:10:05,364 - app.main - INFO - Database tables created (SQLite)
+2026-08-12 11:10:05,479 - app.main - INFO - Shutting down CMF Platform API
+2026-08-12 11:10:10,452 - app.main - INFO - Starting CMF Platform API
+2026-08-12 11:10:10,465 - app.main - INFO - Database tables created (SQLite)
+2026-08-12 11:10:10,580 - app.main - INFO - Shutting down CMF Platform API
+2026-08-12 11:10:16,058 - app.main - INFO - Starting CMF Platform API
+2026-08-12 11:10:16,070 - app.main - INFO - Database tables created (SQLite)
+2026-08-12 11:11:32,945 - app.main - INFO - GET /api/v1/auth/me
+2026-08-12 11:11:33,229 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-12 11:11:33,249 - app.main - INFO - GET /api/v1/auth/me
+2026-08-12 11:11:33,352 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-12 11:11:33,495 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:11:33,506 - app.main - INFO - GET /api/v1/templates
+2026-08-12 11:11:33,750 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-12 11:11:33,770 - app.main - INFO - GET /api/v1/templates
+2026-08-12 11:11:33,917 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-12 11:11:34,021 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:11:40,115 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:11:40,316 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:11:49,086 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:11:49,317 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:13:43,791 - app.main - INFO - Shutting down CMF Platform API
+2026-08-12 11:13:49,995 - app.main - INFO - Starting CMF Platform API
+2026-08-12 11:13:50,007 - app.main - INFO - Database tables created (SQLite)
+2026-08-12 11:13:50,127 - app.main - INFO - Shutting down CMF Platform API
+2026-08-12 11:13:55,533 - app.main - INFO - Starting CMF Platform API
+2026-08-12 11:13:55,544 - app.main - INFO - Database tables created (SQLite)
+2026-08-12 11:14:20,954 - app.main - INFO - Shutting down CMF Platform API
+2026-08-12 11:14:26,383 - app.main - INFO - Starting CMF Platform API
+2026-08-12 11:14:26,395 - app.main - INFO - Database tables created (SQLite)
+2026-08-12 11:15:49,235 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:15:49,896 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:15:56,894 - app.main - INFO - GET /api/v1/auth/me
+2026-08-12 11:15:56,969 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-12 11:15:56,982 - app.main - INFO - GET /api/v1/auth/me
+2026-08-12 11:15:57,061 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-12 11:15:57,110 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:15:57,112 - app.main - INFO - GET /api/v1/templates
+2026-08-12 11:15:57,374 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-12 11:15:57,403 - app.main - INFO - GET /api/v1/templates
+2026-08-12 11:15:57,465 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:15:57,723 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-12 11:15:57,785 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:15:57,910 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:16:09,607 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:16:09,871 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:16:12,173 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:16:12,384 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:16:25,285 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:16:25,540 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:16:30,849 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:16:30,980 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:16:37,328 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:16:37,444 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:16:56,808 - app.main - INFO - POST /api/v1/projects/bulk-delete
+2026-08-12 11:16:57,683 - app.main - INFO - POST /api/v1/projects/bulk-delete -> 200
+2026-08-12 11:16:57,737 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:16:57,910 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:16:57,925 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:16:58,065 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:17:13,593 - app.main - INFO - POST /api/v1/projects/bulk-delete
+2026-08-12 11:17:14,511 - app.main - INFO - POST /api/v1/projects/bulk-delete -> 200
+2026-08-12 11:17:14,558 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:17:14,847 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:17:14,873 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:17:15,128 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:17:30,398 - app.main - INFO - POST /api/v1/projects/bulk-delete
+2026-08-12 11:17:31,260 - app.main - INFO - POST /api/v1/projects/bulk-delete -> 200
+2026-08-12 11:17:31,294 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:17:31,494 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:17:31,512 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:17:31,707 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:17:47,279 - app.main - INFO - POST /api/v1/projects/bulk-delete
+2026-08-12 11:17:48,031 - app.main - INFO - POST /api/v1/projects/bulk-delete -> 200
+2026-08-12 11:17:48,055 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:17:48,247 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:17:48,266 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:17:48,429 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:18:03,886 - app.main - INFO - POST /api/v1/projects/bulk-delete
+2026-08-12 11:18:04,837 - app.main - INFO - POST /api/v1/projects/bulk-delete -> 200
+2026-08-12 11:18:04,894 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:18:05,056 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:18:05,072 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:18:05,211 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:18:06,128 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:18:06,143 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-12 11:18:07,070 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:18:07,809 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-12 11:18:08,592 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:18:08,727 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:18:29,498 - app.main - INFO - POST /api/v1/projects/bulk-delete
+2026-08-12 11:18:30,611 - app.main - INFO - POST /api/v1/projects/bulk-delete -> 200
+2026-08-12 11:18:30,648 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:18:30,916 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:18:30,940 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:18:31,211 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:18:34,649 - app.main - INFO - POST /api/v1/projects/bulk-delete
+2026-08-12 11:18:35,549 - app.main - INFO - POST /api/v1/projects/bulk-delete -> 200
+2026-08-12 11:18:35,596 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:18:35,792 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:18:35,808 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:18:35,948 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:18:39,448 - app.main - INFO - POST /api/v1/projects/bulk-delete
+2026-08-12 11:18:40,693 - app.main - INFO - POST /api/v1/projects/bulk-delete -> 200
+2026-08-12 11:18:40,735 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:18:40,919 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:18:40,936 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:18:41,076 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:18:44,035 - app.main - INFO - POST /api/v1/projects/bulk-delete
+2026-08-12 11:18:44,871 - app.main - INFO - POST /api/v1/projects/bulk-delete -> 200
+2026-08-12 11:18:44,913 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:18:45,142 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:18:45,156 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:18:45,298 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:18:48,907 - app.main - INFO - POST /api/v1/projects/bulk-delete
+2026-08-12 11:18:49,761 - app.main - INFO - POST /api/v1/projects/bulk-delete -> 200
+2026-08-12 11:18:49,807 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:18:50,065 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:18:50,081 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:18:50,223 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:18:53,351 - app.main - INFO - POST /api/v1/projects/bulk-delete
+2026-08-12 11:18:54,347 - app.main - INFO - POST /api/v1/projects/bulk-delete -> 200
+2026-08-12 11:18:54,406 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:18:54,667 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:18:54,688 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:18:54,888 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:18:58,120 - app.main - INFO - POST /api/v1/projects/bulk-delete
+2026-08-12 11:18:59,334 - app.main - INFO - POST /api/v1/projects/bulk-delete -> 200
+2026-08-12 11:18:59,449 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:18:59,588 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:18:59,603 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:18:59,738 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:19:03,094 - app.main - INFO - POST /api/v1/projects/bulk-delete
+2026-08-12 11:19:03,985 - app.main - INFO - POST /api/v1/projects/bulk-delete -> 200
+2026-08-12 11:19:04,041 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:19:04,146 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:19:04,162 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:19:04,219 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:19:07,738 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-12 11:19:07,740 - app.main - INFO - GET /api/v1/documents
+2026-08-12 11:19:07,868 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 47.74 ms
+2026-08-12 11:19:07,880 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-12 11:19:07,910 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-12 11:19:07,931 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-12 11:19:07,994 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 18.19 ms
+2026-08-12 11:19:08,001 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-12 11:20:20,015 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-12 11:20:20,125 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Sheet: 'CMF K9 SCV' | Orient: HORIZONTAL | Headers (64): ['Unique_ID', 'APQP', 'Part name', 'Désignation Pièces (Commodity variant) LI description', 'Type de consultation : RFQ, carry-over, FETE\r\nVérifier avec un référent Achats tous les cas et les codifications habituelles', 'New\r\nC/O', 'Use case', 'Part\r\nInformation', 'Part number', 'Quantity', 'Supplier information', 'Supplier name', 'Manufacturing COFOR', 'Production location', 'Stakeholder', 'Buyer', 'Purchasing \r\nManager', 'GM', 'SQE', 'Capacity', 'SCR\r\nLink to DocInfo', 'GST No.', 'Mix', 'Calculated Weekly Capacity (parts/week)', 'Contracted Capacity', 'Comment', 'FETE', 'TKO or FETE \r\nLink to Sharepoint', 'Capacity\r\nStandard\r\n(parts/week)', 'Capacity\r\nStandard + Extra\r\n(parts/week)2', 'FETE or TKO letter document', 'SQME (from column AV)', 'SQM', 'SQD Team', 'Run Assessment: \r\nAsked / Not Asked', 'FORECASTED DATE \r\nCAT\r\n(format : CW202X)', 'CAT1/2/3', 'REQUESTED TO SUPPLIER', 'Run Observation \r\nStandard+Extra Capacity', 'Estimated Target\r\nStandard+Extra Capacity', 'ASSESSMENT DATE (CW202X)', 'CAPACITY STEP DATE', 'STATUS (COMPARISON WITH SCR):\r\nGREEN\r\nORANGE\r\nRED\r\nOPEN', 'Rescheduled or Follow-up Date \r\n(including Next Step)', 'ONSITE AUDIT (OSA) /\r\nSELF ASSESMENT AUDIT (SAA)', 'DocInfo\r\nLink', 'COMMENTS ON ASSESSMENT & ACTIONS PLAN', 'SQD', 'Technical Manager', 'WEEKLY CAPACITY TO MEASURE\r\nIf Carry-Over=TOTAL veh Capacity', 'K9 SCK', 'CAT1 FORECASTED DATE\r\nCW', 'CAT2 FORECASTED DATE', 'CAT3 FORECASTED DATE', 'CAT1/2/3 TYPE', 'WEEKLY CAPACITY MEASURED', 'ESTIMATED TARGET', 'CAT1/2/3 EVALUATION (G;O;R)', 'SHARED FOLDER - link', 'Comments', 'SQE', 'SQM', 'TEAM', 'FAMILY_MULTIPLIER']
+2026-08-12 11:20:20,166 - app.application.services.ollama_mapping_service - INFO - [OLLAMA] Configured timeout: 30.0s, default model: llama3.2:1b, url: http://localhost:11434
+2026-08-12 11:20:20,170 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Template: 'K9' (CMF K9 Project Template), Fields: 35, Headers: 64
+2026-08-12 11:20:20,899 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 11:20:21,308 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 11:20:50,545 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-12 11:20:50,594 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Sheet: 'CMF K9 SCV' | Orient: HORIZONTAL | Headers (64): ['Unique_ID', 'APQP', 'Part name', 'Désignation Pièces (Commodity variant) LI description', 'Type de consultation : RFQ, carry-over, FETE\r\nVérifier avec un référent Achats tous les cas et les codifications habituelles', 'New\r\nC/O', 'Use case', 'Part\r\nInformation', 'Part number', 'Quantity', 'Supplier information', 'Supplier name', 'Manufacturing COFOR', 'Production location', 'Stakeholder', 'Buyer', 'Purchasing \r\nManager', 'GM', 'SQE', 'Capacity', 'SCR\r\nLink to DocInfo', 'GST No.', 'Mix', 'Calculated Weekly Capacity (parts/week)', 'Contracted Capacity', 'Comment', 'FETE', 'TKO or FETE \r\nLink to Sharepoint', 'Capacity\r\nStandard\r\n(parts/week)', 'Capacity\r\nStandard + Extra\r\n(parts/week)2', 'FETE or TKO letter document', 'SQME (from column AV)', 'SQM', 'SQD Team', 'Run Assessment: \r\nAsked / Not Asked', 'FORECASTED DATE \r\nCAT\r\n(format : CW202X)', 'CAT1/2/3', 'REQUESTED TO SUPPLIER', 'Run Observation \r\nStandard+Extra Capacity', 'Estimated Target\r\nStandard+Extra Capacity', 'ASSESSMENT DATE (CW202X)', 'CAPACITY STEP DATE', 'STATUS (COMPARISON WITH SCR):\r\nGREEN\r\nORANGE\r\nRED\r\nOPEN', 'Rescheduled or Follow-up Date \r\n(including Next Step)', 'ONSITE AUDIT (OSA) /\r\nSELF ASSESMENT AUDIT (SAA)', 'DocInfo\r\nLink', 'COMMENTS ON ASSESSMENT & ACTIONS PLAN', 'SQD', 'Technical Manager', 'WEEKLY CAPACITY TO MEASURE\r\nIf Carry-Over=TOTAL veh Capacity', 'K9 SCK', 'CAT1 FORECASTED DATE\r\nCW', 'CAT2 FORECASTED DATE', 'CAT3 FORECASTED DATE', 'CAT1/2/3 TYPE', 'WEEKLY CAPACITY MEASURED', 'ESTIMATED TARGET', 'CAT1/2/3 EVALUATION (G;O;R)', 'SHARED FOLDER - link', 'Comments', 'SQE', 'SQM', 'TEAM', 'FAMILY_MULTIPLIER']
+2026-08-12 11:20:50,612 - app.application.services.ollama_mapping_service - INFO - [OLLAMA] Configured timeout: 30.0s, default model: llama3.2:1b, url: http://localhost:11434
+2026-08-12 11:20:50,613 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Template: 'K9' (CMF K9 Project Template), Fields: 35, Headers: 64
+2026-08-12 11:20:50,930 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 11:20:51,366 - app.application.services.ollama_mapping_service - WARNING - [OLLAMA MAP] Request to Ollama timed out after 30.0s. Automatically switched to deterministic fuzzy mapping.
+2026-08-12 11:20:51,376 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Final Mapping Summary (0/35 fields mapped via LLM):
+  unique_id: excel='Unique_ID' conf=0.99 src=exact_match
+  apqp: excel='APQP' conf=0.99 src=exact_match
+  part_name: excel='Part name' conf=0.99 src=exact_match
+  use_case: excel='Use case' conf=0.99 src=exact_match
+  part_info: excel='None' conf=0.0 src=none
+  part_number: excel='Part number' conf=0.99 src=exact_match
+  supplier_info: excel='Supplier information' conf=0.99 src=exact_match
+  supplier_name: excel='Supplier name' conf=0.99 src=exact_match
+  manufacturing_cofor: excel='Manufacturing COFOR' conf=0.99 src=exact_match
+  production_location: excel='Production location' conf=0.99 src=exact_match
+  stakeholder: excel='Stakeholder' conf=0.99 src=exact_match
+  buyer: excel='Buyer' conf=0.99 src=exact_match
+  capacity: excel='Capacity' conf=0.99 src=exact_match
+  scr_link_docinfo: excel='None' conf=0.0 src=none
+  gst_no: excel='GST No.' conf=0.99 src=exact_match
+  contracted_capacity: excel='Contracted Capacity' conf=0.99 src=exact_match
+  fete: excel='FETE' conf=0.99 src=exact_match
+  tko_fete_link_sharepoint: excel='None' conf=0.0 src=none
+  capacity_standard: excel='None' conf=0.0 src=none
+  fete_tko_letter_doc: excel='FETE or TKO letter document' conf=0.99 src=exact_match
+  technical_manager: excel='Technical Manager' conf=0.99 src=exact_match
+  k9_sck: excel='K9 SCK' conf=0.99 src=exact_match
+  cat1_forecast_date_cw: excel='None' conf=0.0 src=none
+  cat2_forecast_date: excel='CAT2 FORECASTED DATE' conf=0.99 src=exact_match
+  cat3_forecast_date: excel='CAT3 FORECASTED DATE' conf=0.99 src=exact_match
+  cat1_2_3_type: excel='CAT1/2/3 TYPE' conf=0.99 src=exact_match
+  weekly_capacity_measured: excel='WEEKLY CAPACITY MEASURED' conf=0.99 src=exact_match
+  estimated_target: excel='ESTIMATED TARGET' conf=0.99 src=exact_match
+  cat_evaluation: excel='CAT1/2/3' conf=0.85 src=fuzzy_fallback
+  shared_folder_link: excel='None' conf=0.0 src=none
+  comments: excel='Comments' conf=0.99 src=exact_match
+  sqe: excel='SQE' conf=0.99 src=exact_match
+  sqm: excel='SQM' conf=0.99 src=exact_match
+  team: excel='TEAM' conf=0.99 src=exact_match
+  family_multiplier: excel='FAMILY_MULTIPLIER' conf=0.99 src=exact_match
+2026-08-12 11:20:51,378 - app.application.services.ollama_mapping_service - INFO - 
+==================== [OLLAMA LLM METRICS] ====================
+  - Model:             llama3.2:1b
+  - Prompt Size:       3985 chars
+  - Prompt Tokens:     0
+  - Completion Tokens: 0
+  - Inference Time:    30448.29 ms
+  - JSON Parse Time:   0.00 ms
+  - Excel Read Time:   0.12 ms
+  - Total Mapping:     31205.42 ms
+  - LLM Mapped Fields: 0/35 (Active: False)
+==============================================================
+2026-08-12 11:20:51,384 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 11:20:51,398 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-12 11:21:21,410 - app.application.services.ollama_mapping_service - WARNING - [OLLAMA MAP] Request to Ollama timed out after 30.0s. Automatically switched to deterministic fuzzy mapping.
+2026-08-12 11:21:21,420 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Final Mapping Summary (0/35 fields mapped via LLM):
+  unique_id: excel='Unique_ID' conf=0.99 src=exact_match
+  apqp: excel='APQP' conf=0.99 src=exact_match
+  part_name: excel='Part name' conf=0.99 src=exact_match
+  use_case: excel='Use case' conf=0.99 src=exact_match
+  part_info: excel='None' conf=0.0 src=none
+  part_number: excel='Part number' conf=0.99 src=exact_match
+  supplier_info: excel='Supplier information' conf=0.99 src=exact_match
+  supplier_name: excel='Supplier name' conf=0.99 src=exact_match
+  manufacturing_cofor: excel='Manufacturing COFOR' conf=0.99 src=exact_match
+  production_location: excel='Production location' conf=0.99 src=exact_match
+  stakeholder: excel='Stakeholder' conf=0.99 src=exact_match
+  buyer: excel='Buyer' conf=0.99 src=exact_match
+  capacity: excel='Capacity' conf=0.99 src=exact_match
+  scr_link_docinfo: excel='None' conf=0.0 src=none
+  gst_no: excel='GST No.' conf=0.99 src=exact_match
+  contracted_capacity: excel='Contracted Capacity' conf=0.99 src=exact_match
+  fete: excel='FETE' conf=0.99 src=exact_match
+  tko_fete_link_sharepoint: excel='None' conf=0.0 src=none
+  capacity_standard: excel='None' conf=0.0 src=none
+  fete_tko_letter_doc: excel='FETE or TKO letter document' conf=0.99 src=exact_match
+  technical_manager: excel='Technical Manager' conf=0.99 src=exact_match
+  k9_sck: excel='K9 SCK' conf=0.99 src=exact_match
+  cat1_forecast_date_cw: excel='None' conf=0.0 src=none
+  cat2_forecast_date: excel='CAT2 FORECASTED DATE' conf=0.99 src=exact_match
+  cat3_forecast_date: excel='CAT3 FORECASTED DATE' conf=0.99 src=exact_match
+  cat1_2_3_type: excel='CAT1/2/3 TYPE' conf=0.99 src=exact_match
+  weekly_capacity_measured: excel='WEEKLY CAPACITY MEASURED' conf=0.99 src=exact_match
+  estimated_target: excel='ESTIMATED TARGET' conf=0.99 src=exact_match
+  cat_evaluation: excel='CAT1/2/3' conf=0.85 src=fuzzy_fallback
+  shared_folder_link: excel='None' conf=0.0 src=none
+  comments: excel='Comments' conf=0.99 src=exact_match
+  sqe: excel='SQE' conf=0.99 src=exact_match
+  sqm: excel='SQM' conf=0.99 src=exact_match
+  team: excel='TEAM' conf=0.99 src=exact_match
+  family_multiplier: excel='FAMILY_MULTIPLIER' conf=0.99 src=exact_match
+2026-08-12 11:21:21,422 - app.application.services.ollama_mapping_service - INFO - 
+==================== [OLLAMA LLM METRICS] ====================
+  - Model:             llama3.2:1b
+  - Prompt Size:       3985 chars
+  - Prompt Tokens:     0
+  - Completion Tokens: 0
+  - Inference Time:    30463.83 ms
+  - JSON Parse Time:   0.00 ms
+  - Excel Read Time:   0.06 ms
+  - Total Mapping:     30806.62 ms
+  - LLM Mapped Fields: 0/35 (Active: False)
+==============================================================
+2026-08-12 11:21:21,430 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-12 11:23:02,034 - app.main - INFO - POST /api/v1/import/preview
+2026-08-12 11:23:31,641 - app.main - INFO - POST /api/v1/import/preview -> 200
+2026-08-12 11:23:34,417 - app.main - INFO - POST /api/v1/import/execute
+2026-08-12 11:23:34,619 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Starting execution for file 'CMF_K9_SCV.xlsm' with template 'K9'
+2026-08-12 11:23:34,621 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Selected template: 'K9'
+2026-08-12 11:23:34,624 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Uploaded filename: 'CMF_K9_SCV.xlsm' (1335067 bytes)
+2026-08-12 11:23:34,626 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Mapped fields: {'Unique_ID': 'unique_id', 'APQP': 'apqp', 'Part name': 'part_name', 'Use case': 'use_case', 'Part number': 'part_number', 'Supplier information': 'supplier_info', 'Supplier name': 'supplier_name', 'Manufacturing COFOR': 'manufacturing_cofor', 'Production location': 'production_location', 'Stakeholder': 'stakeholder', 'Buyer': 'buyer', 'Capacity': 'capacity', 'GST No.': 'gst_no', 'Contracted Capacity': 'contracted_capacity', 'FETE': 'fete', 'FETE or TKO letter document': 'fete_tko_letter_doc', 'Technical Manager': 'technical_manager', 'K9 SCK': 'k9_sck', 'CAT2 FORECASTED DATE': 'cat2_forecast_date', 'CAT3 FORECASTED DATE': 'cat3_forecast_date', 'CAT1/2/3 TYPE': 'cat1_2_3_type', 'WEEKLY CAPACITY MEASURED': 'weekly_capacity_measured', 'ESTIMATED TARGET': 'estimated_target', 'CAT1/2/3': 'cat_evaluation', 'Comments': 'comments', 'SQE': 'sqe', 'SQM': 'sqm', 'TEAM': 'team', 'FAMILY_MULTIPLIER': 'family_multiplier'}
+2026-08-12 11:23:34,630 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Import mode: 'insert', strategy: 'skip_invalid'
+2026-08-12 11:24:02,356 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Validation summary: Total Rows=114, Valid=0, Errors=228
+2026-08-12 11:24:36,428 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Rows detected: 114
+2026-08-12 11:24:36,429 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Headers detected: ['Unique_ID', 'APQP', 'Part name', 'Désignation Pièces (Commodity variant) LI description', 'Type de consultation : RFQ, carry-over, FETE\nVérifier avec un référent Achats tous les cas et les codifications habituelles', 'New\nC/O', 'Use case', 'Part\nInformation', 'Part number', 'Quantity', 'Supplier information', 'Supplier name', 'Manufacturing COFOR', 'Production location', 'Stakeholder', 'Buyer', 'Purchasing \nManager', 'GM', 'SQE', 'Capacity', 'SCR\nLink to DocInfo', 'GST No.', 'Mix', 'Calculated Weekly Capacity (parts/week)', 'Contracted Capacity', 'Comment', 'FETE', 'TKO or FETE \nLink to Sharepoint', 'Capacity\nStandard\n(parts/week)', 'Capacity\nStandard + Extra\n(parts/week)2', 'FETE or TKO letter document', 'SQME (from column AV)', 'SQM', 'SQD Team', 'Run Assessment: \nAsked / Not Asked', 'FORECASTED DATE \nCAT\n(format : CW202X)', 'CAT1/2/3', 'REQUESTED TO SUPPLIER', 'Run Observation \nStandard+Extra Capacity', 'Estimated Target\nStandard+Extra Capacity', 'ASSESSMENT DATE (CW202X)', 'CAPACITY STEP DATE', 'STATUS (COMPARISON WITH SCR):\nGREEN\nORANGE\nRED\nOPEN', 'Rescheduled or Follow-up Date \n(including Next Step)', 'ONSITE AUDIT (OSA) /\nSELF ASSESMENT AUDIT (SAA)', 'DocInfo\nLink', 'COMMENTS ON ASSESSMENT & ACTIONS PLAN', 'SQD', 'Technical Manager', 'WEEKLY CAPACITY TO MEASURE\nIf Carry-Over=TOTAL veh Capacity', 'K9 SCK', 'CAT1 FORECASTED DATE\nCW', 'CAT2 FORECASTED DATE', 'CAT3 FORECASTED DATE', 'CAT1/2/3 TYPE', 'WEEKLY CAPACITY MEASURED', 'ESTIMATED TARGET', 'CAT1/2/3 EVALUATION (G;O;R)', 'SHARED FOLDER - link', 'Comments', 'SQE', 'SQM', 'TEAM', 'FAMILY_MULTIPLIER']
+2026-08-12 11:24:36,431 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Database transaction: Starting transaction session...
+2026-08-12 11:24:36,433 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Serializer errors count: 0
+2026-08-12 11:24:36,471 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Database transaction: Committed successfully (Imported: 0, Updated: 0, Skipped: 114, Failed: 0)
+2026-08-12 11:24:36,472 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Execution time: 61814 ms
+2026-08-12 11:24:36,481 - app.main - INFO - POST /api/v1/import/execute -> 200
+2026-08-12 11:24:36,501 - app.main - INFO - POST /api/v1/import/save-mapping-memory
+2026-08-12 11:24:36,551 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:unique_id -> unique_id
+2026-08-12 11:24:36,553 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:apqp -> apqp
+2026-08-12 11:24:36,555 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:part name -> part_name
+2026-08-12 11:24:36,556 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:use case -> use_case
+2026-08-12 11:24:36,557 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:part number -> part_number
+2026-08-12 11:24:36,558 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:supplier information -> supplier_info
+2026-08-12 11:24:36,560 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:supplier name -> supplier_name
+2026-08-12 11:24:36,561 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:manufacturing cofor -> manufacturing_cofor
+2026-08-12 11:24:36,562 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:production location -> production_location
+2026-08-12 11:24:36,563 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:stakeholder -> stakeholder
+2026-08-12 11:24:36,564 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:buyer -> buyer
+2026-08-12 11:24:36,564 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:capacity -> capacity
+2026-08-12 11:24:36,566 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:gst no. -> gst_no
+2026-08-12 11:24:36,566 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:contracted capacity -> contracted_capacity
+2026-08-12 11:24:36,567 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:fete -> fete
+2026-08-12 11:24:36,569 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:fete or tko letter document -> fete_tko_letter_doc
+2026-08-12 11:24:36,571 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:technical manager -> technical_manager
+2026-08-12 11:24:36,572 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:k9 sck -> k9_sck
+2026-08-12 11:24:36,574 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:cat2 forecasted date -> cat2_forecast_date
+2026-08-12 11:24:36,575 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:cat3 forecasted date -> cat3_forecast_date
+2026-08-12 11:24:36,576 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:cat1/2/3 type -> cat1_2_3_type
+2026-08-12 11:24:36,577 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:weekly capacity measured -> weekly_capacity_measured
+2026-08-12 11:24:36,577 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:estimated target -> estimated_target
+2026-08-12 11:24:36,578 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:cat1/2/3 -> cat_evaluation
+2026-08-12 11:24:36,579 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:comments -> comments
+2026-08-12 11:24:36,581 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:sqe -> sqe
+2026-08-12 11:24:36,581 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:sqm -> sqm
+2026-08-12 11:24:36,582 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:team -> team
+2026-08-12 11:24:36,583 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:family_multiplier -> family_multiplier
+2026-08-12 11:24:36,590 - app.main - INFO - POST /api/v1/import/save-mapping-memory -> 200
+2026-08-12 11:24:45,640 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:24:45,800 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:24:49,288 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:24:49,469 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:24:51,277 - app.main - INFO - GET /api/v1/projects
+2026-08-12 11:24:51,386 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 11:24:55,119 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-12 11:24:55,123 - app.main - INFO - GET /api/v1/documents
+2026-08-12 11:24:55,245 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 40.47 ms
+2026-08-12 11:24:55,253 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-12 11:24:55,275 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-12 11:24:55,337 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-12 11:24:55,405 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 19.08 ms
+2026-08-12 11:24:55,413 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-12 11:25:56,789 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-12 11:25:56,903 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Sheet: 'CMF K9 SCV' | Orient: HORIZONTAL | Headers (64): ['Unique_ID', 'APQP', 'Part name', 'Désignation Pièces (Commodity variant) LI description', 'Type de consultation : RFQ, carry-over, FETE\r\nVérifier avec un référent Achats tous les cas et les codifications habituelles', 'New\r\nC/O', 'Use case', 'Part\r\nInformation', 'Part number', 'Quantity', 'Supplier information', 'Supplier name', 'Manufacturing COFOR', 'Production location', 'Stakeholder', 'Buyer', 'Purchasing \r\nManager', 'GM', 'SQE', 'Capacity', 'SCR\r\nLink to DocInfo', 'GST No.', 'Mix', 'Calculated Weekly Capacity (parts/week)', 'Contracted Capacity', 'Comment', 'FETE', 'TKO or FETE \r\nLink to Sharepoint', 'Capacity\r\nStandard\r\n(parts/week)', 'Capacity\r\nStandard + Extra\r\n(parts/week)2', 'FETE or TKO letter document', 'SQME (from column AV)', 'SQM', 'SQD Team', 'Run Assessment: \r\nAsked / Not Asked', 'FORECASTED DATE \r\nCAT\r\n(format : CW202X)', 'CAT1/2/3', 'REQUESTED TO SUPPLIER', 'Run Observation \r\nStandard+Extra Capacity', 'Estimated Target\r\nStandard+Extra Capacity', 'ASSESSMENT DATE (CW202X)', 'CAPACITY STEP DATE', 'STATUS (COMPARISON WITH SCR):\r\nGREEN\r\nORANGE\r\nRED\r\nOPEN', 'Rescheduled or Follow-up Date \r\n(including Next Step)', 'ONSITE AUDIT (OSA) /\r\nSELF ASSESMENT AUDIT (SAA)', 'DocInfo\r\nLink', 'COMMENTS ON ASSESSMENT & ACTIONS PLAN', 'SQD', 'Technical Manager', 'WEEKLY CAPACITY TO MEASURE\r\nIf Carry-Over=TOTAL veh Capacity', 'K9 SCK', 'CAT1 FORECASTED DATE\r\nCW', 'CAT2 FORECASTED DATE', 'CAT3 FORECASTED DATE', 'CAT1/2/3 TYPE', 'WEEKLY CAPACITY MEASURED', 'ESTIMATED TARGET', 'CAT1/2/3 EVALUATION (G;O;R)', 'SHARED FOLDER - link', 'Comments', 'SQE', 'SQM', 'TEAM', 'FAMILY_MULTIPLIER']
+2026-08-12 11:25:56,920 - app.application.services.ollama_mapping_service - INFO - [OLLAMA] Configured timeout: 30.0s, default model: llama3.2:1b, url: http://localhost:11434
+2026-08-12 11:25:56,921 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Template: 'K9' (CMF K9 Project Template), Fields: 35, Headers: 64
+2026-08-12 11:25:57,263 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 11:25:57,707 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 11:26:17,047 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2026-08-12 11:26:17,055 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] LLM Raw Response: '{"Unique_ID": "unique_id", "APQP": "apqp", "Part_name": "part_name", "Désignation Pièces (Commodity variant) LI description": "description", "Type de consultation : RFQ, carry-over, FETE": "fete", "New": "new", "C/O": "c/o", "Use case": "use_case", "Part Information": "part_info", "Part number": "part_number", "Quantity": "quantity", "Supplier information": "supplier_info", "Supplier name": "supplier_name", "Manufacturing COFOR": "manufacturing_cofor", "Production location": "production_location'
+2026-08-12 11:26:17,063 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Final Mapping Summary (0/35 fields mapped via LLM):
+  unique_id: excel='Unique_ID' conf=0.99 src=mapping_memory
+  apqp: excel='APQP' conf=0.99 src=mapping_memory
+  part_name: excel='Part name' conf=0.99 src=mapping_memory
+  use_case: excel='Use case' conf=0.99 src=mapping_memory
+  part_info: excel='None' conf=0.0 src=none
+  part_number: excel='Part number' conf=0.99 src=mapping_memory
+  supplier_info: excel='Supplier information' conf=0.99 src=mapping_memory
+  supplier_name: excel='Supplier name' conf=0.99 src=mapping_memory
+  manufacturing_cofor: excel='Manufacturing COFOR' conf=0.99 src=mapping_memory
+  production_location: excel='Production location' conf=0.99 src=mapping_memory
+  stakeholder: excel='Stakeholder' conf=0.99 src=mapping_memory
+  buyer: excel='Buyer' conf=0.99 src=mapping_memory
+  capacity: excel='Capacity' conf=0.99 src=mapping_memory
+  scr_link_docinfo: excel='None' conf=0.0 src=none
+  gst_no: excel='GST No.' conf=0.99 src=mapping_memory
+  contracted_capacity: excel='Contracted Capacity' conf=0.99 src=mapping_memory
+  fete: excel='FETE' conf=0.99 src=mapping_memory
+  tko_fete_link_sharepoint: excel='None' conf=0.0 src=none
+  capacity_standard: excel='None' conf=0.0 src=none
+  fete_tko_letter_doc: excel='FETE or TKO letter document' conf=0.99 src=mapping_memory
+  technical_manager: excel='Technical Manager' conf=0.99 src=mapping_memory
+  k9_sck: excel='K9 SCK' conf=0.99 src=mapping_memory
+  cat1_forecast_date_cw: excel='None' conf=0.0 src=none
+  cat2_forecast_date: excel='CAT2 FORECASTED DATE' conf=0.99 src=mapping_memory
+  cat3_forecast_date: excel='CAT3 FORECASTED DATE' conf=0.99 src=mapping_memory
+  cat1_2_3_type: excel='CAT1/2/3 TYPE' conf=0.99 src=mapping_memory
+  weekly_capacity_measured: excel='WEEKLY CAPACITY MEASURED' conf=0.99 src=mapping_memory
+  estimated_target: excel='ESTIMATED TARGET' conf=0.99 src=mapping_memory
+  cat_evaluation: excel='CAT1/2/3' conf=0.99 src=mapping_memory
+  shared_folder_link: excel='None' conf=0.0 src=none
+  comments: excel='Comments' conf=0.99 src=mapping_memory
+  sqe: excel='SQE' conf=0.99 src=mapping_memory
+  sqm: excel='SQM' conf=0.99 src=mapping_memory
+  team: excel='TEAM' conf=0.99 src=mapping_memory
+  family_multiplier: excel='FAMILY_MULTIPLIER' conf=0.99 src=mapping_memory
+2026-08-12 11:26:17,064 - app.application.services.ollama_mapping_service - INFO - 
+==================== [OLLAMA LLM METRICS] ====================
+  - Model:             llama3.2:1b
+  - Prompt Size:       3985 chars
+  - Prompt Tokens:     1140
+  - Completion Tokens: 150
+  - Inference Time:    17594.01 ms
+  - JSON Parse Time:   0.25 ms
+  - Excel Read Time:   0.07 ms
+  - Total Mapping:     20140.47 ms
+  - LLM Mapped Fields: 0/35 (Active: False)
+==============================================================
+2026-08-12 11:26:17,071 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-12 12:07:17,033 - app.main - INFO - GET /api/v1/auth/me
+2026-08-12 12:07:17,044 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-12 12:07:17,048 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-12 12:07:17,065 - app.main - INFO - GET /api/v1/auth/me
+2026-08-12 12:07:17,072 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-12 12:07:17,077 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-12 12:07:17,091 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-12 12:07:17,332 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-12 12:07:17,353 - app.main - INFO - GET /api/v1/auth/me
+2026-08-12 12:07:17,487 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-12 12:07:17,502 - app.main - INFO - GET /api/v1/auth/me
+2026-08-12 12:07:17,592 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-12 12:07:17,682 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-12 12:07:17,736 - app.main - INFO - GET /api/v1/documents
+2026-08-12 12:07:17,749 - app.main - INFO - GET /api/v1/templates
+2026-08-12 12:07:18,914 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 21.83 ms
+2026-08-12 12:07:18,923 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-12 12:07:19,003 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-12 12:07:19,081 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-12 12:07:19,122 - app.main - INFO - GET /api/v1/templates
+2026-08-12 12:07:19,175 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-12 12:07:19,194 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 50.66 ms
+2026-08-12 12:07:19,201 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-12 12:07:19,316 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-12 12:07:41,869 - app.main - INFO - GET /api/v1/auth/me
+2026-08-12 12:07:41,978 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-12 12:07:41,990 - app.main - INFO - GET /api/v1/auth/me
+2026-08-12 12:07:42,083 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-12 12:07:42,145 - app.main - INFO - GET /api/v1/templates
+2026-08-12 12:07:42,245 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-12 12:07:42,263 - app.main - INFO - GET /api/v1/templates
+2026-08-12 12:07:42,330 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-12 12:07:42,485 - app.main - INFO - GET /api/v1/projects
+2026-08-12 12:07:42,494 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-12 12:07:43,100 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 12:07:43,418 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-12 12:14:57,683 - app.main - INFO - Shutting down CMF Platform API
+2026-08-12 12:15:04,169 - app.main - INFO - Starting CMF Platform API
+2026-08-12 12:15:04,194 - app.main - INFO - Database tables created (SQLite)
+2026-08-12 12:18:14,900 - app.main - INFO - Shutting down CMF Platform API
+2026-08-12 12:18:20,824 - app.main - INFO - Starting CMF Platform API
+2026-08-12 12:18:20,840 - app.main - INFO - Database tables created (SQLite)
+2026-08-12 12:19:59,410 - app.main - INFO - GET /api/v1/auth/me
+2026-08-12 12:19:59,988 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-12 12:20:00,015 - app.main - INFO - GET /api/v1/auth/me
+2026-08-12 12:20:00,166 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-12 12:20:00,357 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-12 12:20:00,379 - app.main - INFO - GET /api/v1/templates
+2026-08-12 12:20:00,382 - app.main - INFO - GET /api/v1/documents
+2026-08-12 12:20:00,870 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 108.59 ms
+2026-08-12 12:20:00,902 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-12 12:20:00,916 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-12 12:20:00,930 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-12 12:20:00,940 - app.main - INFO - GET /api/v1/templates
+2026-08-12 12:20:00,987 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-12 12:20:01,076 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 29.66 ms
+2026-08-12 12:20:01,083 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-12 12:20:01,102 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-12 12:20:04,019 - app.main - INFO - GET /api/v1/projects
+2026-08-12 12:20:04,151 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 12:20:08,408 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-12 12:20:08,541 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 41.63 ms
+2026-08-12 12:20:08,552 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-12 12:20:08,587 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-12 12:20:08,698 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 16.69 ms
+2026-08-12 12:20:08,703 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-12 12:20:20,947 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-12 12:20:21,035 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Sheet: 'CMF K9 SCV' | Orient: HORIZONTAL | Headers (64): ['Unique_ID', 'APQP', 'Part name', 'Désignation Pièces (Commodity variant) LI description', 'Type de consultation : RFQ, carry-over, FETE\r\nVérifier avec un référent Achats tous les cas et les codifications habituelles', 'New\r\nC/O', 'Use case', 'Part\r\nInformation', 'Part number', 'Quantity', 'Supplier information', 'Supplier name', 'Manufacturing COFOR', 'Production location', 'Stakeholder', 'Buyer', 'Purchasing \r\nManager', 'GM', 'SQE', 'Capacity', 'SCR\r\nLink to DocInfo', 'GST No.', 'Mix', 'Calculated Weekly Capacity (parts/week)', 'Contracted Capacity', 'Comment', 'FETE', 'TKO or FETE \r\nLink to Sharepoint', 'Capacity\r\nStandard\r\n(parts/week)', 'Capacity\r\nStandard + Extra\r\n(parts/week)2', 'FETE or TKO letter document', 'SQME (from column AV)', 'SQM', 'SQD Team', 'Run Assessment: \r\nAsked / Not Asked', 'FORECASTED DATE \r\nCAT\r\n(format : CW202X)', 'CAT1/2/3', 'REQUESTED TO SUPPLIER', 'Run Observation \r\nStandard+Extra Capacity', 'Estimated Target\r\nStandard+Extra Capacity', 'ASSESSMENT DATE (CW202X)', 'CAPACITY STEP DATE', 'STATUS (COMPARISON WITH SCR):\r\nGREEN\r\nORANGE\r\nRED\r\nOPEN', 'Rescheduled or Follow-up Date \r\n(including Next Step)', 'ONSITE AUDIT (OSA) /\r\nSELF ASSESMENT AUDIT (SAA)', 'DocInfo\r\nLink', 'COMMENTS ON ASSESSMENT & ACTIONS PLAN', 'SQD', 'Technical Manager', 'WEEKLY CAPACITY TO MEASURE\r\nIf Carry-Over=TOTAL veh Capacity', 'K9 SCK', 'CAT1 FORECASTED DATE\r\nCW', 'CAT2 FORECASTED DATE', 'CAT3 FORECASTED DATE', 'CAT1/2/3 TYPE', 'WEEKLY CAPACITY MEASURED', 'ESTIMATED TARGET', 'CAT1/2/3 EVALUATION (G;O;R)', 'SHARED FOLDER - link', 'Comments', 'SQE', 'SQM', 'TEAM', 'FAMILY_MULTIPLIER']
+2026-08-12 12:20:21,067 - app.application.services.ollama_mapping_service - INFO - [OLLAMA] Configured timeout: 30.0s, default model: llama3.2:1b, url: http://localhost:11434
+2026-08-12 12:20:21,069 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Template: 'CMF_EXAMPLE' (cmf-anwar), Fields: 13, Headers: 64
+2026-08-12 12:20:21,786 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 12:20:22,323 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 12:20:27,540 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-12 12:20:27,617 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Sheet: 'CMF K9 SCV' | Orient: HORIZONTAL | Headers (64): ['Unique_ID', 'APQP', 'Part name', 'Désignation Pièces (Commodity variant) LI description', 'Type de consultation : RFQ, carry-over, FETE\r\nVérifier avec un référent Achats tous les cas et les codifications habituelles', 'New\r\nC/O', 'Use case', 'Part\r\nInformation', 'Part number', 'Quantity', 'Supplier information', 'Supplier name', 'Manufacturing COFOR', 'Production location', 'Stakeholder', 'Buyer', 'Purchasing \r\nManager', 'GM', 'SQE', 'Capacity', 'SCR\r\nLink to DocInfo', 'GST No.', 'Mix', 'Calculated Weekly Capacity (parts/week)', 'Contracted Capacity', 'Comment', 'FETE', 'TKO or FETE \r\nLink to Sharepoint', 'Capacity\r\nStandard\r\n(parts/week)', 'Capacity\r\nStandard + Extra\r\n(parts/week)2', 'FETE or TKO letter document', 'SQME (from column AV)', 'SQM', 'SQD Team', 'Run Assessment: \r\nAsked / Not Asked', 'FORECASTED DATE \r\nCAT\r\n(format : CW202X)', 'CAT1/2/3', 'REQUESTED TO SUPPLIER', 'Run Observation \r\nStandard+Extra Capacity', 'Estimated Target\r\nStandard+Extra Capacity', 'ASSESSMENT DATE (CW202X)', 'CAPACITY STEP DATE', 'STATUS (COMPARISON WITH SCR):\r\nGREEN\r\nORANGE\r\nRED\r\nOPEN', 'Rescheduled or Follow-up Date \r\n(including Next Step)', 'ONSITE AUDIT (OSA) /\r\nSELF ASSESMENT AUDIT (SAA)', 'DocInfo\r\nLink', 'COMMENTS ON ASSESSMENT & ACTIONS PLAN', 'SQD', 'Technical Manager', 'WEEKLY CAPACITY TO MEASURE\r\nIf Carry-Over=TOTAL veh Capacity', 'K9 SCK', 'CAT1 FORECASTED DATE\r\nCW', 'CAT2 FORECASTED DATE', 'CAT3 FORECASTED DATE', 'CAT1/2/3 TYPE', 'WEEKLY CAPACITY MEASURED', 'ESTIMATED TARGET', 'CAT1/2/3 EVALUATION (G;O;R)', 'SHARED FOLDER - link', 'Comments', 'SQE', 'SQM', 'TEAM', 'FAMILY_MULTIPLIER']
+2026-08-12 12:20:27,643 - app.application.services.ollama_mapping_service - INFO - [OLLAMA] Configured timeout: 30.0s, default model: llama3.2:1b, url: http://localhost:11434
+2026-08-12 12:20:27,644 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Template: 'K9' (CMF K9 Project Template), Fields: 35, Headers: 64
+2026-08-12 12:20:27,967 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 12:20:28,288 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 12:20:28,403 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-12 12:20:28,482 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Sheet: 'CMF K9 SCV' | Orient: HORIZONTAL | Headers (64): ['Unique_ID', 'APQP', 'Part name', 'Désignation Pièces (Commodity variant) LI description', 'Type de consultation : RFQ, carry-over, FETE\r\nVérifier avec un référent Achats tous les cas et les codifications habituelles', 'New\r\nC/O', 'Use case', 'Part\r\nInformation', 'Part number', 'Quantity', 'Supplier information', 'Supplier name', 'Manufacturing COFOR', 'Production location', 'Stakeholder', 'Buyer', 'Purchasing \r\nManager', 'GM', 'SQE', 'Capacity', 'SCR\r\nLink to DocInfo', 'GST No.', 'Mix', 'Calculated Weekly Capacity (parts/week)', 'Contracted Capacity', 'Comment', 'FETE', 'TKO or FETE \r\nLink to Sharepoint', 'Capacity\r\nStandard\r\n(parts/week)', 'Capacity\r\nStandard + Extra\r\n(parts/week)2', 'FETE or TKO letter document', 'SQME (from column AV)', 'SQM', 'SQD Team', 'Run Assessment: \r\nAsked / Not Asked', 'FORECASTED DATE \r\nCAT\r\n(format : CW202X)', 'CAT1/2/3', 'REQUESTED TO SUPPLIER', 'Run Observation \r\nStandard+Extra Capacity', 'Estimated Target\r\nStandard+Extra Capacity', 'ASSESSMENT DATE (CW202X)', 'CAPACITY STEP DATE', 'STATUS (COMPARISON WITH SCR):\r\nGREEN\r\nORANGE\r\nRED\r\nOPEN', 'Rescheduled or Follow-up Date \r\n(including Next Step)', 'ONSITE AUDIT (OSA) /\r\nSELF ASSESMENT AUDIT (SAA)', 'DocInfo\r\nLink', 'COMMENTS ON ASSESSMENT & ACTIONS PLAN', 'SQD', 'Technical Manager', 'WEEKLY CAPACITY TO MEASURE\r\nIf Carry-Over=TOTAL veh Capacity', 'K9 SCK', 'CAT1 FORECASTED DATE\r\nCW', 'CAT2 FORECASTED DATE', 'CAT3 FORECASTED DATE', 'CAT1/2/3 TYPE', 'WEEKLY CAPACITY MEASURED', 'ESTIMATED TARGET', 'CAT1/2/3 EVALUATION (G;O;R)', 'SHARED FOLDER - link', 'Comments', 'SQE', 'SQM', 'TEAM', 'FAMILY_MULTIPLIER']
+2026-08-12 12:20:28,509 - app.application.services.ollama_mapping_service - INFO - [OLLAMA] Configured timeout: 30.0s, default model: llama3.2:1b, url: http://localhost:11434
+2026-08-12 12:20:28,514 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Template: 'K9' (CMF K9 Project Template), Fields: 35, Headers: 64
+2026-08-12 12:20:28,848 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 12:20:29,191 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 12:20:52,347 - app.application.services.ollama_mapping_service - WARNING - [OLLAMA MAP] Request to Ollama timed out after 30.0s. Automatically switched to deterministic fuzzy mapping.
+2026-08-12 12:20:52,353 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Final Mapping Summary (0/13 fields mapped via LLM):
+  project_code: excel='None' conf=0.0 src=none
+  project_name: excel='None' conf=0.0 src=none
+  customer: excel='None' conf=0.0 src=none
+  project_status: excel='None' conf=0.0 src=none
+  start_date: excel='None' conf=0.0 src=none
+  supplier_code: excel='None' conf=0.0 src=none
+  supplier_name: excel='Supplier name' conf=0.99 src=exact_match
+  country: excel='None' conf=0.0 src=none
+  supplier_status: excel='None' conf=0.0 src=none
+  assessment_date: excel='ASSESSMENT DATE (CW202X)' conf=0.85 src=fuzzy_fallback
+  quality_score: excel='None' conf=0.0 src=none
+  evaluation: excel='CAT1/2/3 EVALUATION (G;O;R)' conf=0.85 src=fuzzy_fallback
+  comments: excel='Comments' conf=0.99 src=exact_match
+2026-08-12 12:20:52,355 - app.application.services.ollama_mapping_service - INFO - 
+==================== [OLLAMA LLM METRICS] ====================
+  - Model:             llama3.2:1b
+  - Prompt Size:       2225 chars
+  - Prompt Tokens:     0
+  - Completion Tokens: 0
+  - Inference Time:    30534.74 ms
+  - JSON Parse Time:   0.00 ms
+  - Excel Read Time:   0.12 ms
+  - Total Mapping:     31284.37 ms
+  - LLM Mapped Fields: 0/13 (Active: False)
+==============================================================
+2026-08-12 12:20:52,371 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-12 12:20:58,317 - app.application.services.ollama_mapping_service - WARNING - [OLLAMA MAP] Request to Ollama timed out after 30.0s. Automatically switched to deterministic fuzzy mapping.
+2026-08-12 12:20:58,334 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Final Mapping Summary (0/35 fields mapped via LLM):
+  unique_id: excel='Unique_ID' conf=0.99 src=exact_match
+  apqp: excel='APQP' conf=0.99 src=exact_match
+  part_name: excel='Part name' conf=0.99 src=exact_match
+  use_case: excel='Use case' conf=0.99 src=exact_match
+  part_info: excel='None' conf=0.0 src=none
+  part_number: excel='Part number' conf=0.99 src=exact_match
+  supplier_info: excel='Supplier information' conf=0.99 src=exact_match
+  supplier_name: excel='Supplier name' conf=0.99 src=exact_match
+  manufacturing_cofor: excel='Manufacturing COFOR' conf=0.99 src=exact_match
+  production_location: excel='Production location' conf=0.99 src=exact_match
+  stakeholder: excel='Stakeholder' conf=0.99 src=exact_match
+  buyer: excel='Buyer' conf=0.99 src=exact_match
+  capacity: excel='Capacity' conf=0.99 src=exact_match
+  scr_link_docinfo: excel='None' conf=0.0 src=none
+  gst_no: excel='GST No.' conf=0.99 src=exact_match
+  contracted_capacity: excel='Contracted Capacity' conf=0.99 src=exact_match
+  fete: excel='FETE' conf=0.99 src=exact_match
+  tko_fete_link_sharepoint: excel='None' conf=0.0 src=none
+  capacity_standard: excel='None' conf=0.0 src=none
+  fete_tko_letter_doc: excel='FETE or TKO letter document' conf=0.99 src=exact_match
+  technical_manager: excel='Technical Manager' conf=0.99 src=exact_match
+  k9_sck: excel='K9 SCK' conf=0.99 src=exact_match
+  cat1_forecast_date_cw: excel='None' conf=0.0 src=none
+  cat2_forecast_date: excel='CAT2 FORECASTED DATE' conf=0.99 src=exact_match
+  cat3_forecast_date: excel='CAT3 FORECASTED DATE' conf=0.99 src=exact_match
+  cat1_2_3_type: excel='CAT1/2/3 TYPE' conf=0.99 src=exact_match
+  weekly_capacity_measured: excel='WEEKLY CAPACITY MEASURED' conf=0.99 src=exact_match
+  estimated_target: excel='ESTIMATED TARGET' conf=0.99 src=exact_match
+  cat_evaluation: excel='CAT1/2/3' conf=0.85 src=fuzzy_fallback
+  shared_folder_link: excel='None' conf=0.0 src=none
+  comments: excel='Comments' conf=0.99 src=exact_match
+  sqe: excel='SQE' conf=0.99 src=exact_match
+  sqm: excel='SQM' conf=0.99 src=exact_match
+  team: excel='TEAM' conf=0.99 src=exact_match
+  family_multiplier: excel='FAMILY_MULTIPLIER' conf=0.99 src=exact_match
+2026-08-12 12:20:58,337 - app.application.services.ollama_mapping_service - INFO - 
+==================== [OLLAMA LLM METRICS] ====================
+  - Model:             llama3.2:1b
+  - Prompt Size:       3985 chars
+  - Prompt Tokens:     0
+  - Completion Tokens: 0
+  - Inference Time:    30335.86 ms
+  - JSON Parse Time:   0.00 ms
+  - Excel Read Time:   0.07 ms
+  - Total Mapping:     30688.52 ms
+  - LLM Mapped Fields: 0/35 (Active: False)
+==============================================================
+2026-08-12 12:20:58,353 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-12 12:20:59,204 - app.application.services.ollama_mapping_service - WARNING - [OLLAMA MAP] Request to Ollama timed out after 30.0s. Automatically switched to deterministic fuzzy mapping.
+2026-08-12 12:20:59,215 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Final Mapping Summary (0/35 fields mapped via LLM):
+  unique_id: excel='Unique_ID' conf=0.99 src=exact_match
+  apqp: excel='APQP' conf=0.99 src=exact_match
+  part_name: excel='Part name' conf=0.99 src=exact_match
+  use_case: excel='Use case' conf=0.99 src=exact_match
+  part_info: excel='None' conf=0.0 src=none
+  part_number: excel='Part number' conf=0.99 src=exact_match
+  supplier_info: excel='Supplier information' conf=0.99 src=exact_match
+  supplier_name: excel='Supplier name' conf=0.99 src=exact_match
+  manufacturing_cofor: excel='Manufacturing COFOR' conf=0.99 src=exact_match
+  production_location: excel='Production location' conf=0.99 src=exact_match
+  stakeholder: excel='Stakeholder' conf=0.99 src=exact_match
+  buyer: excel='Buyer' conf=0.99 src=exact_match
+  capacity: excel='Capacity' conf=0.99 src=exact_match
+  scr_link_docinfo: excel='None' conf=0.0 src=none
+  gst_no: excel='GST No.' conf=0.99 src=exact_match
+  contracted_capacity: excel='Contracted Capacity' conf=0.99 src=exact_match
+  fete: excel='FETE' conf=0.99 src=exact_match
+  tko_fete_link_sharepoint: excel='None' conf=0.0 src=none
+  capacity_standard: excel='None' conf=0.0 src=none
+  fete_tko_letter_doc: excel='FETE or TKO letter document' conf=0.99 src=exact_match
+  technical_manager: excel='Technical Manager' conf=0.99 src=exact_match
+  k9_sck: excel='K9 SCK' conf=0.99 src=exact_match
+  cat1_forecast_date_cw: excel='None' conf=0.0 src=none
+  cat2_forecast_date: excel='CAT2 FORECASTED DATE' conf=0.99 src=exact_match
+  cat3_forecast_date: excel='CAT3 FORECASTED DATE' conf=0.99 src=exact_match
+  cat1_2_3_type: excel='CAT1/2/3 TYPE' conf=0.99 src=exact_match
+  weekly_capacity_measured: excel='WEEKLY CAPACITY MEASURED' conf=0.99 src=exact_match
+  estimated_target: excel='ESTIMATED TARGET' conf=0.99 src=exact_match
+  cat_evaluation: excel='CAT1/2/3' conf=0.85 src=fuzzy_fallback
+  shared_folder_link: excel='None' conf=0.0 src=none
+  comments: excel='Comments' conf=0.99 src=exact_match
+  sqe: excel='SQE' conf=0.99 src=exact_match
+  sqm: excel='SQM' conf=0.99 src=exact_match
+  team: excel='TEAM' conf=0.99 src=exact_match
+  family_multiplier: excel='FAMILY_MULTIPLIER' conf=0.99 src=exact_match
+2026-08-12 12:20:59,217 - app.application.services.ollama_mapping_service - INFO - 
+==================== [OLLAMA LLM METRICS] ====================
+  - Model:             llama3.2:1b
+  - Prompt Size:       3985 chars
+  - Prompt Tokens:     0
+  - Completion Tokens: 0
+  - Inference Time:    30344.28 ms
+  - JSON Parse Time:   0.00 ms
+  - Excel Read Time:   0.08 ms
+  - Total Mapping:     30700.73 ms
+  - LLM Mapped Fields: 0/35 (Active: False)
+==============================================================
+2026-08-12 12:20:59,226 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-12 12:21:03,140 - app.main - INFO - GET /api/v1/projects
+2026-08-12 12:21:03,247 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 12:21:06,667 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-12 12:21:06,685 - app.main - INFO - GET /api/v1/documents
+2026-08-12 12:21:06,907 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 51.31 ms
+2026-08-12 12:21:06,923 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-12 12:21:06,953 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-12 12:21:06,991 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-12 12:21:07,085 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 29.09 ms
+2026-08-12 12:21:07,093 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-12 12:21:30,310 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-12 12:21:30,410 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Sheet: 'CMF K9 SCV' | Orient: HORIZONTAL | Headers (64): ['Unique_ID', 'APQP', 'Part name', 'Désignation Pièces (Commodity variant) LI description', 'Type de consultation : RFQ, carry-over, FETE\r\nVérifier avec un référent Achats tous les cas et les codifications habituelles', 'New\r\nC/O', 'Use case', 'Part\r\nInformation', 'Part number', 'Quantity', 'Supplier information', 'Supplier name', 'Manufacturing COFOR', 'Production location', 'Stakeholder', 'Buyer', 'Purchasing \r\nManager', 'GM', 'SQE', 'Capacity', 'SCR\r\nLink to DocInfo', 'GST No.', 'Mix', 'Calculated Weekly Capacity (parts/week)', 'Contracted Capacity', 'Comment', 'FETE', 'TKO or FETE \r\nLink to Sharepoint', 'Capacity\r\nStandard\r\n(parts/week)', 'Capacity\r\nStandard + Extra\r\n(parts/week)2', 'FETE or TKO letter document', 'SQME (from column AV)', 'SQM', 'SQD Team', 'Run Assessment: \r\nAsked / Not Asked', 'FORECASTED DATE \r\nCAT\r\n(format : CW202X)', 'CAT1/2/3', 'REQUESTED TO SUPPLIER', 'Run Observation \r\nStandard+Extra Capacity', 'Estimated Target\r\nStandard+Extra Capacity', 'ASSESSMENT DATE (CW202X)', 'CAPACITY STEP DATE', 'STATUS (COMPARISON WITH SCR):\r\nGREEN\r\nORANGE\r\nRED\r\nOPEN', 'Rescheduled or Follow-up Date \r\n(including Next Step)', 'ONSITE AUDIT (OSA) /\r\nSELF ASSESMENT AUDIT (SAA)', 'DocInfo\r\nLink', 'COMMENTS ON ASSESSMENT & ACTIONS PLAN', 'SQD', 'Technical Manager', 'WEEKLY CAPACITY TO MEASURE\r\nIf Carry-Over=TOTAL veh Capacity', 'K9 SCK', 'CAT1 FORECASTED DATE\r\nCW', 'CAT2 FORECASTED DATE', 'CAT3 FORECASTED DATE', 'CAT1/2/3 TYPE', 'WEEKLY CAPACITY MEASURED', 'ESTIMATED TARGET', 'CAT1/2/3 EVALUATION (G;O;R)', 'SHARED FOLDER - link', 'Comments', 'SQE', 'SQM', 'TEAM', 'FAMILY_MULTIPLIER']
+2026-08-12 12:21:30,439 - app.application.services.ollama_mapping_service - INFO - [OLLAMA] Configured timeout: 30.0s, default model: llama3.2:1b, url: http://localhost:11434
+2026-08-12 12:21:30,442 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Template: 'K9' (CMF K9 Project Template), Fields: 35, Headers: 64
+2026-08-12 12:21:30,763 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 12:21:31,134 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 12:21:31,489 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-12 12:21:31,591 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Sheet: 'CMF K9 SCV' | Orient: HORIZONTAL | Headers (64): ['Unique_ID', 'APQP', 'Part name', 'Désignation Pièces (Commodity variant) LI description', 'Type de consultation : RFQ, carry-over, FETE\r\nVérifier avec un référent Achats tous les cas et les codifications habituelles', 'New\r\nC/O', 'Use case', 'Part\r\nInformation', 'Part number', 'Quantity', 'Supplier information', 'Supplier name', 'Manufacturing COFOR', 'Production location', 'Stakeholder', 'Buyer', 'Purchasing \r\nManager', 'GM', 'SQE', 'Capacity', 'SCR\r\nLink to DocInfo', 'GST No.', 'Mix', 'Calculated Weekly Capacity (parts/week)', 'Contracted Capacity', 'Comment', 'FETE', 'TKO or FETE \r\nLink to Sharepoint', 'Capacity\r\nStandard\r\n(parts/week)', 'Capacity\r\nStandard + Extra\r\n(parts/week)2', 'FETE or TKO letter document', 'SQME (from column AV)', 'SQM', 'SQD Team', 'Run Assessment: \r\nAsked / Not Asked', 'FORECASTED DATE \r\nCAT\r\n(format : CW202X)', 'CAT1/2/3', 'REQUESTED TO SUPPLIER', 'Run Observation \r\nStandard+Extra Capacity', 'Estimated Target\r\nStandard+Extra Capacity', 'ASSESSMENT DATE (CW202X)', 'CAPACITY STEP DATE', 'STATUS (COMPARISON WITH SCR):\r\nGREEN\r\nORANGE\r\nRED\r\nOPEN', 'Rescheduled or Follow-up Date \r\n(including Next Step)', 'ONSITE AUDIT (OSA) /\r\nSELF ASSESMENT AUDIT (SAA)', 'DocInfo\r\nLink', 'COMMENTS ON ASSESSMENT & ACTIONS PLAN', 'SQD', 'Technical Manager', 'WEEKLY CAPACITY TO MEASURE\r\nIf Carry-Over=TOTAL veh Capacity', 'K9 SCK', 'CAT1 FORECASTED DATE\r\nCW', 'CAT2 FORECASTED DATE', 'CAT3 FORECASTED DATE', 'CAT1/2/3 TYPE', 'WEEKLY CAPACITY MEASURED', 'ESTIMATED TARGET', 'CAT1/2/3 EVALUATION (G;O;R)', 'SHARED FOLDER - link', 'Comments', 'SQE', 'SQM', 'TEAM', 'FAMILY_MULTIPLIER']
+2026-08-12 12:21:31,629 - app.application.services.ollama_mapping_service - INFO - [OLLAMA] Configured timeout: 30.0s, default model: llama3.2:1b, url: http://localhost:11434
+2026-08-12 12:21:31,631 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Template: 'K9' (CMF K9 Project Template), Fields: 35, Headers: 64
+2026-08-12 12:21:31,969 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 12:21:32,296 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 12:22:01,167 - app.application.services.ollama_mapping_service - WARNING - [OLLAMA MAP] Request to Ollama timed out after 30.0s. Automatically switched to deterministic fuzzy mapping.
+2026-08-12 12:22:01,179 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Final Mapping Summary (0/35 fields mapped via LLM):
+  unique_id: excel='Unique_ID' conf=0.99 src=exact_match
+  apqp: excel='APQP' conf=0.99 src=exact_match
+  part_name: excel='Part name' conf=0.99 src=exact_match
+  use_case: excel='Use case' conf=0.99 src=exact_match
+  part_info: excel='None' conf=0.0 src=none
+  part_number: excel='Part number' conf=0.99 src=exact_match
+  supplier_info: excel='Supplier information' conf=0.99 src=exact_match
+  supplier_name: excel='Supplier name' conf=0.99 src=exact_match
+  manufacturing_cofor: excel='Manufacturing COFOR' conf=0.99 src=exact_match
+  production_location: excel='Production location' conf=0.99 src=exact_match
+  stakeholder: excel='Stakeholder' conf=0.99 src=exact_match
+  buyer: excel='Buyer' conf=0.99 src=exact_match
+  capacity: excel='Capacity' conf=0.99 src=exact_match
+  scr_link_docinfo: excel='None' conf=0.0 src=none
+  gst_no: excel='GST No.' conf=0.99 src=exact_match
+  contracted_capacity: excel='Contracted Capacity' conf=0.99 src=exact_match
+  fete: excel='FETE' conf=0.99 src=exact_match
+  tko_fete_link_sharepoint: excel='None' conf=0.0 src=none
+  capacity_standard: excel='None' conf=0.0 src=none
+  fete_tko_letter_doc: excel='FETE or TKO letter document' conf=0.99 src=exact_match
+  technical_manager: excel='Technical Manager' conf=0.99 src=exact_match
+  k9_sck: excel='K9 SCK' conf=0.99 src=exact_match
+  cat1_forecast_date_cw: excel='None' conf=0.0 src=none
+  cat2_forecast_date: excel='CAT2 FORECASTED DATE' conf=0.99 src=exact_match
+  cat3_forecast_date: excel='CAT3 FORECASTED DATE' conf=0.99 src=exact_match
+  cat1_2_3_type: excel='CAT1/2/3 TYPE' conf=0.99 src=exact_match
+  weekly_capacity_measured: excel='WEEKLY CAPACITY MEASURED' conf=0.99 src=exact_match
+  estimated_target: excel='ESTIMATED TARGET' conf=0.99 src=exact_match
+  cat_evaluation: excel='CAT1/2/3' conf=0.85 src=fuzzy_fallback
+  shared_folder_link: excel='None' conf=0.0 src=none
+  comments: excel='Comments' conf=0.99 src=exact_match
+  sqe: excel='SQE' conf=0.99 src=exact_match
+  sqm: excel='SQM' conf=0.99 src=exact_match
+  team: excel='TEAM' conf=0.99 src=exact_match
+  family_multiplier: excel='FAMILY_MULTIPLIER' conf=0.99 src=exact_match
+2026-08-12 12:22:01,185 - app.application.services.ollama_mapping_service - INFO - 
+==================== [OLLAMA LLM METRICS] ====================
+  - Model:             llama3.2:1b
+  - Prompt Size:       3985 chars
+  - Prompt Tokens:     0
+  - Completion Tokens: 0
+  - Inference Time:    30390.10 ms
+  - JSON Parse Time:   0.00 ms
+  - Excel Read Time:   0.11 ms
+  - Total Mapping:     30736.99 ms
+  - LLM Mapped Fields: 0/35 (Active: False)
+==============================================================
+2026-08-12 12:22:01,196 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-12 12:22:02,321 - app.application.services.ollama_mapping_service - WARNING - [OLLAMA MAP] Request to Ollama timed out after 30.0s. Automatically switched to deterministic fuzzy mapping.
+2026-08-12 12:22:02,331 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Final Mapping Summary (0/35 fields mapped via LLM):
+  unique_id: excel='Unique_ID' conf=0.99 src=exact_match
+  apqp: excel='APQP' conf=0.99 src=exact_match
+  part_name: excel='Part name' conf=0.99 src=exact_match
+  use_case: excel='Use case' conf=0.99 src=exact_match
+  part_info: excel='None' conf=0.0 src=none
+  part_number: excel='Part number' conf=0.99 src=exact_match
+  supplier_info: excel='Supplier information' conf=0.99 src=exact_match
+  supplier_name: excel='Supplier name' conf=0.99 src=exact_match
+  manufacturing_cofor: excel='Manufacturing COFOR' conf=0.99 src=exact_match
+  production_location: excel='Production location' conf=0.99 src=exact_match
+  stakeholder: excel='Stakeholder' conf=0.99 src=exact_match
+  buyer: excel='Buyer' conf=0.99 src=exact_match
+  capacity: excel='Capacity' conf=0.99 src=exact_match
+  scr_link_docinfo: excel='None' conf=0.0 src=none
+  gst_no: excel='GST No.' conf=0.99 src=exact_match
+  contracted_capacity: excel='Contracted Capacity' conf=0.99 src=exact_match
+  fete: excel='FETE' conf=0.99 src=exact_match
+  tko_fete_link_sharepoint: excel='None' conf=0.0 src=none
+  capacity_standard: excel='None' conf=0.0 src=none
+  fete_tko_letter_doc: excel='FETE or TKO letter document' conf=0.99 src=exact_match
+  technical_manager: excel='Technical Manager' conf=0.99 src=exact_match
+  k9_sck: excel='K9 SCK' conf=0.99 src=exact_match
+  cat1_forecast_date_cw: excel='None' conf=0.0 src=none
+  cat2_forecast_date: excel='CAT2 FORECASTED DATE' conf=0.99 src=exact_match
+  cat3_forecast_date: excel='CAT3 FORECASTED DATE' conf=0.99 src=exact_match
+  cat1_2_3_type: excel='CAT1/2/3 TYPE' conf=0.99 src=exact_match
+  weekly_capacity_measured: excel='WEEKLY CAPACITY MEASURED' conf=0.99 src=exact_match
+  estimated_target: excel='ESTIMATED TARGET' conf=0.99 src=exact_match
+  cat_evaluation: excel='CAT1/2/3' conf=0.85 src=fuzzy_fallback
+  shared_folder_link: excel='None' conf=0.0 src=none
+  comments: excel='Comments' conf=0.99 src=exact_match
+  sqe: excel='SQE' conf=0.99 src=exact_match
+  sqm: excel='SQM' conf=0.99 src=exact_match
+  team: excel='TEAM' conf=0.99 src=exact_match
+  family_multiplier: excel='FAMILY_MULTIPLIER' conf=0.99 src=exact_match
+2026-08-12 12:22:02,334 - app.application.services.ollama_mapping_service - INFO - 
+==================== [OLLAMA LLM METRICS] ====================
+  - Model:             llama3.2:1b
+  - Prompt Size:       3985 chars
+  - Prompt Tokens:     0
+  - Completion Tokens: 0
+  - Inference Time:    30341.55 ms
+  - JSON Parse Time:   0.00 ms
+  - Excel Read Time:   0.13 ms
+  - Total Mapping:     30698.59 ms
+  - LLM Mapped Fields: 0/35 (Active: False)
+==============================================================
+2026-08-12 12:22:02,342 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-12 12:22:08,944 - app.main - INFO - POST /api/v1/import/preview
+2026-08-12 12:22:34,731 - app.main - INFO - POST /api/v1/import/preview -> 200
+2026-08-12 12:22:57,973 - app.main - INFO - POST /api/v1/import/execute
+2026-08-12 12:22:58,193 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Starting execution for file 'CMF_K9_SCV.xlsm' with template 'K9'
+2026-08-12 12:22:58,197 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Selected template: 'K9'
+2026-08-12 12:22:58,201 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Uploaded filename: 'CMF_K9_SCV.xlsm' (1335067 bytes)
+2026-08-12 12:22:58,203 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Mapped fields: {'Unique_ID': 'unique_id', 'APQP': 'apqp', 'Part name': 'part_name', 'Use case': 'use_case', 'Part number': 'part_number', 'Supplier information': 'supplier_info', 'Supplier name': 'supplier_name', 'Manufacturing COFOR': 'manufacturing_cofor', 'Production location': 'production_location', 'Stakeholder': 'stakeholder', 'Buyer': 'buyer', 'Capacity': 'capacity', 'GST No.': 'gst_no', 'Contracted Capacity': 'contracted_capacity', 'FETE': 'fete', 'FETE or TKO letter document': 'fete_tko_letter_doc', 'Technical Manager': 'technical_manager', 'K9 SCK': 'k9_sck', 'CAT2 FORECASTED DATE': 'cat2_forecast_date', 'CAT3 FORECASTED DATE': 'cat3_forecast_date', 'CAT1/2/3 TYPE': 'cat1_2_3_type', 'WEEKLY CAPACITY MEASURED': 'weekly_capacity_measured', 'ESTIMATED TARGET': 'estimated_target', 'CAT1/2/3': 'cat_evaluation', 'Comments': 'comments', 'SQE': 'sqe', 'SQM': 'sqm', 'TEAM': 'team', 'FAMILY_MULTIPLIER': 'family_multiplier'}
+2026-08-12 12:22:58,205 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Import mode: 'insert', strategy: 'skip_invalid'
+2026-08-12 12:23:30,419 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Validation summary: Total Rows=114, Valid=113, Errors=1
+2026-08-12 12:24:05,786 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Rows detected: 114
+2026-08-12 12:24:05,789 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Headers detected: ['Unique_ID', 'APQP', 'Part name', 'Désignation Pièces (Commodity variant) LI description', 'Type de consultation : RFQ, carry-over, FETE\nVérifier avec un référent Achats tous les cas et les codifications habituelles', 'New\nC/O', 'Use case', 'Part\nInformation', 'Part number', 'Quantity', 'Supplier information', 'Supplier name', 'Manufacturing COFOR', 'Production location', 'Stakeholder', 'Buyer', 'Purchasing \nManager', 'GM', 'SQE', 'Capacity', 'SCR\nLink to DocInfo', 'GST No.', 'Mix', 'Calculated Weekly Capacity (parts/week)', 'Contracted Capacity', 'Comment', 'FETE', 'TKO or FETE \nLink to Sharepoint', 'Capacity\nStandard\n(parts/week)', 'Capacity\nStandard + Extra\n(parts/week)2', 'FETE or TKO letter document', 'SQME (from column AV)', 'SQM', 'SQD Team', 'Run Assessment: \nAsked / Not Asked', 'FORECASTED DATE \nCAT\n(format : CW202X)', 'CAT1/2/3', 'REQUESTED TO SUPPLIER', 'Run Observation \nStandard+Extra Capacity', 'Estimated Target\nStandard+Extra Capacity', 'ASSESSMENT DATE (CW202X)', 'CAPACITY STEP DATE', 'STATUS (COMPARISON WITH SCR):\nGREEN\nORANGE\nRED\nOPEN', 'Rescheduled or Follow-up Date \n(including Next Step)', 'ONSITE AUDIT (OSA) /\nSELF ASSESMENT AUDIT (SAA)', 'DocInfo\nLink', 'COMMENTS ON ASSESSMENT & ACTIONS PLAN', 'SQD', 'Technical Manager', 'WEEKLY CAPACITY TO MEASURE\nIf Carry-Over=TOTAL veh Capacity', 'K9 SCK', 'CAT1 FORECASTED DATE\nCW', 'CAT2 FORECASTED DATE', 'CAT3 FORECASTED DATE', 'CAT1/2/3 TYPE', 'WEEKLY CAPACITY MEASURED', 'ESTIMATED TARGET', 'CAT1/2/3 EVALUATION (G;O;R)', 'SHARED FOLDER - link', 'Comments', 'SQE', 'SQM', 'TEAM', 'FAMILY_MULTIPLIER']
+2026-08-12 12:24:05,791 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Database transaction: Starting transaction session...
+2026-08-12 12:24:12,306 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Serializer errors count: 0
+2026-08-12 12:24:12,410 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Database transaction: Committed successfully (Imported: 0, Updated: 113, Skipped: 1, Failed: 0)
+2026-08-12 12:24:12,417 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Execution time: 74112 ms
+2026-08-12 12:24:12,438 - app.main - INFO - POST /api/v1/import/execute -> 200
+2026-08-12 12:24:12,478 - app.main - INFO - POST /api/v1/import/save-mapping-memory
+2026-08-12 12:24:12,589 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:unique_id -> unique_id
+2026-08-12 12:24:12,593 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:apqp -> apqp
+2026-08-12 12:24:12,595 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:part name -> part_name
+2026-08-12 12:24:12,599 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:use case -> use_case
+2026-08-12 12:24:12,601 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:part number -> part_number
+2026-08-12 12:24:12,604 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:supplier information -> supplier_info
+2026-08-12 12:24:12,606 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:supplier name -> supplier_name
+2026-08-12 12:24:12,608 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:manufacturing cofor -> manufacturing_cofor
+2026-08-12 12:24:12,611 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:production location -> production_location
+2026-08-12 12:24:12,616 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:stakeholder -> stakeholder
+2026-08-12 12:24:12,620 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:buyer -> buyer
+2026-08-12 12:24:12,622 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:capacity -> capacity
+2026-08-12 12:24:12,625 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:gst no. -> gst_no
+2026-08-12 12:24:12,628 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:contracted capacity -> contracted_capacity
+2026-08-12 12:24:12,632 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:fete -> fete
+2026-08-12 12:24:12,635 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:fete or tko letter document -> fete_tko_letter_doc
+2026-08-12 12:24:12,637 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:technical manager -> technical_manager
+2026-08-12 12:24:12,640 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:k9 sck -> k9_sck
+2026-08-12 12:24:12,643 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:cat2 forecasted date -> cat2_forecast_date
+2026-08-12 12:24:12,647 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:cat3 forecasted date -> cat3_forecast_date
+2026-08-12 12:24:12,651 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:cat1/2/3 type -> cat1_2_3_type
+2026-08-12 12:24:12,653 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:weekly capacity measured -> weekly_capacity_measured
+2026-08-12 12:24:12,654 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:estimated target -> estimated_target
+2026-08-12 12:24:12,657 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:cat1/2/3 -> cat_evaluation
+2026-08-12 12:24:12,659 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:comments -> comments
+2026-08-12 12:24:12,662 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:sqe -> sqe
+2026-08-12 12:24:12,667 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:sqm -> sqm
+2026-08-12 12:24:12,669 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:team -> team
+2026-08-12 12:24:12,671 - app.application.services.mapping_cache_service - INFO - Saved mapping memory for K9:family_multiplier -> family_multiplier
+2026-08-12 12:24:12,686 - app.main - INFO - POST /api/v1/import/save-mapping-memory -> 200
+2026-08-12 12:24:25,142 - app.main - INFO - GET /api/v1/projects
+2026-08-12 12:24:25,266 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 12:24:29,002 - app.main - INFO - GET /api/v1/auth/me
+2026-08-12 12:24:29,111 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-12 12:24:29,129 - app.main - INFO - GET /api/v1/auth/me
+2026-08-12 12:24:29,258 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-12 12:24:29,284 - app.main - INFO - GET /api/v1/projects
+2026-08-12 12:24:29,290 - app.main - INFO - GET /api/v1/templates
+2026-08-12 12:24:29,496 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-12 12:24:29,516 - app.main - INFO - GET /api/v1/templates
+2026-08-12 12:24:29,557 - app.main - INFO - GET /api/v1/projects
+2026-08-12 12:24:29,773 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-12 12:24:29,821 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 12:24:29,849 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 12:26:51,487 - app.main - INFO - Shutting down CMF Platform API
+2026-08-12 12:26:58,028 - app.main - INFO - Starting CMF Platform API
+2026-08-12 12:26:58,045 - app.main - INFO - Database tables created (SQLite)
+2026-08-12 12:29:30,175 - app.main - INFO - GET /api/v1/projects
+2026-08-12 12:29:30,516 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 12:29:32,458 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-12 12:29:32,466 - app.main - INFO - GET /api/v1/documents
+2026-08-12 12:29:32,581 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 45.27 ms
+2026-08-12 12:29:32,597 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-12 12:29:32,613 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-12 12:29:32,755 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-12 12:29:32,804 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 17.71 ms
+2026-08-12 12:29:32,809 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-12 12:30:24,688 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-12 12:30:24,806 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Sheet: 'Pilot Sheet (Suivi)' | Orient: HORIZONTAL | Headers (47): ['Part Number', 'Index', 'Description', 'Coef.', 'Serial Piece Price', 'Mass Purchase\r\n(Coef. x Price per part)', 'RU', 'NOA', 'Make Battery (LP)', 'Make Battery (LP)', '', '', '', '', 'libre', 'Supplier name', 'Vendor COFOR', 'Manufacturer COFOR', 'Combined COFOR', 'Tango order', 'EI status', 'Comments', 'Week\r\nProject Target', 'Forecast\r\nWeek', 'Completed\r\nWeek', 'Week\r\nProject Target', 'Forecast\r\nWeek', 'Completed\r\nWeek', 'Week\r\nProject Target', 'Forecast\r\nWeek', 'Completed\r\nWeek', 'Quality', 'Supply Chain', 'Global Purchasing', 'CPL', 'RCPI', 'Minimum Quality status acted', 'Mass inquired', 'Packaging readiness, UNLweb \r\nvalidated', 'TANGO contract validated', 'Supplier capability confirmed', 'IT CPL (CORAIL,) setting', 'FCLA Validates', 'PLE created', 'EDI opened', 'UM logistic flow validated', 'Manufacturing process validated']
+2026-08-12 12:30:24,845 - app.application.services.ollama_mapping_service - INFO - [OLLAMA] Configured timeout: 30.0s, default model: llama3.2:1b, url: http://localhost:11434
+2026-08-12 12:30:24,849 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Template: 'K0' (CMF K0 Project Template), Fields: 66, Headers: 47
+2026-08-12 12:30:25,623 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 12:30:26,077 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 12:30:56,134 - app.application.services.ollama_mapping_service - WARNING - [OLLAMA MAP] Request to Ollama timed out after 30.0s. Automatically switched to deterministic fuzzy mapping.
+2026-08-12 12:30:56,151 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Final Mapping Summary (0/66 fields mapped via LLM):
+  line_item: excel='None' conf=0.0 src=none
+  components_package_rfq: excel='None' conf=0.0 src=none
+  tazebao_id_dev_system_no: excel='None' conf=0.0 src=none
+  gst_source_package_number: excel='None' conf=0.0 src=none
+  part_number: excel='Part Number' conf=0.99 src=exact_match
+  part_name: excel='None' conf=0.0 src=none
+  comments: excel='Comments' conf=0.99 src=exact_match
+  make_or_buy: excel='None' conf=0.0 src=none
+  other_platform_impacted: excel='None' conf=0.0 src=none
+  development_type: excel='None' conf=0.0 src=none
+  status_resourcing: excel='None' conf=0.0 src=none
+  original_vehicle_co_parts: excel='None' conf=0.0 src=none
+  supplier_name_co_parts: excel='Supplier name' conf=0.85 src=fuzzy_fallback
+  new_supplier_yn: excel='None' conf=0.0 src=none
+  nominated_supplier: excel='None' conf=0.0 src=none
+  manufacturing_cofor: excel='None' conf=0.0 src=none
+  supplier_location: excel='None' conf=0.0 src=none
+  ppm: excel='None' conf=0.0 src=none
+  commodity_buyer: excel='None' conf=0.0 src=none
+  program_buyer: excel='None' conf=0.0 src=none
+  gm_commodity: excel='None' conf=0.0 src=none
+  pur_manager: excel='None' conf=0.0 src=none
+  ga: excel='None' conf=0.0 src=none
+  pur_area: excel='None' conf=0.0 src=none
+  lead_engineer_hordain: excel='None' conf=0.0 src=none
+  e_port: excel='None' conf=0.0 src=none
+  tofas: excel='None' conf=0.0 src=none
+  eko: excel='None' conf=0.0 src=none
+  lfp_66_kwh: excel='None' conf=0.0 src=none
+  nmc_82_kwh: excel='None' conf=0.0 src=none
+  quantity_parts_per_vehicle: excel='None' conf=0.0 src=none
+  weekly_capacity_requested_gst: excel='None' conf=0.0 src=none
+  capacity_step_requested_gst: excel='None' conf=0.0 src=none
+  calculation_date_gst: excel='None' conf=0.0 src=none
+  weekly_capacity_requested_tko: excel='None' conf=0.0 src=none
+  capacity_step_requested_tko: excel='None' conf=0.0 src=none
+  scr_date_tko: excel='None' conf=0.0 src=none
+  scr_tko_link: excel='None' conf=0.0 src=none
+  weekly_capacity_latest_ltos: excel='None' conf=0.0 src=none
+  capacity_step_latest_ltos: excel='None' conf=0.0 src=none
+  date_latest_ltos: excel='None' conf=0.0 src=none
+  calculation_link: excel='None' conf=0.0 src=none
+  contracted_capacity: excel='None' conf=0.0 src=none
+  contracted_capacity_step: excel='None' conf=0.0 src=none
+  capacity_sizing_ok: excel='None' conf=0.0 src=none
+  new_scr_calculation_done: excel='None' conf=0.0 src=none
+  contracted_capacity_ok: excel='None' conf=0.0 src=none
+  capacity_comments: excel='None' conf=0.0 src=none
+  capacity_workshop_date: excel='None' conf=0.0 src=none
+  capacity_workshop_comment: excel='None' conf=0.0 src=none
+  sqvl: excel='None' conf=0.0 src=none
+  sqme_manufacturing: excel='None' conf=0.0 src=none
+  apqp_grid: excel='None' conf=0.0 src=none
+  run_assessment: excel='None' conf=0.0 src=none
+  cat_forecast_date: excel='None' conf=0.0 src=none
+  cat_forecast_calendar_week: excel='None' conf=0.0 src=none
+  cat_real_date: excel='None' conf=0.0 src=none
+  cat_real_calendar_week: excel='None' conf=0.0 src=none
+  last_cat: excel='None' conf=0.0 src=none
+  requested_supplier_weekly_capacity: excel='None' conf=0.0 src=none
+  cat_run_observation: excel='None' conf=0.0 src=none
+  number_production_days: excel='None' conf=0.0 src=none
+  number_production_shifts: excel='None' conf=0.0 src=none
+  cat_rating: excel='None' conf=0.0 src=none
+  cat_link: excel='None' conf=0.0 src=none
+  cat_comment: excel='None' conf=0.0 src=none
+2026-08-12 12:30:56,153 - app.application.services.ollama_mapping_service - INFO - 
+==================== [OLLAMA LLM METRICS] ====================
+  - Model:             llama3.2:1b
+  - Prompt Size:       5038 chars
+  - Prompt Tokens:     0
+  - Completion Tokens: 0
+  - Inference Time:    30476.06 ms
+  - JSON Parse Time:   0.00 ms
+  - Excel Read Time:   0.09 ms
+  - Total Mapping:     31302.19 ms
+  - LLM Mapped Fields: 0/66 (Active: False)
+==============================================================
+2026-08-12 12:30:56,161 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-12 12:31:35,868 - app.main - INFO - GET /api/v1/projects
+2026-08-12 12:31:36,246 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 12:31:36,273 - app.main - INFO - GET /api/v1/projects
+2026-08-12 12:31:36,529 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 12:31:40,112 - app.main - INFO - GET /api/v1/projects
+2026-08-12 12:31:40,213 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 12:33:08,806 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-12 12:33:08,824 - app.main - INFO - GET /api/v1/documents
+2026-08-12 12:33:09,079 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 81.83 ms
+2026-08-12 12:33:09,089 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-12 12:33:09,110 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-12 12:33:09,128 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-12 12:33:09,195 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 22.31 ms
+2026-08-12 12:33:09,209 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-12 12:33:34,385 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-12 12:33:34,513 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Sheet: 'Pilot Sheet (Suivi)' | Orient: HORIZONTAL | Headers (47): ['Part Number', 'Index', 'Description', 'Coef.', 'Serial Piece Price', 'Mass Purchase\r\n(Coef. x Price per part)', 'RU', 'NOA', 'Make Battery (LP)', 'Make Battery (LP)', '', '', '', '', 'libre', 'Supplier name', 'Vendor COFOR', 'Manufacturer COFOR', 'Combined COFOR', 'Tango order', 'EI status', 'Comments', 'Week\r\nProject Target', 'Forecast\r\nWeek', 'Completed\r\nWeek', 'Week\r\nProject Target', 'Forecast\r\nWeek', 'Completed\r\nWeek', 'Week\r\nProject Target', 'Forecast\r\nWeek', 'Completed\r\nWeek', 'Quality', 'Supply Chain', 'Global Purchasing', 'CPL', 'RCPI', 'Minimum Quality status acted', 'Mass inquired', 'Packaging readiness, UNLweb \r\nvalidated', 'TANGO contract validated', 'Supplier capability confirmed', 'IT CPL (CORAIL,) setting', 'FCLA Validates', 'PLE created', 'EDI opened', 'UM logistic flow validated', 'Manufacturing process validated']
+2026-08-12 12:33:34,570 - app.application.services.ollama_mapping_service - INFO - [OLLAMA] Configured timeout: 30.0s, default model: llama3.2:1b, url: http://localhost:11434
+2026-08-12 12:33:34,573 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Template: 'K0' (CMF K0 Project Template), Fields: 66, Headers: 47
+2026-08-12 12:33:34,970 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 12:33:35,397 - httpx - INFO - HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-08-12 12:33:54,120 - httpx - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
+2026-08-12 12:33:54,127 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] LLM Raw Response: '{"Part Number": "part_number", "Index": "index", "Description": "description", "Coef.":"coef.", "Serial Piece Price": "serial_piece_price", "Mass Purchase (Coefficient x Price per part)": "mass_purchase_coeff_x_price_per_part", "RU": "ru", "NOA": "noa", "Make Battery (LP)": "make_battery_l_p", "Make Battery (LP)": "make_battery_l_p", "":"libre", "Supplier name": "supplier_name", "Vendor COFOR": "vendor_cofor", "Manufacturer COFOR": "manufacturer_cofor", "Combined COFOR": "combined_cofor", "Tango'
+2026-08-12 12:33:54,143 - app.application.services.ollama_mapping_service - INFO - [OLLAMA MAP] Final Mapping Summary (0/66 fields mapped via LLM):
+  line_item: excel='None' conf=0.0 src=none
+  components_package_rfq: excel='None' conf=0.0 src=none
+  tazebao_id_dev_system_no: excel='None' conf=0.0 src=none
+  gst_source_package_number: excel='None' conf=0.0 src=none
+  part_number: excel='Part Number' conf=0.99 src=exact_match
+  part_name: excel='None' conf=0.0 src=none
+  comments: excel='Comments' conf=0.99 src=exact_match
+  make_or_buy: excel='None' conf=0.0 src=none
+  other_platform_impacted: excel='None' conf=0.0 src=none
+  development_type: excel='None' conf=0.0 src=none
+  status_resourcing: excel='None' conf=0.0 src=none
+  original_vehicle_co_parts: excel='None' conf=0.0 src=none
+  supplier_name_co_parts: excel='Supplier name' conf=0.85 src=fuzzy_fallback
+  new_supplier_yn: excel='None' conf=0.0 src=none
+  nominated_supplier: excel='None' conf=0.0 src=none
+  manufacturing_cofor: excel='None' conf=0.0 src=none
+  supplier_location: excel='None' conf=0.0 src=none
+  ppm: excel='None' conf=0.0 src=none
+  commodity_buyer: excel='None' conf=0.0 src=none
+  program_buyer: excel='None' conf=0.0 src=none
+  gm_commodity: excel='None' conf=0.0 src=none
+  pur_manager: excel='None' conf=0.0 src=none
+  ga: excel='None' conf=0.0 src=none
+  pur_area: excel='None' conf=0.0 src=none
+  lead_engineer_hordain: excel='None' conf=0.0 src=none
+  e_port: excel='None' conf=0.0 src=none
+  tofas: excel='None' conf=0.0 src=none
+  eko: excel='None' conf=0.0 src=none
+  lfp_66_kwh: excel='None' conf=0.0 src=none
+  nmc_82_kwh: excel='None' conf=0.0 src=none
+  quantity_parts_per_vehicle: excel='None' conf=0.0 src=none
+  weekly_capacity_requested_gst: excel='None' conf=0.0 src=none
+  capacity_step_requested_gst: excel='None' conf=0.0 src=none
+  calculation_date_gst: excel='None' conf=0.0 src=none
+  weekly_capacity_requested_tko: excel='None' conf=0.0 src=none
+  capacity_step_requested_tko: excel='None' conf=0.0 src=none
+  scr_date_tko: excel='None' conf=0.0 src=none
+  scr_tko_link: excel='None' conf=0.0 src=none
+  weekly_capacity_latest_ltos: excel='None' conf=0.0 src=none
+  capacity_step_latest_ltos: excel='None' conf=0.0 src=none
+  date_latest_ltos: excel='None' conf=0.0 src=none
+  calculation_link: excel='None' conf=0.0 src=none
+  contracted_capacity: excel='None' conf=0.0 src=none
+  contracted_capacity_step: excel='None' conf=0.0 src=none
+  capacity_sizing_ok: excel='None' conf=0.0 src=none
+  new_scr_calculation_done: excel='None' conf=0.0 src=none
+  contracted_capacity_ok: excel='None' conf=0.0 src=none
+  capacity_comments: excel='None' conf=0.0 src=none
+  capacity_workshop_date: excel='None' conf=0.0 src=none
+  capacity_workshop_comment: excel='None' conf=0.0 src=none
+  sqvl: excel='None' conf=0.0 src=none
+  sqme_manufacturing: excel='None' conf=0.0 src=none
+  apqp_grid: excel='None' conf=0.0 src=none
+  run_assessment: excel='None' conf=0.0 src=none
+  cat_forecast_date: excel='None' conf=0.0 src=none
+  cat_forecast_calendar_week: excel='None' conf=0.0 src=none
+  cat_real_date: excel='None' conf=0.0 src=none
+  cat_real_calendar_week: excel='None' conf=0.0 src=none
+  last_cat: excel='None' conf=0.0 src=none
+  requested_supplier_weekly_capacity: excel='None' conf=0.0 src=none
+  cat_run_observation: excel='None' conf=0.0 src=none
+  number_production_days: excel='None' conf=0.0 src=none
+  number_production_shifts: excel='None' conf=0.0 src=none
+  cat_rating: excel='None' conf=0.0 src=none
+  cat_link: excel='None' conf=0.0 src=none
+  cat_comment: excel='None' conf=0.0 src=none
+2026-08-12 12:33:54,144 - app.application.services.ollama_mapping_service - INFO - 
+==================== [OLLAMA LLM METRICS] ====================
+  - Model:             llama3.2:1b
+  - Prompt Size:       5038 chars
+  - Prompt Tokens:     1280
+  - Completion Tokens: 150
+  - Inference Time:    17250.78 ms
+  - JSON Parse Time:   0.15 ms
+  - Excel Read Time:   0.13 ms
+  - Total Mapping:     19569.03 ms
+  - LLM Mapped Fields: 0/66 (Active: False)
+==============================================================
+2026-08-12 12:33:54,152 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-12 12:34:24,275 - app.main - INFO - GET /api/v1/parts
+2026-08-12 12:34:24,524 - app.main - INFO - GET /api/v1/parts -> 200
+2026-08-12 12:34:40,335 - app.main - INFO - GET /api/v1/projects
+2026-08-12 12:34:40,429 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 12:34:40,451 - app.main - INFO - GET /api/v1/projects
+2026-08-12 12:34:40,546 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 12:34:49,409 - app.main - INFO - DELETE /api/v1/templates/c8d78c5a-3dd0-4adf-afea-f9b88b2a2f9b
+2026-08-12 12:34:49,590 - app.main - INFO - DELETE /api/v1/templates/c8d78c5a-3dd0-4adf-afea-f9b88b2a2f9b -> 200
+2026-08-12 12:34:49,628 - app.main - INFO - GET /api/v1/templates
+2026-08-12 12:34:49,740 - app.main - ERROR - Unhandled exception: (sqlite3.IntegrityError) UNIQUE constraint failed: templates.code
+[SQL: INSERT INTO templates (id, code, name, description, version, status, schema_json, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('133ef3a0810542ebaddd10d9ef5ba7a7', 'K0', 'CMF K0 Project Template', 'CMF K0 automotive project template structured into three role-based business modules: Buyer, Capacity Manager, and SQD.', '1.0', 'PUBLISHED', '{"code": "K0", "name": "CMF K0 Project Template", "version": "1.0", "status": "PUBLISHED", "description": "CMF K0 automotive project template structu ... (25746 characters truncated) ... art_number", "defaultSortDesc": false, "defaultPageSize": 20, "quickFilterFields": ["part_number", "part_name", "nominated_supplier", "cat_rating"]}}', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 183, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 343, in _handle_exception
+    raise error
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 165, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 40, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 32, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 160, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 63, in _connection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: templates.code
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 135, in rate_limit_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 110, in logging_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 99, in request_id_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 72, in strip_trailing_slash_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 222, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\deps.py", line 42, in get_db
+    yield session
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\v1\endpoints\templates.py", line 30, in list_templates
+    return await service.get_templates()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 348, in get_templates
+    await self.seed_k9_if_missing()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 344, in seed_k9_if_missing
+    await self.seed_template_by_code("K0", "k0_template.json")
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 338, in seed_template_by_code
+    tmpl = await self._uow.templates.create(template_data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\infrastructure\persistence\repositories\base.py", line 64, in create
+    await self._session.flush()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 786, in flush
+    await greenlet_spawn(self.sync_session.flush, objects=objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 203, in greenlet_spawn
+    result = context.switch(value)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4353, in flush
+    self._flush(objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4488, in _flush
+    with util.safe_reraise():
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 122, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4449, in _flush
+    flush_context.execute()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 465, in execute
+    rec.execute(self)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 641, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 94, in save_obj
+    _emit_insert_statements(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1234, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 183, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 343, in _handle_exception
+    raise error
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 165, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 40, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 32, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 160, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 63, in _connection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: templates.code
+[SQL: INSERT INTO templates (id, code, name, description, version, status, schema_json, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('133ef3a0810542ebaddd10d9ef5ba7a7', 'K0', 'CMF K0 Project Template', 'CMF K0 automotive project template structured into three role-based business modules: Buyer, Capacity Manager, and SQD.', '1.0', 'PUBLISHED', '{"code": "K0", "name": "CMF K0 Project Template", "version": "1.0", "status": "PUBLISHED", "description": "CMF K0 automotive project template structu ... (25746 characters truncated) ... art_number", "defaultSortDesc": false, "defaultPageSize": 20, "quickFilterFields": ["part_number", "part_name", "nominated_supplier", "cat_rating"]}}', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-08-12 12:34:51,863 - app.main - INFO - GET /api/v1/projects
+2026-08-12 12:34:52,020 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-12 12:44:33,811 - app.main - INFO - POST /api/v1/templates
+2026-08-12 12:44:33,835 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-12 12:44:33,839 - app.main - INFO - POST /api/v1/templates -> 401
+2026-08-12 12:44:37,982 - app.main - INFO - POST /api/v1/templates
+2026-08-12 12:44:38,000 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-12 12:44:38,005 - app.main - INFO - POST /api/v1/templates -> 401
+2026-08-12 12:44:42,682 - app.main - INFO - GET /api/v1/auth/me
+2026-08-12 12:44:42,692 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-12 12:44:42,701 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-12 12:44:42,738 - app.main - INFO - GET /api/v1/auth/me
+2026-08-12 12:44:42,753 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-12 12:44:42,766 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-12 12:44:42,801 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-12 12:44:42,951 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-12 12:44:42,972 - app.main - INFO - GET /api/v1/auth/me
+2026-08-12 12:44:43,116 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-12 12:44:43,143 - app.main - INFO - GET /api/v1/auth/me
+2026-08-12 12:44:43,508 - app.main - INFO - GET /api/v1/templates
+2026-08-12 12:44:43,786 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-12 12:44:43,820 - app.main - ERROR - Unhandled exception: (sqlite3.IntegrityError) UNIQUE constraint failed: templates.code
+[SQL: INSERT INTO templates (id, code, name, description, version, status, schema_json, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('ac647c6517a041a3ab0611df60d6cf65', 'K0', 'CMF K0 Project Template', 'CMF K0 automotive project template structured into three role-based business modules: Buyer, Capacity Manager, and SQD.', '1.0', 'PUBLISHED', '{"code": "K0", "name": "CMF K0 Project Template", "version": "1.0", "status": "PUBLISHED", "description": "CMF K0 automotive project template structu ... (25746 characters truncated) ... art_number", "defaultSortDesc": false, "defaultPageSize": 20, "quickFilterFields": ["part_number", "part_name", "nominated_supplier", "cat_rating"]}}', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 183, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 343, in _handle_exception
+    raise error
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 165, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 40, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 32, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 160, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 63, in _connection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: templates.code
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 135, in rate_limit_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 110, in logging_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 99, in request_id_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 72, in strip_trailing_slash_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 222, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\deps.py", line 42, in get_db
+    yield session
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\v1\endpoints\templates.py", line 30, in list_templates
+    return await service.get_templates()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 348, in get_templates
+    await self.seed_k9_if_missing()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 344, in seed_k9_if_missing
+    await self.seed_template_by_code("K0", "k0_template.json")
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 338, in seed_template_by_code
+    tmpl = await self._uow.templates.create(template_data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\infrastructure\persistence\repositories\base.py", line 64, in create
+    await self._session.flush()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 786, in flush
+    await greenlet_spawn(self.sync_session.flush, objects=objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 203, in greenlet_spawn
+    result = context.switch(value)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4353, in flush
+    self._flush(objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4488, in _flush
+    with util.safe_reraise():
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 122, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4449, in _flush
+    flush_context.execute()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 465, in execute
+    rec.execute(self)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 641, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 94, in save_obj
+    _emit_insert_statements(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1234, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 183, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 343, in _handle_exception
+    raise error
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 165, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 40, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 32, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 160, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 63, in _connection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: templates.code
+[SQL: INSERT INTO templates (id, code, name, description, version, status, schema_json, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('ac647c6517a041a3ab0611df60d6cf65', 'K0', 'CMF K0 Project Template', 'CMF K0 automotive project template structured into three role-based business modules: Buyer, Capacity Manager, and SQD.', '1.0', 'PUBLISHED', '{"code": "K0", "name": "CMF K0 Project Template", "version": "1.0", "status": "PUBLISHED", "description": "CMF K0 automotive project template structu ... (25746 characters truncated) ... art_number", "defaultSortDesc": false, "defaultPageSize": 20, "quickFilterFields": ["part_number", "part_name", "nominated_supplier", "cat_rating"]}}', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-08-12 12:44:43,866 - app.main - INFO - GET /api/v1/templates
+2026-08-12 12:44:43,931 - app.main - ERROR - Unhandled exception: (sqlite3.IntegrityError) UNIQUE constraint failed: templates.code
+[SQL: INSERT INTO templates (id, code, name, description, version, status, schema_json, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('34f11b84e68544f9bef4de4930da18ec', 'K0', 'CMF K0 Project Template', 'CMF K0 automotive project template structured into three role-based business modules: Buyer, Capacity Manager, and SQD.', '1.0', 'PUBLISHED', '{"code": "K0", "name": "CMF K0 Project Template", "version": "1.0", "status": "PUBLISHED", "description": "CMF K0 automotive project template structu ... (25746 characters truncated) ... art_number", "defaultSortDesc": false, "defaultPageSize": 20, "quickFilterFields": ["part_number", "part_name", "nominated_supplier", "cat_rating"]}}', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 183, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 343, in _handle_exception
+    raise error
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 165, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 40, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 32, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 160, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 63, in _connection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: templates.code
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 135, in rate_limit_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 110, in logging_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 99, in request_id_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 72, in strip_trailing_slash_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 222, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\deps.py", line 42, in get_db
+    yield session
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\v1\endpoints\templates.py", line 30, in list_templates
+    return await service.get_templates()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 348, in get_templates
+    await self.seed_k9_if_missing()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 344, in seed_k9_if_missing
+    await self.seed_template_by_code("K0", "k0_template.json")
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 338, in seed_template_by_code
+    tmpl = await self._uow.templates.create(template_data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\infrastructure\persistence\repositories\base.py", line 64, in create
+    await self._session.flush()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 786, in flush
+    await greenlet_spawn(self.sync_session.flush, objects=objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 203, in greenlet_spawn
+    result = context.switch(value)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4353, in flush
+    self._flush(objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4488, in _flush
+    with util.safe_reraise():
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 122, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4449, in _flush
+    flush_context.execute()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 465, in execute
+    rec.execute(self)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 641, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 94, in save_obj
+    _emit_insert_statements(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1234, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 183, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 343, in _handle_exception
+    raise error
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 165, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 40, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 32, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 160, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 63, in _connection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: templates.code
+[SQL: INSERT INTO templates (id, code, name, description, version, status, schema_json, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('34f11b84e68544f9bef4de4930da18ec', 'K0', 'CMF K0 Project Template', 'CMF K0 automotive project template structured into three role-based business modules: Buyer, Capacity Manager, and SQD.', '1.0', 'PUBLISHED', '{"code": "K0", "name": "CMF K0 Project Template", "version": "1.0", "status": "PUBLISHED", "description": "CMF K0 automotive project template structu ... (25746 characters truncated) ... art_number", "defaultSortDesc": false, "defaultPageSize": 20, "quickFilterFields": ["part_number", "part_name", "nominated_supplier", "cat_rating"]}}', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-08-12 12:57:55,945 - app.main - INFO - GET /api/v1/auth/me
+2026-08-12 12:57:56,066 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-12 12:57:56,083 - app.main - INFO - GET /api/v1/auth/me
+2026-08-12 12:57:56,173 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-12 12:57:56,229 - app.main - INFO - GET /api/v1/templates
+2026-08-12 12:57:56,392 - app.main - ERROR - Unhandled exception: (sqlite3.IntegrityError) UNIQUE constraint failed: templates.code
+[SQL: INSERT INTO templates (id, code, name, description, version, status, schema_json, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('87507b5390cb4959baf4acd8bc48e786', 'K0', 'CMF K0 Project Template', 'CMF K0 automotive project template structured into three role-based business modules: Buyer, Capacity Manager, and SQD.', '1.0', 'PUBLISHED', '{"code": "K0", "name": "CMF K0 Project Template", "version": "1.0", "status": "PUBLISHED", "description": "CMF K0 automotive project template structu ... (25746 characters truncated) ... art_number", "defaultSortDesc": false, "defaultPageSize": 20, "quickFilterFields": ["part_number", "part_name", "nominated_supplier", "cat_rating"]}}', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 183, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 343, in _handle_exception
+    raise error
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 165, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 40, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 32, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 160, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 63, in _connection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: templates.code
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 135, in rate_limit_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 110, in logging_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 99, in request_id_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 72, in strip_trailing_slash_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 222, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\deps.py", line 42, in get_db
+    yield session
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\v1\endpoints\templates.py", line 30, in list_templates
+    return await service.get_templates()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 348, in get_templates
+    await self.seed_k9_if_missing()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 344, in seed_k9_if_missing
+    await self.seed_template_by_code("K0", "k0_template.json")
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 338, in seed_template_by_code
+    tmpl = await self._uow.templates.create(template_data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\infrastructure\persistence\repositories\base.py", line 64, in create
+    await self._session.flush()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 786, in flush
+    await greenlet_spawn(self.sync_session.flush, objects=objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 203, in greenlet_spawn
+    result = context.switch(value)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4353, in flush
+    self._flush(objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4488, in _flush
+    with util.safe_reraise():
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 122, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4449, in _flush
+    flush_context.execute()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 465, in execute
+    rec.execute(self)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 641, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 94, in save_obj
+    _emit_insert_statements(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1234, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 183, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 343, in _handle_exception
+    raise error
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 165, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 40, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 32, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 160, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 63, in _connection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: templates.code
+[SQL: INSERT INTO templates (id, code, name, description, version, status, schema_json, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('87507b5390cb4959baf4acd8bc48e786', 'K0', 'CMF K0 Project Template', 'CMF K0 automotive project template structured into three role-based business modules: Buyer, Capacity Manager, and SQD.', '1.0', 'PUBLISHED', '{"code": "K0", "name": "CMF K0 Project Template", "version": "1.0", "status": "PUBLISHED", "description": "CMF K0 automotive project template structu ... (25746 characters truncated) ... art_number", "defaultSortDesc": false, "defaultPageSize": 20, "quickFilterFields": ["part_number", "part_name", "nominated_supplier", "cat_rating"]}}', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-08-12 12:57:56,436 - app.main - INFO - GET /api/v1/templates
+2026-08-12 12:57:56,510 - app.main - ERROR - Unhandled exception: (sqlite3.IntegrityError) UNIQUE constraint failed: templates.code
+[SQL: INSERT INTO templates (id, code, name, description, version, status, schema_json, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('20dc6bc29d2e4f2bb6098c6517417865', 'K0', 'CMF K0 Project Template', 'CMF K0 automotive project template structured into three role-based business modules: Buyer, Capacity Manager, and SQD.', '1.0', 'PUBLISHED', '{"code": "K0", "name": "CMF K0 Project Template", "version": "1.0", "status": "PUBLISHED", "description": "CMF K0 automotive project template structu ... (25746 characters truncated) ... art_number", "defaultSortDesc": false, "defaultPageSize": 20, "quickFilterFields": ["part_number", "part_name", "nominated_supplier", "cat_rating"]}}', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 183, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 343, in _handle_exception
+    raise error
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 165, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 40, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 32, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 160, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 63, in _connection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: templates.code
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 135, in rate_limit_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 110, in logging_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 99, in request_id_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 185, in __call__
+    with collapse_excgroups():
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_utils.py", line 83, in collapse_excgroups
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 187, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\main.py", line 72, in strip_trailing_slash_middleware
+    return await call_next(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 163, in call_next
+    raise app_exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 149, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\hp\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 222, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\deps.py", line 42, in get_db
+    yield session
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\api\v1\endpoints\templates.py", line 30, in list_templates
+    return await service.get_templates()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 348, in get_templates
+    await self.seed_k9_if_missing()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 344, in seed_k9_if_missing
+    await self.seed_template_by_code("K0", "k0_template.json")
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\application\services\template_service.py", line 338, in seed_template_by_code
+    tmpl = await self._uow.templates.create(template_data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\app\infrastructure\persistence\repositories\base.py", line 64, in create
+    await self._session.flush()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 786, in flush
+    await greenlet_spawn(self.sync_session.flush, objects=objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 203, in greenlet_spawn
+    result = context.switch(value)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4353, in flush
+    self._flush(objects)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4488, in _flush
+    with util.safe_reraise():
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\langhelpers.py", line 122, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4449, in _flush
+    flush_context.execute()
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 465, in execute
+    rec.execute(self)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\unitofwork.py", line 641, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 94, in save_obj
+    _emit_insert_statements(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\orm\persistence.py", line 1234, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1421, in execute
+    return meth(
+           ^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 526, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1643, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2365, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\engine\default.py", line 952, in do_execute
+    cursor.execute(statement, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 183, in execute
+    self._adapt_connection._handle_exception(error)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 343, in _handle_exception
+    raise error
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\dialects\sqlite\aiosqlite.py", line 165, in execute
+    self.await_(_cursor.execute(operation, parameters))
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 40, in execute
+    await self._execute(self._cursor.execute, sql, parameters)
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\cursor.py", line 32, in _execute
+    return await self._conn._execute(fn, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 160, in _execute
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\projects\pfa-anwar\cmf-platform\backend\venv\Lib\site-packages\aiosqlite\core.py", line 63, in _connection_worker_thread
+    result = function()
+             ^^^^^^^^^^
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: templates.code
+[SQL: INSERT INTO templates (id, code, name, description, version, status, schema_json, deleted_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING created_at, updated_at]
+[parameters: ('20dc6bc29d2e4f2bb6098c6517417865', 'K0', 'CMF K0 Project Template', 'CMF K0 automotive project template structured into three role-based business modules: Buyer, Capacity Manager, and SQD.', '1.0', 'PUBLISHED', '{"code": "K0", "name": "CMF K0 Project Template", "version": "1.0", "status": "PUBLISHED", "description": "CMF K0 automotive project template structu ... (25746 characters truncated) ... art_number", "defaultSortDesc": false, "defaultPageSize": 20, "quickFilterFields": ["part_number", "part_name", "nominated_supplier", "cat_rating"]}}', None)]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2026-08-12 13:05:50,992 - app.main - INFO - Shutting down CMF Platform API

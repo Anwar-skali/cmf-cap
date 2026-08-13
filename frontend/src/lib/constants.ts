@@ -110,6 +110,7 @@ export const API_ENDPOINTS = {
     BASE: '/projects',
     BY_ID: (id: string) => `/projects/${id}`,
     STATUS: (id: string) => `/projects/${id}/status`,
+    BULK_DELETE: '/projects/bulk-delete',
   },
   PARTS: {
     BASE: '/parts',

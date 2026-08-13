@@ -71,3 +71,19 @@ export function useUpdateProjectStatusMutation() {
     },
   });
 }
+
+export function useBulkDeleteProjectMutation() {
+  const queryClient = useQueryClient();
+  const toast = useToast();
+
+  return useMutation({
+    mutationFn: (ids: string[]) => projectsApi.bulkDeleteProjects(ids),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.projects.lists() });
+      toast.success(`${data.deleted_count} project(s) deleted successfully`);
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || 'Failed to delete projects');
+    },
+  });
+}

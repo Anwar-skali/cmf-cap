@@ -86,6 +86,7 @@ export interface ProjectFilter {
   dateTo?: string;
   page?: number;
   pageSize?: number;
+  page_size?: number;
   sortBy?: string;
   sortOrder?: 'asc' | 'desc';
 }
@@ -369,6 +370,20 @@ export interface PaginatedResponse<T> {
   total: number;
   skip: number;
   limit: number;
+  page?: number;
+  page_size?: number;
+  pageSize?: number;
+  total_pages?: number;
+  totalPages?: number;
+}
+
+export interface BulkDeleteProjectsRequest {
+  project_ids: string[];
+}
+
+export interface BulkDeleteProjectsResponse {
+  deleted_count: number;
+  deleted_ids: string[];
 }
 
 export interface ApiError {

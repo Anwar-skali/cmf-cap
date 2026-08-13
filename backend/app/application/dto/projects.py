@@ -97,6 +97,9 @@ class ProjectListResponse(BaseModel):
     total: int
     skip: int = 0
     limit: int = 20
+    page: int = 1
+    page_size: int = 20
+    total_pages: int = 1
 
 
 class ProjectStatusUpdateRequest(BaseModel):
@@ -114,6 +117,18 @@ class ProjectFilter(BaseModel):
     template_id: Any | None = None
     skip: int = Field(default=0, ge=0)
     limit: int = Field(default=20, ge=1, le=100)
+    page: int | None = Field(default=None, ge=1)
+    page_size: int | None = Field(default=None, ge=1, le=100)
     sort_by: str | None = "created_at"
     sort_desc: bool = True
+
+
+class BulkDeleteProjectsRequest(BaseModel):
+    project_ids: list[Any] = Field(..., min_length=1)
+
+
+class BulkDeleteProjectsResponse(BaseModel):
+    deleted_count: int
+    deleted_ids: list[Any]
+
 
