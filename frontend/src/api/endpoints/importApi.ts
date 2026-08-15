@@ -41,6 +41,9 @@ export interface ImportPreviewReport {
   totalRows: number;
   validRowsCount: number;
   errorRowsCount: number;
+  newCount?: number;
+  updateCount?: number;
+  restoreCount?: number;
   headers: string[];
   columnMapping: Record<string, string | null>;
   availableSchemaColumns: ImportSchemaColumn[];

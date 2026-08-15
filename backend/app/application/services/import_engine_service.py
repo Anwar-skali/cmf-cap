@@ -435,21 +435,24 @@ class ImportEngineService:
                 }
             )
 
-        # Step 3: Row-by-Row validation & duplicate detection
+        # Step 3: Row-by-Row validation, duplicate detection, and action classification
         unique_key_spec = next((c for c in schema.columns if c.unique_key), None)
         seen_unique_values: dict[str, int] = {}  # clean_value -> first_seen_row_idx
 
-        # Database existing unique values check
-        existing_db_unique_values: set[str] = set()
+        # Query existing database records (including soft-deleted)
+        existing_db_records: dict[str, dict[str, Any]] = {}
         if unique_key_spec:
-            existing_db_unique_values = await self._get_existing_db_unique_keys(
-                entity_type, unique_key_spec.key
-            )
+            existing_db_records = await self._get_existing_db_records(entity_type)
+
+        is_project_entity = entity_type.lower() not in ("suppliers", "parts", "risks", "capacity")
 
         valid_rows_count = 0
         error_rows_set: set[int] = set()
         duplicate_in_excel_set: set[int] = set()
         duplicate_in_db_set: set[int] = set()
+        new_rows_set: set[int] = set()
+        update_rows_set: set[int] = set()
+        restore_rows_set: set[int] = set()
         validation_error_rows_set: set[int] = set()
         non_record_rows_set: set[int] = set()
         record_rows_count = 0
@@ -567,12 +570,15 @@ class ImportEngineService:
                     row_norm_details[col_spec.key]["message"],
                 )
 
-            # Stage 3: Duplicate detection (Excel file & Database)
+            # Stage 3: Duplicate detection and Action Classification (CREATE / UPDATE / RESTORE)
+            row_action = "CREATE"
+            row_status = "new"
+
             if unique_key_spec and unique_key_spec.key in row_dict and row_dict[unique_key_spec.key] is not None:
                 u_val = str(row_dict[unique_key_spec.key]).strip()
                 clean_u_val = u_val.lower()
 
-                # Duplicate inside Excel file check
+                # Duplicate inside same Excel file check
                 if clean_u_val in seen_unique_values:
                     first_row = seen_unique_values[clean_u_val]
                     validation_errors.append(
@@ -590,21 +596,39 @@ class ImportEngineService:
                 else:
                     seen_unique_values[clean_u_val] = row_idx
 
-                # Duplicate against Database check
-                if clean_u_val in existing_db_unique_values:
-                    row_dict["_exists_in_db"] = True
-                    validation_errors.append(
-                        {
-                            "row_index": row_idx,
-                            "column_name": unique_key_spec.label,
-                            "field_key": unique_key_spec.key,
-                            "raw_value": u_val,
-                            "error_type": "DuplicateInDatabase",
-                            "message": f"Value '{u_val}' already exists in database.",
-                        }
-                    )
-                    row_has_error = True
+                # Check Database existence (Active vs Soft-Deleted)
+                if clean_u_val in existing_db_records:
+                    rec_info = existing_db_records[clean_u_val]
+                    is_soft_del = bool(rec_info.get("is_deleted", False))
                     duplicate_in_db_set.add(row_idx)
+                    row_dict["_exists_in_db"] = True
+                    row_dict["_is_deleted"] = is_soft_del
+
+                    if is_soft_del:
+                        row_action = "RESTORE"
+                        row_status = "deleted"
+                        restore_rows_set.add(row_idx)
+                    else:
+                        row_action = "UPDATE"
+                        row_status = "existing"
+                        update_rows_set.add(row_idx)
+
+                    # For non-project entities in strict mode, record DuplicateInDatabase
+                    if not is_project_entity:
+                        validation_errors.append(
+                            {
+                                "row_index": row_idx,
+                                "column_name": unique_key_spec.label,
+                                "field_key": unique_key_spec.key,
+                                "raw_value": u_val,
+                                "error_type": "DuplicateInDatabase",
+                                "message": f"Value '{u_val}' already exists in database.",
+                            }
+                        )
+                else:
+                    row_action = "CREATE"
+                    row_status = "new"
+                    new_rows_set.add(row_idx)
 
             if is_record:
                 if row_has_error:
@@ -619,12 +643,13 @@ class ImportEngineService:
                 preview_entry["_row_index"] = row_idx
                 preview_entry["_has_error"] = row_has_error
                 preview_entry["_is_record"] = is_record
+                preview_entry["_action"] = row_action
+                preview_entry["_status"] = row_status
                 preview_entry["norm_details"] = row_norm_details
                 preview_entry["_norm_details"] = row_norm_details
                 preview_rows.append(preview_entry)
 
-        # Non-record rows are ignored entirely: drop their (irrelevant) errors and
-        # warnings so the report only reflects actual data records.
+        # Non-record rows are ignored entirely
         if non_record_rows_set:
             validation_errors = [
                 e for e in validation_errors if e.get("row_index") not in non_record_rows_set
@@ -632,6 +657,8 @@ class ImportEngineService:
             normalization_warnings = [
                 w for w in normalization_warnings if w.get("row_index") not in non_record_rows_set
             ]
+
+        valid_records = set(range(1, len(data_rows) + 1)) - error_rows_set - non_record_rows_set
 
         return {
             "entity_type": entity_type,
@@ -644,6 +671,9 @@ class ImportEngineService:
             "record_rows_count": record_rows_count,
             "valid_rows_count": valid_rows_count,
             "error_rows_count": len(error_rows_set),
+            "new_count": len(new_rows_set & valid_records),
+            "update_count": len(update_rows_set & valid_records),
+            "restore_count": len(restore_rows_set & valid_records),
             "duplicate_in_excel_count": len(duplicate_in_excel_set),
             "duplicate_in_db_count": len(duplicate_in_db_set),
             "validation_errors_count": len(
@@ -729,6 +759,8 @@ class ImportEngineService:
         logger.info("[IMPORT DEBUG] Headers detected: %r", headers)
 
         # Categorize validation errors for row-level skip logic
+        is_project_entity = entity_type.lower() not in ("suppliers", "parts", "risks", "capacity")
+
         excel_dup_map = {
             err["row_index"]: err["message"]
             for err in validation_errors
@@ -771,8 +803,6 @@ class ImportEngineService:
                         row_dict[db_key] = val
 
                 # 0. Skip non-record rows (no value in any unique-key column).
-                #    These are section headers, notes, or blank placeholders and
-                #    must not be imported as data records.
                 if not self._row_has_record_key(row_dict, schema):
                     skipped_count += 1
                     non_record_rows_count += 1
@@ -794,8 +824,8 @@ class ImportEngineService:
                     })
                     continue
 
-                # 2. Skip Duplicate in Database (when mode == "insert")
-                if mode == "insert" and row_idx in db_dup_map:
+                # 2. Skip Duplicate in Database (ONLY for non-project entities when mode == "insert")
+                if not is_project_entity and mode == "insert" and row_idx in db_dup_map:
                     skipped_count += 1
                     duplicate_in_db_count += 1
                     skipped_details.append({
@@ -848,7 +878,7 @@ class ImportEngineService:
                     u_val_str = str(coerced_row[unique_key_spec.key]).strip()
                     clean_u_val = u_val_str.lower()
 
-                if mode == "insert" and clean_u_val and clean_u_val in inserted_in_batch:
+                if not is_project_entity and mode == "insert" and clean_u_val and clean_u_val in inserted_in_batch:
                     skipped_count += 1
                     duplicate_in_excel_count += 1
                     skipped_details.append({
@@ -877,12 +907,19 @@ class ImportEngineService:
                                 inserted_in_batch.add(clean_u_val)
                     else:
                         skipped_count += 1
-                        duplicate_in_db_count += 1
-                        skipped_details.append({
-                            "row_index": row_idx,
-                            "reason": "Already exists in database",
-                            "message": f"Record '{u_val_str or row_idx}' already exists in database.",
-                        })
+                        if is_project_entity:
+                            skipped_details.append({
+                                "row_index": row_idx,
+                                "reason": "Missing unique identifier",
+                                "message": f"Row {row_idx} is missing a valid project identifier.",
+                            })
+                        else:
+                            duplicate_in_db_count += 1
+                            skipped_details.append({
+                                "row_index": row_idx,
+                                "reason": "Already exists in database",
+                                "message": f"Record '{u_val_str or row_idx}' already exists in database.",
+                            })
 
                 except Exception as e:
                     # SAVEPOINT automatically rolled back only this row's savepoint
@@ -1009,6 +1046,7 @@ class ImportEngineService:
             cell.fill = header_fill
             cell.font = req_font if col_spec.required else header_font
             cell.alignment = Alignment(horizontal="center", vertical="center")
+            cell.border = thin_border
 
         # Write Sample Rows
         for sample in schema.sample_rows:
@@ -1025,33 +1063,77 @@ class ImportEngineService:
         wb.save(output)
         return output.getvalue()
 
+    async def _get_existing_db_records(
+        self, entity_type: str
+    ) -> dict[str, dict[str, Any]]:
+        """
+        Retrieves existing database records indexed by normalized unique key,
+        INCLUDING soft-deleted records for accurate CREATE, UPDATE, and RESTORE operations.
+        Returns: { clean_key: {"id": obj_id, "is_deleted": bool, "code": key_str} }
+        """
+        records: dict[str, dict[str, Any]] = {}
+
+        if entity_type == "suppliers":
+            from app.infrastructure.persistence.models.supplier import Supplier
+            from sqlalchemy import select
+            stmt = select(Supplier)
+            res = await self._uow.session.execute(stmt)
+            for s in res.scalars().all():
+                if s.name:
+                    clean = s.name.strip().lower()
+                    is_del = bool(getattr(s, "deleted_at", None) is not None)
+                    records[clean] = {"id": s.id, "is_deleted": is_del, "name": s.name}
+
+        elif entity_type == "parts":
+            from app.infrastructure.persistence.models.project_part import ProjectPart
+            from sqlalchemy import select
+            stmt = select(ProjectPart)
+            res = await self._uow.session.execute(stmt)
+            for pt in res.scalars().all():
+                if pt.part_number:
+                    clean = pt.part_number.strip().lower()
+                    records[clean] = {
+                        "id": pt.id,
+                        "is_deleted": pt.deleted_at is not None,
+                        "part_number": pt.part_number,
+                        "project_id": pt.project_id,
+                    }
+
+        elif entity_type == "risks":
+            from app.infrastructure.persistence.models.risk import Risk
+            from sqlalchemy import select
+            stmt = select(Risk)
+            res = await self._uow.session.execute(stmt)
+            for r in res.scalars().all():
+                if r.title:
+                    clean = r.title.strip().lower()
+                    is_del = bool(getattr(r, "deleted_at", None) is not None)
+                    records[clean] = {"id": r.id, "is_deleted": is_del, "title": r.title}
+
+        else:
+            # Query all projects INCLUDING soft-deleted
+            from app.infrastructure.persistence.models.project import Project as ProjectModel
+            from sqlalchemy import select
+            stmt = select(ProjectModel)
+            res = await self._uow.session.execute(stmt)
+            for p in res.scalars().all():
+                is_del = p.deleted_at is not None
+                info = {"id": p.id, "is_deleted": is_del, "code": p.code}
+                if p.code:
+                    records[p.code.strip().lower()] = info
+                if p.data and isinstance(p.data, dict):
+                    for k in ("unique_id", "code", "part_number"):
+                        v = p.data.get(k)
+                        if v:
+                            records[str(v).strip().lower()] = info
+
+        return records
+
     async def _get_existing_db_unique_keys(
         self, entity_type: str, unique_key: str
     ) -> set[str]:
-        keys: set[str] = set()
-        if entity_type == "suppliers":
-            suppliers = await self._uow.suppliers.get_multi(limit=5000)
-            keys = {s.name.strip().lower() for s in suppliers if s.name}
-        elif entity_type == "parts":
-            parts = await self._uow.project_parts.get_multi(limit=5000)
-            keys = {pt.part_number.strip().lower() for pt in parts if pt.part_number}
-        elif entity_type == "risks":
-            risks = await self._uow.risks.get_multi(limit=5000)
-            keys = {r.title.strip().lower() for r in risks if r.title}
-        else:
-            projects = await self._uow.projects.get_multi(limit=5000)
-            keys = set()
-            for p in projects:
-                if p.code:
-                    keys.add(p.code.strip().lower())
-                if p.data and isinstance(p.data, dict):
-                    if p.data.get("unique_id"):
-                        keys.add(str(p.data.get("unique_id")).strip().lower())
-                    if p.data.get("code"):
-                        keys.add(str(p.data.get("code")).strip().lower())
-                    if p.data.get("part_number"):
-                        keys.add(str(p.data.get("part_number")).strip().lower())
-        return keys
+        records = await self._get_existing_db_records(entity_type)
+        return set(records.keys())
 
     async def _import_single_record(
         self,
@@ -1061,7 +1143,7 @@ class ImportEngineService:
         mode: str,
     ) -> tuple[bool, bool]:
         """
-        Inserts or updates a record depending on mode and existing presence.
+        Inserts, updates, or restores a record depending on mode and existing presence.
         Returns tuple: (success: bool, is_update: bool)
         """
         if entity_type == "suppliers":
@@ -1126,13 +1208,16 @@ class ImportEngineService:
                 return True, False
 
         else:
-            # Default to Project / Project Template
+            # Default to Project / Project Template (CREATE + UPDATE + RESTORE)
             code = (
                 record.get("code")
                 or record.get("unique_id")
                 or record.get("part_number")
-                or f"PRJ-{uuid.uuid4().hex[:8].upper()}"
             )
+            if not code or str(code).strip() == "":
+                # Missing unique project identifier -> fail this record with explicit reason
+                return False, False
+
             name = (
                 record.get("name")
                 or record.get("part_name")
@@ -1148,8 +1233,8 @@ class ImportEngineService:
                     pass
 
             project_payload: dict[str, Any] = {
-                "code": str(code),
-                "name": str(name),
+                "code": str(code).strip(),
+                "name": str(name).strip(),
                 "description": record.get("description") or record.get("part_info"),
                 "notes": record.get("notes"),
                 "data": self._make_json_safe(record),
@@ -1159,61 +1244,38 @@ class ImportEngineService:
                 project_payload["template_version"] = tmpl.version
 
             code_str = str(code).strip()
-            from sqlalchemy import select
+            from sqlalchemy import select, func
             from app.infrastructure.persistence.models.project import Project as ProjectModel
 
-            stmt = select(ProjectModel).where(ProjectModel.code == code_str)
+            # Look up project in database INCLUDING soft-deleted records (case-insensitive)
+            clean_target = code_str.lower()
+            stmt = select(ProjectModel).where(func.lower(ProjectModel.code) == clean_target)
             res = await uow.session.execute(stmt)
             existing_obj = res.scalars().first()
 
-            if not existing_obj:
-                all_stmt = select(ProjectModel)
-                all_res = await uow.session.execute(all_stmt)
-                clean_target = code_str.lower()
-                for p in all_res.scalars().all():
-                    if p.code and p.code.strip().lower() == clean_target:
-                        existing_obj = p
-                        break
-                    if p.data and isinstance(p.data, dict):
-                        if (
-                            str(p.data.get("unique_id", "")).strip().lower() == clean_target
-                            or str(p.data.get("code", "")).strip().lower() == clean_target
-                            or str(p.data.get("part_number", "")).strip().lower() == clean_target
-                        ):
-                            existing_obj = p
-                            break
-
             if existing_obj:
-                is_soft_deleted = existing_obj.deleted_at is not None
-                if mode == "upsert" or is_soft_deleted:
-                    # Directly update fields on the ORM object.
-                    # We CANNOT use uow.projects.update() here because:
-                    #   (a) it calls get() which filters deleted_at IS NULL — soft-deleted
-                    #       records would not be found and update() returns None silently.
-                    #   (b) its data_dict strips None values, so deleted_at=None would
-                    #       never be applied and the record would remain soft-deleted.
-                    from sqlalchemy.orm.attributes import flag_modified
-                    from datetime import datetime
+                # Existing or soft-deleted project found: UPDATE + RESTORE
+                from sqlalchemy.orm.attributes import flag_modified
+                from datetime import datetime, timezone
 
-                    for field, value in project_payload.items():
-                        if hasattr(existing_obj, field):
-                            setattr(existing_obj, field, value)
+                for field, value in project_payload.items():
+                    if hasattr(existing_obj, field):
+                        setattr(existing_obj, field, value)
 
-                    # Explicitly restore soft-deleted record
-                    existing_obj.deleted_at = None
-                    existing_obj.updated_at = datetime.utcnow()
+                # Explicitly restore soft-deleted record and update timestamp
+                existing_obj.deleted_at = None
+                existing_obj.updated_at = datetime.now(timezone.utc)
 
-                    if hasattr(existing_obj, "data") and "data" in project_payload:
-                        flag_modified(existing_obj, "data")
+                if hasattr(existing_obj, "data") and "data" in project_payload:
+                    flag_modified(existing_obj, "data")
 
-                    uow.session.add(existing_obj)
-                    await uow.session.flush()
-                    return True, True
-                else:
-                    return False, False
+                uow.session.add(existing_obj)
+                await uow.session.flush()
+                return True, True  # success=True, is_update=True
             else:
+                # New project: CREATE
                 await uow.projects.create(project_payload)
-                return True, False
+                return True, False  # success=True, is_update=False
 
     def _validate_and_coerce_type(
         self, val: Any, spec: ImportColumnSpec

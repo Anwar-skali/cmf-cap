@@ -360,6 +360,9 @@ export function ImportWizard({
 
       await MappingCacheService.syncToServer(selectedTemplate.code, wizardMapping);
       setStep(7);
+      if (onComplete) {
+        onComplete();
+      }
     } catch (err: any) {
       clearInterval(progressInterval);
       setImportProgress(0);
@@ -1249,28 +1252,131 @@ export function ImportWizard({
       {step === 6 && previewReport && (
         <Card className="shadow-md">
           <CardHeader>
-            <CardTitle className="text-xl font-bold flex items-center gap-2">
-              <FileCheck className="h-5 w-5 text-primary" /> Step 6: Import Preview & Validation
-            </CardTitle>
-            <CardDescription>
-              Parsed {previewReport.totalRows} rows from {previewReport.fileName} ({selectedSheet}).
-            </CardDescription>
+            <div className="flex items-center justify-between flex-wrap gap-2">
+              <div>
+                <CardTitle className="text-xl font-bold flex items-center gap-2">
+                  <FileCheck className="h-5 w-5 text-primary" /> Step 6: Import Preview & Validation
+                </CardTitle>
+                <CardDescription>
+                  Parsed {previewReport.totalRows} rows from {previewReport.fileName} ({selectedSheet}).
+                </CardDescription>
+              </div>
+              <Badge className="bg-primary/10 text-primary border-primary/20 text-xs">
+                Strategy: CREATE + UPDATE + RESTORE
+              </Badge>
+            </div>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="p-4 rounded-xl border bg-card">
-                <div className="text-xs text-muted-foreground font-medium">Total Rows</div>
-                <div className="text-2xl font-extrabold mt-1">{previewReport.totalRows}</div>
+            {/* Action Breakdown Summary Cards */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="p-3.5 rounded-xl border bg-emerald-500/5 border-emerald-300 dark:border-emerald-800">
+                <div className="text-xs text-emerald-700 dark:text-emerald-300 font-semibold flex items-center gap-1.5">
+                  <CheckCircle2 className="h-3.5 w-3.5" /> New (Create)
+                </div>
+                <div className="text-2xl font-extrabold text-emerald-700 dark:text-emerald-300 mt-1">
+                  {previewReport.newCount ?? previewReport.validRowsCount}
+                </div>
               </div>
-              <div className="p-4 rounded-xl border bg-emerald-500/5 border-emerald-200">
-                <div className="text-xs text-emerald-700 font-medium">Valid Rows</div>
-                <div className="text-2xl font-extrabold text-emerald-700 mt-1">{previewReport.validRowsCount}</div>
+              <div className="p-3.5 rounded-xl border bg-sky-500/5 border-sky-300 dark:border-sky-800">
+                <div className="text-xs text-sky-700 dark:text-sky-300 font-semibold flex items-center gap-1.5">
+                  <RefreshCw className="h-3.5 w-3.5" /> Existing (Update)
+                </div>
+                <div className="text-2xl font-extrabold text-sky-700 dark:text-sky-300 mt-1">
+                  {previewReport.updateCount ?? 0}
+                </div>
               </div>
-              <div className="p-4 rounded-xl border bg-destructive/5 border-destructive/20">
-                <div className="text-xs text-destructive font-medium">Error Rows</div>
-                <div className="text-2xl font-extrabold text-destructive mt-1">{previewReport.errorRowsCount}</div>
+              <div className="p-3.5 rounded-xl border bg-violet-500/5 border-violet-300 dark:border-violet-800">
+                <div className="text-xs text-violet-700 dark:text-violet-300 font-semibold flex items-center gap-1.5">
+                  <Sparkles className="h-3.5 w-3.5" /> Deleted (Restore)
+                </div>
+                <div className="text-2xl font-extrabold text-violet-700 dark:text-violet-300 mt-1">
+                  {previewReport.restoreCount ?? 0}
+                </div>
+              </div>
+              <div className="p-3.5 rounded-xl border bg-destructive/5 border-destructive/20">
+                <div className="text-xs text-destructive font-semibold flex items-center gap-1.5">
+                  <AlertTriangle className="h-3.5 w-3.5" /> Error Rows
+                </div>
+                <div className="text-2xl font-extrabold text-destructive mt-1">
+                  {previewReport.errorRowsCount}
+                </div>
               </div>
             </div>
+
+            {/* Preview Rows Table */}
+            {previewReport.previewRows && previewReport.previewRows.length > 0 && (
+              <div className="rounded-xl border overflow-hidden">
+                <div className="p-3 bg-muted/40 border-b flex items-center justify-between">
+                  <span className="text-xs font-extrabold uppercase tracking-wider text-foreground">
+                    Record Action Preview (First {previewReport.previewRows.length} Rows)
+                  </span>
+                  <span className="text-[11px] text-muted-foreground">
+                    Deterministic database status verification
+                  </span>
+                </div>
+                <div className="overflow-x-auto max-h-64">
+                  <Table>
+                    <TableHeader className="bg-muted/30 sticky top-0">
+                      <TableRow className="text-[11px] uppercase">
+                        <TableHead className="w-16">Row #</TableHead>
+                        <TableHead>Project Code / Key</TableHead>
+                        <TableHead>Project Name</TableHead>
+                        <TableHead className="text-center">Action</TableHead>
+                        <TableHead className="text-center">Status</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {previewReport.previewRows.slice(0, 30).map((row, idx) => {
+                        const action = row._action || 'CREATE';
+                        const codeVal = row.code || row.unique_id || row.part_number || '—';
+                        const nameVal = row.name || row.part_name || row.project_name || '—';
+                        const hasErr = row._has_error;
+
+                        return (
+                          <TableRow key={`prev-${row._row_index || idx}`} className="text-xs">
+                            <TableCell className="font-mono text-muted-foreground">
+                              {row._row_index || idx + 1}
+                            </TableCell>
+                            <TableCell className="font-bold font-mono text-foreground">
+                              {codeVal}
+                            </TableCell>
+                            <TableCell className="max-w-[200px] truncate">
+                              {nameVal}
+                            </TableCell>
+                            <TableCell className="text-center">
+                              {hasErr ? (
+                                <Badge variant="destructive" className="text-[10px]">
+                                  INVALID
+                                </Badge>
+                              ) : action === 'RESTORE' ? (
+                                <Badge className="bg-violet-500/15 text-violet-700 dark:text-violet-300 border-violet-300 text-[10px]">
+                                  RESTORE + UPDATE
+                                </Badge>
+                              ) : action === 'UPDATE' ? (
+                                <Badge className="bg-sky-500/15 text-sky-700 dark:text-sky-300 border-sky-300 text-[10px]">
+                                  UPDATE
+                                </Badge>
+                              ) : (
+                                <Badge className="bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-300 text-[10px]">
+                                  CREATE
+                                </Badge>
+                              )}
+                            </TableCell>
+                            <TableCell className="text-center">
+                              {hasErr ? (
+                                <span className="text-[10px] text-destructive font-bold">Error</span>
+                              ) : (
+                                <span className="text-[10px] text-emerald-600 font-semibold">Valid</span>
+                              )}
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    </TableBody>
+                  </Table>
+                </div>
+              </div>
+            )}
 
             <div className="flex justify-between items-center">
               <Button variant="outline" onClick={() => setStep(5)} className="gap-2">
