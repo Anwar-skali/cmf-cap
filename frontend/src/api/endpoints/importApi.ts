@@ -244,7 +244,7 @@ export interface FieldDefinition {
 export interface OllamaMappingItem {
   excel: string | null;
   confidence: number;
-  source: 'ollama_llm' | 'mapping_memory' | 'exact_match' | 'alias_match' | 'fuzzy_fallback' | 'none';
+  source: 'ollama_ai' | 'ollama_llm' | 'mapping_memory' | 'exact_match' | 'alias_match' | 'fuzzy_match' | 'fuzzy_fallback' | 'none';
 }
 
 export interface OllamaExecutionTimes {

@@ -1,0 +1,22 @@
+import sqlite3
+conn = sqlite3.connect("cmf.db")
+c = conn.cursor()
+c.execute("SELECT id, code, name, version, status, deleted_at FROM templates ORDER BY code")
+rows = c.fetchall()
+print("=== TEMPLATES ===")
+for r in rows:
+    print(r)
+print()
+c.execute("SELECT id, code, name, status, deleted_at, template_id, template_version FROM projects ORDER BY code")
+prows = c.fetchall()
+print("=== PROJECTS (count=%d) ===" % len(prows))
+for r in prows[:20]:
+    print(r)
+print("... total projects:", len(prows))
+c.execute("SELECT code, COUNT(*) FROM projects GROUP BY code HAVING COUNT(*) > 1")
+print("=== DUPLICATE PROJECT CODES ===")
+print(c.fetchall())
+c.execute("SELECT code, COUNT(*) FROM templates GROUP BY code HAVING COUNT(*) > 1")
+print("=== DUPLICATE TEMPLATE CODES ===")
+print(c.fetchall())
+conn.close()

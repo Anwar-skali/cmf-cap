@@ -317,6 +317,7 @@ async def ollama_semantic_map(
         "ollama_reachable": result.get("ollama_reachable", False),
         "model": result.get("model", ""),
         "fallback_reason": result.get("fallback_reason"),
+        "stats": result.get("stats", {}),
         "execution_times": exec_times,
         "orientation": orient_info.get("orientation", "HORIZONTAL"),
         "orientation_confidence": orient_info.get("orientation_confidence", 90.0),

@@ -40,17 +40,18 @@ class ExcelHeaderExtractor:
         """
         Scores a single row. Returns tuple of (raw_score, confidence_percentage).
         """
+        from app.application.services.header_normalizer import normalize_header
         non_empty = [str(c).strip() for c in row_cells if c is not None and str(c).strip() != ""]
         if not non_empty:
             return 0.0, 0.0
 
         score = float(len(non_empty))
-        all_keywords = HEADER_KEYWORDS | (template_keywords or set())
+        all_keywords = {normalize_header(k) for k in (HEADER_KEYWORDS | (template_keywords or set())) if k}
 
         numeric_count = 0
         keyword_hits = 0
         for val in non_empty:
-            clean_v = val.lower().replace("_", " ").strip()
+            clean_v = normalize_header(val)
             if clean_v in all_keywords:
                 score += 10.0
                 keyword_hits += 1

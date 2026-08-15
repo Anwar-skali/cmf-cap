@@ -89,7 +89,15 @@ class ImportEngineService:
                         best_rows = sheet_rows
 
         if not best_rows:
-            return {"sheets": sheets, "headers": [], "rows": [], "total_rows": 0, "orientation": "HORIZONTAL"}
+            return {
+                "sheets": sheets,
+                "headers": [],
+                "rows": [],
+                "total_rows": 0,
+                "physical_rows": 0,
+                "empty_rows_count": 0,
+                "orientation": "HORIZONTAL",
+            }
 
         # Run orientation detection
         from app.application.services.excel_header_extractor import ExcelHeaderExtractor
@@ -123,6 +131,8 @@ class ImportEngineService:
                 "headers": headers,
                 "rows": [single_row_vals] if headers else [],
                 "total_rows": 1 if headers else 0,
+                "physical_rows": 1 if headers else 0,
+                "empty_rows_count": 0,
                 "orientation": "VERTICAL",
                 "orientation_info": orient_info,
             }
@@ -142,13 +152,18 @@ class ImportEngineService:
             headers.pop()
 
         data_rows = []
-        for row in best_rows[header_idx + 1:]:
+        last_data_offset = -1
+        for offset, row in enumerate(best_rows[header_idx + 1:]):
             row_vals = list(row[: len(headers)])
             if len(row_vals) < len(headers):
                 row_vals.extend([None] * (len(headers) - len(row_vals)))
 
             if any(cell is not None and str(cell).strip() != "" for cell in row_vals):
                 data_rows.append(row_vals)
+                last_data_offset = offset
+
+        physical_rows = last_data_offset + 1
+        empty_rows_count = max(0, physical_rows - len(data_rows))
 
         return {
             "sheets": sheets,
@@ -156,6 +171,8 @@ class ImportEngineService:
             "headers": headers,
             "rows": data_rows,
             "total_rows": len(data_rows),
+            "physical_rows": physical_rows,
+            "empty_rows_count": empty_rows_count,
             "orientation": "HORIZONTAL",
             "orientation_info": orient_info,
         }
@@ -164,30 +181,84 @@ class ImportEngineService:
         self, headers: list[str], schema: EntityImportSchema
     ) -> dict[str, str | None]:
         """
-        Fuzzy auto-matching between Excel column headers and database target fields.
-        Returns a mapping dict: { excel_header: db_field_key or None }
+        Deterministic multi-level auto-matching between Excel headers and schema fields:
+        Level 1: Exact normalized match (key / label)
+        Level 2: Known aliases match
+        Level 3: Fuzzy matching (>= 0.90 confidence)
         """
+        from app.application.services.header_normalizer import normalize_header, compute_similarity
+
         mapping: dict[str, str | None] = {}
         assigned_keys: set[str] = set()
 
+        # Pass 1: Exact matches
         for header in headers:
-            clean_header = header.lower().strip()
-            matched_key: str | None = None
+            norm_header = normalize_header(header)
+            if not norm_header:
+                mapping[header] = None
+                continue
 
-            # Try exact label or key match
+            matched_key: str | None = None
             for col in schema.columns:
                 if col.key in assigned_keys:
                     continue
-                if (
-                    clean_header == col.key.lower()
-                    or clean_header == col.label.lower()
-                    or clean_header in [a.lower() for a in col.aliases]
-                ):
+                if norm_header == normalize_header(col.key) or norm_header == normalize_header(col.label):
                     matched_key = col.key
                     assigned_keys.add(col.key)
                     break
 
-            mapping[header] = matched_key
+            if matched_key:
+                mapping[header] = matched_key
+
+        # Pass 2: Known alias matches
+        for header in headers:
+            if header in mapping:
+                continue
+            norm_header = normalize_header(header)
+            if not norm_header:
+                mapping[header] = None
+                continue
+
+            matched_key = None
+            for col in schema.columns:
+                if col.key in assigned_keys:
+                    continue
+                norm_aliases = [normalize_header(a) for a in col.aliases if a]
+                if norm_header in norm_aliases:
+                    matched_key = col.key
+                    assigned_keys.add(col.key)
+                    break
+
+            if matched_key:
+                mapping[header] = matched_key
+
+        # Pass 3: High confidence fuzzy matches (>= 0.90)
+        for header in headers:
+            if header in mapping:
+                continue
+            norm_header = normalize_header(header)
+            if not norm_header:
+                mapping[header] = None
+                continue
+
+            best_key = None
+            best_score = 0.0
+            for col in schema.columns:
+                if col.key in assigned_keys:
+                    continue
+                score_k = compute_similarity(norm_header, normalize_header(col.key))
+                score_l = compute_similarity(norm_header, normalize_header(col.label))
+                score_a = max([compute_similarity(norm_header, normalize_header(a)) for a in col.aliases if a], default=0.0)
+                max_score = max(score_k, score_l, score_a)
+                if max_score > best_score:
+                    best_score = max_score
+                    best_key = col.key
+
+            if best_key and best_score >= 0.90:
+                mapping[header] = best_key
+                assigned_keys.add(best_key)
+            else:
+                mapping[header] = None
 
         return mapping
 
@@ -199,33 +270,42 @@ class ImportEngineService:
         Normalizes any custom_mapping dict (whether Excel->DB, DB->Excel, or Ollama dict)
         into a consistent {excel_header: db_field_key} mapping dict.
         """
+        from app.application.services.header_normalizer import normalize_header
+
         column_mapping: dict[str, str] = {}
         schema_keys = {col.key for col in schema.columns}
         schema_key_map = {col.key.lower(): col.key for col in schema.columns}
+        schema_norm_map = {normalize_header(col.key): col.key for col in schema.columns}
 
         # Build lookup for Excel headers present in the uploaded file
-        header_map = {h.lower().strip(): h for h in headers if h}
+        header_map = {normalize_header(h): h for h in headers if h}
 
         for k, v in custom_mapping.items():
+            if v == "__ignore__" or k == "__ignore__":
+                continue
+
             if isinstance(v, dict):
                 excel_col = v.get("excel")
-                if excel_col:
+                if excel_col and excel_col != "__ignore__":
                     column_mapping[str(excel_col)] = k
             elif isinstance(v, str):
                 clean_k = str(k).strip()
                 clean_v = str(v).strip()
 
-                k_is_header = clean_k in headers or clean_k.lower() in header_map
-                v_is_header = clean_v in headers or clean_v.lower() in header_map
+                norm_k = normalize_header(clean_k)
+                norm_v = normalize_header(clean_v)
 
-                exact_k_header = header_map.get(clean_k.lower(), clean_k) if k_is_header else clean_k
-                exact_v_header = header_map.get(clean_v.lower(), clean_v) if v_is_header else clean_v
+                k_is_header = norm_k in header_map
+                v_is_header = norm_v in header_map
 
-                k_is_db = clean_k in schema_keys or clean_k.lower() in schema_key_map
-                v_is_db = clean_v in schema_keys or clean_v.lower() in schema_key_map
+                exact_k_header = header_map.get(norm_k, clean_k) if k_is_header else clean_k
+                exact_v_header = header_map.get(norm_v, clean_v) if v_is_header else clean_v
 
-                resolved_k_db = schema_key_map.get(clean_k.lower(), clean_k) if k_is_db else clean_k
-                resolved_v_db = schema_key_map.get(clean_v.lower(), clean_v) if v_is_db else clean_v
+                k_is_db = clean_k in schema_keys or norm_k in schema_norm_map or clean_k.lower() in schema_key_map
+                v_is_db = clean_v in schema_keys or norm_v in schema_norm_map or clean_v.lower() in schema_key_map
+
+                resolved_k_db = schema_norm_map.get(norm_k, schema_key_map.get(clean_k.lower(), clean_k)) if k_is_db else clean_k
+                resolved_v_db = schema_norm_map.get(norm_v, schema_key_map.get(clean_v.lower(), clean_v)) if v_is_db else clean_v
 
                 if k_is_header and v_is_db:
                     column_mapping[exact_k_header] = resolved_v_db
@@ -273,6 +353,35 @@ class ImportEngineService:
             display_name=ctx.template_name,
             columns=columns,
             sample_rows=[],
+        )
+
+    @staticmethod
+    def _unique_key_columns(schema: EntityImportSchema) -> list[str]:
+        """Return the schema keys that identify a real record (unique keys).
+
+        ``id`` is excluded: it is never supplied by an Excel import, so treating
+        it as a record-identifying key would wrongly classify rows as records.
+        """
+        return [c.key for c in schema.columns if c.unique_key and c.key != "id"]
+
+    @staticmethod
+    def _row_has_record_key(values: dict[str, Any], schema: EntityImportSchema) -> bool:
+        """Determine whether a parsed row represents an actual data record.
+
+        A row is a record when any unique-key column carries a non-empty value
+        (e.g. ``part_number`` for the K0 structure). Rows without a unique-key
+        value are non-record rows (section headers, notes, blank placeholders)
+        and must be excluded from validation, preview, and import counts.
+        """
+        unique_key_keys = ImportEngineService._unique_key_columns(schema)
+        if not unique_key_keys:
+            return any(
+                v is not None and str(v).strip() != ""
+                for v in values.values()
+            )
+        return any(
+            values.get(k) is not None and str(values.get(k)).strip() != ""
+            for k in unique_key_keys
         )
 
     async def preview_and_validate(
@@ -342,6 +451,8 @@ class ImportEngineService:
         duplicate_in_excel_set: set[int] = set()
         duplicate_in_db_set: set[int] = set()
         validation_error_rows_set: set[int] = set()
+        non_record_rows_set: set[int] = set()
+        record_rows_count = 0
 
         preview_rows: list[dict[str, Any]] = []
         normalization_warnings: list[dict[str, Any]] = []
@@ -357,6 +468,12 @@ class ImportEngineService:
                 db_key = column_mapping.get(header)
                 if db_key:
                     row_raw_dict[db_key] = val
+
+            is_record = self._row_has_record_key(row_raw_dict, schema)
+            if is_record:
+                record_rows_count += 1
+            else:
+                non_record_rows_set.add(row_idx)
 
             # Normalize and Validate each schema column
             for col_spec in schema.columns:
@@ -489,10 +606,11 @@ class ImportEngineService:
                     row_has_error = True
                     duplicate_in_db_set.add(row_idx)
 
-            if row_has_error:
-                error_rows_set.add(row_idx)
-            else:
-                valid_rows_count += 1
+            if is_record:
+                if row_has_error:
+                    error_rows_set.add(row_idx)
+                else:
+                    valid_rows_count += 1
 
             if len(preview_rows) < 100:
                 preview_entry: dict[str, Any] = {}
@@ -500,20 +618,37 @@ class ImportEngineService:
                     preview_entry[k] = v.isoformat() if isinstance(v, (date, datetime)) else v
                 preview_entry["_row_index"] = row_idx
                 preview_entry["_has_error"] = row_has_error
+                preview_entry["_is_record"] = is_record
                 preview_entry["norm_details"] = row_norm_details
                 preview_entry["_norm_details"] = row_norm_details
                 preview_rows.append(preview_entry)
+
+        # Non-record rows are ignored entirely: drop their (irrelevant) errors and
+        # warnings so the report only reflects actual data records.
+        if non_record_rows_set:
+            validation_errors = [
+                e for e in validation_errors if e.get("row_index") not in non_record_rows_set
+            ]
+            normalization_warnings = [
+                w for w in normalization_warnings if w.get("row_index") not in non_record_rows_set
+            ]
 
         return {
             "entity_type": entity_type,
             "entity_display_name": schema.display_name,
             "file_name": file_name,
             "total_rows": len(data_rows),
+            "physical_rows": parsed.get("physical_rows", len(data_rows)),
+            "empty_rows_count": parsed.get("empty_rows_count", 0),
+            "non_record_rows_count": len(non_record_rows_set),
+            "record_rows_count": record_rows_count,
             "valid_rows_count": valid_rows_count,
             "error_rows_count": len(error_rows_set),
             "duplicate_in_excel_count": len(duplicate_in_excel_set),
             "duplicate_in_db_count": len(duplicate_in_db_set),
-            "validation_errors_count": len(validation_error_rows_set),
+            "validation_errors_count": len(
+                {e.get("row_index") for e in validation_errors if e.get("row_index", 0) > 0}
+            ),
             "headers": headers,
             "column_mapping": column_mapping,
             "available_schema_columns": [
@@ -617,6 +752,7 @@ class ImportEngineService:
         duplicate_in_excel_count = 0
         duplicate_in_db_count = 0
         validation_errors_count = 0
+        non_record_rows_count = 0
 
         skipped_details: list[dict[str, Any]] = []
         serializer_errors: list[dict[str, Any]] = []
@@ -627,6 +763,26 @@ class ImportEngineService:
         logger.info("[IMPORT DEBUG] Database transaction: Starting transaction session...")
         async with self._uow as uow:
             for row_idx, row_vals in enumerate(data_rows, start=1):
+                # Prepare row values (header -> db field)
+                row_dict: dict[str, Any] = {}
+                for header, val in zip(headers, row_vals):
+                    db_key = column_mapping.get(header)
+                    if db_key:
+                        row_dict[db_key] = val
+
+                # 0. Skip non-record rows (no value in any unique-key column).
+                #    These are section headers, notes, or blank placeholders and
+                #    must not be imported as data records.
+                if not self._row_has_record_key(row_dict, schema):
+                    skipped_count += 1
+                    non_record_rows_count += 1
+                    skipped_details.append({
+                        "row_index": row_idx,
+                        "reason": "Ignored non-record row",
+                        "message": "Row has no value for the record's unique key; skipped.",
+                    })
+                    continue
+
                 # 1. Skip Duplicate in Excel file
                 if row_idx in excel_dup_map:
                     skipped_count += 1
@@ -664,13 +820,6 @@ class ImportEngineService:
                         "raw_value": err_info.get("raw_value"),
                     })
                     continue
-
-                # Prepare row values
-                row_dict: dict[str, Any] = {}
-                for header, val in zip(headers, row_vals):
-                    db_key = column_mapping.get(header)
-                    if db_key:
-                        row_dict[db_key] = val
 
                 # Coerce data types via DataNormalizer pipeline
                 coerced_row: dict[str, Any] = {}
@@ -766,6 +915,7 @@ class ImportEngineService:
                         "updated_count": updated_count,
                         "skipped_count": skipped_count,
                         "failed_count": failed_count,
+                        "non_record_rows_count": non_record_rows_count,
                         "total_rows": len(data_rows),
                         "user_email": user_email,
                     },
@@ -809,6 +959,10 @@ class ImportEngineService:
             "entity_type": entity_type,
             "file_name": file_name,
             "total_rows": len(data_rows),
+            "physical_rows": preview.get("physical_rows", len(data_rows)),
+            "empty_rows_count": preview.get("empty_rows_count", 0),
+            "non_record_rows_count": non_record_rows_count,
+            "record_rows_count": preview.get("record_rows_count", 0),
             "imported_count": imported_count,
             "updated_count": updated_count,
             "skipped_count": skipped_count,
