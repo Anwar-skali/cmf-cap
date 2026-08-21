@@ -13,7 +13,7 @@ from app.application.dto.templates import (
     UpdateTemplateRequest,
 )
 from app.application.interfaces.services import IUnitOfWork
-from app.core.exceptions import BadRequestException, ConflictException, NotFoundException
+from app.core.exceptions import BadRequestException, ConflictException, ForbiddenException, NotFoundException
 
 # Maps generic JSON schema field types onto the CMF field-type vocabulary.
 _JSON_FIELD_TYPE_MAP: dict[str, str] = {
@@ -531,6 +531,9 @@ def validate_structure_selectable_fields(schema_json: dict[str, Any]) -> list[st
     return problems
 
 
+PROTECTED_TEMPLATE_CODES = {"K0", "K9"}
+
+
 class TemplateService:
     def __init__(self, uow: IUnitOfWork) -> None:
         self._uow = uow
@@ -544,9 +547,10 @@ class TemplateService:
             schema_json = json.load(f)
 
         file_version = schema_json.get("version", "1.0")
-        existing = await self._uow.templates.get_by_code(code.upper())
+        code_upper = code.upper()
+        existing = await self._uow.templates.get_by_code(code_upper)
         if existing is not None:
-            if existing.version != file_version:
+            if existing.version != file_version or existing.schema_json != schema_json:
                 updated = await self._uow.templates.update(
                     existing.id,
                     {
@@ -564,15 +568,27 @@ class TemplateService:
                 return updated
             return existing
 
-        # Respect explicit deletions. If a row (even a soft-deleted one) still
-        # occupies the unique `code`, seeding must NOT resurrect it — otherwise a
-        # user who deleted K0 would see it come back on the next list call.
-        # Recreation goes through create/import, which revives the row on purpose.
-        if await self._uow.templates.get_by_code_including_deleted(code.upper()) is not None:
+        # For protected core templates (K0, K9), if soft-deleted, revive immediately
+        soft_deleted = await self._uow.templates.get_by_code_including_deleted(code_upper)
+        if soft_deleted is not None:
+            if code_upper in PROTECTED_TEMPLATE_CODES:
+                payload = {
+                    "name": schema_json.get("name", f"CMF {code} Project Template"),
+                    "version": file_version,
+                    "description": schema_json.get("description"),
+                    "schema_json": schema_json,
+                    "status": "PUBLISHED",
+                }
+                revived = await self._uow.templates.revive(soft_deleted.id, payload)
+                await self._uow.templates.create_version(
+                    revived.id, file_version, schema_json, f"Revived protected core template v{file_version}"
+                )
+                await self._uow.commit()
+                return revived
             return None
 
         template_data = {
-            "code": code.upper(),
+            "code": code_upper,
             "name": schema_json.get("name", f"CMF {code} Project Template"),
             "version": file_version,
             "status": "PUBLISHED",
@@ -742,6 +758,11 @@ class TemplateService:
         if tmpl is None:
             await self._uow.commit()
             return False
+
+        if tmpl.code.upper() in PROTECTED_TEMPLATE_CODES:
+            raise ForbiddenException(
+                f"Template '{tmpl.code}' is a protected core CMF structure and cannot be deleted."
+            )
 
         # Soft-delete dependent projects so the structure's data disappears with
         # it and re-importing the structure later never collides with orphaned

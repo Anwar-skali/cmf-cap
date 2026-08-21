@@ -183,6 +183,7 @@ export interface CreateSupplierRequest {
 }
 
 export type CapacityStatus = 'pending' | 'assessed' | 'confirmed' | 'rejected';
+export type CapacityRiskLevel = 'critical' | 'high' | 'medium' | 'low';
 
 export interface CapacityAssessment {
   id: string;
@@ -193,14 +194,23 @@ export interface CapacityAssessment {
   maximumCapacity: number;
   utilizationRate?: number;
   leadTimeDays?: number;
+  cate?: string;
+  gate?: string;
+  targetWeek?: string;
+  forecastWeek?: string;
+  completedWeek?: string;
+  riskLevel?: CapacityRiskLevel | string;
   bottleneck?: string;
   notes?: string;
   status: CapacityStatus;
   projectPartId: string;
   supplierId: string;
   assessedBy?: string;
-  projectName?: string;
+  partNumber?: string;
+  partName?: string;
   supplierName?: string;
+  supplierCode?: string;
+  projectName?: string;
   title?: string;
   description?: string;
   score?: number;
@@ -217,6 +227,12 @@ export interface CreateCapacityAssessmentRequest {
   supplierId: string;
   assessmentDate?: string;
   leadTimeDays?: number;
+  cate?: string;
+  gate?: string;
+  targetWeek?: string;
+  forecastWeek?: string;
+  completedWeek?: string;
+  riskLevel?: string;
   bottleneck?: string;
   notes?: string;
   status?: string;

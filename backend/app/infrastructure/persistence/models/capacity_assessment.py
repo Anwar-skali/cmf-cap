@@ -52,6 +52,12 @@ class CapacityAssessment(Base, TimestampMixin, SoftDeleteMixin):
     lead_time_days: Mapped[int | None] = mapped_column(
         Integer, nullable=True
     )
+    cate: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    gate: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    target_week: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    forecast_week: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    completed_week: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    risk_level: Mapped[str | None] = mapped_column(String(50), nullable=True, default="low")
     bottleneck: Mapped[str | None] = mapped_column(Text, nullable=True)
     notes: Mapped[str | None] = mapped_column(Text, nullable=True)
     status: Mapped[CapacityStatus] = mapped_column(

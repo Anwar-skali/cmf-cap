@@ -521,15 +521,24 @@ export default function TemplateStudioPage() {
                       >
                         <Download className="h-3.5 w-3.5" /> JSON
                       </Button>
-                      <Button
-                        onClick={() => setStructureToDelete(tmpl)}
-                        variant="outline"
-                        size="sm"
-                        className="rounded-full text-xs font-bold gap-1.5 border-rose-200 dark:border-rose-900/50 text-rose-600 hover:text-rose-700 hover:bg-rose-50 dark:hover:bg-rose-950/40 cursor-pointer"
-                        title="Delete Structure"
-                      >
-                        <Trash2 className="h-3.5 w-3.5 text-rose-600" /> Delete
-                      </Button>
+                      {['K0', 'K9'].includes(tmpl.code?.toUpperCase?.() ?? '') ? (
+                        <span
+                          title="Protected Core Structure – cannot be deleted"
+                          className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-bold border border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/30 select-none cursor-not-allowed"
+                        >
+                          🔒 Protected
+                        </span>
+                      ) : (
+                        <Button
+                          onClick={() => setStructureToDelete(tmpl)}
+                          variant="outline"
+                          size="sm"
+                          className="rounded-full text-xs font-bold gap-1.5 border-rose-200 dark:border-rose-900/50 text-rose-600 hover:text-rose-700 hover:bg-rose-50 dark:hover:bg-rose-950/40 cursor-pointer"
+                          title="Delete Structure"
+                        >
+                          <Trash2 className="h-3.5 w-3.5 text-rose-600" /> Delete
+                        </Button>
+                      )}
                     </div>
 
                     <Button

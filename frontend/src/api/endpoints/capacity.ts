@@ -5,7 +5,13 @@ import type { CapacityAssessment, CreateCapacityAssessmentRequest, PaginatedResp
 interface CapacityFilter {
   projectId?: string;
   supplierId?: string;
+  projectPartId?: string;
   status?: string;
+  gate?: string;
+  riskLevel?: string;
+  month?: number;
+  year?: number;
+  search?: string;
   page?: number;
   pageSize?: number;
 }

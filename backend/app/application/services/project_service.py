@@ -35,35 +35,26 @@ K9_SQD_FIELDS = {
     "sqe", "sqm", "team", "family_multiplier"
 }
 
-# K0 field sets
+# K0 field sets (47 authoritative fields across Buyer, Capacity Manager, and SQD)
 K0_BUYER_FIELDS = {
-    "line_item", "components_package_rfq", "tazebao_id_dev_system_no",
-    "gst_source_package_number", "part_number", "part_name", "comments",
-    "make_or_buy", "other_platform_impacted", "development_type",
-    "status_resourcing", "original_vehicle_co_parts", "supplier_name_co_parts",
-    "new_supplier_yn", "nominated_supplier", "manufacturing_cofor",
-    "supplier_location", "ppm", "commodity_buyer", "program_buyer",
-    "gm_commodity", "pur_manager", "ga", "pur_area", "lead_engineer_hordain",
-    "e_port", "tofas", "eko", "lfp_66_kwh", "nmc_82_kwh",
-    "project_name", "project_code"
+    "part_number", "index", "description", "coef", "serial_piece_price",
+    "mass_purchase", "ru", "noa", "make_battery_lp_1", "make_battery_lp_2",
+    "ref_column_k", "ref_column_l", "ref_column_m", "ref_column_n", "libre",
+    "supplier_name", "vendor_cofor", "manufacturer_cofor", "combined_cofor",
+    "tango_order", "ei_status", "comments", "project_name", "project_code"
 }
 K0_CAPACITY_FIELDS = {
-    "quantity_parts_per_vehicle",
-    "weekly_capacity_requested_gst", "capacity_step_requested_gst", "calculation_date_gst",
-    "weekly_capacity_requested_tko", "capacity_step_requested_tko", "scr_date_tko", "scr_tko_link",
-    "weekly_capacity_latest_ltos", "capacity_step_latest_ltos", "date_latest_ltos", "calculation_link",
-    "contracted_capacity", "contracted_capacity_step", "capacity_sizing_ok",
-    "new_scr_calculation_done", "contracted_capacity_ok",
-    "capacity_comments", "capacity_workshop_date", "capacity_workshop_comment"
+    "week_project_target_1", "forecast_week_1", "completed_week_1",
+    "week_project_target_2", "forecast_week_2", "completed_week_2",
+    "week_project_target_3", "forecast_week_3", "completed_week_3"
 }
 K0_SQD_FIELDS = {
-    "sqvl", "sqme_manufacturing",
-    "apqp_grid", "run_assessment",
-    "cat_forecast_date", "cat_forecast_calendar_week",
-    "cat_real_date", "cat_real_calendar_week",
-    "last_cat", "requested_supplier_weekly_capacity",
-    "cat_run_observation", "number_production_days", "number_production_shifts",
-    "cat_rating", "cat_link", "cat_comment"
+    "quality", "supply_chain", "global_purchasing", "cpl", "rcpi",
+    "minimum_quality_status_acted", "mass_inquired",
+    "packaging_readiness_unlweb_validated", "tango_contract_validated",
+    "supplier_capability_confirmed", "it_cpl_corail_setting",
+    "fcla_validates", "ple_created", "edi_opened",
+    "um_logistic_flow_validated", "manufacturing_process_validated"
 }
 
 # Aliases for legacy callers
@@ -96,7 +87,7 @@ def _is_green_evaluation(val: Any) -> bool:
     if val is None or str(val).strip() == "":
         return True
     s = str(val).upper().strip()
-    if "RED" in s or "ORANGE" in s:
+    if "RED" in s or "ORANGE" in s or "NOK" in s or "NOT ACTED" in s:
         return False
     return True
 
@@ -104,11 +95,13 @@ def _is_green_evaluation(val: Any) -> bool:
 def calculate_workflow_step(data_dict: dict[str, Any], template_code: str | None = None) -> int:
     """Calculate the current workflow step for any CMF template."""
     code = (template_code or "K9").upper()
-    if code == "K0":
+    if code in ("K0", "K0_MAKE_BATTERY", "CMF_K0"):
         has_capacity = _has_any_field(data_dict, K0_CAPACITY_FIELDS)
         has_sqd = _has_any_field(data_dict, K0_SQD_FIELDS)
-        cat_rating = data_dict.get("cat_rating")
-        if has_sqd and _is_green_evaluation(cat_rating):
+        quality_val = data_dict.get("quality")
+        acted_val = data_dict.get("minimum_quality_status_acted")
+        is_green = _is_green_evaluation(quality_val) and _is_green_evaluation(acted_val)
+        if has_sqd and is_green and _has_any_field(data_dict, {"quality", "minimum_quality_status_acted", "manufacturing_process_validated"}):
             return 4
         if has_sqd:
             return 3

@@ -88,7 +88,37 @@ class TemplateContextService:
         if tmpl is not None:
             return self._build_context_from_db_template(tmpl)
 
-        # 2. Try matching built-in entity import schemas (e.g. 'projects', 'suppliers', 'parts')
+        # 2. Try matching built-in domain template JSONs (K0, K9)
+        from pathlib import Path
+        domain_dir = Path(__file__).parent.parent.parent / "domain"
+        upper_id = clean_id.upper()
+        if upper_id in ("K0", "K0_MAKE_BATTERY"):
+            json_p = domain_dir / "k0_template.json"
+            if json_p.exists():
+                with open(json_p, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                class _TmplProxy:
+                    code = "K0"
+                    name = data.get("name", "CMF K0 Project Template")
+                    description = data.get("description", "")
+                    version = data.get("version", "1.0")
+                    schema_json = data
+                return self._build_context_from_db_template(_TmplProxy())
+
+        if upper_id == "K9":
+            json_p = domain_dir / "k9_template.json"
+            if json_p.exists():
+                with open(json_p, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                class _TmplProxy:
+                    code = "K9"
+                    name = data.get("name", "CMF K9 Project Template")
+                    description = data.get("description", "")
+                    version = data.get("version", "1.0")
+                    schema_json = data
+                return self._build_context_from_db_template(_TmplProxy())
+
+        # 3. Try matching built-in entity import schemas (e.g. 'projects', 'suppliers', 'parts')
         lower_id = clean_id.lower()
         if lower_id in ENTITY_IMPORT_SCHEMAS:
             schema = ENTITY_IMPORT_SCHEMAS[lower_id]

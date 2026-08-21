@@ -415,3 +415,233 @@ async def test_10_unique_project_identifiers_integrity(unit_of_work):
     # Ensure no duplicates exist in DB
     assert len(all_codes) == len(set(all_codes))
     assert set(all_codes) == {"PRJ-UNIQ-100", "PRJ-UNIQ-200", "PRJ-UNIQ-300"}
+
+
+async def _create_cmf_arch_template(unit_of_work):
+    existing = await unit_of_work.templates.get_by_code("CMF_ARCH_TEST_V1")
+    if existing:
+        return existing
+    template_data = {
+        "code": "CMF_ARCH_TEST_V1",
+        "name": "CMF Architecture Test V1",
+        "description": "Multi-module structure with BUYER, CAPACITY, SQD",
+        "version": "1.0",
+        "schema_json": {
+            "sections": [
+                {
+                    "id": "sec_buyer",
+                    "title": "BUYER Module",
+                    "groups": [
+                        {
+                            "id": "grp_buyer",
+                            "title": "General Buyer Info",
+                            "fields": [
+                                {"id": "fld_1", "key": "project_code", "label": "Project Code", "required": True, "type": "string"},
+                                {"id": "fld_2", "key": "project_name", "label": "Project Name", "required": True, "type": "string"},
+                                {"id": "fld_3", "key": "customer", "label": "Customer", "required": False, "type": "string"},
+                                {"id": "fld_4", "key": "project_status", "label": "Project Status", "required": False, "type": "string"},
+                                {"id": "fld_5", "key": "start_date", "label": "Start Date", "required": False, "type": "date"},
+                            ],
+                        }
+                    ],
+                },
+                {
+                    "id": "sec_capacity",
+                    "title": "CAPACITY Module",
+                    "groups": [
+                        {
+                            "id": "grp_capacity",
+                            "title": "Capacity Assessment",
+                            "fields": [
+                                {"id": "fld_6", "key": "forecast_week", "label": "Forecast Week", "required": False, "type": "integer"},
+                                {"id": "fld_7", "key": "assessment_date", "label": "Assessment Date", "required": False, "type": "date"},
+                                {"id": "fld_8", "key": "required_capacity", "label": "Required Capacity", "required": False, "type": "number"},
+                                {"id": "fld_9", "key": "available_capacity", "label": "Available Capacity", "required": False, "type": "number"},
+                                {"id": "fld_10", "key": "capacity_status", "label": "Capacity Status", "required": False, "type": "string"},
+                            ],
+                        }
+                    ],
+                },
+                {
+                    "id": "sec_sqd",
+                    "title": "SQD Module",
+                    "groups": [
+                        {
+                            "id": "grp_sqd",
+                            "title": "Quality Details",
+                            "fields": [
+                                {"id": "fld_11", "key": "quality_score", "label": "Quality Score", "required": False, "type": "number"},
+                                {"id": "fld_12", "key": "quality_status", "label": "Quality Status", "required": False, "type": "string"},
+                                {"id": "fld_13", "key": "comments", "label": "Comments", "required": False, "type": "textarea"},
+                            ],
+                        }
+                    ],
+                },
+            ]
+        },
+    }
+    return await unit_of_work.templates.create(template_data)
+
+
+@pytest.mark.asyncio
+async def test_11_cmf_arch_test_v1_three_rows_import(unit_of_work):
+    """TEST 11: 3-row import for custom structure (CMF_ARCH_TEST_V1) with modules (BUYER, CAPACITY, SQD) -> 3 imported, 0 skipped, 0 failed"""
+    await _create_cmf_arch_template(unit_of_work)
+    import_service = ImportEngineService(unit_of_work)
+
+    # Build 3 Excel rows matching the exact user structure
+    headers = [
+        "project code", "project name", "customer", "project status",
+        "start date", "forecast week", "assessment date", "comments",
+        "required capacity", "available capacity", "capacity status",
+        "quality score", "quality status"
+    ]
+    rows = [
+        [
+            "PRJ-ARCH-001", "Project Chassis Alpha", "OEM Stellantis", "active",
+            "2026-03-01", 12, "2026-03-15", "Chassis module on track",
+            1000, 1200, "OK", 95.5, "GREEN"
+        ],
+        [
+            "PRJ-ARCH-002", "Project Battery Beta", "OEM Renault", "active",
+            "2026-04-01", 14, "2026-04-10", "Battery pack prototype testing",
+            500, 450, "WARNING", 88.0, "YELLOW"
+        ],
+        [
+            "PRJ-ARCH-003", "Project Motor Gamma", "OEM BMW", "draft",
+            "2026-05-01", 18, "2026-05-20", "E-motor stator winding",
+            800, 800, "OK", 99.0, "GREEN"
+        ],
+    ]
+    file_bytes = _build_excel_file(headers=headers, rows=rows)
+
+    mapping = {
+        "project code": "project_code",
+        "project name": "project_name",
+        "customer": "customer",
+        "project status": "project_status",
+        "start date": "start_date",
+        "forecast week": "forecast_week",
+        "assessment date": "assessment_date",
+        "comments": "comments",
+        "required capacity": "required_capacity",
+        "available capacity": "available_capacity",
+        "capacity status": "capacity_status",
+        "quality score": "quality_score",
+        "quality status": "quality_status",
+    }
+
+    # Execute import with custom structure entity_type CMF_ARCH_TEST_V1
+    result = await import_service.execute_import(
+        file_bytes=file_bytes,
+        file_name="cmf_arch_test_v1.xlsx",
+        entity_type="CMF_ARCH_TEST_V1",
+        column_mapping=mapping,
+        mode="insert",
+    )
+
+    # Assert exact 3-row import result
+    assert result["imported_count"] == 3
+    assert result["updated_count"] == 0
+    assert result["skipped_count"] == 0
+    assert result["failed_count"] == 0
+    assert result["total_rows"] == 3
+
+    # Verify all 3 projects exist in the database with their custom module data
+    p1 = await unit_of_work.projects.get_by_code("PRJ-ARCH-001")
+    assert p1 is not None
+    assert p1.name == "Project Chassis Alpha"
+    assert p1.client_name == "OEM Stellantis"
+    assert p1.data.get("required_capacity") == 1000
+    assert p1.data.get("quality_score") == 95.5
+
+    p2 = await unit_of_work.projects.get_by_code("PRJ-ARCH-002")
+    assert p2 is not None
+    assert p2.name == "Project Battery Beta"
+    assert p2.client_name == "OEM Renault"
+    assert p2.data.get("capacity_status") == "WARNING"
+
+    p3 = await unit_of_work.projects.get_by_code("PRJ-ARCH-003")
+    assert p3 is not None
+    assert p3.name == "Project Motor Gamma"
+    assert p3.client_name == "OEM BMW"
+
+
+@pytest.mark.asyncio
+async def test_12_cmf_arch_test_v1_three_rows_second_import_updates(unit_of_work):
+    """TEST 12: Importing same 3 rows again updates the existing records without duplicates"""
+    await _create_cmf_arch_template(unit_of_work)
+    import_service = ImportEngineService(unit_of_work)
+
+    headers = ["project code", "project name", "customer", "required capacity"]
+    rows = [
+        ["PRJ-ARCH-001", "Project Chassis Alpha V2", "OEM Stellantis", 1500],
+        ["PRJ-ARCH-002", "Project Battery Beta V2", "OEM Renault", 600],
+        ["PRJ-ARCH-003", "Project Motor Gamma V2", "OEM BMW", 900],
+    ]
+    file_bytes = _build_excel_file(headers=headers, rows=rows)
+    mapping = {
+        "project code": "project_code",
+        "project name": "project_name",
+        "customer": "customer",
+        "required capacity": "required_capacity",
+    }
+
+    # 1st import: creates 3
+    res1 = await import_service.execute_import(
+        file_bytes=file_bytes,
+        file_name="arch_v1.xlsx",
+        entity_type="CMF_ARCH_TEST_V1",
+        column_mapping=mapping,
+        mode="insert",
+    )
+    assert res1["imported_count"] == 3
+    assert res1["updated_count"] == 0
+
+    # 2nd import: updates 3
+    res2 = await import_service.execute_import(
+        file_bytes=file_bytes,
+        file_name="arch_v1.xlsx",
+        entity_type="CMF_ARCH_TEST_V1",
+        column_mapping=mapping,
+        mode="insert",
+    )
+    assert res2["imported_count"] == 0
+    assert res2["updated_count"] == 3
+    assert res2["skipped_count"] == 0
+    assert res2["failed_count"] == 0
+
+    p1 = await unit_of_work.projects.get_by_code("PRJ-ARCH-001")
+    assert p1.name == "Project Chassis Alpha V2"
+    assert p1.data.get("required_capacity") == 1500
+
+
+@pytest.mark.asyncio
+async def test_13_cmf_arch_test_v1_invalid_row_explicit_skip(unit_of_work):
+    """TEST 13: Invalid row with empty project code is skipped with explicit reason and message"""
+    await _create_cmf_arch_template(unit_of_work)
+    import_service = ImportEngineService(unit_of_work)
+
+    headers = ["project code", "project name"]
+    rows = [
+        ["PRJ-VALID-010", "Valid Project"],
+        ["", "Invalid No Code Project"],
+    ]
+    file_bytes = _build_excel_file(headers=headers, rows=rows)
+    mapping = {"project code": "project_code", "project name": "project_name"}
+
+    result = await import_service.execute_import(
+        file_bytes=file_bytes,
+        file_name="test_invalid.xlsx",
+        entity_type="CMF_ARCH_TEST_V1",
+        column_mapping=mapping,
+        mode="insert",
+    )
+
+    assert result["imported_count"] == 1
+    assert result["skipped_count"] == 1
+    assert len(result["skipped_details"]) > 0
+    assert result["skipped_details"][0]["row_index"] == 2
+    assert result["skipped_details"][0]["reason"] in ("Ignored non-record row", "Missing unique identifier")
+
+

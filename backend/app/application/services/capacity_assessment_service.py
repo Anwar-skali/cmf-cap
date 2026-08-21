@@ -147,6 +147,22 @@ class CapacityAssessmentService:
         rate = None
         if assessment.maximum_capacity and assessment.maximum_capacity > 0:
             rate = round(float(assessment.current_capacity / assessment.maximum_capacity * 100), 2)
+
+        part_number = None
+        part_name = None
+        project_name = None
+        if getattr(assessment, "project_part", None):
+            part_number = getattr(assessment.project_part, "part_number", None)
+            part_name = getattr(assessment.project_part, "name", None)
+            if getattr(assessment.project_part, "project", None):
+                project_name = getattr(assessment.project_part.project, "name", None) or getattr(assessment.project_part.project, "code", None)
+
+        supplier_name = None
+        supplier_code = None
+        if getattr(assessment, "supplier", None):
+            supplier_name = getattr(assessment.supplier, "name", None)
+            supplier_code = getattr(assessment.supplier, "code", None)
+
         return CapacityAssessmentResponse(
             id=assessment.id,
             assessment_date=assessment.assessment_date,
@@ -156,12 +172,23 @@ class CapacityAssessmentService:
             maximum_capacity=assessment.maximum_capacity,
             utilization_rate=rate,
             lead_time_days=assessment.lead_time_days,
+            cate=getattr(assessment, "cate", None) or getattr(assessment, "gate", None),
+            gate=getattr(assessment, "cate", None) or getattr(assessment, "gate", None),
+            target_week=getattr(assessment, "target_week", None),
+            forecast_week=getattr(assessment, "forecast_week", None),
+            completed_week=getattr(assessment, "completed_week", None),
+            risk_level=getattr(assessment, "risk_level", "low") or "low",
             bottleneck=assessment.bottleneck,
             notes=assessment.notes,
             status=assessment.status,
             project_part_id=assessment.project_part_id,
             supplier_id=assessment.supplier_id,
             assessed_by=assessment.assessed_by,
+            part_number=part_number,
+            part_name=part_name,
+            supplier_name=supplier_name,
+            supplier_code=supplier_code,
+            project_name=project_name,
             created_at=assessment.created_at,
             updated_at=assessment.updated_at,
         )

@@ -15,7 +15,12 @@ from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
 from app.api.deps import get_current_active_user, get_unit_of_work
-from app.application.services.import_engine_service import ImportEngineService
+from app.application.services.import_engine_service import (
+    ImportEngineService,
+    K0_SOURCE_COLUMNS,
+    K0_SOURCE_COLUMN_COUNT,
+    _K0_CODES,
+)
 from app.application.services.template_context_service import TemplateContextService
 from app.application.services.excel_header_extractor import ExcelHeaderExtractor
 from app.application.services.ollama_mapping_service import OllamaMappingService
@@ -265,6 +270,17 @@ async def ollama_semantic_map(
     else:
         excel_read_ms = round((time.perf_counter() - header_start) * 1000, 2)
 
+    # For K0 templates: cap headers to the 47 authoritative source columns.
+    # The K0 workbook has empty cells after column AU (index 47+) that must
+    # not be sent to Ollama as potential source columns.
+    is_k0_template = template_identifier.upper() in _K0_CODES
+    if is_k0_template and len(excel_headers) > K0_SOURCE_COLUMN_COUNT:
+        logger.info(
+            "[OLLAMA MAP] K0 template: capping %d headers to %d real source columns",
+            len(excel_headers), K0_SOURCE_COLUMN_COUNT,
+        )
+        excel_headers = excel_headers[:K0_SOURCE_COLUMN_COUNT]
+
     logger.info("[OLLAMA MAP DEBUG] Sheet: '%s' | Orient: %s | Headers (%d): %r",
                 sheet_used, orient_info.get("orientation"), len(excel_headers), excel_headers)
 
@@ -295,6 +311,19 @@ async def ollama_semantic_map(
         result = await ollama_svc.generate_mapping(template_context, excel_headers, excel_read_ms=excel_read_ms)
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Mapping service error: {e}")
+
+    # For K0 templates: assign positional matches for any remaining unmapped fields
+    # (e.g. duplicate headers like "Week Project Target" milestones 2 & 3, "Make Battery (LP)" 2nd occurrence, etc.)
+    if is_k0_template:
+        for col_idx, f_key in enumerate(K0_SOURCE_COLUMNS):
+            if f_key and col_idx < len(excel_headers):
+                curr = result["mapping"].get(f_key)
+                if not curr or not curr.get("excel") or curr.get("confidence", 0) == 0:
+                    result["mapping"][f_key] = {
+                        "excel": excel_headers[col_idx],
+                        "confidence": 0.98,
+                        "source": "positional_match",
+                    }
 
     total_duration_ms = round((time.perf_counter() - total_start) * 1000, 2)
     exec_times = result.get("execution_times", {})
@@ -383,6 +412,7 @@ async def preview_import(
     custom_mapping_json: str | None = Form(None),
     orientation: str | None = Form(None),
     sheet_name: str | None = Form(None),
+    header_row: int | None = Form(None),
     current_user: User = Depends(get_current_active_user),
     uow: UnitOfWork = Depends(get_unit_of_work),
 ) -> dict[str, Any]:
@@ -419,6 +449,7 @@ async def preview_import(
             custom_mapping=custom_mapping,
             orientation=orientation,
             sheet_name=sheet_name,
+            header_row=header_row,
         )
         duration_ms = round((time.perf_counter() - start_t) * 1000, 2)
         report["preview_validation_ms"] = duration_ms
@@ -449,6 +480,7 @@ async def execute_import(
     column_mapping_json: str = Form(...),
     orientation: str | None = Form(None),
     sheet_name: str | None = Form(None),
+    header_row: int | None = Form(None),
     file: UploadFile = File(...),
     current_user: User = Depends(get_current_active_user),
     uow: UnitOfWork = Depends(get_unit_of_work),
@@ -478,6 +510,7 @@ async def execute_import(
             user_email=current_user.email,
             orientation=orientation,
             sheet_name=sheet_name,
+            header_row=header_row,
         )
         return result
     except Exception as e:

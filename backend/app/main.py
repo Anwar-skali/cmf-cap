@@ -36,11 +36,31 @@ def _create_tables_if_sqlite() -> None:
     try:
         from app.infrastructure.persistence.models.base import Base
         from app.core.database import sync_engine
+        from sqlalchemy import inspect, text
 
         Base.metadata.create_all(bind=sync_engine)
-        logger.info("Database tables created (SQLite)")
+        
+        # Self-healing migration for new capacity_assessments columns
+        inspector = inspect(sync_engine)
+        if "capacity_assessments" in inspector.get_table_names():
+            existing_cols = {c["name"] for c in inspector.get_columns("capacity_assessments")}
+            new_columns = [
+                ("cate", "VARCHAR(50)"),
+                ("gate", "VARCHAR(50)"),
+                ("target_week", "VARCHAR(50)"),
+                ("forecast_week", "VARCHAR(50)"),
+                ("completed_week", "VARCHAR(50)"),
+                ("risk_level", "VARCHAR(50) DEFAULT 'low'"),
+            ]
+            with sync_engine.begin() as conn:
+                for col_name, col_type in new_columns:
+                    if col_name not in existing_cols:
+                        conn.execute(text(f"ALTER TABLE capacity_assessments ADD COLUMN {col_name} {col_type}"))
+                        logger.info("Added column %s to capacity_assessments", col_name)
+
+        logger.info("Database tables verified/created (SQLite)")
     except Exception as exc:
-        logger.warning("Could not create tables: %s", exc)
+        logger.warning("Could not create/migrate tables: %s", exc)
 
 
 def create_application() -> FastAPI:

@@ -103,6 +103,12 @@ function SourceBadge({ source }: { source: string }) {
           <Cpu className="h-3 w-3" /> Fuzzy
         </Badge>
       );
+    case 'positional_match':
+      return (
+        <Badge className="text-xs gap-1 bg-teal-500/10 text-teal-700 border-teal-300">
+          <CheckCircle2 className="h-3 w-3" /> Positional
+        </Badge>
+      );
     default:
       return (
         <Badge variant="outline" className="text-xs">

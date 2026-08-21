@@ -14,6 +14,12 @@ class CreateCapacityAssessmentRequest(BaseModel):
     current_capacity: Decimal = Field(..., ge=0)
     maximum_capacity: Decimal = Field(..., ge=0)
     lead_time_days: int | None = Field(None, ge=0)
+    cate: str | None = None
+    gate: str | None = None
+    target_week: str | None = None
+    forecast_week: str | None = None
+    completed_week: str | None = None
+    risk_level: str | None = "low"
     bottleneck: str | None = None
     notes: str | None = None
     status: str = "pending"
@@ -36,6 +42,12 @@ class UpdateCapacityAssessmentRequest(BaseModel):
     current_capacity: Decimal | None = Field(None, ge=0)
     maximum_capacity: Decimal | None = Field(None, ge=0)
     lead_time_days: int | None = Field(None, ge=0)
+    cate: str | None = None
+    gate: str | None = None
+    target_week: str | None = None
+    forecast_week: str | None = None
+    completed_week: str | None = None
+    risk_level: str | None = None
     bottleneck: str | None = None
     notes: str | None = None
     status: str | None = None
@@ -57,12 +69,23 @@ class CapacityAssessmentResponse(BaseModel):
     maximum_capacity: Decimal
     utilization_rate: float | None = None
     lead_time_days: int | None = None
+    cate: str | None = None
+    gate: str | None = None
+    target_week: str | None = None
+    forecast_week: str | None = None
+    completed_week: str | None = None
+    risk_level: str | None = "low"
     bottleneck: str | None = None
     notes: str | None = None
     status: str = "pending"
     project_part_id: Any
     supplier_id: Any
     assessed_by: Any | None = None
+    part_number: str | None = None
+    part_name: str | None = None
+    supplier_name: str | None = None
+    supplier_code: str | None = None
+    project_name: str | None = None
     created_at: datetime | None = None
     updated_at: datetime | None = None
 
@@ -80,6 +103,8 @@ class CapacityFilter(BaseModel):
     month: int | None = Field(None, ge=1, le=12)
     year: int | None = Field(None, ge=2000, le=2100)
     status: str | None = None
+    cate: str | None = None
+    gate: str | None = None
     supplier_id: Any | None = None
     project_part_id: Any | None = None
     skip: int = Field(default=0, ge=0)

@@ -100,15 +100,18 @@ async def test_preview_flags_duplicates_in_file_and_db(engine_factory):
         file_bytes = make_workbook([
             ["PRJ-T1", "Alpha", "active"],    # valid, new
             ["PRJ-T1", "Dup", "active"],      # duplicate in file
-            ["PRJ-T3", "Existing", "active"], # duplicate in database
+            ["PRJ-T3", "Existing", "active"], # duplicate in database (valid for update)
         ])
         report = await service.preview_and_validate(
             file_bytes, "test.xlsx", "projects", custom_mapping=PROJECT_MAPPING
         )
         assert report["total_rows"] == 3
         assert report["record_rows_count"] == 3
-        assert report["valid_rows_count"] == 1
-        assert report["error_rows_count"] == 2
+        # PRJ-T1 (new) and PRJ-T3 (update) are valid; PRJ-T1 (dup in file) is error
+        assert report["valid_rows_count"] == 2
+        assert report["error_rows_count"] == 1
+        assert report["new_count"] == 1
+        assert report["update_count"] == 1
         assert report["duplicate_in_excel_count"] == 1
         assert report["duplicate_in_db_count"] == 1
     await engine.dispose()
@@ -124,11 +127,11 @@ async def test_execute_skips_non_record_and_duplicates(engine_factory):
         await uow.commit()
 
         file_bytes = make_workbook([
-            ["PRJ-T1", "Alpha", "active"],    # new record
+            ["PRJ-T1", "Alpha", "active"],    # new record -> imported
             ["", "Beta", ""],                 # non-record -> skipped
             ["PRJ-T1", "Dup", "active"],      # duplicate in file -> skipped
-            ["PRJ-T3", "Existing", "active"], # duplicate in db -> skipped
-            ["PRJ-T2", "Gamma", "active"],    # new record
+            ["PRJ-T3", "Existing", "active"], # existing in db -> updated
+            ["PRJ-T2", "Gamma", "active"],    # new record -> imported
         ])
         result = await service.execute_import(
             file_bytes,
@@ -140,11 +143,10 @@ async def test_execute_skips_non_record_and_duplicates(engine_factory):
         )
         assert result["non_record_rows_count"] == 1
         assert result["duplicate_in_excel_count"] == 1
-        assert result["duplicate_in_db_count"] == 1
         assert result["imported_count"] == 2
-        assert result["updated_count"] == 0
+        assert result["updated_count"] == 1
         assert result["failed_count"] == 0
-        assert result["skipped_count"] == 3
+        assert result["skipped_count"] == 2
 
         projects = await uow.projects.get_multi(limit=100)
         codes = {p.code for p in projects}
@@ -152,6 +154,8 @@ async def test_execute_skips_non_record_and_duplicates(engine_factory):
         # no junk auto-generated PRJ- codes may be created
         assert not any(c.startswith("PRJ-") and c not in {"PRJ-T1", "PRJ-T2", "PRJ-T3"} for c in codes)
     await engine.dispose()
+
+
 
 
 @pytest.mark.asyncio

@@ -37,10 +37,12 @@ async def list_capacity(
     month: int | None = Query(None, ge=1, le=12),
     year: int | None = Query(None, ge=2000, le=2100),
     status: str | None = Query(None),
+    gate: str | None = Query(None),
+    risk_level: str | None = Query(None),
     supplier_id: uuid.UUID | None = Query(None),
     project_part_id: uuid.UUID | None = Query(None),
     skip: int = Query(0, ge=0),
-    limit: int = Query(20, ge=1, le=100),
+    limit: int = Query(50, ge=1, le=200),
     current_user: User = Depends(get_current_active_user),
     uow: UnitOfWork = Depends(get_unit_of_work),
     capacity_service: CapacityAssessmentService = Depends(get_capacity_assessment_service),
@@ -52,6 +54,10 @@ async def list_capacity(
         filters["year"] = year
     if status is not None:
         filters["status"] = status
+    if gate is not None:
+        filters["gate"] = gate
+    if risk_level is not None:
+        filters["risk_level"] = risk_level
     if supplier_id is not None:
         filters["supplier_id"] = supplier_id
     if project_part_id is not None:

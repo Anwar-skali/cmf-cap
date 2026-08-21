@@ -19,6 +19,238 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+# ---------------------------------------------------------------------------
+# K0 Make Battery – authoritative field definitions
+# ---------------------------------------------------------------------------
+# All 42 real internal K0 schema fields in logical order (Buyer → Capacity → SQD).
+# Columns K, L, M, N (#REF!) and O (libre) in the raw Excel are unmapped dead columns.
+K0_FIELD_KEYS: list[str] = [
+    "part_number", "index", "description", "coef", "serial_piece_price",
+    "mass_purchase", "ru", "noa", "make_battery_lp_1", "make_battery_lp_2",
+    "supplier_name", "vendor_cofor", "manufacturer_cofor", "combined_cofor",
+    "tango_order", "ei_status", "comments", "week_project_target_1",
+    "forecast_week_1", "completed_week_1", "week_project_target_2",
+    "forecast_week_2", "completed_week_2", "week_project_target_3",
+    "forecast_week_3", "completed_week_3", "quality", "supply_chain",
+    "global_purchasing", "cpl", "rcpi", "minimum_quality_status_acted",
+    "mass_inquired", "packaging_readiness_unlweb_validated",
+    "tango_contract_validated", "supplier_capability_confirmed",
+    "it_cpl_corail_setting", "fcla_validates", "ple_created", "edi_opened",
+    "um_logistic_flow_validated", "manufacturing_process_validated",
+]
+
+# ---------------------------------------------------------------------------
+# The 47 SOURCE column positions present in the real K0 Excel file (Row 8, Cols A–AU).
+#
+# The K0 source workbook ("Pilot Sheet (Suivi)") has 47 physical columns (A through AU).
+# - Columns A..J (0..9) map to Buyer identification fields.
+# - Columns K..O (10..14) are dead/empty columns (#REF! and libre) -> None.
+# - Columns P..V (15..21) map to Buyer supplier/status/comments fields.
+# - Columns W..AE (22..30) map to Capacity Manager milestones 1, 2, 3.
+# - Columns AF..AU (31..46) map to SQD assessments & validations.
+# ---------------------------------------------------------------------------
+K0_SOURCE_COLUMNS: list[str | None] = [
+    "part_number",        # Col A   (idx=0)  – Part Number
+    "index",              # Col B   (idx=1)  – Index
+    "description",        # Col C   (idx=2)  – Description
+    "coef",               # Col D   (idx=3)  – Coef.
+    "serial_piece_price", # Col E   (idx=4)  – Serial Piece Price
+    "mass_purchase",      # Col F   (idx=5)  – Mass Purchase
+    "ru",                 # Col G   (idx=6)  – RU
+    "noa",                # Col H   (idx=7)  – NOA
+    "make_battery_lp_1",  # Col I   (idx=8)  – Make Battery (LP) — 1st occurrence
+    "make_battery_lp_2",  # Col J   (idx=9)  – Make Battery (LP) — 2nd occurrence
+    None,                 # Col K   (idx=10) – #REF! (dead column)
+    None,                 # Col L   (idx=11) – #REF! (dead column)
+    None,                 # Col M   (idx=12) – #REF! (dead column)
+    None,                 # Col N   (idx=13) – #REF! (dead column)
+    None,                 # Col O   (idx=14) – libre (dead column)
+    "supplier_name",      # Col P   (idx=15) – Supplier name
+    "vendor_cofor",       # Col Q   (idx=16) – Vendor COFOR
+    "manufacturer_cofor", # Col R   (idx=17) – Manufacturer COFOR
+    "combined_cofor",     # Col S   (idx=18) – Combined COFOR
+    "tango_order",        # Col T   (idx=19) – Tango order
+    "ei_status",          # Col U   (idx=20) – EI status
+    "comments",           # Col V   (idx=21) – Comments
+    "week_project_target_1",  # Col W  (idx=22) – Week\nProject Target (1st)
+    "forecast_week_1",        # Col X  (idx=23) – Forecast\nWeek (1st)
+    "completed_week_1",       # Col Y  (idx=24) – Completed\nWeek (1st)
+    "week_project_target_2",  # Col Z  (idx=25) – Week\nProject Target (2nd)
+    "forecast_week_2",        # Col AA (idx=26) – Forecast\nWeek (2nd)
+    "completed_week_2",       # Col AB (idx=27) – Completed\nWeek (2nd)
+    "week_project_target_3",  # Col AC (idx=28) – Week\nProject Target (3rd)
+    "forecast_week_3",        # Col AD (idx=29) – Forecast\nWeek (3rd)
+    "completed_week_3",       # Col AE (idx=30) – Completed\nWeek (3rd)
+    "quality",            # Col AF  (idx=31) – Quality
+    "supply_chain",       # Col AG  (idx=32) – Supply Chain
+    "global_purchasing",  # Col AH  (idx=33) – Global Purchasing
+    "cpl",                # Col AI  (idx=34) – CPL
+    "rcpi",               # Col AJ  (idx=35) – RCPI
+    "minimum_quality_status_acted",       # Col AK (idx=36) – Minimum Quality status acted
+    "mass_inquired",                      # Col AL (idx=37) – Mass inquired
+    "packaging_readiness_unlweb_validated", # Col AM (idx=38) – Packaging readiness, UNLweb validated
+    "tango_contract_validated",           # Col AN (idx=39) – TANGO contract validated
+    "supplier_capability_confirmed",      # Col AO (idx=40) – Supplier capability confirmed
+    "it_cpl_corail_setting",              # Col AP (idx=41) – IT CPL (CORAIL,) setting
+    "fcla_validates",                     # Col AQ (idx=42) – FCLA Validates
+    "ple_created",                        # Col AR (idx=43) – PLE created
+    "edi_opened",                         # Col AS (idx=44) – EDI opened
+    "um_logistic_flow_validated",         # Col AT (idx=45) – UM logistic flow validated
+    "manufacturing_process_validated",      # Col AU (idx=46) – Manufacturing process validated
+]
+K0_SOURCE_COLUMN_COUNT: int = len(K0_SOURCE_COLUMNS)  # == 47
+K0_ALL_FIELD_KEYS = K0_FIELD_KEYS  # alias for backward compat
+
+# K0 Excel sheet and header row settings
+K0_SHEET_NAME = "Pilot Sheet (Suivi)"
+K0_HEADER_ROW = 8         # 1-indexed Excel row containing English headers
+K0_DATA_START_ROW = 9     # 1-indexed Excel row of first real data record
+K0_UNIQUE_KEY_COL = 0     # 0-indexed column of part_number (Column A)
+
+# Known K0 Excel header names (from Row 8) mapped deterministically to field keys.
+# NOTE: This dict is used ONLY for display/metadata purposes now.
+# The actual row conversion uses K0_SOURCE_COLUMNS with index-based lookup,
+# which is immune to duplicate-header dict collision bugs.
+K0_HEADER_TO_KEY: dict[str, str] = {
+    "Part Number": "part_number",
+    "Index": "index",
+    "Description": "description",
+    "Coef.": "coef",
+    "Coef": "coef",
+    "Serial Piece Price": "serial_piece_price",
+    "Serial Piece Price ": "serial_piece_price",
+    "Mass Purchase\n(Coef. x Price per part)": "mass_purchase",
+    "Mass Purchase": "mass_purchase",
+    "RU": "ru",
+    "NOA": "noa",
+    "Make Battery (LP)": "make_battery_lp_1",
+    "Make Battery (LP) 1": "make_battery_lp_1",
+    "Make Battery (LP) 2": "make_battery_lp_2",
+    "Supplier Name": "supplier_name",
+    "Supplier name": "supplier_name",
+    "Vendor COFOR": "vendor_cofor",
+    "Vendor Cofor": "vendor_cofor",
+    "Manufacturer COFOR": "manufacturer_cofor",
+    "Manufacturer Cofor": "manufacturer_cofor",
+    "Combined COFOR": "combined_cofor",
+    "Tango Order": "tango_order",
+    "EI Status": "ei_status",
+    "EI status": "ei_status",
+    "Comments": "comments",
+    "Week\nProject Target": "week_project_target_1",
+    "Week Project Target 1": "week_project_target_1",
+    "Forecast\nWeek": "forecast_week_1",
+    "Forecast Week 1": "forecast_week_1",
+    "Completed\nWeek": "completed_week_1",
+    "Completed Week 1": "completed_week_1",
+    "Week Project Target 2": "week_project_target_2",
+    "Forecast Week 2": "forecast_week_2",
+    "Completed Week 2": "completed_week_2",
+    "Week Project Target 3": "week_project_target_3",
+    "Forecast Week 3": "forecast_week_3",
+    "Completed Week 3": "completed_week_3",
+    "Quality": "quality",
+    "Supply Chain": "supply_chain",
+    "Global Purchasing": "global_purchasing",
+    "CPL": "cpl",
+    "RCPI": "rcpi",
+    "Minimum Quality status acted": "minimum_quality_status_acted",
+    "Minimum Quality Status Acted": "minimum_quality_status_acted",
+    "Mass inquired": "mass_inquired",
+    "Mass Inquired": "mass_inquired",
+    "Packaging readiness, UNLweb \nvalidated": "packaging_readiness_unlweb_validated",
+    "Packaging Readiness UNLWEB Validated": "packaging_readiness_unlweb_validated",
+    "TANGO contract validated": "tango_contract_validated",
+    "Tango Contract Validated": "tango_contract_validated",
+    "Supplier capability confirmed": "supplier_capability_confirmed",
+    "Supplier Capability Confirmed": "supplier_capability_confirmed",
+    "IT CPL (CORAIL,) setting": "it_cpl_corail_setting",
+    "IT CPL (CORAIL) Setting": "it_cpl_corail_setting",
+    "IT CPL Corail Setting": "it_cpl_corail_setting",
+    "FCLA validates": "fcla_validates",
+    "FCLA Validates": "fcla_validates",
+    "PLE created": "ple_created",
+    "PLE Created": "ple_created",
+    "EDI opened": "edi_opened",
+    "EDI Opened": "edi_opened",
+    "UM logistic flow validated": "um_logistic_flow_validated",
+    "UM Logistic Flow Validated": "um_logistic_flow_validated",
+    "Manufacturing process validated": "manufacturing_process_validated",
+    "Manufacturing Process Validated": "manufacturing_process_validated",
+}
+
+# Core structure codes that have their own fast-path positional mapping
+_K0_CODES = {"K0", "K0_MAKE_BATTERY"}
+
+
+def _k0_col_letter(idx: int) -> str:
+    """Return the Excel column letter(s) for a 0-based column index (A, B, …, Z, AA, AB, …)."""
+    if idx < 26:
+        return chr(ord("A") + idx)
+    # Two-letter columns: A=0 → AA=26, AB=27, …, AZ=51, BA=52, …
+    first = (idx - 26) // 26
+    second = (idx - 26) % 26
+    return chr(ord("A") + first) + chr(ord("A") + second)
+
+
+def _build_k0_index_mapping(source_headers: list[str]) -> dict[int, str]:
+    """
+    Build a deterministic **index-based** mapping for K0 source columns.
+
+    Returns a dict mapping 0-based column index -> K0 internal field key,
+    covering ONLY the first K0_SOURCE_COLUMN_COUNT (47) columns.
+
+    WHY INDEX-BASED (not header-string-based):
+    The K0 source Excel has duplicate header strings:
+    - Columns W, Z, AC (idx 22, 25, 28) all share header "Week\nProject Target"
+    - Columns X, AA, AD (idx 23, 26, 29) all share header "Forecast\nWeek"
+    - Columns Y, AB, AE (idx 24, 27, 30) all share header "Completed\nWeek"
+    - Columns I & J (idx 8 & 9) both share header "Make Battery (LP)"
+    A dict keyed on header-string would be overwritten on each duplicate.
+    Index-based mapping is completely immune to this class of bug.
+
+    SCOPE: The first 47 columns (A–AU) are source data columns.
+    Columns 48+ are empty Excel cells and are never imported.
+
+    This runs in O(1) for each column access and never calls Ollama/AI.
+    """
+    mapping: dict[int, str] = {}
+    col_count = min(len(source_headers), K0_SOURCE_COLUMN_COUNT)
+    for col_idx in range(col_count):
+        mapping[col_idx] = K0_SOURCE_COLUMNS[col_idx]
+
+    # Emit structured debug log showing the full column mapping
+    logger.info(
+        "[K0 PARSE] header_row=%d source_columns=%d (mapped=%d from file)",
+        K0_HEADER_ROW, K0_SOURCE_COLUMN_COUNT, col_count,
+    )
+    for col_idx, field_key in mapping.items():
+        hdr = source_headers[col_idx] if col_idx < len(source_headers) else "(no header)"
+        col_letter = _k0_col_letter(col_idx)
+        logger.debug("[K0 MAPPING] Col %s (idx=%d) / Header %r -> field '%s'",
+                     col_letter, col_idx, hdr, field_key)
+    return mapping
+
+
+def _build_k0_column_mapping(headers: list[str]) -> dict[str, str | None]:
+    """
+    LEGACY shim kept for backward compatibility with callers that pass
+    ``column_mapping.get(header)`` using a string key.
+
+    Delegates to _build_k0_index_mapping and wraps the result as a
+    header-string dict so existing call sites continue to work.
+    NOTE: Duplicate headers (e.g. "Week\nProject Target" on cols W, Z, AC)
+    will collide in a string-keyed dict — the LAST occurrence wins.  That is
+    acceptable for the string-keyed shim because the actual row conversion
+    loop uses k0_index_map (index-based) which is collision-free.
+    """
+    index_map = _build_k0_index_mapping(headers)
+    result: dict[str, str | None] = {}
+    for col_idx, field_key in index_map.items():
+        if col_idx < len(headers):
+            result[headers[col_idx]] = field_key
+    return result
+
 
 class ImportEngineService:
     def __init__(self, uow: UnitOfWork) -> None:
@@ -57,10 +289,25 @@ class ImportEngineService:
         file_bytes: bytes,
         specified_orientation: str | None = None,
         specified_sheet_name: str | None = None,
+        specified_header_row: int | None = None,
+        unique_key_col_index: int | None = None,
+        max_source_columns: int | None = None,
     ) -> dict[str, Any]:
         """
         Extract sheet names, headers, and raw rows from an uploaded Excel file.
         Supports both HORIZONTAL (tabular) and VERTICAL (key-value) orientations.
+
+        Args:
+            specified_header_row: 1-indexed row number of the header row.  When provided
+                the scanner skips straight to that row instead of auto-detecting.
+            unique_key_col_index: 0-indexed column position of the primary key column
+                (e.g. 0 for ``part_number`` in K0).  When supplied, any data row whose
+                unique-key cell is empty / zero / formula-only is treated as an empty
+                row and excluded from the returned ``rows`` list.
+            max_source_columns: When set, headers and row values are truncated to this
+                many columns after the header row is determined.  Use this for K0 to
+                restrict ingestion to the 26 authoritative source columns (A–Z) and
+                prevent Excel helper/formula columns (AA+) from being read as data.
         """
         workbook = openpyxl.load_workbook(io.BytesIO(file_bytes), data_only=True)
         sheets = workbook.sheetnames
@@ -138,32 +385,97 @@ class ImportEngineService:
             }
 
         # HORIZONTAL Mode
-        header_idx = 0
-        max_count = 0
-        for idx, r in enumerate(best_rows[:20]):
-            non_empty_count = len([c for c in r if c is not None and str(c).strip() != ""])
-            if non_empty_count > max_count:
-                max_count = non_empty_count
-                header_idx = idx
+        # Determine header row index (0-based into best_rows)
+        if specified_header_row and 1 <= specified_header_row <= len(best_rows):
+            header_idx = specified_header_row - 1
+            logger.info("[PARSE] Using specified_header_row=%d (0-based idx=%d)", specified_header_row, header_idx)
+        else:
+            # Auto-detect: row with the most non-empty cells in first 20 rows
+            header_idx = 0
+            max_count = 0
+            for idx, r in enumerate(best_rows[:20]):
+                non_empty_count = len([c for c in r if c is not None and str(c).strip() != ""])
+                if non_empty_count > max_count:
+                    max_count = non_empty_count
+                    header_idx = idx
+            logger.info("[PARSE] Auto-detected header row %d (0-based idx=%d)", header_idx + 1, header_idx)
 
         header_row = best_rows[header_idx]
         headers = [str(cell).strip() if cell is not None else "" for cell in header_row]
         while headers and headers[-1] == "":
             headers.pop()
 
-        data_rows = []
-        last_data_offset = -1
+        # K0 source-column boundary: the K0 workbook has exactly 47 real source
+        # columns (A–AU).  Columns beyond AU are empty Excel cells and must never
+        # be treated as importable data.  max_source_columns enforces this boundary.
+        if max_source_columns is not None and len(headers) > max_source_columns:
+            logger.info(
+                "[K0 PARSE] Capping headers from %d to %d real source columns",
+                len(headers), max_source_columns,
+            )
+            headers = headers[:max_source_columns]
+
+        # Sentinel values produced by Excel formulas on blank rows that look non-empty
+        _FORMULA_SENTINELS: set[str] = {"0", "0.0", "#ref!", "#n/a", "#value!", "#name?", "none", "nan"}
+
+        def _cell_is_meaningful(val: Any) -> bool:
+            """Return True if the cell carries a real human-entered value."""
+            if val is None:
+                return False
+            s = str(val).strip()
+            return s != "" and s.lower() not in _FORMULA_SENTINELS
+
+        def _row_is_empty(row_vals: list[Any], uk_col_idx: int | None) -> bool:
+            """
+            A row is EMPTY when:
+            - All cells are None / "" / formula sentinels, OR
+            - A unique-key column index is given and that cell is not meaningful
+              (even if other formula cells look non-empty).
+            """
+            if uk_col_idx is not None and 0 <= uk_col_idx < len(row_vals):
+                return not _cell_is_meaningful(row_vals[uk_col_idx])
+            return not any(_cell_is_meaningful(c) for c in row_vals)
+
+        data_rows: list[list[Any]] = []
+        # We track the furthest offset that had at least one raw non-None cell
+        # (to measure the physical used range of the sheet).
+        last_physical_offset = -1
         for offset, row in enumerate(best_rows[header_idx + 1:]):
-            row_vals = list(row[: len(headers)])
+            row_vals = list(row[: len(headers)])  # already bounded by truncated headers
             if len(row_vals) < len(headers):
                 row_vals.extend([None] * (len(headers) - len(row_vals)))
 
-            if any(cell is not None and str(cell).strip() != "" for cell in row_vals):
-                data_rows.append(row_vals)
-                last_data_offset = offset
+            # Check whether the physical row has ANY content (incl. formulas)
+            has_any_content = any(c is not None and str(c).strip() != "" for c in row_vals)
+            if has_any_content:
+                last_physical_offset = offset
 
-        physical_rows = last_data_offset + 1
-        empty_rows_count = max(0, physical_rows - len(data_rows))
+            if _row_is_empty(row_vals, unique_key_col_index):
+                # Bug fix: only count as 'empty' if the row is within the physical used range.
+                # Rows completely beyond last_physical_offset are trailing nulls, not empty records.
+                if has_any_content:
+                    physical_row_num = header_idx + 2 + offset  # 1-based Excel row
+                    logger.debug(
+                        "[IMPORT ROW FILTER] physical_row=%d status=EMPTY_IGNORED",
+                        physical_row_num,
+                    )
+            else:
+                physical_row_num = header_idx + 2 + offset
+                logger.debug(
+                    "[IMPORT ROW FILTER] physical_row=%d status=DATA",
+                    physical_row_num,
+                )
+                data_rows.append(row_vals)
+
+        physical_rows = last_physical_offset + 1
+        # empty_rows_count = rows within the physical range that had formula/content
+        # but no valid unique key (i.e. were not real data rows).
+        empty_rows_count = physical_rows - len(data_rows)
+
+        logger.info(
+            "[IMPORT ROW FILTER] sheet=%s header_row=%d physical_rows=%d data_rows=%d empty_rows=%d",
+            best_sheet_name, header_idx + 1, physical_rows, len(data_rows), empty_rows_count,
+        )
 
         return {
             "sheets": sheets,
@@ -335,7 +647,16 @@ class ImportEngineService:
 
         columns = []
         for f in ctx.fields:
-            is_unique = f.key in ["unique_id", "code", "part_number", "id"]
+            lower_k = f.key.lower()
+            is_unique = (
+                lower_k in [
+                    "unique_id", "code", "project_code", "part_number", "part_no",
+                    "project_id", "ref", "project_ref", "pn", "id"
+                ]
+                or "code" in lower_k
+                or "unique" in lower_k
+                or "part_number" in lower_k
+            )
             columns.append(
                 ImportColumnSpec(
                     key=f.key,
@@ -362,7 +683,106 @@ class ImportEngineService:
         ``id`` is excluded: it is never supplied by an Excel import, so treating
         it as a record-identifying key would wrongly classify rows as records.
         """
-        return [c.key for c in schema.columns if c.unique_key and c.key != "id"]
+        keys = [c.key for c in schema.columns if c.unique_key and c.key != "id"]
+        if not keys:
+            for c in schema.columns:
+                lower_k = c.key.lower()
+                if (
+                    lower_k in (
+                        "project_code", "code", "unique_id", "part_number", "part_no",
+                        "project_id", "ref", "project_ref", "pn"
+                    )
+                    or "code" in lower_k
+                    or "unique" in lower_k
+                ):
+                    keys.append(c.key)
+        return keys
+
+    @staticmethod
+    def _extract_project_code(record: dict[str, Any], schema: EntityImportSchema | None = None) -> str | None:
+        """Extracts the unique project code/identifier from a mapped record dictionary."""
+        # 1. Primary candidate keys
+        for k in (
+            "project_code",
+            "code",
+            "unique_id",
+            "part_number",
+            "part_no",
+            "project_id",
+            "ref",
+            "project_ref",
+            "pn",
+            "id",
+        ):
+            val = record.get(k)
+            if val is not None and str(val).strip() != "":
+                return str(val).strip()
+
+        # 2. Check schema columns marked unique_key
+        if schema:
+            for col in schema.columns:
+                if col.unique_key and col.key != "id":
+                    val = record.get(col.key)
+                    if val is not None and str(val).strip() != "":
+                        return str(val).strip()
+
+        # 3. Fallback to any key containing "code", "unique", or "part_number"
+        for k, val in record.items():
+            if val is not None and str(val).strip() != "":
+                lower_k = k.lower()
+                if "code" in lower_k or "unique" in lower_k or "part_number" in lower_k:
+                    return str(val).strip()
+
+        return None
+
+    @staticmethod
+    def _extract_project_name(record: dict[str, Any], code: str | None = None) -> str:
+        """Extracts the project name/title from a mapped record dictionary."""
+        for k in (
+            "project_name",
+            "name",
+            "part_name",
+            "title",
+            "project_title",
+            "label",
+        ):
+            val = record.get(k)
+            if val is not None and str(val).strip() != "":
+                return str(val).strip()
+
+        for k, val in record.items():
+            if val is not None and str(val).strip() != "":
+                lower_k = k.lower()
+                if "name" in lower_k or "title" in lower_k:
+                    return str(val).strip()
+
+        return f"Project {code}" if code else "Untitled Project"
+
+    @staticmethod
+    def _extract_project_description(record: dict[str, Any]) -> str | None:
+        """Extracts project description/info/notes/comments from a mapped record dictionary."""
+        for k in (
+            "description",
+            "project_description",
+            "part_info",
+            "notes",
+            "comments",
+            "comment",
+            "details",
+        ):
+            val = record.get(k)
+            if val is not None and str(val).strip() != "":
+                return str(val).strip()
+        return None
+
+    @staticmethod
+    def _extract_client_name(record: dict[str, Any]) -> str | None:
+        """Extracts customer/client name from a mapped record dictionary."""
+        for k in ("customer", "client_name", "client", "customer_name", "company"):
+            val = record.get(k)
+            if val is not None and str(val).strip() != "":
+                return str(val).strip()
+        return None
 
     @staticmethod
     def _row_has_record_key(values: dict[str, Any], schema: EntityImportSchema) -> bool:
@@ -392,28 +812,76 @@ class ImportEngineService:
         custom_mapping: dict[str, str] | None = None,
         orientation: str | None = None,
         sheet_name: str | None = None,
+        header_row: int | None = None,
     ) -> dict[str, Any]:
         """
         Parses the Excel file, validates header schema and row values,
         checks for duplicates, and produces a complete validation preview report.
         """
+        is_k0 = entity_type.upper() in _K0_CODES
+        start_perf = time.perf_counter()
+
+        # K0 fast-path: use known sheet/header/key settings
+        effective_header_row = header_row
+        effective_sheet = sheet_name
+        effective_uk_col: int | None = None
+        if is_k0:
+            effective_header_row = effective_header_row or K0_HEADER_ROW
+            effective_sheet = effective_sheet or K0_SHEET_NAME
+            effective_uk_col = K0_UNIQUE_KEY_COL
+
         schema = await self._get_schema(entity_type)
-        parsed = self.parse_excel_file(file_bytes, specified_orientation=orientation, specified_sheet_name=sheet_name)
+        parsed = self.parse_excel_file(
+            file_bytes,
+            specified_orientation=orientation,
+            specified_sheet_name=effective_sheet,
+            specified_header_row=effective_header_row,
+            unique_key_col_index=effective_uk_col,
+            max_source_columns=K0_SOURCE_COLUMN_COUNT if is_k0 else None,
+        )
         headers = parsed["headers"]
         data_rows = parsed["rows"]
         parsed_orientation = parsed.get("orientation", "HORIZONTAL")
         parsed_orientation_info = parsed.get("orientation_info", {})
 
         # Step 1: Mapping setup
-        if custom_mapping:
+        if is_k0:
+            k0_index_map = _build_k0_index_mapping(headers)
+            if custom_mapping:
+                column_mapping = self._normalize_column_mapping(custom_mapping, schema, headers)
+            else:
+                column_mapping = _build_k0_column_mapping(headers)
+
+            elapsed_ms = round((time.perf_counter() - start_perf) * 1000, 2)
+            mapped_count = len([v for v in k0_index_map.values() if v])
+            unmapped_count = K0_SOURCE_COLUMN_COUNT - mapped_count
+            logger.info(
+                "[K0 PARSE]\nsheet=%s\nheader_row=%d\nsource_columns=%d",
+                effective_sheet or K0_SHEET_NAME, K0_HEADER_ROW, K0_SOURCE_COLUMN_COUNT,
+            )
+            logger.info(
+                "[K0 DATA]\nphysical_rows=%d\ndata_rows=%d\nempty_rows=%d",
+                parsed.get("physical_rows", 0), len(data_rows), parsed.get("empty_rows_count", 0),
+            )
+            logger.info(
+                "[K0 MAPPING]\nmapped_columns=%d\nunmapped_columns=%d",
+                mapped_count, unmapped_count,
+            )
+        elif custom_mapping:
             column_mapping = self._normalize_column_mapping(custom_mapping, schema, headers)
         else:
             column_mapping = self.auto_map_columns(headers, schema)
 
         # Invert mapping to map db_field_key -> excel_header
-        mapped_fields: dict[str, str] = {
-            v: k for k, v in column_mapping.items() if v is not None
-        }
+        if is_k0:
+            mapped_fields: dict[str, str] = {
+                field_key: headers[col_idx] if col_idx < len(headers) else field_key
+                for col_idx, field_key in k0_index_map.items() if field_key
+            }
+        else:
+            mapped_fields = {
+                v: k for k, v in column_mapping.items() if v is not None
+            }
 
         validation_errors: list[dict[str, Any]] = []
 
@@ -466,11 +934,21 @@ class ImportEngineService:
             row_norm_details: dict[str, Any] = {}
             row_has_error = False
 
-            # Convert row using column mapping
-            for header, val in zip(headers, row_vals):
-                db_key = column_mapping.get(header)
-                if db_key:
-                    row_raw_dict[db_key] = val
+            # Convert row using column mapping.
+            # For K0: use index-based mapping (k0_index_map) so duplicate header strings
+            # (e.g. "Week\nProject Target" on cols W, Z, AC) can never overwrite each other.
+            # Rows are already bounded to K0_SOURCE_COLUMN_COUNT by parse_excel_file.
+            # For all other templates: use the standard header-string mapping.
+            if is_k0:
+                for col_idx, val in enumerate(row_vals):
+                    db_key = k0_index_map.get(col_idx)
+                    if db_key:
+                        row_raw_dict[db_key] = val
+            else:
+                for header, val in zip(headers, row_vals):
+                    db_key = column_mapping.get(header)
+                    if db_key:
+                        row_raw_dict[db_key] = val
 
             is_record = self._row_has_record_key(row_raw_dict, schema)
             if is_record:
@@ -613,7 +1091,7 @@ class ImportEngineService:
                         row_status = "existing"
                         update_rows_set.add(row_idx)
 
-                    # For non-project entities in strict mode, record DuplicateInDatabase
+                    # For non-project entities in strict insert mode, record DuplicateInDatabase
                     if not is_project_entity:
                         validation_errors.append(
                             {
@@ -625,6 +1103,8 @@ class ImportEngineService:
                                 "message": f"Value '{u_val}' already exists in database.",
                             }
                         )
+                        row_has_error = True
+                        validation_error_rows_set.add(row_idx)
                 else:
                     row_action = "CREATE"
                     row_status = "new"
@@ -659,6 +1139,9 @@ class ImportEngineService:
             ]
 
         valid_records = set(range(1, len(data_rows) + 1)) - error_rows_set - non_record_rows_set
+
+        if is_k0:
+            logger.info("[K0 PREVIEW]\nstatus=success")
 
         return {
             "entity_type": entity_type,
@@ -709,11 +1192,13 @@ class ImportEngineService:
         user_email: str | None = None,
         orientation: str | None = None,
         sheet_name: str | None = None,
+        header_row: int | None = None,
     ) -> dict[str, Any]:
         """
         Executes database import with transactional safety, audit logging,
         and history recording.
         """
+        is_k0 = entity_type.upper() in _K0_CODES
         start_time = time.time()
         logger.info("[IMPORT DEBUG] Starting execution for file '%s' with template '%s'", file_name, entity_type)
         logger.info("[IMPORT DEBUG] Selected template: '%s'", entity_type)
@@ -721,13 +1206,27 @@ class ImportEngineService:
         logger.info("[IMPORT DEBUG] Mapped fields: %r", column_mapping)
         logger.info("[IMPORT DEBUG] Import mode: '%s', strategy: '%s'", mode, strategy)
 
+        # K0 fast-path settings
+        effective_header_row = header_row
+        effective_sheet = sheet_name
+        effective_uk_col: int | None = None
+        if is_k0:
+            effective_header_row = effective_header_row or K0_HEADER_ROW
+            effective_sheet = effective_sheet or K0_SHEET_NAME
+            effective_uk_col = K0_UNIQUE_KEY_COL
+            # For K0, always use the deterministic positional mapping
+            effective_column_mapping: dict[str, str] = {}
+        else:
+            effective_column_mapping = column_mapping
+
         preview = await self.preview_and_validate(
             file_bytes=file_bytes,
             file_name=file_name,
             entity_type=entity_type,
-            custom_mapping=column_mapping,
+            custom_mapping=effective_column_mapping if not is_k0 else None,
             orientation=orientation,
-            sheet_name=sheet_name,
+            sheet_name=effective_sheet,
+            header_row=effective_header_row,
         )
 
         validation_errors = preview["validation_errors"]
@@ -748,13 +1247,27 @@ class ImportEngineService:
         parsed = self.parse_excel_file(
             file_bytes,
             specified_orientation=orientation,
-            specified_sheet_name=sheet_name,
+            specified_sheet_name=effective_sheet,
+            specified_header_row=effective_header_row,
+            unique_key_col_index=effective_uk_col,
+            max_source_columns=K0_SOURCE_COLUMN_COUNT if is_k0 else None,
         )
         data_rows = parsed["rows"]
         headers = parsed["headers"]
         schema = await self._get_schema(entity_type)
         unique_key_spec = next((c for c in schema.columns if c.unique_key), None)
 
+        # Build column_mapping for the execution loop
+        if is_k0:
+            # Use index-based mapping (immune to duplicate header collisions)
+            k0_execute_index_map = _build_k0_index_mapping(headers)
+            column_mapping = _build_k0_column_mapping(headers)  # shim for any non-loop callers
+            logger.info(
+                "[K0 IMPORT] processing_data_rows=%d",
+                len(data_rows),
+            )
+        else:
+            k0_execute_index_map = {}
         logger.info("[IMPORT DEBUG] Rows detected: %d", len(data_rows))
         logger.info("[IMPORT DEBUG] Headers detected: %r", headers)
 
@@ -795,12 +1308,20 @@ class ImportEngineService:
         logger.info("[IMPORT DEBUG] Database transaction: Starting transaction session...")
         async with self._uow as uow:
             for row_idx, row_vals in enumerate(data_rows, start=1):
-                # Prepare row values (header -> db field)
+                # Prepare row values (field key -> raw value).
+                # For K0: use index-based mapping so duplicate header strings can't collide.
+                # Rows are already bounded to K0_SOURCE_COLUMN_COUNT by parse_excel_file.
                 row_dict: dict[str, Any] = {}
-                for header, val in zip(headers, row_vals):
-                    db_key = column_mapping.get(header)
-                    if db_key:
-                        row_dict[db_key] = val
+                if is_k0:
+                    for col_idx, val in enumerate(row_vals):
+                        db_key = k0_execute_index_map.get(col_idx)
+                        if db_key:
+                            row_dict[db_key] = val
+                else:
+                    for header, val in zip(headers, row_vals):
+                        db_key = column_mapping.get(header)
+                        if db_key:
+                            row_dict[db_key] = val
 
                 # 0. Skip non-record rows (no value in any unique-key column).
                 if not self._row_has_record_key(row_dict, schema):
@@ -896,8 +1417,10 @@ class ImportEngineService:
                             entity_type=entity_type,
                             record=coerced_row,
                             mode=mode,
+                            schema=schema,
                         )
 
+                    code_val = self._extract_project_code(coerced_row, schema) if is_project_entity else (u_val_str or str(row_idx))
                     if success:
                         if is_update:
                             updated_count += 1
@@ -905,21 +1428,35 @@ class ImportEngineService:
                             imported_count += 1
                             if clean_u_val:
                                 inserted_in_batch.add(clean_u_val)
+                        logger.info(
+                            "[IMPORT DEBUG]\nrow=%d\nproject_code=%s\ndecision=%s\nreason=%s\nexisting_project_id=%s\nexisting_project_code=%s\ndeleted/active=%s\nvalidation_errors=[]\nmapped_data=%r",
+                            row_idx,
+                            code_val,
+                            "UPDATED" if is_update else "IMPORTED",
+                            "Record updated/restored in database" if is_update else "New record created in database",
+                            "RESOLVED" if is_update else "None",
+                            code_val if is_update else "None",
+                            "RESOLVED" if is_update else "NONE",
+                            coerced_row,
+                        )
                     else:
                         skipped_count += 1
-                        if is_project_entity:
-                            skipped_details.append({
-                                "row_index": row_idx,
-                                "reason": "Missing unique identifier",
-                                "message": f"Row {row_idx} is missing a valid project identifier.",
-                            })
-                        else:
+                        reason_msg = "Missing unique identifier" if is_project_entity else "Already exists in database"
+                        detail_msg = f"Row {row_idx} is missing a valid project identifier." if is_project_entity else f"Record '{u_val_str or row_idx}' already exists in database."
+                        skipped_details.append({
+                            "row_index": row_idx,
+                            "reason": reason_msg,
+                            "message": detail_msg,
+                        })
+                        if not is_project_entity:
                             duplicate_in_db_count += 1
-                            skipped_details.append({
-                                "row_index": row_idx,
-                                "reason": "Already exists in database",
-                                "message": f"Record '{u_val_str or row_idx}' already exists in database.",
-                            })
+                        logger.warning(
+                            "[IMPORT DEBUG]\nrow=%d\nproject_code=%s\ndecision=SKIPPED\nreason=%s\nexisting_project_id=None\nexisting_project_code=None\ndeleted/active=NONE\nvalidation_errors=[]\nmapped_data=%r",
+                            row_idx,
+                            code_val or "None",
+                            reason_msg,
+                            coerced_row,
+                        )
 
                 except Exception as e:
                     # SAVEPOINT automatically rolled back only this row's savepoint
@@ -990,6 +1527,18 @@ class ImportEngineService:
             )
 
         logger.info("[IMPORT DEBUG] Execution time: %d ms", duration_ms)
+        if is_k0:
+            logger.info(
+                "[K0 IMPORT] imported=%d updated=%d skipped=%d failed=%d",
+                imported_count, updated_count, skipped_count, failed_count,
+            )
+            for skip in skipped_details:
+                logger.info(
+                    "[K0 IMPORT] row=%d skipped reason='%s' detail='%s'",
+                    skip.get("row_index", 0),
+                    skip.get("reason", ""),
+                    skip.get("message", ""),
+                )
 
         return {
             "id": str(history_entry.id),
@@ -1122,7 +1671,10 @@ class ImportEngineService:
                 if p.code:
                     records[p.code.strip().lower()] = info
                 if p.data and isinstance(p.data, dict):
-                    for k in ("unique_id", "code", "part_number"):
+                    for k in (
+                        "unique_id", "code", "project_code", "part_number", "part_no",
+                        "project_id", "ref", "project_ref", "pn"
+                    ):
                         v = p.data.get(k)
                         if v:
                             records[str(v).strip().lower()] = info
@@ -1141,6 +1693,7 @@ class ImportEngineService:
         entity_type: str,
         record: dict[str, Any],
         mode: str,
+        schema: EntityImportSchema | None = None,
     ) -> tuple[bool, bool]:
         """
         Inserts, updates, or restores a record depending on mode and existing presence.
@@ -1209,21 +1762,18 @@ class ImportEngineService:
 
         else:
             # Default to Project / Project Template (CREATE + UPDATE + RESTORE)
-            code = (
-                record.get("code")
-                or record.get("unique_id")
-                or record.get("part_number")
-            )
+            code = self._extract_project_code(record, schema)
             if not code or str(code).strip() == "":
                 # Missing unique project identifier -> fail this record with explicit reason
+                logger.warning(
+                    "[IMPORT DEBUG] Project code resolution failed for record: %r",
+                    record
+                )
                 return False, False
 
-            name = (
-                record.get("name")
-                or record.get("part_name")
-                or record.get("project_name")
-                or f"Project {code}"
-            )
+            name = self._extract_project_name(record, code)
+            description = self._extract_project_description(record)
+            client_name = self._extract_client_name(record)
 
             tmpl = await uow.templates.get_by_code(entity_type.upper())
             if tmpl is None:
@@ -1232,12 +1782,29 @@ class ImportEngineService:
                 except (ValueError, AttributeError):
                     pass
 
+            tmpl_code = tmpl.code if tmpl else entity_type.upper()
+            inner_data = self._make_json_safe(record)
+            if not isinstance(inner_data, dict):
+                inner_data = {}
+            inner_data["template_code"] = tmpl_code
+
+            from app.application.services.project_service import (
+                calculate_workflow_step,
+                K0_BUYER_FIELDS,
+                K0_CAPACITY_FIELDS,
+                K0_SQD_FIELDS,
+                _has_any_field,
+            )
+            workflow_step = calculate_workflow_step(inner_data, tmpl_code)
+            inner_data["workflow_step"] = workflow_step
+
             project_payload: dict[str, Any] = {
                 "code": str(code).strip(),
                 "name": str(name).strip(),
-                "description": record.get("description") or record.get("part_info"),
+                "description": description,
+                "client_name": client_name,
                 "notes": record.get("notes"),
-                "data": self._make_json_safe(record),
+                "data": inner_data,
             }
             if tmpl:
                 project_payload["template_id"] = tmpl.id
@@ -1253,28 +1820,81 @@ class ImportEngineService:
             res = await uow.session.execute(stmt)
             existing_obj = res.scalars().first()
 
+            has_buyer = _has_any_field(inner_data, K0_BUYER_FIELDS)
+            has_capacity = _has_any_field(inner_data, K0_CAPACITY_FIELDS)
+            has_sqd = _has_any_field(inner_data, K0_SQD_FIELDS)
+
             if existing_obj:
                 # Existing or soft-deleted project found: UPDATE + RESTORE
+                is_soft_del = existing_obj.deleted_at is not None
+                decision = "RESTORED" if is_soft_del else "UPDATED"
+                reason = "Soft-deleted project restored and updated with Excel values" if is_soft_del else "Active project updated with Excel values"
+
                 from sqlalchemy.orm.attributes import flag_modified
                 from datetime import datetime, timezone
 
                 for field, value in project_payload.items():
-                    if hasattr(existing_obj, field):
+                    if hasattr(existing_obj, field) and value is not None:
                         setattr(existing_obj, field, value)
+
+                if hasattr(existing_obj, "data") and "data" in project_payload:
+                    merged_data = dict(existing_obj.data or {})
+                    merged_data.update(project_payload["data"] or {})
+                    merged_data["template_code"] = tmpl_code
+                    merged_data["workflow_step"] = calculate_workflow_step(merged_data, tmpl_code)
+                    existing_obj.data = merged_data
+                    flag_modified(existing_obj, "data")
 
                 # Explicitly restore soft-deleted record and update timestamp
                 existing_obj.deleted_at = None
                 existing_obj.updated_at = datetime.now(timezone.utc)
 
-                if hasattr(existing_obj, "data") and "data" in project_payload:
-                    flag_modified(existing_obj, "data")
-
                 uow.session.add(existing_obj)
                 await uow.session.flush()
+
+                logger.info(
+                    "[IMPORT DEBUG] Project execution decision:\nproject_code=%s\ndecision=%s\nreason=%s\nexisting_project_id=%s\nexisting_project_code=%s\ndeleted/active=%s\nmapped_data=%r",
+                    code_str,
+                    decision,
+                    reason,
+                    str(existing_obj.id),
+                    existing_obj.code,
+                    "DELETED" if is_soft_del else "ACTIVE",
+                    record,
+                )
+                logger.info(
+                    "[K0 IMPORT WORKFLOW]\nproject_code=%s\nproject_id=%s\nstructure_id=%s\nstructure_code=%s\n\nbuyer_module=Buyer\nbuyer_data_created=%s\n\ncapacity_module=Capacity Manager\ncapacity_data_created=%s\n\nsqd_module=SQD\nsqd_data_created=%s\n\ncurrent_step=%s\nworkflow_state=%s",
+                    code_str,
+                    str(existing_obj.id),
+                    str(tmpl.id) if tmpl else "None",
+                    tmpl_code,
+                    "true" if has_buyer else "false",
+                    "true" if has_capacity else "false",
+                    "true" if has_sqd else "false",
+                    workflow_step,
+                    f"Step {workflow_step}",
+                )
                 return True, True  # success=True, is_update=True
             else:
                 # New project: CREATE
-                await uow.projects.create(project_payload)
+                new_proj = await uow.projects.create(project_payload)
+                logger.info(
+                    "[IMPORT DEBUG] Project execution decision:\nproject_code=%s\ndecision=CREATED\nreason=New project created\nexisting_project_id=None\nexisting_project_code=None\ndeleted/active=NONE\nmapped_data=%r",
+                    code_str,
+                    record,
+                )
+                logger.info(
+                    "[K0 IMPORT WORKFLOW]\nproject_code=%s\nproject_id=%s\nstructure_id=%s\nstructure_code=%s\n\nbuyer_module=Buyer\nbuyer_data_created=%s\n\ncapacity_module=Capacity Manager\ncapacity_data_created=%s\n\nsqd_module=SQD\nsqd_data_created=%s\n\ncurrent_step=%s\nworkflow_state=%s",
+                    code_str,
+                    str(new_proj.id),
+                    str(tmpl.id) if tmpl else "None",
+                    tmpl_code,
+                    "true" if has_buyer else "false",
+                    "true" if has_capacity else "false",
+                    "true" if has_sqd else "false",
+                    workflow_step,
+                    f"Step {workflow_step}",
+                )
                 return True, False  # success=True, is_update=False
 
     def _validate_and_coerce_type(

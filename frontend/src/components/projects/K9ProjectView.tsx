@@ -49,9 +49,8 @@ export const K9ProjectView: React.FC<K9ProjectViewProps> = ({
     const base = project.data || {};
     if (isK0) {
       return {
-        cat_rating: 'GREEN',
-        part_name: base.part_name ?? project.name,
         part_number: base.part_number ?? project.code,
+        description: base.description ?? project.name,
         ...base,
       };
     }
@@ -101,24 +100,22 @@ export const K9ProjectView: React.FC<K9ProjectViewProps> = ({
 
     if (isK0) {
       const hasSqd = [
-        'sqvl', 'sqme_manufacturing', 'apqp_grid', 'run_assessment',
-        'cat_forecast_date', 'cat_forecast_calendar_week', 'cat_real_date',
-        'cat_real_calendar_week', 'last_cat', 'requested_supplier_weekly_capacity',
-        'cat_run_observation', 'number_production_days', 'number_production_shifts',
-        'cat_rating', 'cat_link', 'cat_comment'
+        'quality', 'supply_chain', 'global_purchasing', 'cpl', 'rcpi',
+        'minimum_quality_status_acted', 'mass_inquired',
+        'packaging_readiness_unlweb_validated', 'tango_contract_validated',
+        'supplier_capability_confirmed', 'it_cpl_corail_setting',
+        'fcla_validates', 'ple_created', 'edi_opened',
+        'um_logistic_flow_validated', 'manufacturing_process_validated'
       ].some(f => isValSet(data[f]));
 
       const hasCap = [
-        'quantity_parts_per_vehicle', 'weekly_capacity_requested_gst',
-        'capacity_step_requested_gst', 'calculation_date_gst', 'weekly_capacity_requested_tko',
-        'capacity_step_requested_tko', 'scr_date_tko', 'scr_tko_link',
-        'weekly_capacity_latest_ltos', 'capacity_step_latest_ltos', 'date_latest_ltos',
-        'calculation_link', 'contracted_capacity', 'contracted_capacity_step',
-        'capacity_sizing_ok', 'new_scr_calculation_done', 'contracted_capacity_ok',
-        'capacity_comments', 'capacity_workshop_date', 'capacity_workshop_comment'
+        'week_project_target_1', 'forecast_week_1', 'completed_week_1',
+        'week_project_target_2', 'forecast_week_2', 'completed_week_2',
+        'week_project_target_3', 'forecast_week_3', 'completed_week_3'
       ].some(f => isValSet(data[f]));
 
-      if (hasSqd && isGreenEval(data.cat_rating)) return 4;
+      const isGreen = isGreenEval(data.quality) && isGreenEval(data.minimum_quality_status_acted);
+      if (hasSqd && isGreen && [data.quality, data.minimum_quality_status_acted, data.manufacturing_process_validated].some(isValSet)) return 4;
       if (hasSqd) return 3;
       if (hasCap) return 2;
       return 1;

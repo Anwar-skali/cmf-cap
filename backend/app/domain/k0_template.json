@@ -3,83 +3,23 @@
   "name": "CMF K0 Project Template",
   "version": "1.0",
   "status": "PUBLISHED",
-  "description": "CMF K0 automotive project template structured into three role-based business modules: Buyer, Capacity Manager, and SQD.",
+  "description": "CMF K0 Make Battery automotive project template with 42 tracking fields across Buyer, Capacity Manager, and SQD business modules.",
   "sections": [
     {
       "id": "sec_buyer",
       "name": "Buyer",
       "order": 1,
-      "description": "Purchasing and project baseline information created by the Buyer role.",
+      "description": "Purchasing and component baseline information created by the Buyer role.",
       "permissions": {
         "rolesAllowedToEdit": ["buyer", "admin"],
         "rolesAllowedToView": ["buyer", "capacity_manager", "sqd", "admin", "viewer"]
       },
       "groups": [
         {
-          "id": "grp_general_info",
-          "name": "General Information",
+          "id": "grp_part_identification",
+          "name": "Part Identification & Commercial Data",
           "order": 1,
-          "description": "General identification and package numbers",
-          "fields": [
-            {
-              "id": "fld_line_item",
-              "internalName": "line_item",
-              "label": "Line Item",
-              "type": "text",
-              "required": false,
-              "placeholder": "e.g. Line-01",
-              "helpText": "Line item identifier",
-              "order": 1,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
-            },
-            {
-              "id": "fld_components_package_rfq",
-              "internalName": "components_package_rfq",
-              "label": "Components Package for RFQ",
-              "type": "text",
-              "required": false,
-              "placeholder": "e.g. PKG-RFQ-2026-09",
-              "helpText": "RFQ components package reference",
-              "order": 2,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
-            },
-            {
-              "id": "fld_tazebao_id_dev_system_no",
-              "internalName": "tazebao_id_dev_system_no",
-              "label": "Tazebao ID Development System No.",
-              "type": "text",
-              "required": false,
-              "placeholder": "e.g. TZB-994821",
-              "helpText": "Tazebao development system ID",
-              "order": 3,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
-            },
-            {
-              "id": "fld_gst_source_package_number",
-              "internalName": "gst_source_package_number",
-              "label": "GST Source Package Number",
-              "type": "text",
-              "required": false,
-              "placeholder": "e.g. GST-SRC-0024",
-              "helpText": "GST source package reference number",
-              "order": 4,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
-            }
-          ]
-        },
-        {
-          "id": "grp_part_info",
-          "name": "Part Information",
-          "order": 2,
-          "description": "Component part identity and comments",
+          "description": "Component part number, indexing, description, pricing and purchasing volume",
           "fields": [
             {
               "id": "fld_part_number",
@@ -87,379 +27,244 @@
               "label": "Part Number",
               "type": "text",
               "required": true,
-              "placeholder": "e.g. PN-K0-100245",
+              "placeholder": "e.g. 9876895380",
               "helpText": "Official component part number",
               "order": 1,
               "visible": true,
               "editable": true,
+              "aliases": ["Part Number", "part_number", "Référence", "Reference", "pn", "part no", "Part No"],
               "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
             },
             {
-              "id": "fld_part_name",
-              "internalName": "part_name",
-              "label": "Part Name",
+              "id": "fld_index",
+              "internalName": "index",
+              "label": "Index",
               "type": "text",
-              "required": true,
-              "placeholder": "e.g. Rear Bumper Reinforcement",
-              "helpText": "Official part name",
+              "required": false,
+              "placeholder": "e.g. 00",
+              "helpText": "Part engineering index",
               "order": 2,
               "visible": true,
               "editable": true,
+              "aliases": ["Index", "index", "Indice", "indice"],
               "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
             },
             {
-              "id": "fld_buyer_comments",
+              "id": "fld_description",
+              "internalName": "description",
+              "label": "Description",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. BOITIER GESTION MODULE SURVEILLANCE BATTERIE",
+              "helpText": "Part description / designation",
+              "order": 3,
+              "visible": true,
+              "editable": true,
+              "aliases": ["Description", "description", "Désignation", "Designation", "part name", "part_name"],
+              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
+            },
+            {
+              "id": "fld_coef",
+              "internalName": "coef",
+              "label": "Coef.",
+              "type": "decimal",
+              "required": false,
+              "placeholder": "e.g. 1.0",
+              "helpText": "Quantity coefficient per battery unit",
+              "order": 4,
+              "visible": true,
+              "editable": true,
+              "aliases": ["Coef.", "coef", "Coef", "coefficient", "Coefficient"],
+              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
+            },
+            {
+              "id": "fld_serial_piece_price",
+              "internalName": "serial_piece_price",
+              "label": "Serial Piece Price",
+              "type": "decimal",
+              "required": false,
+              "placeholder": "e.g. 51.46",
+              "helpText": "Serial piece unit price in EUR",
+              "order": 5,
+              "visible": true,
+              "editable": true,
+              "aliases": ["Serial Piece Price", "Serial Piece Price ", "serial_piece_price", "Prix Pièce Série", "Prix Piece Serie"],
+              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
+            },
+            {
+              "id": "fld_mass_purchase",
+              "internalName": "mass_purchase",
+              "label": "Mass Purchase",
+              "type": "decimal",
+              "required": false,
+              "placeholder": "e.g. 51.46",
+              "helpText": "Mass purchase (Coef x Serial Piece Price)",
+              "order": 6,
+              "visible": true,
+              "editable": true,
+              "aliases": ["Mass Purchase", "mass_purchase", "Mass Purchase\n(Coef. x Price per part)", "Masse Achat", "Masse Achat\n(Coef. x Prix pièce)"],
+              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
+            },
+            {
+              "id": "fld_ru",
+              "internalName": "ru",
+              "label": "RU",
+              "type": "decimal",
+              "required": false,
+              "placeholder": "e.g. 1.0",
+              "helpText": "RU coefficient / status",
+              "order": 7,
+              "visible": true,
+              "editable": true,
+              "aliases": ["RU", "ru"],
+              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
+            },
+            {
+              "id": "fld_noa",
+              "internalName": "noa",
+              "label": "NOA",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. TAOUFIK ROUNDI",
+              "helpText": "NOA Buyer identifier / responsible",
+              "order": 8,
+              "visible": true,
+              "editable": true,
+              "aliases": ["NOA", "noa", "buyer", "Buyer"],
+              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
+            },
+            {
+              "id": "fld_make_battery_lp_1",
+              "internalName": "make_battery_lp_1",
+              "label": "Make Battery (LP) 1",
+              "type": "decimal",
+              "required": false,
+              "placeholder": "e.g. 1",
+              "helpText": "Make Battery LP phase 1 allocation",
+              "order": 9,
+              "visible": true,
+              "editable": true,
+              "aliases": ["Make Battery (LP)", "make_battery_lp_1", "make_battery_lp", "Make Battery (LP) 1"],
+              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
+            },
+            {
+              "id": "fld_make_battery_lp_2",
+              "internalName": "make_battery_lp_2",
+              "label": "Make Battery (LP) 2",
+              "type": "decimal",
+              "required": false,
+              "placeholder": "e.g. 0",
+              "helpText": "Make Battery LP phase 2 allocation",
+              "order": 10,
+              "visible": true,
+              "editable": true,
+              "aliases": ["Make Battery (LP) 2", "make_battery_lp_2"],
+              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
+            }
+          ]
+        },
+        {
+          "id": "grp_supplier_info",
+          "name": "Supplier & Logistics COFOR Information",
+          "order": 2,
+          "description": "Supplier name, COFOR codes, and contract references",
+          "fields": [
+            {
+              "id": "fld_supplier_name",
+              "internalName": "supplier_name",
+              "label": "Supplier Name",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. STELLANTIS RETAIL",
+              "helpText": "Name of manufacturing supplier",
+              "order": 1,
+              "visible": true,
+              "editable": true,
+              "aliases": ["Supplier Name", "Supplier name", "supplier_name", "supplier", "Fournisseur"],
+              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
+            },
+            {
+              "id": "fld_vendor_cofor",
+              "internalName": "vendor_cofor",
+              "label": "Vendor COFOR",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. V-00129",
+              "helpText": "Vendor COFOR code",
+              "order": 2,
+              "visible": true,
+              "editable": true,
+              "aliases": ["Vendor COFOR", "Vendor Cofor", "vendor_cofor", "COFOR Vendeur"],
+              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
+            },
+            {
+              "id": "fld_manufacturer_cofor",
+              "internalName": "manufacturer_cofor",
+              "label": "Manufacturer COFOR",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. M-88210",
+              "helpText": "Manufacturer COFOR code",
+              "order": 3,
+              "visible": true,
+              "editable": true,
+              "aliases": ["Manufacturer COFOR", "Manufacturer Cofor", "manufacturer_cofor", "COFOR Fabricant"],
+              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
+            },
+            {
+              "id": "fld_combined_cofor",
+              "internalName": "combined_cofor",
+              "label": "Combined COFOR",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. C-99120",
+              "helpText": "Combined COFOR code",
+              "order": 4,
+              "visible": true,
+              "editable": true,
+              "aliases": ["Combined COFOR", "Combined Cofor", "combined_cofor"],
+              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
+            },
+            {
+              "id": "fld_tango_order",
+              "internalName": "tango_order",
+              "label": "Tango Order",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. TNG-88120",
+              "helpText": "Tango purchase order reference",
+              "order": 5,
+              "visible": true,
+              "editable": true,
+              "aliases": ["Tango Order", "Tango order", "tango_order", "Commande Tango"],
+              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
+            },
+            {
+              "id": "fld_ei_status",
+              "internalName": "ei_status",
+              "label": "EI Status",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. OK",
+              "helpText": "EI status / validation",
+              "order": 6,
+              "visible": true,
+              "editable": true,
+              "aliases": ["EI Status", "EI status", "ei_status", "Statut EI"],
+              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
+            },
+            {
+              "id": "fld_comments",
               "internalName": "comments",
               "label": "Comments",
               "type": "textarea",
               "required": false,
-              "placeholder": "General comments and notes...",
-              "helpText": "Part comments and notes",
-              "order": 3,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
-            }
-          ]
-        },
-        {
-          "id": "grp_sourcing",
-          "name": "Sourcing",
-          "order": 3,
-          "description": "Sourcing strategy and carry-over details",
-          "fields": [
-            {
-              "id": "fld_make_or_buy",
-              "internalName": "make_or_buy",
-              "label": "Make or Buy",
-              "type": "dropdown",
-              "required": false,
-              "options": [
-                { "value": "MAKE", "label": "Make", "order": 1 },
-                { "value": "BUY", "label": "Buy", "order": 2 }
-              ],
-              "helpText": "Make or buy sourcing decision",
-              "order": 1,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
-            },
-            {
-              "id": "fld_other_platform_impacted",
-              "internalName": "other_platform_impacted",
-              "label": "Other Platform Impacted",
-              "type": "text",
-              "required": false,
-              "placeholder": "e.g. CMP / EMP2",
-              "helpText": "Cross-platform impact",
-              "order": 2,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
-            },
-            {
-              "id": "fld_development_type",
-              "internalName": "development_type",
-              "label": "Development Type",
-              "type": "text",
-              "required": false,
-              "placeholder": "e.g. New Dev / Carry-Over",
-              "helpText": "Type of component development",
-              "order": 3,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
-            },
-            {
-              "id": "fld_status_resourcing",
-              "internalName": "status_resourcing",
-              "label": "Status if Resourcing",
-              "type": "text",
-              "required": false,
-              "placeholder": "e.g. In Progress",
-              "helpText": "Resourcing status if applicable",
-              "order": 4,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
-            },
-            {
-              "id": "fld_original_vehicle_co_parts",
-              "internalName": "original_vehicle_co_parts",
-              "label": "Original Vehicle if C/O Parts",
-              "type": "text",
-              "required": false,
-              "placeholder": "e.g. Peugeot 3008",
-              "helpText": "Original vehicle line if carry-over part",
-              "order": 5,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
-            },
-            {
-              "id": "fld_supplier_name_co_parts",
-              "internalName": "supplier_name_co_parts",
-              "label": "Supplier(s) Name if C/O Parts",
-              "type": "text",
-              "required": false,
-              "placeholder": "e.g. Plastic Omnium",
-              "helpText": "Existing supplier if carry-over part",
-              "order": 6,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
-            },
-            {
-              "id": "fld_new_supplier_yn",
-              "internalName": "new_supplier_yn",
-              "label": "New Supplier (Y/N)",
-              "type": "dropdown",
-              "required": false,
-              "options": [
-                { "value": "Y", "label": "Yes", "order": 1 },
-                { "value": "N", "label": "No", "order": 2 }
-              ],
-              "helpText": "Indicates if supplier is new",
+              "placeholder": "Enter notes or comments",
+              "helpText": "General remarks and comments",
               "order": 7,
               "visible": true,
               "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
-            },
-            {
-              "id": "fld_nominated_supplier",
-              "internalName": "nominated_supplier",
-              "label": "Nominated Supplier",
-              "type": "supplier",
-              "required": false,
-              "helpText": "Selected nominated supplier",
-              "order": 8,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
-            }
-          ]
-        },
-        {
-          "id": "grp_buyer_supplier_k0",
-          "name": "Supplier",
-          "order": 4,
-          "description": "Manufacturing cofor and plant location",
-          "fields": [
-            {
-              "id": "fld_manufacturing_cofor",
-              "internalName": "manufacturing_cofor",
-              "label": "Manufacturing Cofor",
-              "type": "text",
-              "required": false,
-              "placeholder": "e.g. COFOR-88210",
-              "helpText": "Manufacturing COFOR code",
-              "order": 1,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
-            },
-            {
-              "id": "fld_supplier_location",
-              "internalName": "supplier_location",
-              "label": "Supplier Location",
-              "type": "text",
-              "required": false,
-              "placeholder": "e.g. Hordain, France",
-              "helpText": "Supplier manufacturing location",
-              "order": 2,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
-            }
-          ]
-        },
-        {
-          "id": "grp_quality",
-          "name": "Quality",
-          "order": 5,
-          "description": "Target quality PPM",
-          "fields": [
-            {
-              "id": "fld_ppm",
-              "internalName": "ppm",
-              "label": "PPM",
-              "type": "integer",
-              "required": false,
-              "placeholder": "e.g. 50",
-              "helpText": "Parts Per Million defect target",
-              "order": 1,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
-            }
-          ]
-        },
-        {
-          "id": "grp_purchasing_team",
-          "name": "Purchasing Team",
-          "order": 6,
-          "description": "Purchasing contacts and governance team",
-          "fields": [
-            {
-              "id": "fld_commodity_buyer",
-              "internalName": "commodity_buyer",
-              "label": "Commodity Buyer (Sourcing → Nomination)",
-              "type": "user",
-              "required": false,
-              "helpText": "Commodity buyer responsible up to nomination",
-              "order": 1,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
-            },
-            {
-              "id": "fld_program_buyer",
-              "internalName": "program_buyer",
-              "label": "Program Buyer (Nomination → SOP)",
-              "type": "user",
-              "required": false,
-              "helpText": "Program buyer responsible from nomination to SOP",
-              "order": 2,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
-            },
-            {
-              "id": "fld_gm_commodity",
-              "internalName": "gm_commodity",
-              "label": "GM Commodity",
-              "type": "user",
-              "required": false,
-              "helpText": "General Manager Commodity lead",
-              "order": 3,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
-            },
-            {
-              "id": "fld_pur_manager",
-              "internalName": "pur_manager",
-              "label": "PUR Manager",
-              "type": "user",
-              "required": false,
-              "helpText": "Purchasing Manager",
-              "order": 4,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
-            },
-            {
-              "id": "fld_ga",
-              "internalName": "ga",
-              "label": "GA",
-              "type": "text",
-              "required": false,
-              "placeholder": "e.g. GA-01",
-              "helpText": "Group Purchasing Manager (GA)",
-              "order": 5,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
-            },
-            {
-              "id": "fld_pur_area",
-              "internalName": "pur_area",
-              "label": "PUR Area",
-              "type": "text",
-              "required": false,
-              "placeholder": "e.g. Europe North",
-              "helpText": "Purchasing geographical area",
-              "order": 6,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
-            }
-          ]
-        },
-        {
-          "id": "grp_engineering",
-          "name": "Engineering",
-          "order": 7,
-          "description": "Lead engineering contact",
-          "fields": [
-            {
-              "id": "fld_lead_engineer_hordain",
-              "internalName": "lead_engineer_hordain",
-              "label": "Lead Engineer Hordain",
-              "type": "user",
-              "required": false,
-              "helpText": "Lead plant engineer at Hordain",
-              "order": 1,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
-            }
-          ]
-        },
-        {
-          "id": "grp_vehicle_platforms",
-          "name": "Vehicle Platforms",
-          "order": 8,
-          "description": "Vehicle line configurations and battery packs",
-          "fields": [
-            {
-              "id": "fld_e_port",
-              "internalName": "e_port",
-              "label": "E-Port",
-              "type": "boolean",
-              "required": false,
-              "helpText": "E-Port platform applicability",
-              "order": 1,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
-            },
-            {
-              "id": "fld_tofas",
-              "internalName": "tofas",
-              "label": "Tofas",
-              "type": "boolean",
-              "required": false,
-              "helpText": "Tofas platform applicability",
-              "order": 2,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
-            },
-            {
-              "id": "fld_eko",
-              "internalName": "eko",
-              "label": "eK0",
-              "type": "boolean",
-              "required": false,
-              "helpText": "eK0 electric platform applicability",
-              "order": 3,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
-            },
-            {
-              "id": "fld_lfp_66_kwh",
-              "internalName": "lfp_66_kwh",
-              "label": "LFP (66 KWh)",
-              "type": "boolean",
-              "required": false,
-              "helpText": "LFP 66 KWh battery pack variant",
-              "order": 4,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
-            },
-            {
-              "id": "fld_nmc_82_kwh",
-              "internalName": "nmc_82_kwh",
-              "label": "NMC (82 KWh)",
-              "type": "boolean",
-              "required": false,
-              "helpText": "NMC 82 KWh battery pack variant",
-              "order": 5,
-              "visible": true,
-              "editable": true,
+              "aliases": ["Comments", "comments", "Commentaires", "Notes"],
               "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
             }
           ]
@@ -470,309 +275,142 @@
       "id": "sec_capacity_manager",
       "name": "Capacity Manager",
       "order": 2,
-      "description": "Production capacity planning completed by Capacity Manager.",
+      "description": "Weekly tracking targets, forecasts, and completion milestones created by Capacity Manager.",
       "permissions": {
         "rolesAllowedToEdit": ["capacity_manager", "admin"],
         "rolesAllowedToView": ["buyer", "capacity_manager", "sqd", "admin", "viewer"]
       },
       "groups": [
         {
-          "id": "grp_production",
-          "name": "Production",
+          "id": "grp_weekly_tracking",
+          "name": "Weekly Tracking Milestones",
           "order": 1,
-          "description": "Vehicle part usage rates",
+          "description": "Target, forecast, and completed weeks across phases 1, 2, and 3",
           "fields": [
             {
-              "id": "fld_quantity_parts_per_vehicle",
-              "internalName": "quantity_parts_per_vehicle",
-              "label": "Quantity of Parts per Vehicle",
-              "type": "integer",
+              "id": "fld_week_project_target_1",
+              "internalName": "week_project_target_1",
+              "label": "Week Project Target 1",
+              "type": "text",
               "required": false,
-              "placeholder": "e.g. 2",
-              "helpText": "Number of parts fitted per vehicle",
+              "placeholder": "e.g. W12",
+              "helpText": "Target calendar week for milestone 1",
               "order": 1,
               "visible": true,
               "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
-            }
-          ]
-        },
-        {
-          "id": "grp_gst_planning",
-          "name": "GST Planning",
-          "order": 2,
-          "description": "GST requested capacity metrics",
-          "fields": [
-            {
-              "id": "fld_weekly_capacity_requested_gst",
-              "internalName": "weekly_capacity_requested_gst",
-              "label": "Weekly Capacity Requested GST",
-              "type": "integer",
-              "required": false,
-              "placeholder": "e.g. 4000",
-              "helpText": "Weekly capacity requested for GST",
-              "order": 1,
-              "visible": true,
-              "editable": true,
+              "aliases": ["Week Project Target 1", "week_project_target_1", "Week\nProject Target"],
               "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
             },
             {
-              "id": "fld_capacity_step_requested_gst",
-              "internalName": "capacity_step_requested_gst",
-              "label": "Capacity Step Requested GST",
+              "id": "fld_forecast_week_1",
+              "internalName": "forecast_week_1",
+              "label": "Forecast Week 1",
               "type": "text",
               "required": false,
-              "placeholder": "e.g. Step-1",
-              "helpText": "Capacity step requested for GST",
+              "placeholder": "e.g. W13",
+              "helpText": "Forecasted calendar week for milestone 1",
               "order": 2,
               "visible": true,
               "editable": true,
+              "aliases": ["Forecast Week 1", "forecast_week_1", "Forecast\nWeek"],
               "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
             },
             {
-              "id": "fld_calculation_date_gst",
-              "internalName": "calculation_date_gst",
-              "label": "Calculation Date GST",
-              "type": "date",
+              "id": "fld_completed_week_1",
+              "internalName": "completed_week_1",
+              "label": "Completed Week 1",
+              "type": "text",
               "required": false,
-              "helpText": "GST capacity calculation date",
+              "placeholder": "e.g. W14",
+              "helpText": "Actual completed calendar week for milestone 1",
               "order": 3,
               "visible": true,
               "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
-            }
-          ]
-        },
-        {
-          "id": "grp_tko_planning",
-          "name": "TKO Planning",
-          "order": 3,
-          "description": "TKO requested capacity and SCR links",
-          "fields": [
-            {
-              "id": "fld_weekly_capacity_requested_tko",
-              "internalName": "weekly_capacity_requested_tko",
-              "label": "Weekly Capacity Requested TKO",
-              "type": "integer",
-              "required": false,
-              "placeholder": "e.g. 4200",
-              "helpText": "Weekly capacity requested for TKO",
-              "order": 1,
-              "visible": true,
-              "editable": true,
+              "aliases": ["Completed Week 1", "completed_week_1", "Completed\nWeek"],
               "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
             },
             {
-              "id": "fld_capacity_step_requested_tko",
-              "internalName": "capacity_step_requested_tko",
-              "label": "Capacity Step Requested TKO",
+              "id": "fld_week_project_target_2",
+              "internalName": "week_project_target_2",
+              "label": "Week Project Target 2",
               "type": "text",
               "required": false,
-              "placeholder": "e.g. Step-2",
-              "helpText": "Capacity step for TKO",
-              "order": 2,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
-            },
-            {
-              "id": "fld_scr_date_tko",
-              "internalName": "scr_date_tko",
-              "label": "SCR Date TKO",
-              "type": "date",
-              "required": false,
-              "helpText": "TKO SCR date",
-              "order": 3,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
-            },
-            {
-              "id": "fld_scr_tko_link",
-              "internalName": "scr_tko_link",
-              "label": "SCR / TKO Link",
-              "type": "text",
-              "required": false,
-              "placeholder": "https://sharepoint.com/tko-scr-link",
-              "helpText": "Link to SCR or TKO document",
+              "placeholder": "e.g. W18",
+              "helpText": "Target calendar week for milestone 2",
               "order": 4,
               "visible": true,
               "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
-            }
-          ]
-        },
-        {
-          "id": "grp_ltos",
-          "name": "LTOS",
-          "order": 4,
-          "description": "Long Term Operating System capacity calculations",
-          "fields": [
-            {
-              "id": "fld_weekly_capacity_latest_ltos",
-              "internalName": "weekly_capacity_latest_ltos",
-              "label": "Weekly Capacity Latest LTOS Calculation",
-              "type": "integer",
-              "required": false,
-              "placeholder": "e.g. 4500",
-              "helpText": "Latest LTOS weekly capacity",
-              "order": 1,
-              "visible": true,
-              "editable": true,
+              "aliases": ["Week Project Target 2", "week_project_target_2"],
               "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
             },
             {
-              "id": "fld_capacity_step_latest_ltos",
-              "internalName": "capacity_step_latest_ltos",
-              "label": "Capacity Step Latest LTOS",
+              "id": "fld_forecast_week_2",
+              "internalName": "forecast_week_2",
+              "label": "Forecast Week 2",
               "type": "text",
               "required": false,
-              "placeholder": "e.g. LTOS-Step-3",
-              "helpText": "Latest LTOS capacity step",
-              "order": 2,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
-            },
-            {
-              "id": "fld_date_latest_ltos",
-              "internalName": "date_latest_ltos",
-              "label": "Date Latest LTOS Calculation",
-              "type": "date",
-              "required": false,
-              "helpText": "Date of latest LTOS calculation",
-              "order": 3,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
-            },
-            {
-              "id": "fld_calculation_link",
-              "internalName": "calculation_link",
-              "label": "Calculation Link",
-              "type": "text",
-              "required": false,
-              "placeholder": "https://sharepoint.com/ltos-calc",
-              "helpText": "Link to LTOS calculation sheet",
-              "order": 4,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
-            }
-          ]
-        },
-        {
-          "id": "grp_contract",
-          "name": "Contract",
-          "order": 5,
-          "description": "Contractual capacity commitments and validation flags",
-          "fields": [
-            {
-              "id": "fld_contracted_capacity",
-              "internalName": "contracted_capacity",
-              "label": "Contracted Capacity",
-              "type": "integer",
-              "required": false,
-              "placeholder": "e.g. 4500",
-              "helpText": "Contractually agreed capacity",
-              "order": 1,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
-            },
-            {
-              "id": "fld_contracted_capacity_step",
-              "internalName": "contracted_capacity_step",
-              "label": "Contracted Capacity Step",
-              "type": "text",
-              "required": false,
-              "placeholder": "e.g. Step-A",
-              "helpText": "Contracted capacity step identifier",
-              "order": 2,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
-            },
-            {
-              "id": "fld_capacity_sizing_ok",
-              "internalName": "capacity_sizing_ok",
-              "label": "Capacity Sizing OK",
-              "type": "boolean",
-              "required": false,
-              "helpText": "Sizing validation flag",
-              "order": 3,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
-            },
-            {
-              "id": "fld_new_scr_calculation_done",
-              "internalName": "new_scr_calculation_done",
-              "label": "New SCR Calculation Done",
-              "type": "boolean",
-              "required": false,
-              "helpText": "New SCR calculation status",
-              "order": 4,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
-            },
-            {
-              "id": "fld_contracted_capacity_ok",
-              "internalName": "contracted_capacity_ok",
-              "label": "Contracted Capacity OK",
-              "type": "boolean",
-              "required": false,
-              "helpText": "Contracted capacity compliance status",
+              "placeholder": "e.g. W19",
+              "helpText": "Forecasted calendar week for milestone 2",
               "order": 5,
               "visible": true,
               "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
-            }
-          ]
-        },
-        {
-          "id": "grp_capacity_comments",
-          "name": "Comments",
-          "order": 6,
-          "description": "Capacity workshop notes and comments",
-          "fields": [
-            {
-              "id": "fld_capacity_comments",
-              "internalName": "capacity_comments",
-              "label": "Capacity Comments",
-              "type": "textarea",
-              "required": false,
-              "placeholder": "Enter capacity comments...",
-              "helpText": "General capacity notes",
-              "order": 1,
-              "visible": true,
-              "editable": true,
+              "aliases": ["Forecast Week 2", "forecast_week_2"],
               "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
             },
             {
-              "id": "fld_capacity_workshop_date",
-              "internalName": "capacity_workshop_date",
-              "label": "Capacity Workshop Date",
-              "type": "date",
+              "id": "fld_completed_week_2",
+              "internalName": "completed_week_2",
+              "label": "Completed Week 2",
+              "type": "text",
               "required": false,
-              "helpText": "Date of capacity workshop",
-              "order": 2,
+              "placeholder": "e.g. W20",
+              "helpText": "Actual completed calendar week for milestone 2",
+              "order": 6,
               "visible": true,
               "editable": true,
+              "aliases": ["Completed Week 2", "completed_week_2"],
               "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
             },
             {
-              "id": "fld_capacity_workshop_comment",
-              "internalName": "capacity_workshop_comment",
-              "label": "Capacity Workshop Comment",
-              "type": "textarea",
+              "id": "fld_week_project_target_3",
+              "internalName": "week_project_target_3",
+              "label": "Week Project Target 3",
+              "type": "text",
               "required": false,
-              "placeholder": "Workshop summary and outcomes...",
-              "helpText": "Comments from capacity workshop",
-              "order": 3,
+              "placeholder": "e.g. W24",
+              "helpText": "Target calendar week for milestone 3",
+              "order": 7,
               "visible": true,
               "editable": true,
+              "aliases": ["Week Project Target 3", "week_project_target_3"],
+              "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
+            },
+            {
+              "id": "fld_forecast_week_3",
+              "internalName": "forecast_week_3",
+              "label": "Forecast Week 3",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. W25",
+              "helpText": "Forecasted calendar week for milestone 3",
+              "order": 8,
+              "visible": true,
+              "editable": true,
+              "aliases": ["Forecast Week 3", "forecast_week_3"],
+              "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
+            },
+            {
+              "id": "fld_completed_week_3",
+              "internalName": "completed_week_3",
+              "label": "Completed Week 3",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. W26",
+              "helpText": "Actual completed calendar week for milestone 3",
+              "order": 9,
+              "visible": true,
+              "editable": true,
+              "aliases": ["Completed Week 3", "completed_week_3"],
               "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
             }
           ]
@@ -783,307 +421,245 @@
       "id": "sec_sqd",
       "name": "SQD",
       "order": 3,
-      "description": "Supplier Quality Development evaluation and CAT audit ratings.",
+      "description": "Supplier quality, validation, capability and process readiness evaluated by SQD role.",
       "permissions": {
         "rolesAllowedToEdit": ["sqd", "admin"],
         "rolesAllowedToView": ["buyer", "capacity_manager", "sqd", "admin", "viewer"]
       },
       "groups": [
         {
-          "id": "grp_sqd_team_k0",
-          "name": "SQD Team",
+          "id": "grp_quality_assessments",
+          "name": "Quality & Readiness Assessments",
           "order": 1,
-          "description": "SQD team assignments",
+          "description": "Quality ratings, logistics, UNLWeb, EDI, PLE, and manufacturing validations",
           "fields": [
             {
-              "id": "fld_sqvl",
-              "internalName": "sqvl",
-              "label": "SQVL",
-              "type": "user",
-              "required": false,
-              "helpText": "Supplier Quality Vehicle Line lead",
-              "order": 1,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
-            },
-            {
-              "id": "fld_sqme_manufacturing",
-              "internalName": "sqme_manufacturing",
-              "label": "SQME Manufacturing",
-              "type": "user",
-              "required": false,
-              "helpText": "Supplier Quality Manufacturing Engineer",
-              "order": 2,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
-            }
-          ]
-        },
-        {
-          "id": "grp_sqd_planning_k0",
-          "name": "Planning",
-          "order": 2,
-          "description": "APQP-Grid and Run Assessment triggers",
-          "fields": [
-            {
-              "id": "fld_apqp_grid",
-              "internalName": "apqp_grid",
-              "label": "APQP-Grid",
+              "id": "fld_quality",
+              "internalName": "quality",
+              "label": "Quality",
               "type": "text",
               "required": false,
-              "placeholder": "e.g. Grid-V3",
-              "helpText": "APQP Grid milestone status",
+              "placeholder": "e.g. OK",
+              "helpText": "Overall quality readiness evaluation",
               "order": 1,
               "visible": true,
               "editable": true,
+              "aliases": ["Quality", "quality", "Qualité"],
               "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
             },
             {
-              "id": "fld_run_assessment",
-              "internalName": "run_assessment",
-              "label": "Run Assessment (Asked / Not Asked)",
-              "type": "dropdown",
+              "id": "fld_supply_chain",
+              "internalName": "supply_chain",
+              "label": "Supply Chain",
+              "type": "text",
               "required": false,
-              "options": [
-                { "value": "ASKED", "label": "Asked", "order": 1 },
-                { "value": "NOT_ASKED", "label": "Not Asked", "order": 2 }
-              ],
-              "helpText": "Indicates whether Run Assessment was requested",
+              "placeholder": "e.g. OK",
+              "helpText": "Supply chain readiness status",
               "order": 2,
               "visible": true,
               "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
-            }
-          ]
-        },
-        {
-          "id": "grp_sqd_forecast",
-          "name": "Forecast",
-          "order": 3,
-          "description": "CAT forecasted audit schedule",
-          "fields": [
-            {
-              "id": "fld_cat_forecast_date",
-              "internalName": "cat_forecast_date",
-              "label": "CAT Forecast Date",
-              "type": "date",
-              "required": false,
-              "helpText": "Forecasted CAT audit date",
-              "order": 1,
-              "visible": true,
-              "editable": true,
+              "aliases": ["Supply Chain", "supply_chain"],
               "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
             },
             {
-              "id": "fld_cat_forecast_calendar_week",
-              "internalName": "cat_forecast_calendar_week",
-              "label": "CAT Forecast Calendar Week",
-              "type": "week",
+              "id": "fld_global_purchasing",
+              "internalName": "global_purchasing",
+              "label": "Global Purchasing",
+              "type": "text",
               "required": false,
-              "placeholder": "e.g. 2026-W22",
-              "helpText": "Forecasted calendar week for CAT audit",
-              "order": 2,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
-            }
-          ]
-        },
-        {
-          "id": "grp_sqd_execution",
-          "name": "Execution",
-          "order": 4,
-          "description": "Actual CAT audit execution dates",
-          "fields": [
-            {
-              "id": "fld_cat_real_date",
-              "internalName": "cat_real_date",
-              "label": "CAT Real Date",
-              "type": "date",
-              "required": false,
-              "helpText": "Actual executed CAT audit date",
-              "order": 1,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
-            },
-            {
-              "id": "fld_cat_real_calendar_week",
-              "internalName": "cat_real_calendar_week",
-              "label": "CAT Real Calendar Week",
-              "type": "week",
-              "required": false,
-              "placeholder": "e.g. 2026-W23",
-              "helpText": "Actual calendar week of CAT audit execution",
-              "order": 2,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
-            }
-          ]
-        },
-        {
-          "id": "grp_sqd_assessment",
-          "name": "Assessment",
-          "order": 5,
-          "description": "Last CAT audit milestone rating",
-          "fields": [
-            {
-              "id": "fld_last_cat",
-              "internalName": "last_cat",
-              "label": "Last CAT (CAT1 / CAT2 / CAT3)",
-              "type": "dropdown",
-              "required": false,
-              "options": [
-                { "value": "CAT1", "label": "CAT1", "order": 1 },
-                { "value": "CAT2", "label": "CAT2", "order": 2 },
-                { "value": "CAT3", "label": "CAT3", "order": 3 }
-              ],
-              "helpText": "Latest completed CAT milestone",
-              "order": 1,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
-            }
-          ]
-        },
-        {
-          "id": "grp_sqd_supplier_commitment",
-          "name": "Supplier Commitment",
-          "order": 6,
-          "description": "Capacity requested from supplier",
-          "fields": [
-            {
-              "id": "fld_requested_supplier_weekly_capacity",
-              "internalName": "requested_supplier_weekly_capacity",
-              "label": "Requested to Supplier Weekly Capacity",
-              "type": "integer",
-              "required": false,
-              "placeholder": "e.g. 4500",
-              "helpText": "Weekly capacity requested to supplier",
-              "order": 1,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
-            }
-          ]
-        },
-        {
-          "id": "grp_sqd_observation",
-          "name": "Observation",
-          "order": 7,
-          "description": "Observed audit capacity, days, and shifts",
-          "fields": [
-            {
-              "id": "fld_cat_run_observation",
-              "internalName": "cat_run_observation",
-              "label": "CAT Run Observation (Parts/Week)",
-              "type": "integer",
-              "required": false,
-              "placeholder": "e.g. 4300",
-              "helpText": "Observed run capacity in parts per week",
-              "order": 1,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
-            },
-            {
-              "id": "fld_number_production_days",
-              "internalName": "number_production_days",
-              "label": "Number of Production Days",
-              "type": "integer",
-              "required": false,
-              "placeholder": "e.g. 5",
-              "helpText": "Number of production operating days per week",
-              "order": 2,
-              "visible": true,
-              "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
-            },
-            {
-              "id": "fld_number_production_shifts",
-              "internalName": "number_production_shifts",
-              "label": "Number of Production Shifts",
-              "type": "integer",
-              "required": false,
-              "placeholder": "e.g. 3",
-              "helpText": "Number of production shifts per day",
+              "placeholder": "e.g. OK",
+              "helpText": "Global purchasing validation",
               "order": 3,
               "visible": true,
               "editable": true,
-              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
-            }
-          ]
-        },
-        {
-          "id": "grp_sqd_evaluation_k0",
-          "name": "Evaluation",
-          "order": 8,
-          "description": "CAT rating, folder link, and auditor comments",
-          "fields": [
-            {
-              "id": "fld_cat_rating",
-              "internalName": "cat_rating",
-              "label": "CAT Rating",
-              "type": "dropdown",
-              "required": false,
-              "defaultValue": "GREEN",
-              "options": [
-                { "value": "GREEN", "label": "GREEN - Satisfactory", "order": 1 },
-                { "value": "ORANGE", "label": "ORANGE - Action Plan Required", "order": 2 },
-                { "value": "RED", "label": "RED - Non-Compliant", "order": 3 }
-              ],
-              "helpText": "SQD CAT audit rating status",
-              "order": 1,
-              "visible": true,
-              "editable": true,
+              "aliases": ["Global Purchasing", "global_purchasing"],
               "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
             },
             {
-              "id": "fld_cat_link",
-              "internalName": "cat_link",
-              "label": "CAT Link",
+              "id": "fld_cpl",
+              "internalName": "cpl",
+              "label": "CPL",
               "type": "text",
               "required": false,
-              "placeholder": "https://sharepoint.com/sites/sqd/cat-k0",
-              "helpText": "Link to official CAT assessment file",
-              "order": 2,
+              "placeholder": "e.g. OK",
+              "helpText": "CPL readiness status",
+              "order": 4,
               "visible": true,
               "editable": true,
+              "aliases": ["CPL", "cpl"],
               "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
             },
             {
-              "id": "fld_cat_comment",
-              "internalName": "cat_comment",
-              "label": "CAT Comment",
-              "type": "textarea",
+              "id": "fld_rcpi",
+              "internalName": "rcpi",
+              "label": "RCPI",
+              "type": "text",
               "required": false,
-              "placeholder": "Auditor evaluation remarks...",
-              "helpText": "Detailed CAT evaluation comments",
-              "order": 3,
+              "placeholder": "e.g. OK",
+              "helpText": "RCPI status",
+              "order": 5,
               "visible": true,
               "editable": true,
+              "aliases": ["RCPI", "rcpi"],
+              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
+            },
+            {
+              "id": "fld_minimum_quality_status_acted",
+              "internalName": "minimum_quality_status_acted",
+              "label": "Minimum Quality Status Acted",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. Yes",
+              "helpText": "Minimum quality status acted confirmation",
+              "order": 6,
+              "visible": true,
+              "editable": true,
+              "aliases": ["Minimum Quality Status Acted", "Minimum Quality status acted", "minimum_quality_status_acted"],
+              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
+            },
+            {
+              "id": "fld_mass_inquired",
+              "internalName": "mass_inquired",
+              "label": "Mass Inquired",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. Yes",
+              "helpText": "Mass inquired status",
+              "order": 7,
+              "visible": true,
+              "editable": true,
+              "aliases": ["Mass Inquired", "Mass inquired", "mass_inquired"],
+              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
+            },
+            {
+              "id": "fld_packaging_readiness_unlweb_validated",
+              "internalName": "packaging_readiness_unlweb_validated",
+              "label": "Packaging Readiness UNLWEB Validated",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. OK",
+              "helpText": "Packaging readiness UNLWeb validation",
+              "order": 8,
+              "visible": true,
+              "editable": true,
+              "aliases": ["Packaging Readiness UNLWEB Validated", "Packaging readiness, UNLweb \nvalidated", "Packaging Readiness UNLWeb Validated", "packaging_readiness_unlweb_validated"],
+              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
+            },
+            {
+              "id": "fld_tango_contract_validated",
+              "internalName": "tango_contract_validated",
+              "label": "Tango Contract Validated",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. OK",
+              "helpText": "Tango contract validation status",
+              "order": 9,
+              "visible": true,
+              "editable": true,
+              "aliases": ["Tango Contract Validated", "TANGO contract validated", "tango_contract_validated"],
+              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
+            },
+            {
+              "id": "fld_supplier_capability_confirmed",
+              "internalName": "supplier_capability_confirmed",
+              "label": "Supplier Capability Confirmed",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. Confirmed",
+              "helpText": "Confirmation of supplier manufacturing capability",
+              "order": 10,
+              "visible": true,
+              "editable": true,
+              "aliases": ["Supplier Capability Confirmed", "Supplier capability confirmed", "supplier_capability_confirmed"],
+              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
+            },
+            {
+              "id": "fld_it_cpl_corail_setting",
+              "internalName": "it_cpl_corail_setting",
+              "label": "IT CPL Corail Setting",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. OK",
+              "helpText": "IT CPL (CORAIL) system setting",
+              "order": 11,
+              "visible": true,
+              "editable": true,
+              "aliases": ["IT CPL Corail Setting", "IT CPL (CORAIL,) setting", "IT CPL (CORAIL) Setting", "it_cpl_corail_setting"],
+              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
+            },
+            {
+              "id": "fld_fcla_validates",
+              "internalName": "fcla_validates",
+              "label": "FCLA Validates",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. OK",
+              "helpText": "FCLA validation status",
+              "order": 12,
+              "visible": true,
+              "editable": true,
+              "aliases": ["FCLA Validates", "FCLA validates", "FCLA Validated", "fcla_validates"],
+              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
+            },
+            {
+              "id": "fld_ple_created",
+              "internalName": "ple_created",
+              "label": "PLE Created",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. Yes",
+              "helpText": "PLE created status",
+              "order": 13,
+              "visible": true,
+              "editable": true,
+              "aliases": ["PLE Created", "PLE created", "ple_created"],
+              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
+            },
+            {
+              "id": "fld_edi_opened",
+              "internalName": "edi_opened",
+              "label": "EDI Opened",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. Yes",
+              "helpText": "EDI opened communication status",
+              "order": 14,
+              "visible": true,
+              "editable": true,
+              "aliases": ["EDI Opened", "EDI opened", "edi_opened"],
+              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
+            },
+            {
+              "id": "fld_um_logistic_flow_validated",
+              "internalName": "um_logistic_flow_validated",
+              "label": "UM Logistic Flow Validated",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. OK",
+              "helpText": "UM logistic flow validation status",
+              "order": 15,
+              "visible": true,
+              "editable": true,
+              "aliases": ["UM Logistic Flow Validated", "UM logistic flow validated", "um_logistic_flow_validated"],
+              "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
+            },
+            {
+              "id": "fld_manufacturing_process_validated",
+              "internalName": "manufacturing_process_validated",
+              "label": "Manufacturing Process Validated",
+              "type": "text",
+              "required": false,
+              "placeholder": "e.g. OK",
+              "helpText": "Manufacturing process validation status",
+              "order": 16,
+              "visible": true,
+              "editable": true,
+              "aliases": ["Manufacturing Process Validated", "Manufacturing process validated", "manufacturing_process_validated"],
               "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
             }
           ]
         }
       ]
     }
-  ],
-  "dashboardConfig": {
-    "kpis": [
-      { "id": "kpi_cat_rating", "title": "CAT Audit Rating", "field": "cat_rating", "aggregation": "count", "format": "number" }
-    ],
-    "charts": [
-      { "id": "chart_cat_rating", "title": "CAT Rating Distribution", "type": "pie", "groupBy": "cat_rating", "metrics": [{ "field": "cat_rating", "aggregation": "count", "label": "Count", "color": "#22c55e" }] }
-    ]
-  },
-  "searchConfig": {
-    "defaultSortBy": "part_number",
-    "defaultSortDesc": false,
-    "defaultPageSize": 20,
-    "quickFilterFields": ["part_number", "part_name", "nominated_supplier", "cat_rating"]
-  }
+  ]
 }
