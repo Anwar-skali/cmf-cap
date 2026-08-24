@@ -38,10 +38,11 @@ export function useCapacityCoverageQuery() {
   });
 }
 
-export function useCapacityMonthlyQuery() {
+export function useCapacityMonthlyQuery(year: number, month: number) {
   return useQuery({
-    queryKey: queryKeys.capacity.monthly(),
-    queryFn: () => capacityApi.getMonthly(),
+    queryKey: [...queryKeys.capacity.monthly(), year, month],
+    queryFn: () => capacityApi.getMonthly(year, month),
+    enabled: !!year && !!month,
     staleTime: 60_000,
     gcTime: 120_000,
   });

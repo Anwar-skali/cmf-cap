@@ -29,11 +29,13 @@ export const changePasswordSchema = z.object({
   currentPassword: z.string().min(1, 'Current password is required'),
   newPassword: z
     .string()
-    .min(6, 'New password must be at least 6 characters')
-    .max(100, 'New password is too long'),
+    .min(8, 'New password must be at least 8 characters')
+    .regex(/[A-Z]/, 'New password must contain at least one uppercase letter (A-Z)')
+    .regex(/[a-z]/, 'New password must contain at least one lowercase letter (a-z)')
+    .regex(/[0-9]/, 'New password must contain at least one number (0-9)'),
   confirmNewPassword: z.string().min(1, 'Please confirm your new password'),
 }).refine((data) => data.newPassword === data.confirmNewPassword, {
-  message: 'Passwords do not match',
+  message: 'New passwords do not match',
   path: ['confirmNewPassword'],
 }).refine((data) => data.currentPassword !== data.newPassword, {
   message: 'New password must be different from current password',
@@ -114,6 +116,7 @@ export const createCapacityAssessmentSchema = z.object({
   supplierId: z.string().min(1, 'Supplier is required'),
   assessmentDate: z.string().optional(),
   leadTimeDays: z.number().optional(),
+  cate: z.string().optional(),
   gate: z.string().optional(),
   targetWeek: z.string().optional(),
   forecastWeek: z.string().optional(),

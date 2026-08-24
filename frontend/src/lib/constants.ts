@@ -128,7 +128,7 @@ export const API_ENDPOINTS = {
     BASE: '/capacity',
     BY_ID: (id: string) => `/capacity/${id}`,
     COVERAGE: '/capacity/coverage',
-    MONTHLY: '/capacity/monthly',
+    MONTHLY: (year: number, month: number) => `/capacity/monthly/${year}/${month}`,
   },
   RISKS: {
     BASE: '/risks',

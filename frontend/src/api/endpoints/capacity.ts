@@ -42,6 +42,6 @@ export function getCoverage(): Promise<CapacityCoverage[]> {
   return api.get<CapacityCoverage[]>(API_ENDPOINTS.CAPACITY.COVERAGE);
 }
 
-export function getMonthly(): Promise<MonthlyCapacity[]> {
-  return api.get<MonthlyCapacity[]>(API_ENDPOINTS.CAPACITY.MONTHLY);
+export function getMonthly(year: number, month: number): Promise<MonthlyCapacity[]> {
+  return api.get<MonthlyCapacity[]>(API_ENDPOINTS.CAPACITY.MONTHLY(year, month));
 }

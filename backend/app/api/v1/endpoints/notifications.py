@@ -54,6 +54,11 @@ async def unread_count(
     response_model=dict[str, bool],
     summary="Mark a notification as read",
 )
+@router.post(
+    "/{id}/read",
+    response_model=dict[str, bool],
+    summary="Mark a notification as read (POST alternative)",
+)
 async def mark_as_read(
     id: uuid.UUID,
     current_user: User = Depends(get_current_active_user),
@@ -67,6 +72,11 @@ async def mark_as_read(
     "/read-all",
     response_model=dict[str, int],
     summary="Mark all notifications as read",
+)
+@router.post(
+    "/read-all",
+    response_model=dict[str, int],
+    summary="Mark all notifications as read (POST alternative)",
 )
 async def mark_all_as_read(
     current_user: User = Depends(get_current_active_user),

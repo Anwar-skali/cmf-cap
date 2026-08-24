@@ -29,6 +29,32 @@ router = APIRouter(prefix="/api/v1/capacity", tags=["Capacity Assessments"])
 
 
 @router.get(
+    "/coverage",
+    response_model=CapacityCoverageResponse,
+    summary="Get capacity coverage statistics",
+)
+async def capacity_coverage(
+    current_user: User = Depends(get_current_active_user),
+    capacity_service: CapacityAssessmentService = Depends(get_capacity_assessment_service),
+) -> Any:
+    return await capacity_service.get_coverage()
+
+
+@router.get(
+    "/monthly/{year}/{month}",
+    response_model=list[MonthlyCapacityResponse],
+    summary="Get monthly capacity data",
+)
+async def monthly_capacity(
+    year: int,
+    month: int,
+    current_user: User = Depends(get_current_active_user),
+    capacity_service: CapacityAssessmentService = Depends(get_capacity_assessment_service),
+) -> Any:
+    return await capacity_service.get_monthly(year, month)
+
+
+@router.get(
     "",
     response_model=CapacityAssessmentListResponse,
     summary="List capacity assessments with filtering",
@@ -138,29 +164,3 @@ async def delete_capacity(
 ) -> dict[str, bool]:
     result = await capacity_service.delete_assessment(id, user_id=current_user.id)
     return {"success": result}
-
-
-@router.get(
-    "/coverage",
-    response_model=CapacityCoverageResponse,
-    summary="Get capacity coverage statistics",
-)
-async def capacity_coverage(
-    current_user: User = Depends(get_current_active_user),
-    capacity_service: CapacityAssessmentService = Depends(get_capacity_assessment_service),
-) -> Any:
-    return await capacity_service.get_coverage()
-
-
-@router.get(
-    "/monthly/{year}/{month}",
-    response_model=list[MonthlyCapacityResponse],
-    summary="Get monthly capacity data",
-)
-async def monthly_capacity(
-    year: int,
-    month: int,
-    current_user: User = Depends(get_current_active_user),
-    capacity_service: CapacityAssessmentService = Depends(get_capacity_assessment_service),
-) -> Any:
-    return await capacity_service.get_monthly(year, month)

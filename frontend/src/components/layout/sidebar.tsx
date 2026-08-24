@@ -162,32 +162,37 @@ export function Sidebar() {
       <div className="border-t border-sidebar-border p-3 bg-muted/20">
         {isCollapsed ? (
           <div className="flex justify-center">
-            <Avatar className="h-8 w-8 cursor-pointer ring-2 ring-sidebar-border">
-              {state.user?.avatar ? (
-                <AvatarImage src={state.user.avatar} alt="User" />
-              ) : null}
-              <AvatarFallback initials={`${state.user?.firstName?.[0] ?? ''}${state.user?.lastName?.[0] ?? ''}`} />
-            </Avatar>
+            <NavLink to="/profile" title="View Profile">
+              <Avatar className="h-8 w-8 cursor-pointer ring-2 ring-sidebar-border hover:ring-primary transition-all">
+                {state.user?.avatar ? (
+                  <AvatarImage src={state.user.avatar} alt="User" />
+                ) : null}
+                <AvatarFallback initials={`${state.user?.firstName?.[0] ?? ''}${state.user?.lastName?.[0] ?? ''}`} />
+              </Avatar>
+            </NavLink>
           </div>
         ) : (
           <div className="flex items-center gap-3">
-            <Avatar className="h-9 w-9 ring-2 ring-sidebar-border">
-              {state.user?.avatar ? (
-                <AvatarImage src={state.user.avatar} alt="User" />
-              ) : null}
-              <AvatarFallback initials={`${state.user?.firstName?.[0] ?? ''}${state.user?.lastName?.[0] ?? ''}`} />
-            </Avatar>
-            <div className="flex-1 overflow-hidden">
-              <p className="truncate text-xs font-bold text-sidebar-foreground">
-                {state.user?.firstName} {state.user?.lastName}
-              </p>
-              <Badge variant="outline" className={cn('mt-0.5 px-1.5 py-0 text-[10px] font-semibold border border-sidebar-border', roleMeta.badgeClass)}>
-                <RoleIcon className="mr-1 h-2.5 w-2.5 inline-block" />
-                {roleMeta.shortTitle}
-              </Badge>
-            </div>
+            <NavLink to="/profile" className="flex items-center gap-3 flex-1 overflow-hidden group">
+              <Avatar className="h-9 w-9 ring-2 ring-sidebar-border group-hover:ring-primary transition-all shrink-0">
+                {state.user?.avatar ? (
+                  <AvatarImage src={state.user.avatar} alt="User" />
+                ) : null}
+                <AvatarFallback initials={`${state.user?.firstName?.[0] ?? ''}${state.user?.lastName?.[0] ?? ''}`} />
+              </Avatar>
+              <div className="flex-1 overflow-hidden">
+                <p className="truncate text-xs font-bold text-sidebar-foreground group-hover:text-primary transition-colors">
+                  {state.user?.firstName} {state.user?.lastName}
+                </p>
+                <Badge variant="outline" className={cn('mt-0.5 px-1.5 py-0 text-[10px] font-semibold border border-sidebar-border', roleMeta.badgeClass)}>
+                  <RoleIcon className="mr-1 h-2.5 w-2.5 inline-block" />
+                  {roleMeta.shortTitle}
+                </Badge>
+              </div>
+            </NavLink>
             <NavLink
               to="/profile"
+              title="Profile Settings"
               className="rounded-lg p-1.5 text-muted-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
             >
               <User className="h-4 w-4" />

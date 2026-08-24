@@ -139,9 +139,7 @@ export default function CapacityPage() {
     if (!assessmentToDelete) return;
     deleteMutation.mutate(assessmentToDelete, {
       onSuccess: () => {
-        toast.success('Capacity assessment deleted successfully');
         setAssessmentToDelete(null);
-        refetch();
       },
       onError: (err) => toast.error(err?.message || 'Failed to delete assessment'),
     });

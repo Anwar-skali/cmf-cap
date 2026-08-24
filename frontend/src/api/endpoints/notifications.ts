@@ -13,11 +13,11 @@ export function getUnreadCount(): Promise<{ count: number }> {
 }
 
 export function markAsRead(id: string): Promise<void> {
-  return api.post<void>(API_ENDPOINTS.NOTIFICATIONS.MARK_READ(id));
+  return api.patch<void>(API_ENDPOINTS.NOTIFICATIONS.MARK_READ(id));
 }
 
 export function markAllAsRead(): Promise<void> {
-  return api.post<void>(API_ENDPOINTS.NOTIFICATIONS.MARK_ALL_READ);
+  return api.patch<void>(API_ENDPOINTS.NOTIFICATIONS.MARK_ALL_READ);
 }
 
 export function deleteNotification(id: string): Promise<void> {

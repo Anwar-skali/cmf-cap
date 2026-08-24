@@ -9,6 +9,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import {
   ArrowLeft,
   Trash2,
+  Pencil,
   BarChart3,
   Calendar,
   User,
@@ -58,7 +59,6 @@ export default function CapacityDetailPage() {
   const handleDelete = () => {
     deleteMutation.mutate(assessmentId!, {
       onSuccess: () => {
-        toast.success('Capacity assessment deleted successfully');
         navigate('/capacity');
       },
       onError: (err) => toast.error(err?.message || 'Failed to delete assessment'),
@@ -115,9 +115,16 @@ export default function CapacityDetailPage() {
           </div>
         </div>
 
-        <Button variant="destructive" size="sm" onClick={() => setShowDelete(true)} disabled={deleteMutation.isPending} className="gap-1.5">
-          <Trash2 className="h-4 w-4" /> Delete Assessment
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" asChild className="gap-1.5">
+            <Link to={`/capacity/new`} state={{ prefill: assessment }}>
+              <Pencil className="h-4 w-4" /> Edit
+            </Link>
+          </Button>
+          <Button variant="destructive" size="sm" onClick={() => setShowDelete(true)} disabled={deleteMutation.isPending} className="gap-1.5">
+            <Trash2 className="h-4 w-4" /> Delete Assessment
+          </Button>
+        </div>
       </div>
 
       {/* 4 Metric Cards */}

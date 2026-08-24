@@ -38584,3 +38584,582 @@ mapped_data={'part_number': '9877554280', 'index': '00', 'description': 'PATTE T
 2026-08-21 15:10:38,489 - app.main - INFO - DELETE /api/v1/templates/e4cfb5d0-9a2b-4fa3-927a-a1100b5dfbfd
 2026-08-21 15:10:38,892 - app.main - INFO - DELETE /api/v1/templates/e4cfb5d0-9a2b-4fa3-927a-a1100b5dfbfd -> 200
 2026-08-21 15:10:38,915 - app.main - INFO - GET /api/v1/templates
+2026-08-21 15:10:39,013 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-21 15:12:11,123 - app.main - INFO - DELETE /api/v1/templates/17c5698d-779e-4892-897b-c700e3bbd9de
+2026-08-21 15:12:11,320 - app.main - INFO - DELETE /api/v1/templates/17c5698d-779e-4892-897b-c700e3bbd9de -> 200
+2026-08-21 15:12:11,346 - app.main - INFO - GET /api/v1/templates
+2026-08-21 15:12:11,437 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-21 15:12:20,820 - app.main - INFO - DELETE /api/v1/templates/bf2d7baf-b0b9-40ad-9e20-9864daaef48b
+2026-08-21 15:12:20,948 - app.main - INFO - DELETE /api/v1/templates/bf2d7baf-b0b9-40ad-9e20-9864daaef48b -> 200
+2026-08-21 15:12:20,974 - app.main - INFO - GET /api/v1/templates
+2026-08-21 15:12:21,054 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-21 15:12:24,829 - app.main - INFO - DELETE /api/v1/templates/0634ba1f-3f9f-4c3a-82fc-0e2a1b02ccc6
+2026-08-21 15:12:25,053 - app.main - INFO - DELETE /api/v1/templates/0634ba1f-3f9f-4c3a-82fc-0e2a1b02ccc6 -> 200
+2026-08-21 15:12:25,097 - app.main - INFO - GET /api/v1/templates
+2026-08-21 15:12:25,235 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-21 15:12:29,802 - app.main - INFO - DELETE /api/v1/templates/c57f38c3-7429-423e-a04d-b8ff1441e5ec
+2026-08-21 15:12:30,038 - app.main - INFO - DELETE /api/v1/templates/c57f38c3-7429-423e-a04d-b8ff1441e5ec -> 200
+2026-08-21 15:12:30,086 - app.main - INFO - GET /api/v1/templates
+2026-08-21 15:12:30,231 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-21 15:17:03,475 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-21 15:17:03,482 - app.main - INFO - GET /api/v1/documents
+2026-08-21 15:17:03,745 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 3 published templates in 30.47 ms
+2026-08-21 15:17:03,757 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-21 15:17:03,777 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-21 15:17:03,802 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-21 15:17:03,862 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 3 published templates in 12.75 ms
+2026-08-21 15:17:03,867 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-21 15:17:42,697 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-21 15:17:42,832 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Sheet: 'Projects' | Orient: HORIZONTAL | Headers (65): ['INDICE', 'N° RFQ (SP MDT)', 'Module', 'Designation (Commodity)', 'Complément désignation', 'Supplier', 'Plant localization', 'COFOR Fabricant', 'ASP (Acheteur Programme) / AC (Acheteur Comodité)', 'SMT Manager', 'GM', 'GA MA', 'SQME', 'Entité SD', 'Capacity Manager CYMT', 'Lien vers SCR', 'Date SCR', 'Weekly Capacity (parts/week)1', 'Capacity Step (parts/week)11', 'Weekly Capacity (parts/week)12', 'Capacity Step (parts/week)13', 'Weekly Capacity (parts/week)14', 'Capacity Step (parts/week)15', 'Weekly Capacity (parts/week)16', 'Capacity Step (parts/week)17', 'Weekly Capacity (parts/week)18', 'Capacity Step (parts/week)19', 'Weekly Capacity (parts/week)2', 'Capacity Step (parts/week)21', 'Weekly Capacity (parts/week)22', 'Capacity Step (parts/week)23', 'Weekly Capacity (parts/week)222', 'Capacity Step (parts/week)25', 'Weekly Capacity (parts/week)223', 'Capacity Step (parts/week)27', 'Weekly Capacity (parts/week)224', 'Capacity Step (parts/week)273', 'WEEKLY Capa Contract (parts/week)', 'Availability date', 'Contract (PC, TKO, FETE)', 'COMMENT', 'Volume price matrix (Y/N)', 'Capacity Max without Investment', 'Date update commitment Supplier', 'CAPA to check by SQE for next year in parts/week', 'Weekly Capacity (Ex Standard + Extra Capacity) Year Max (SCR Calculation) parts/week', 'Year Max (SCR Calculation)', 'PCAT Type 1 or 2', 'PCAT forecasted date', 'Run Assessment Date', 'Run Observation Weekly Capacity parts/week', 'Estimated Target Weekly Capacity parts/week', 'Status: Green Orange Red', 'COMMENT2', 'Reschedule or Follow-up Date (including Next Step)', 'DocInfo Link', 'References / Part Number', 'Lien SCR WAR ROOM', 'Date de mise à jour SCR WAR ROOM', 'Alerte date prévisionnelle de blocage SCR WAR ROOM', "Besoin max sur l'année SCR WAR ROOM", 'Dernier état WR (ROV)', 'Budget Feasibility 222', 'Commentaires pilotage', 'Projet Lanceur']
+2026-08-21 15:17:42,876 - app.application.services.ollama_mapping_service - INFO - [OLLAMA] Configured timeout: 5.0s, default model: llama3.2:1b, url: http://localhost:11434
+2026-08-21 15:17:43,105 - app.application.services.ollama_mapping_service - INFO - [IMPORT] 0 columns unresolved. Skipping AI mapping entirely.
+2026-08-21 15:17:43,108 - app.application.services.ollama_mapping_service - INFO - [IMPORT] Workbook parsed: 0.3ms
+[IMPORT] Headers detected: 65
+[IMPORT] Exact mappings: 65
+[IMPORT] Alias mappings: 0
+[IMPORT] Fuzzy mappings: 0
+[IMPORT] Cache mappings: 0
+[IMPORT] Unresolved: 0
+[IMPORT] AI invoked: 0 column(s)
+[IMPORT] AI duration: 0.0ms
+[IMPORT] Total: 228.8ms
+2026-08-21 15:17:43,122 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-21 15:18:00,248 - app.main - INFO - POST /api/v1/import/preview
+2026-08-21 15:18:00,418 - app.application.services.import_engine_service - INFO - [PARSE] Auto-detected header row 2 (0-based idx=1)
+2026-08-21 15:18:00,420 - app.application.services.import_engine_service - INFO - [IMPORT ROW FILTER] sheet=Projects header_row=2 physical_rows=2 data_rows=2 empty_rows=0
+2026-08-21 15:18:00,761 - app.main - INFO - POST /api/v1/import/preview -> 200
+2026-08-21 15:18:06,202 - app.main - INFO - POST /api/v1/import/execute
+2026-08-21 15:18:06,365 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Starting execution for file 'projects_cmf_mdt_template.xlsx' with template 'CMF_MDT'
+2026-08-21 15:18:06,367 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Selected template: 'CMF_MDT'
+2026-08-21 15:18:06,371 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Uploaded filename: 'projects_cmf_mdt_template.xlsx' (10020 bytes)
+2026-08-21 15:18:06,375 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Mapped fields: {'N° RFQ (SP MDT)': 'n_rfq_sp_mdt', 'Supplier': 'supplier', 'Weekly Capacity (parts/week)1': 'weekly_capacity_parts_week_1', 'Capacity Step (parts/week)11': 'capacity_step_parts_week_11', 'Weekly Capacity (parts/week)12': 'weekly_capacity_parts_week_12', 'Capacity Step (parts/week)13': 'capacity_step_parts_week_13', 'Weekly Capacity (parts/week)14': 'weekly_capacity_parts_week_14', 'Capacity Step (parts/week)15': 'capacity_step_parts_week_15', 'Weekly Capacity (parts/week)16': 'weekly_capacity_parts_week_16', 'Capacity Step (parts/week)17': 'capacity_step_parts_week_17', 'Weekly Capacity (parts/week)18': 'weekly_capacity_parts_week_18', 'Capacity Step (parts/week)19': 'capacity_step_parts_week_19', 'Weekly Capacity (parts/week)2': 'weekly_capacity_parts_week_2', 'Capacity Step (parts/week)21': 'capacity_step_parts_week_21', 'Weekly Capacity (parts/week)22': 'weekly_capacity_parts_week_22', 'Capacity Step (parts/week)23': 'capacity_step_parts_week_23', 'Weekly Capacity (parts/week)222': 'weekly_capacity_parts_week_222', 'Capacity Step (parts/week)25': 'capacity_step_parts_week_25', 'Weekly Capacity (parts/week)223': 'weekly_capacity_parts_week_223', 'Capacity Step (parts/week)27': 'capacity_step_parts_week_27', 'Weekly Capacity (parts/week)224': 'weekly_capacity_parts_week_224', 'Capacity Step (parts/week)273': 'capacity_step_parts_week_273', 'WEEKLY Capa Contract (parts/week)': 'weekly_capa_contract_parts_week', 'Volume price matrix (Y/N)': 'volume_price_matrix_y_n', 'Date update commitment Supplier': 'date_update_commitment_supplier', 'CAPA to check by SQE for next year in parts/week': 'capa_to_check_by_sqe_for_next_year_in_parts_week', 'Weekly Capacity (Ex Standard + Extra Capacity) Year Max (SCR Calculation) parts/week': 'weekly_capacity_ex_standard_extra_capacity_year_max_scr_calculation_parts_week', 'Run Observation Weekly Capacity parts/week': 'run_observation_weekly_capacity_parts_week', 'Estimated Target Weekly Capacity parts/week': 'estimated_target_weekly_capacity_parts_week', 'References / Part Number': 'references_part_number', 'Capacity Manager CYMT': 'capacity_manager_cymt', 'Capacity Max without Investment': 'capacity_max_without_investment', 'SQME': 'sqme', 'PCAT Type 1 or 2': 'pcat_type_1_or_2', 'PCAT forecasted date': 'pcat_forecasted_date', 'INDICE': 'indice', 'Module': 'module', 'Designation (Commodity)': 'designation_commodity', 'Complément désignation': 'compl_ment_d_signation', 'Plant localization': 'plant_localization', 'COFOR Fabricant': 'cofor_fabricant', 'ASP (Acheteur Programme) / AC (Acheteur Comodité)': 'asp_acheteur_programme_ac_acheteur_comodit', 'SMT Manager': 'smt_manager', 'GM': 'gm', 'GA MA': 'ga_ma', 'Entité SD': 'entit_sd', 'Lien vers SCR': 'lien_vers_scr', 'Date SCR': 'date_scr', 'Availability date': 'availability_date', 'Contract (PC, TKO, FETE)': 'contract_pc_tko_fete', 'COMMENT': 'comment', 'Year Max (SCR Calculation)': 'year_max_scr_calculation', 'Run Assessment Date': 'run_assessment_date', 'Status: Green Orange Red': 'status_green_orange_red', 'COMMENT2': 'comment2', 'Reschedule or Follow-up Date (including Next Step)': 'reschedule_or_follow_up_date_including_next_step', 'DocInfo Link': 'docinfo_link', 'Lien SCR WAR ROOM': 'lien_scr_war_room', 'Date de mise à jour SCR WAR ROOM': 'date_de_mise_jour_scr_war_room', 'Alerte date prévisionnelle de blocage SCR WAR ROOM': 'alerte_date_pr_visionnelle_de_blocage_scr_war_room', "Besoin max sur l'année SCR WAR ROOM": 'besoin_max_sur_l_ann_e_scr_war_room', 'Dernier état WR (ROV)': 'dernier_tat_wr_rov', 'Budget Feasibility 222': 'budget_feasibility_222', 'Commentaires pilotage': 'commentaires_pilotage', 'Projet Lanceur': 'projet_lanceur'}
+2026-08-21 15:18:06,379 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Import mode: 'insert', strategy: 'skip_invalid'
+2026-08-21 15:18:06,590 - app.application.services.import_engine_service - INFO - [PARSE] Auto-detected header row 2 (0-based idx=1)
+2026-08-21 15:18:06,593 - app.application.services.import_engine_service - INFO - [IMPORT ROW FILTER] sheet=Projects header_row=2 physical_rows=2 data_rows=2 empty_rows=0
+2026-08-21 15:18:07,017 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Validation summary: Total Rows=2, Valid=1, Errors=10
+2026-08-21 15:18:07,194 - app.application.services.import_engine_service - INFO - [PARSE] Auto-detected header row 2 (0-based idx=1)
+2026-08-21 15:18:07,197 - app.application.services.import_engine_service - INFO - [IMPORT ROW FILTER] sheet=Projects header_row=2 physical_rows=2 data_rows=2 empty_rows=0
+2026-08-21 15:18:07,229 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Rows detected: 2
+2026-08-21 15:18:07,232 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Headers detected: ['INDICE', 'N° RFQ (SP MDT)', 'Module', 'Designation (Commodity)', 'Complément désignation', 'Supplier', 'Plant localization', 'COFOR Fabricant', 'ASP (Acheteur Programme) / AC (Acheteur Comodité)', 'SMT Manager', 'GM', 'GA MA', 'SQME', 'Entité SD', 'Capacity Manager CYMT', 'Lien vers SCR', 'Date SCR', 'Weekly Capacity (parts/week)1', 'Capacity Step (parts/week)11', 'Weekly Capacity (parts/week)12', 'Capacity Step (parts/week)13', 'Weekly Capacity (parts/week)14', 'Capacity Step (parts/week)15', 'Weekly Capacity (parts/week)16', 'Capacity Step (parts/week)17', 'Weekly Capacity (parts/week)18', 'Capacity Step (parts/week)19', 'Weekly Capacity (parts/week)2', 'Capacity Step (parts/week)21', 'Weekly Capacity (parts/week)22', 'Capacity Step (parts/week)23', 'Weekly Capacity (parts/week)222', 'Capacity Step (parts/week)25', 'Weekly Capacity (parts/week)223', 'Capacity Step (parts/week)27', 'Weekly Capacity (parts/week)224', 'Capacity Step (parts/week)273', 'WEEKLY Capa Contract (parts/week)', 'Availability date', 'Contract (PC, TKO, FETE)', 'COMMENT', 'Volume price matrix (Y/N)', 'Capacity Max without Investment', 'Date update commitment Supplier', 'CAPA to check by SQE for next year in parts/week', 'Weekly Capacity (Ex Standard + Extra Capacity) Year Max (SCR Calculation) parts/week', 'Year Max (SCR Calculation)', 'PCAT Type 1 or 2', 'PCAT forecasted date', 'Run Assessment Date', 'Run Observation Weekly Capacity parts/week', 'Estimated Target Weekly Capacity parts/week', 'Status: Green Orange Red', 'COMMENT2', 'Reschedule or Follow-up Date (including Next Step)', 'DocInfo Link', 'References / Part Number', 'Lien SCR WAR ROOM', 'Date de mise à jour SCR WAR ROOM', 'Alerte date prévisionnelle de blocage SCR WAR ROOM', "Besoin max sur l'année SCR WAR ROOM", 'Dernier état WR (ROV)', 'Budget Feasibility 222', 'Commentaires pilotage', 'Projet Lanceur']
+2026-08-21 15:18:07,237 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Database transaction: Starting transaction session...
+2026-08-21 15:18:07,325 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Project execution decision:
+project_code=Exemple texte
+decision=CREATED
+reason=New project created
+existing_project_id=None
+existing_project_code=None
+deleted/active=NONE
+mapped_data={'n_rfq_sp_mdt': 'Exemple texte', 'supplier': 'ACME Industries', 'weekly_capacity_parts_week_1': '1250.5', 'capacity_step_parts_week_11': '1250.5', 'weekly_capacity_parts_week_12': '1250.5', 'capacity_step_parts_week_13': '1250.5', 'weekly_capacity_parts_week_14': '1250.5', 'capacity_step_parts_week_15': '1250.5', 'weekly_capacity_parts_week_16': '1250.5', 'capacity_step_parts_week_17': '1250.5', 'weekly_capacity_parts_week_18': '1250.5', 'capacity_step_parts_week_19': '1250.5', 'weekly_capacity_parts_week_2': '1250.5', 'capacity_step_parts_week_21': '1250.5', 'weekly_capacity_parts_week_22': '1250.5', 'capacity_step_parts_week_23': '1250.5', 'weekly_capacity_parts_week_222': '1250.5', 'capacity_step_parts_week_25': '1250.5', 'weekly_capacity_parts_week_223': '1250.5', 'capacity_step_parts_week_27': '1250.5', 'weekly_capacity_parts_week_224': '1250.5', 'capacity_step_parts_week_273': '1250.5', 'weekly_capa_contract_parts_week': '1250.5', 'volume_price_matrix_y_n': 'Y', 'date_update_commitment_supplier': datetime.date(2026, 9, 15), 'capa_to_check_by_sqe_for_next_year_in_parts_week': '1250.5', 'weekly_capacity_ex_standard_extra_capacity_year_max_scr_calculation_parts_week': '1250.5', 'run_observation_weekly_capacity_parts_week': '1250.5', 'estimated_target_weekly_capacity_parts_week': '1250.5', 'references_part_number': 'Exemple texte', 'capacity_manager_cymt': 'Exemple texte', 'capacity_max_without_investment': '1250.5', 'sqme': 'Exemple texte', 'pcat_type_1_or_2': 2, 'pcat_forecasted_date': datetime.date(2026, 9, 15), 'indice': 2, 'module': 'Exemple texte', 'designation_commodity': 'Exemple texte', 'compl_ment_d_signation': 'Exemple texte', 'plant_localization': 'Exemple texte', 'cofor_fabricant': 'Exemple texte', 'asp_acheteur_programme_ac_acheteur_comodit': 'Exemple texte', 'smt_manager': 'Exemple texte', 'gm': 'Exemple texte', 'ga_ma': 'Exemple texte', 'entit_sd': 'Exemple texte', 'lien_vers_scr': 'Exemple texte', 'date_scr': datetime.date(2026, 9, 15), 'availability_date': datetime.date(2026, 9, 15), 'contract_pc_tko_fete': 'Exemple texte', 'comment': 'Commentaire libre...', 'year_max_scr_calculation': '1250.5', 'run_assessment_date': datetime.date(2026, 9, 15), 'status_green_orange_red': 'Green', 'comment2': 'Commentaire libre...', 'reschedule_or_follow_up_date_including_next_step': datetime.date(2026, 9, 15), 'docinfo_link': 'Exemple texte', 'lien_scr_war_room': 'Exemple texte', 'date_de_mise_jour_scr_war_room': datetime.date(2026, 9, 15), 'alerte_date_pr_visionnelle_de_blocage_scr_war_room': datetime.date(2026, 9, 15), 'besoin_max_sur_l_ann_e_scr_war_room': '1250.5', 'dernier_tat_wr_rov': 'Green', 'budget_feasibility_222': 'Exemple texte', 'commentaires_pilotage': 'Commentaire libre...', 'projet_lanceur': 'Exemple texte'}
+2026-08-21 15:18:07,329 - app.application.services.import_engine_service - INFO - [K0 IMPORT WORKFLOW]
+project_code=Exemple texte
+project_id=437e8720-0c2c-4317-840b-2f1047c77245
+structure_id=934c56ee-52b1-4275-a5e1-f2ba2f866957
+structure_code=CMF_MDT
+
+buyer_module=Buyer
+buyer_data_created=false
+
+capacity_module=Capacity Manager
+capacity_data_created=false
+
+sqd_module=SQD
+sqd_data_created=false
+
+current_step=1
+workflow_state=Step 1
+2026-08-21 15:18:07,352 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG]
+row=2
+project_code=Exemple texte
+decision=IMPORTED
+reason=New record created in database
+existing_project_id=None
+existing_project_code=None
+deleted/active=NONE
+validation_errors=[]
+mapped_data={'n_rfq_sp_mdt': 'Exemple texte', 'supplier': 'ACME Industries', 'weekly_capacity_parts_week_1': '1250.5', 'capacity_step_parts_week_11': '1250.5', 'weekly_capacity_parts_week_12': '1250.5', 'capacity_step_parts_week_13': '1250.5', 'weekly_capacity_parts_week_14': '1250.5', 'capacity_step_parts_week_15': '1250.5', 'weekly_capacity_parts_week_16': '1250.5', 'capacity_step_parts_week_17': '1250.5', 'weekly_capacity_parts_week_18': '1250.5', 'capacity_step_parts_week_19': '1250.5', 'weekly_capacity_parts_week_2': '1250.5', 'capacity_step_parts_week_21': '1250.5', 'weekly_capacity_parts_week_22': '1250.5', 'capacity_step_parts_week_23': '1250.5', 'weekly_capacity_parts_week_222': '1250.5', 'capacity_step_parts_week_25': '1250.5', 'weekly_capacity_parts_week_223': '1250.5', 'capacity_step_parts_week_27': '1250.5', 'weekly_capacity_parts_week_224': '1250.5', 'capacity_step_parts_week_273': '1250.5', 'weekly_capa_contract_parts_week': '1250.5', 'volume_price_matrix_y_n': 'Y', 'date_update_commitment_supplier': datetime.date(2026, 9, 15), 'capa_to_check_by_sqe_for_next_year_in_parts_week': '1250.5', 'weekly_capacity_ex_standard_extra_capacity_year_max_scr_calculation_parts_week': '1250.5', 'run_observation_weekly_capacity_parts_week': '1250.5', 'estimated_target_weekly_capacity_parts_week': '1250.5', 'references_part_number': 'Exemple texte', 'capacity_manager_cymt': 'Exemple texte', 'capacity_max_without_investment': '1250.5', 'sqme': 'Exemple texte', 'pcat_type_1_or_2': 2, 'pcat_forecasted_date': datetime.date(2026, 9, 15), 'indice': 2, 'module': 'Exemple texte', 'designation_commodity': 'Exemple texte', 'compl_ment_d_signation': 'Exemple texte', 'plant_localization': 'Exemple texte', 'cofor_fabricant': 'Exemple texte', 'asp_acheteur_programme_ac_acheteur_comodit': 'Exemple texte', 'smt_manager': 'Exemple texte', 'gm': 'Exemple texte', 'ga_ma': 'Exemple texte', 'entit_sd': 'Exemple texte', 'lien_vers_scr': 'Exemple texte', 'date_scr': datetime.date(2026, 9, 15), 'availability_date': datetime.date(2026, 9, 15), 'contract_pc_tko_fete': 'Exemple texte', 'comment': 'Commentaire libre...', 'year_max_scr_calculation': '1250.5', 'run_assessment_date': datetime.date(2026, 9, 15), 'status_green_orange_red': 'Green', 'comment2': 'Commentaire libre...', 'reschedule_or_follow_up_date_including_next_step': datetime.date(2026, 9, 15), 'docinfo_link': 'Exemple texte', 'lien_scr_war_room': 'Exemple texte', 'date_de_mise_jour_scr_war_room': datetime.date(2026, 9, 15), 'alerte_date_pr_visionnelle_de_blocage_scr_war_room': datetime.date(2026, 9, 15), 'besoin_max_sur_l_ann_e_scr_war_room': '1250.5', 'dernier_tat_wr_rov': 'Green', 'budget_feasibility_222': 'Exemple texte', 'commentaires_pilotage': 'Commentaire libre...', 'projet_lanceur': 'Exemple texte'}
+2026-08-21 15:18:07,357 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Serializer errors count: 0
+2026-08-21 15:18:07,427 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Database transaction: Committed successfully (Imported: 1, Updated: 0, Skipped: 1, Failed: 0)
+2026-08-21 15:18:07,438 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Execution time: 991 ms
+2026-08-21 15:18:07,446 - app.main - INFO - POST /api/v1/import/execute -> 200
+2026-08-21 15:18:07,488 - app.main - INFO - POST /api/v1/import/save-mapping-memory
+2026-08-21 15:18:07,610 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:n rfq sp mdt -> n_rfq_sp_mdt
+2026-08-21 15:18:07,613 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:supplier -> supplier
+2026-08-21 15:18:07,615 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:weekly capacity parts week 1 -> weekly_capacity_parts_week_1
+2026-08-21 15:18:07,618 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:capacity step parts week 11 -> capacity_step_parts_week_11
+2026-08-21 15:18:07,622 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:weekly capacity parts week 12 -> weekly_capacity_parts_week_12
+2026-08-21 15:18:07,625 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:capacity step parts week 13 -> capacity_step_parts_week_13
+2026-08-21 15:18:07,628 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:weekly capacity parts week 14 -> weekly_capacity_parts_week_14
+2026-08-21 15:18:07,630 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:capacity step parts week 15 -> capacity_step_parts_week_15
+2026-08-21 15:18:07,633 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:weekly capacity parts week 16 -> weekly_capacity_parts_week_16
+2026-08-21 15:18:07,639 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:capacity step parts week 17 -> capacity_step_parts_week_17
+2026-08-21 15:18:07,642 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:weekly capacity parts week 18 -> weekly_capacity_parts_week_18
+2026-08-21 15:18:07,645 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:capacity step parts week 19 -> capacity_step_parts_week_19
+2026-08-21 15:18:07,647 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:weekly capacity parts week 2 -> weekly_capacity_parts_week_2
+2026-08-21 15:18:07,649 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:capacity step parts week 21 -> capacity_step_parts_week_21
+2026-08-21 15:18:07,653 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:weekly capacity parts week 22 -> weekly_capacity_parts_week_22
+2026-08-21 15:18:07,655 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:capacity step parts week 23 -> capacity_step_parts_week_23
+2026-08-21 15:18:07,657 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:weekly capacity parts week 222 -> weekly_capacity_parts_week_222
+2026-08-21 15:18:07,660 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:capacity step parts week 25 -> capacity_step_parts_week_25
+2026-08-21 15:18:07,662 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:weekly capacity parts week 223 -> weekly_capacity_parts_week_223
+2026-08-21 15:18:07,664 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:capacity step parts week 27 -> capacity_step_parts_week_27
+2026-08-21 15:18:07,666 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:weekly capacity parts week 224 -> weekly_capacity_parts_week_224
+2026-08-21 15:18:07,669 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:capacity step parts week 273 -> capacity_step_parts_week_273
+2026-08-21 15:18:07,672 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:weekly capa contract parts week -> weekly_capa_contract_parts_week
+2026-08-21 15:18:07,676 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:volume price matrix y n -> volume_price_matrix_y_n
+2026-08-21 15:18:07,678 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:date update commitment supplier -> date_update_commitment_supplier
+2026-08-21 15:18:07,679 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:capa to check by sqe for next year in parts week -> capa_to_check_by_sqe_for_next_year_in_parts_week
+2026-08-21 15:18:07,682 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:weekly capacity ex standard extra capacity year max scr calculation parts week -> weekly_capacity_ex_standard_extra_capacity_year_max_scr_calculation_parts_week
+2026-08-21 15:18:07,684 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:run observation weekly capacity parts week -> run_observation_weekly_capacity_parts_week
+2026-08-21 15:18:07,688 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:estimated target weekly capacity parts week -> estimated_target_weekly_capacity_parts_week
+2026-08-21 15:18:07,690 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:references part number -> references_part_number
+2026-08-21 15:18:07,691 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:capacity manager cymt -> capacity_manager_cymt
+2026-08-21 15:18:07,694 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:capacity max without investment -> capacity_max_without_investment
+2026-08-21 15:18:07,696 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:sqme -> sqme
+2026-08-21 15:18:07,698 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:pcat type 1 or 2 -> pcat_type_1_or_2
+2026-08-21 15:18:07,700 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:pcat forecasted date -> pcat_forecasted_date
+2026-08-21 15:18:07,702 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:indice -> indice
+2026-08-21 15:18:07,705 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:module -> module
+2026-08-21 15:18:07,707 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:designation commodity -> designation_commodity
+2026-08-21 15:18:07,710 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:complement designation -> compl_ment_d_signation
+2026-08-21 15:18:07,712 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:plant localization -> plant_localization
+2026-08-21 15:18:07,714 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:cofor fabricant -> cofor_fabricant
+2026-08-21 15:18:07,715 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:asp acheteur programme ac acheteur comodite -> asp_acheteur_programme_ac_acheteur_comodit
+2026-08-21 15:18:07,720 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:smt manager -> smt_manager
+2026-08-21 15:18:07,722 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:gm -> gm
+2026-08-21 15:18:07,725 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:ga ma -> ga_ma
+2026-08-21 15:18:07,727 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:entite sd -> entit_sd
+2026-08-21 15:18:07,730 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:lien vers scr -> lien_vers_scr
+2026-08-21 15:18:07,732 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:date scr -> date_scr
+2026-08-21 15:18:07,733 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:availability date -> availability_date
+2026-08-21 15:18:07,738 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:contract pc tko fete -> contract_pc_tko_fete
+2026-08-21 15:18:07,740 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:comment -> comment
+2026-08-21 15:18:07,742 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:year max scr calculation -> year_max_scr_calculation
+2026-08-21 15:18:07,744 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:run assessment date -> run_assessment_date
+2026-08-21 15:18:07,746 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:status green orange red -> status_green_orange_red
+2026-08-21 15:18:07,747 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:comment2 -> comment2
+2026-08-21 15:18:07,749 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:reschedule or follow up date including next step -> reschedule_or_follow_up_date_including_next_step
+2026-08-21 15:18:07,753 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:docinfo link -> docinfo_link
+2026-08-21 15:18:07,755 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:lien scr war room -> lien_scr_war_room
+2026-08-21 15:18:07,758 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:date de mise a jour scr war room -> date_de_mise_jour_scr_war_room
+2026-08-21 15:18:07,760 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:alerte date previsionnelle de blocage scr war room -> alerte_date_pr_visionnelle_de_blocage_scr_war_room
+2026-08-21 15:18:07,762 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:besoin max sur l annee scr war room -> besoin_max_sur_l_ann_e_scr_war_room
+2026-08-21 15:18:07,763 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:dernier etat wr rov -> dernier_tat_wr_rov
+2026-08-21 15:18:07,766 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:budget feasibility 222 -> budget_feasibility_222
+2026-08-21 15:18:07,770 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:commentaires pilotage -> commentaires_pilotage
+2026-08-21 15:18:07,772 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for CMF_MDT:projet lanceur -> projet_lanceur
+2026-08-21 15:18:07,782 - app.main - INFO - POST /api/v1/import/save-mapping-memory -> 200
+2026-08-21 15:19:05,898 - app.main - INFO - GET /api/v1/projects
+2026-08-21 15:19:06,137 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-21 15:19:13,399 - app.main - INFO - GET /api/v1/projects
+2026-08-21 15:19:13,768 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-21 15:19:19,957 - app.main - INFO - GET /api/v1/projects/437e8720-0c2c-4317-840b-2f1047c77245
+2026-08-21 15:19:20,153 - app.main - INFO - GET /api/v1/projects/437e8720-0c2c-4317-840b-2f1047c77245 -> 200
+2026-08-21 15:19:20,594 - app.main - INFO - GET /api/v1/suppliers
+2026-08-21 15:19:20,614 - app.main - INFO - GET /api/v1/users
+2026-08-21 15:19:21,152 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-21 15:19:21,220 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-21 15:19:55,539 - app.main - INFO - GET /api/v1/projects
+2026-08-21 15:19:56,082 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-21 15:19:58,407 - app.main - INFO - GET /api/v1/suppliers
+2026-08-21 15:19:58,410 - app.main - INFO - GET /api/v1/projects/437e8720-0c2c-4317-840b-2f1047c77245
+2026-08-21 15:19:58,547 - app.main - INFO - GET /api/v1/projects/437e8720-0c2c-4317-840b-2f1047c77245 -> 200
+2026-08-21 15:19:58,639 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-21 15:20:13,377 - app.main - INFO - GET /api/v1/projects
+2026-08-21 15:20:13,679 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-21 15:20:22,502 - app.main - INFO - GET /api/v1/parts
+2026-08-21 15:20:22,838 - app.main - INFO - GET /api/v1/parts -> 200
+2026-08-21 15:20:23,409 - app.main - INFO - GET /api/v1/suppliers
+2026-08-21 15:20:23,716 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-21 15:20:41,381 - app.main - INFO - GET /api/v1/projects
+2026-08-21 15:20:41,700 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-21 15:20:45,052 - app.main - INFO - GET /api/v1/risks
+2026-08-21 15:20:45,392 - app.main - INFO - GET /api/v1/risks -> 200
+2026-08-21 15:24:18,748 - app.main - INFO - GET /api/v1/auth/me
+2026-08-21 15:24:18,883 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-21 15:24:18,896 - app.main - INFO - GET /api/v1/auth/me
+2026-08-21 15:24:19,012 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-21 15:24:19,115 - app.main - INFO - GET /api/v1/risks
+2026-08-21 15:24:19,117 - app.main - INFO - GET /api/v1/templates
+2026-08-21 15:24:19,244 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-21 15:24:19,280 - app.main - INFO - GET /api/v1/templates
+2026-08-21 15:24:19,505 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-21 15:24:19,518 - app.main - INFO - GET /api/v1/risks -> 200
+2026-08-24 12:50:22,287 - app.main - INFO - Starting CMF Platform API
+2026-08-24 12:50:22,332 - app.main - INFO - Database tables verified/created (SQLite)
+2026-08-24 12:51:35,664 - app.main - INFO - GET /api/v1/auth/me
+2026-08-24 12:51:35,697 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-24 12:51:35,701 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-24 12:51:35,723 - app.main - INFO - GET /api/v1/auth/me
+2026-08-24 12:51:35,727 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-24 12:51:35,734 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-24 12:51:35,739 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-24 12:51:36,155 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-24 12:51:36,176 - app.main - INFO - GET /api/v1/auth/me
+2026-08-24 12:51:36,401 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-24 12:51:36,414 - app.main - INFO - GET /api/v1/auth/me
+2026-08-24 12:51:36,533 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-24 12:51:36,547 - app.main - INFO - GET /api/v1/templates
+2026-08-24 12:51:36,698 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 12:51:36,714 - app.main - INFO - GET /api/v1/templates
+2026-08-24 12:51:36,811 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 12:51:36,846 - app.main - INFO - GET /api/v1/projects
+2026-08-24 12:51:36,850 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-24 12:51:37,522 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 12:51:38,114 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-24 12:52:12,917 - app.main - INFO - GET /api/v1/projects
+2026-08-24 12:52:13,271 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 12:52:15,275 - app.main - INFO - GET /api/v1/capacity
+2026-08-24 12:52:15,432 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-08-24 12:52:45,860 - app.main - INFO - POST /api/v1/auth/logout
+2026-08-24 12:52:46,380 - app.main - INFO - POST /api/v1/auth/logout -> 200
+2026-08-24 12:53:02,338 - app.main - INFO - POST /api/v1/auth/login
+2026-08-24 12:53:03,051 - app.main - WARNING - UnauthorizedException: Invalid email or password
+2026-08-24 12:53:03,055 - app.main - INFO - POST /api/v1/auth/login -> 401
+2026-08-24 12:53:11,844 - app.main - INFO - POST /api/v1/auth/login
+2026-08-24 12:53:12,438 - app.main - WARNING - UnauthorizedException: Invalid email or password
+2026-08-24 12:53:12,441 - app.main - INFO - POST /api/v1/auth/login -> 401
+2026-08-24 12:53:19,575 - app.main - INFO - POST /api/v1/auth/login
+2026-08-24 12:53:20,419 - app.main - INFO - POST /api/v1/auth/login -> 200
+2026-08-24 12:53:20,449 - app.main - INFO - GET /api/v1/auth/me
+2026-08-24 12:53:20,562 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-24 12:53:20,876 - app.main - INFO - GET /api/v1/projects
+2026-08-24 12:53:20,911 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-24 12:53:20,915 - app.main - INFO - GET /api/v1/templates
+2026-08-24 12:53:21,036 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 12:53:21,051 - app.main - INFO - GET /api/v1/templates
+2026-08-24 12:53:21,230 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 12:53:21,379 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 12:53:21,670 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-24 12:53:23,261 - app.main - INFO - GET /api/v1/capacity
+2026-08-24 12:53:23,350 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-08-24 12:53:32,248 - app.main - INFO - GET /api/v1/parts
+2026-08-24 12:53:32,254 - app.main - INFO - GET /api/v1/suppliers
+2026-08-24 12:53:32,646 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-24 12:53:32,829 - app.main - INFO - GET /api/v1/parts -> 200
+2026-08-24 12:54:59,489 - app.main - INFO - GET /api/v1/capacity
+2026-08-24 12:54:59,762 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-08-24 12:55:17,076 - app.main - INFO - GET /api/v1/parts
+2026-08-24 12:55:17,082 - app.main - INFO - GET /api/v1/suppliers
+2026-08-24 12:55:17,557 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-24 12:55:17,617 - app.main - INFO - GET /api/v1/parts -> 200
+2026-08-24 13:03:46,316 - app.main - INFO - POST /api/v1/auth/login
+2026-08-24 13:03:47,433 - app.main - INFO - POST /api/v1/auth/login -> 200
+2026-08-24 13:03:47,550 - app.main - INFO - GET /api/v1/auth/me
+2026-08-24 13:03:47,675 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-24 13:03:47,989 - app.main - INFO - GET /api/v1/projects
+2026-08-24 13:03:48,045 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-24 13:03:48,128 - app.main - INFO - GET /api/v1/templates
+2026-08-24 13:03:49,065 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 13:03:49,160 - app.main - INFO - GET /api/v1/templates
+2026-08-24 13:03:50,043 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 13:03:50,458 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 13:03:50,692 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-24 13:03:56,077 - app.main - INFO - GET /api/v1/parts
+2026-08-24 13:03:56,349 - app.main - INFO - GET /api/v1/parts -> 200
+2026-08-24 13:04:00,732 - app.main - INFO - GET /api/v1/capacity
+2026-08-24 13:04:01,490 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-08-24 13:13:27,010 - app.main - INFO - GET /api/v1/parts
+2026-08-24 13:13:27,014 - app.main - INFO - GET /api/v1/suppliers
+2026-08-24 13:13:27,389 - app.main - INFO - GET /api/v1/parts -> 200
+2026-08-24 13:13:27,392 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-24 13:14:38,945 - app.main - INFO - Shutting down CMF Platform API
+2026-08-24 13:14:44,225 - app.main - INFO - Starting CMF Platform API
+2026-08-24 13:14:44,243 - app.main - INFO - Database tables verified/created (SQLite)
+2026-08-24 13:14:49,871 - app.main - INFO - GET /api/v1/auth/me
+2026-08-24 13:14:50,239 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-24 13:14:50,258 - app.main - INFO - GET /api/v1/auth/me
+2026-08-24 13:14:50,379 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-24 13:14:50,631 - app.main - INFO - GET /api/v1/parts
+2026-08-24 13:14:50,640 - app.main - INFO - GET /api/v1/suppliers
+2026-08-24 13:14:50,647 - app.main - INFO - GET /api/v1/templates
+2026-08-24 13:14:50,928 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 13:14:50,958 - app.main - INFO - GET /api/v1/templates
+2026-08-24 13:14:51,124 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 13:14:51,215 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-24 13:14:51,231 - app.main - INFO - GET /api/v1/parts -> 200
+2026-08-24 13:17:36,056 - app.main - INFO - GET /api/v1/auth/me
+2026-08-24 13:17:36,147 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-24 13:17:36,162 - app.main - INFO - GET /api/v1/auth/me
+2026-08-24 13:17:36,252 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-24 13:17:36,337 - app.main - INFO - GET /api/v1/parts
+2026-08-24 13:17:36,345 - app.main - INFO - GET /api/v1/suppliers
+2026-08-24 13:17:36,347 - app.main - INFO - GET /api/v1/templates
+2026-08-24 13:17:36,689 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 13:17:36,711 - app.main - INFO - GET /api/v1/templates
+2026-08-24 13:17:36,843 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 13:17:36,968 - app.main - INFO - GET /api/v1/parts -> 200
+2026-08-24 13:17:36,989 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-24 13:18:05,944 - app.main - INFO - GET /api/v1/auth/me
+2026-08-24 13:18:06,024 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-24 13:18:06,036 - app.main - INFO - GET /api/v1/auth/me
+2026-08-24 13:18:06,103 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-24 13:18:06,164 - app.main - INFO - GET /api/v1/templates
+2026-08-24 13:18:06,230 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 13:18:06,244 - app.main - INFO - GET /api/v1/templates
+2026-08-24 13:18:06,300 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 13:18:06,509 - app.main - INFO - GET /api/v1/projects
+2026-08-24 13:18:06,513 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-24 13:18:07,625 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 13:18:08,260 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-24 13:18:32,559 - app.main - INFO - Shutting down CMF Platform API
+2026-08-24 13:18:39,893 - app.main - INFO - Starting CMF Platform API
+2026-08-24 13:18:39,905 - app.main - INFO - Database tables verified/created (SQLite)
+2026-08-24 13:18:53,714 - app.main - INFO - GET /api/v1/auth/me
+2026-08-24 13:18:54,026 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-24 13:18:54,045 - app.main - INFO - GET /api/v1/auth/me
+2026-08-24 13:18:54,118 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-24 13:18:54,146 - app.main - INFO - GET /api/v1/projects
+2026-08-24 13:18:54,150 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-24 13:18:54,157 - app.main - INFO - GET /api/v1/templates
+2026-08-24 13:18:54,489 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 13:18:54,509 - app.main - INFO - GET /api/v1/templates
+2026-08-24 13:18:54,664 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 13:18:54,830 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 13:18:55,204 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-24 13:19:08,039 - app.main - INFO - GET /api/v1/auth/me
+2026-08-24 13:19:08,109 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-24 13:19:08,125 - app.main - INFO - GET /api/v1/auth/me
+2026-08-24 13:19:08,196 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-24 13:19:08,254 - app.main - INFO - GET /api/v1/templates
+2026-08-24 13:19:08,319 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 13:19:08,334 - app.main - INFO - GET /api/v1/templates
+2026-08-24 13:19:08,386 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 13:19:08,652 - app.main - INFO - GET /api/v1/projects
+2026-08-24 13:19:08,655 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-24 13:19:09,266 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 13:19:09,748 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-24 13:19:10,646 - app.main - INFO - GET /api/v1/projects
+2026-08-24 13:19:10,973 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 13:19:12,082 - app.main - INFO - GET /api/v1/parts
+2026-08-24 13:19:12,274 - app.main - INFO - GET /api/v1/parts -> 200
+2026-08-24 13:19:13,260 - app.main - INFO - GET /api/v1/suppliers
+2026-08-24 13:19:13,511 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-24 13:19:14,613 - app.main - INFO - GET /api/v1/risks
+2026-08-24 13:19:14,877 - app.main - INFO - GET /api/v1/risks -> 200
+2026-08-24 13:19:16,183 - app.main - INFO - GET /api/v1/projects
+2026-08-24 13:19:16,405 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 13:19:16,421 - app.main - INFO - GET /api/v1/projects
+2026-08-24 13:19:16,661 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 13:19:17,138 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-24 13:19:17,146 - app.main - INFO - GET /api/v1/documents
+2026-08-24 13:19:17,237 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 3 published templates in 31.25 ms
+2026-08-24 13:19:17,244 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-24 13:19:17,266 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-24 13:19:17,293 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-24 13:19:17,339 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 3 published templates in 15.42 ms
+2026-08-24 13:19:17,347 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-24 13:19:18,505 - app.main - INFO - GET /api/v1/projects
+2026-08-24 13:19:18,516 - app.main - INFO - GET /api/v1/capacity
+2026-08-24 13:19:18,877 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-08-24 13:19:19,005 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 13:23:56,766 - app.main - INFO - GET /api/v1/auth/me
+2026-08-24 13:23:56,773 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-24 13:23:56,776 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-24 13:23:56,792 - app.main - INFO - GET /api/v1/auth/me
+2026-08-24 13:23:56,801 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-24 13:23:56,807 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-24 13:23:56,808 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-24 13:23:56,935 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-24 13:23:56,956 - app.main - INFO - GET /api/v1/auth/me
+2026-08-24 13:23:57,023 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-24 13:23:57,034 - app.main - INFO - GET /api/v1/auth/me
+2026-08-24 13:23:57,098 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-24 13:23:57,358 - app.main - INFO - GET /api/v1/capacity
+2026-08-24 13:23:57,366 - app.main - INFO - GET /api/v1/templates
+2026-08-24 13:23:57,481 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 13:23:57,498 - app.main - INFO - GET /api/v1/templates
+2026-08-24 13:23:57,616 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 13:23:57,770 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-08-24 13:24:23,250 - app.main - INFO - GET /api/v1/auth/me
+2026-08-24 13:24:23,395 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-24 13:24:23,417 - app.main - INFO - GET /api/v1/auth/me
+2026-08-24 13:24:23,476 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-24 13:24:23,735 - app.main - INFO - GET /api/v1/capacity
+2026-08-24 13:24:23,751 - app.main - INFO - GET /api/v1/templates
+2026-08-24 13:24:23,924 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 13:24:23,950 - app.main - INFO - GET /api/v1/templates
+2026-08-24 13:24:24,118 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 13:24:24,192 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-08-24 13:27:22,260 - app.main - INFO - DELETE /api/v1/capacity/5404e396-a678-461e-9040-02c6a88a7329
+2026-08-24 13:27:22,684 - app.main - INFO - DELETE /api/v1/capacity/5404e396-a678-461e-9040-02c6a88a7329 -> 200
+2026-08-24 13:27:22,714 - app.main - INFO - GET /api/v1/capacity
+2026-08-24 13:27:22,856 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-08-24 13:27:28,846 - app.main - INFO - GET /api/v1/parts
+2026-08-24 13:27:28,850 - app.main - INFO - GET /api/v1/suppliers
+2026-08-24 13:27:29,310 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-24 13:27:29,429 - app.main - INFO - GET /api/v1/parts -> 200
+2026-08-24 13:28:35,295 - app.main - INFO - GET /api/v1/parts
+2026-08-24 13:28:35,326 - app.main - INFO - GET /api/v1/suppliers
+2026-08-24 13:28:35,646 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-24 13:28:35,684 - app.main - INFO - GET /api/v1/parts -> 200
+2026-08-24 13:29:22,560 - app.main - INFO - POST /api/v1/capacity
+2026-08-24 13:29:22,904 - app.main - INFO - POST /api/v1/capacity -> 200
+2026-08-24 13:29:23,088 - app.main - INFO - GET /api/v1/capacity
+2026-08-24 13:29:23,223 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-08-24 13:31:23,117 - app.main - INFO - GET /api/v1/projects
+2026-08-24 13:31:23,132 - app.main - INFO - GET /api/v1/risks
+2026-08-24 13:31:23,135 - app.main - INFO - GET /api/v1/suppliers
+2026-08-24 13:31:23,142 - app.main - INFO - GET /api/v1/capacity
+2026-08-24 13:31:23,937 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-24 13:31:24,038 - app.main - INFO - GET /api/v1/risks -> 200
+2026-08-24 13:31:24,196 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-08-24 13:31:24,338 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 13:32:06,927 - app.main - INFO - GET /api/v1/projects
+2026-08-24 13:32:06,930 - app.main - INFO - GET /api/v1/risks
+2026-08-24 13:32:06,938 - app.main - INFO - GET /api/v1/suppliers
+2026-08-24 13:32:06,946 - app.main - INFO - GET /api/v1/capacity
+2026-08-24 13:32:07,413 - app.main - INFO - GET /api/v1/risks -> 200
+2026-08-24 13:32:07,538 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-24 13:32:07,565 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-08-24 13:32:07,653 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 13:32:19,837 - app.main - INFO - GET /api/v1/projects
+2026-08-24 13:32:20,064 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 13:32:40,302 - app.main - INFO - GET /api/v1/projects
+2026-08-24 13:32:40,616 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 13:32:43,150 - app.main - INFO - GET /api/v1/auth/me
+2026-08-24 13:32:43,291 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-24 13:32:43,311 - app.main - INFO - GET /api/v1/auth/me
+2026-08-24 13:32:43,561 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-24 13:32:43,611 - app.main - INFO - GET /api/v1/projects
+2026-08-24 13:32:43,619 - app.main - INFO - GET /api/v1/risks
+2026-08-24 13:32:43,621 - app.main - INFO - GET /api/v1/suppliers
+2026-08-24 13:32:43,676 - app.main - INFO - GET /api/v1/capacity
+2026-08-24 13:32:43,679 - app.main - INFO - GET /api/v1/templates
+2026-08-24 13:32:44,050 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 13:32:44,071 - app.main - INFO - GET /api/v1/templates
+2026-08-24 13:32:44,309 - app.main - INFO - GET /api/v1/risks -> 200
+2026-08-24 13:32:44,455 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-24 13:32:44,586 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 13:32:44,623 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-08-24 13:32:44,722 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 13:33:27,220 - app.main - INFO - GET /api/v1/projects
+2026-08-24 13:33:27,544 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 13:33:45,801 - app.main - INFO - GET /api/v1/projects
+2026-08-24 13:33:46,192 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 13:33:55,363 - app.main - INFO - GET /api/v1/projects
+2026-08-24 13:33:55,784 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 13:34:30,359 - app.main - INFO - GET /api/v1/projects
+2026-08-24 13:34:30,695 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 13:34:39,627 - app.main - INFO - GET /api/v1/projects
+2026-08-24 13:34:39,985 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 13:34:58,903 - app.main - INFO - GET /api/v1/projects
+2026-08-24 13:34:58,907 - app.main - INFO - GET /api/v1/risks
+2026-08-24 13:34:58,916 - app.main - INFO - GET /api/v1/capacity
+2026-08-24 13:34:58,918 - app.main - INFO - GET /api/v1/suppliers
+2026-08-24 13:34:59,424 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 13:34:59,639 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-24 13:34:59,648 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-08-24 13:34:59,681 - app.main - INFO - GET /api/v1/risks -> 200
+2026-08-24 13:37:04,103 - app.main - INFO - GET /api/v1/projects
+2026-08-24 13:37:04,499 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 13:37:34,756 - app.main - INFO - GET /api/v1/risks
+2026-08-24 13:37:35,051 - app.main - INFO - GET /api/v1/risks -> 200
+2026-08-24 13:37:36,461 - app.main - INFO - GET /api/v1/projects
+2026-08-24 13:37:36,465 - app.main - INFO - GET /api/v1/suppliers
+2026-08-24 13:37:36,473 - app.main - INFO - GET /api/v1/capacity
+2026-08-24 13:37:36,900 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-08-24 13:37:36,952 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-24 13:37:37,011 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 13:38:31,400 - app.main - INFO - GET /api/v1/projects
+2026-08-24 13:38:31,727 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 13:38:41,010 - app.main - INFO - GET /api/v1/projects
+2026-08-24 13:38:41,013 - app.main - INFO - GET /api/v1/risks
+2026-08-24 13:38:41,020 - app.main - INFO - GET /api/v1/suppliers
+2026-08-24 13:38:41,027 - app.main - INFO - GET /api/v1/capacity
+2026-08-24 13:38:41,719 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 13:38:41,905 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-08-24 13:38:42,048 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-24 13:38:42,055 - app.main - INFO - GET /api/v1/risks -> 200
+2026-08-24 13:38:43,764 - app.main - INFO - GET /api/v1/projects
+2026-08-24 13:38:44,041 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 13:39:25,847 - app.main - INFO - GET /api/v1/projects
+2026-08-24 13:39:26,242 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 13:39:29,621 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-24 13:39:29,625 - app.main - INFO - GET /api/v1/documents
+2026-08-24 13:39:29,811 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 3 published templates in 56.72 ms
+2026-08-24 13:39:29,825 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-24 13:39:29,859 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-24 13:39:29,902 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-24 13:39:29,972 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 3 published templates in 17.10 ms
+2026-08-24 13:39:29,977 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-24 13:42:14,763 - app.main - INFO - POST /api/v1/auth/change-password
+2026-08-24 13:42:14,803 - app.main - WARNING - Validation error: [{'type': 'string_too_short', 'loc': ['body', 'new_password'], 'msg': 'String should have at least 8 characters', 'input': 'Admin12', 'ctx': {'min_length': 8}}]
+2026-08-24 13:42:14,806 - app.main - INFO - POST /api/v1/auth/change-password -> 422
+2026-08-24 13:42:29,714 - app.main - INFO - POST /api/v1/auth/change-password
+2026-08-24 13:42:29,849 - app.main - WARNING - Validation error: [{'type': 'string_too_short', 'loc': ['body', 'new_password'], 'msg': 'String should have at least 8 characters', 'input': 'Admin12', 'ctx': {'min_length': 8}}]
+2026-08-24 13:42:29,851 - app.main - INFO - POST /api/v1/auth/change-password -> 422
+2026-08-24 13:42:40,120 - app.main - INFO - POST /api/v1/auth/change-password
+2026-08-24 13:42:40,150 - app.main - WARNING - Validation error: [{'type': 'string_too_short', 'loc': ['body', 'new_password'], 'msg': 'String should have at least 8 characters', 'input': 'Admin12', 'ctx': {'min_length': 8}}]
+2026-08-24 13:42:40,152 - app.main - INFO - POST /api/v1/auth/change-password -> 422
+2026-08-24 13:42:56,054 - app.main - INFO - POST /api/v1/auth/change-password
+2026-08-24 13:42:57,413 - app.main - INFO - POST /api/v1/auth/change-password -> 200
+2026-08-24 13:43:15,239 - app.main - INFO - POST /api/v1/auth/change-password
+2026-08-24 13:43:16,571 - app.main - INFO - POST /api/v1/auth/change-password -> 200
+2026-08-24 13:44:33,587 - app.main - INFO - GET /api/v1/notifications
+2026-08-24 13:44:33,671 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-24 13:48:04,873 - app.main - INFO - GET /api/v1/templates
+2026-08-24 13:48:04,940 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 13:48:04,953 - app.main - INFO - GET /api/v1/templates
+2026-08-24 13:48:05,021 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 13:49:25,092 - app.main - INFO - GET /api/v1/notifications
+2026-08-24 13:49:25,199 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-24 13:52:10,709 - app.main - INFO - Shutting down CMF Platform API
+2026-08-24 13:52:16,166 - app.main - INFO - Starting CMF Platform API
+2026-08-24 13:52:16,187 - app.main - INFO - Database tables verified/created (SQLite)
+2026-08-24 13:52:41,888 - app.main - INFO - GET /api/v1/notifications
+2026-08-24 13:52:41,938 - app.main - INFO - GET /api/v1/templates
+2026-08-24 13:52:42,248 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 13:52:42,289 - app.main - INFO - GET /api/v1/templates
+2026-08-24 13:52:42,320 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-24 13:52:42,406 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 13:52:47,859 - app.main - INFO - GET /api/v1/templates
+2026-08-24 13:52:48,047 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 13:52:48,061 - app.main - INFO - GET /api/v1/templates
+2026-08-24 13:52:48,111 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-24 13:53:07,766 - app.main - INFO - GET /api/v1/notifications
+2026-08-24 13:53:07,883 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-24 13:54:56,737 - app.main - INFO - GET /api/v1/notifications
+2026-08-24 13:54:56,742 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-24 13:54:56,749 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-24 13:54:56,758 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-24 13:54:56,761 - app.main - INFO - GET /api/v1/notifications -> 401
+2026-08-24 13:54:56,765 - app.main - INFO - GET /api/v1/notifications/unread-count -> 401
+2026-08-24 13:54:56,788 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-24 13:54:56,936 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-24 13:54:56,968 - app.main - INFO - GET /api/v1/notifications
+2026-08-24 13:54:56,973 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-24 13:54:57,089 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-24 13:54:57,157 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-24 13:55:27,123 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-24 13:55:27,197 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-24 13:55:38,002 - app.main - INFO - GET /api/v1/projects
+2026-08-24 13:55:38,005 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-24 13:55:38,449 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 13:55:38,794 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-24 13:55:44,083 - app.main - INFO - GET /api/v1/notifications
+2026-08-24 13:55:44,152 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-24 13:55:57,233 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-24 13:55:57,299 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-24 13:56:18,857 - app.main - INFO - GET /api/v1/capacity
+2026-08-24 13:56:19,121 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-08-24 13:56:20,908 - app.main - INFO - GET /api/v1/notifications
+2026-08-24 13:56:21,043 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-24 13:56:27,329 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-24 13:56:27,395 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-24 13:56:52,879 - app.main - INFO - PATCH /api/v1/notifications/read-all
+2026-08-24 13:56:52,963 - app.main - INFO - PATCH /api/v1/notifications/read-all -> 200
+2026-08-24 13:56:52,995 - app.main - INFO - GET /api/v1/notifications
+2026-08-24 13:56:52,999 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-24 13:56:53,110 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-24 13:56:53,182 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-24 13:57:00,166 - app.main - INFO - GET /api/v1/notifications
+2026-08-24 13:57:00,223 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-24 13:57:06,857 - app.main - INFO - GET /api/v1/projects
+2026-08-24 13:57:06,866 - app.main - INFO - GET /api/v1/risks
+2026-08-24 13:57:06,867 - app.main - INFO - GET /api/v1/suppliers
+2026-08-24 13:57:06,875 - app.main - INFO - GET /api/v1/capacity
+2026-08-24 13:57:07,439 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-24 13:57:07,477 - app.main - INFO - GET /api/v1/risks -> 200
+2026-08-24 13:57:07,493 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-24 13:57:07,529 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-08-24 15:37:05,112 - app.main - INFO - Starting CMF Platform API

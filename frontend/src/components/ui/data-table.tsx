@@ -95,7 +95,6 @@ function DataTableInternal<TData extends object>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
-  const [internalPagination, setInternalPagination] = useState({ pageIndex: 0, pageSize });
 
   const sorting = externalSorting ?? internalSorting;
   const onSortingChange = externalOnSortingChange ?? setInternalSorting;
