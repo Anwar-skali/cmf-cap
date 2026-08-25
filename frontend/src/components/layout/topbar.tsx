@@ -61,7 +61,7 @@ function Topbar({ onMobileMenuToggle, className }: TopbarProps) {
         <Menu className="h-5 w-5" />
       </button>
 
-      <div className="flex-1 min-w-0">
+      <div className="flex-1 min-w-0 overflow-hidden mr-2">
         <Breadcrumb />
       </div>
 

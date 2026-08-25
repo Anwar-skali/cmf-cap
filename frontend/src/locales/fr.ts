@@ -199,6 +199,184 @@ export const fr: Translations = {
     mark_as_read: 'Marquer comme lu',
   },
 
+  // Risks Page
+  risks_page: {
+    title: 'Risques Qualité & Projets',
+    subtitle: 'Registre des Risques CMF & Gestion des Non-Conformités',
+    description: 'Suivez, évaluez et atténuez les non-conformités techniques, les risques de capacité fournisseurs et les écarts de qualité des projets.',
+    log_new_risk: 'Déclarer un Risque',
+    quick_mitigate: 'Atténuation Rapide',
+    export_report: 'Exporter',
+    export_csv: 'Exporter en CSV',
+    export_json: 'Exporter JSON',
+    print_report: 'Imprimer / Rapport PDF',
+    
+    // KPI metrics
+    kpi_total_risks: 'Total des Risques Suivis',
+    kpi_total_desc: 'Non-conformités et écarts enregistrés',
+    kpi_critical_risks: 'Exposition Critique & Élevée',
+    kpi_critical_desc: 'Impact sévère nécessitant une action immédiate',
+    kpi_open_risks: 'Non-Conformités Ouvertes',
+    kpi_open_desc: 'En attente de plan d\'atténuation',
+    kpi_in_mitigation: 'En Atténuation',
+    kpi_in_mitigation_desc: 'Plans de résolution actifs en cours',
+    kpi_mitigated_rate: 'Taux de Résolution',
+    kpi_mitigated_desc: 'Risques résolus ou clôturés',
+    
+    // Views
+    view_table: 'Vue Tableau',
+    view_kanban: 'Tableau Kanban',
+    view_matrix: 'Matrice 5x5 Heatmap',
+    
+    // Matrix
+    matrix_title: 'Matrice d\'Évaluation des Risques 5x5',
+    matrix_subtitle: 'Heatmap Probabilité vs Sévérité (Cliquez sur une case pour filtrer)',
+    matrix_toggle_show: 'Afficher la Matrice',
+    matrix_toggle_hide: 'Masquer la Matrice',
+    matrix_severity_axis: 'Sévérité (Impact)',
+    matrix_prob_axis: 'Probabilité (Fréquence)',
+    
+    // Analytics
+    analytics_title: 'Analyses & Répartition des Risques',
+    severity_breakdown: 'Répartition par Sévérité',
+    category_breakdown: 'Risques par Catégorie',
+    status_breakdown: 'Pipeline des Statuts',
+    
+    // Filters
+    search_placeholder: 'Rechercher par titre, description, pièce, projet ou responsable...',
+    filter_severity: 'Sévérité',
+    filter_status: 'Statut',
+    filter_probability: 'Probabilité',
+    filter_category: 'Catégorie / Type',
+    filter_project: 'Projet',
+    filter_all: 'Tous',
+    clear_filters: 'Effacer les Filtres',
+    quick_filter_all: 'Tous les Risques',
+    quick_filter_critical: 'Critiques Uniquement',
+    quick_filter_high: 'Élevés & Critiques',
+    quick_filter_open: 'Ouverts & Non Atténués',
+    quick_filter_overdue: 'Plans en Retard',
+    quick_filter_sqd: 'Audités SQD',
+    
+    // Table Columns
+    col_title: 'Titre & Catégorie du Risque',
+    col_severity: 'Sévérité & Score',
+    col_probability: 'Probabilité',
+    col_status: 'Statut',
+    col_project_part: 'Projet & Pièce',
+    col_assignee: 'Responsable & Échéance',
+    col_actions: 'Actions',
+    
+    // Kanban
+    kanban_open: 'Ouvert / Détecté',
+    kanban_mitigating: 'En Atténuation',
+    kanban_mitigated: 'Atténué',
+    kanban_closed: 'Clôturé & Validé',
+    
+    // Modals
+    modal_quick_mitigate_title: 'Plan d\'Atténuation Rapide',
+    modal_quick_mitigate_desc: 'Soumettez ou mettez à jour les actions correctives et faites progresser la résolution.',
+    modal_quick_view_title: 'Détails du Risque',
+    modal_save_mitigation: 'Enregistrer le Plan',
+    modal_mark_mitigated: 'Marquer comme Atténué',
+    modal_mark_closed: 'Clôturer le Risque',
+    mitigation_plan_label: 'Plan d\'Atténuation & Actions',
+    contingency_plan_label: 'Plan de Contingence / Repli',
+    due_date_label: 'Date Cible de Résolution',
+    status_label: 'Statut de Résolution',
+    
+    // Severities
+    sev_critical: 'Critique',
+    sev_high: 'Élevé',
+    sev_medium: 'Moyen',
+    sev_low: 'Faible',
+    
+    // Probabilities
+    prob_rare: 'Rare (1)',
+    prob_unlikely: 'Improbable (2)',
+    prob_possible: 'Possible (3)',
+    prob_likely: 'Probable (4)',
+    prob_almost_certain: 'Quasi Certain (5)',
+    
+    // Statuses
+    status_open: 'Ouvert',
+    status_mitigating: 'En Atténuation',
+    status_mitigated: 'Atténué',
+    status_closed: 'Clôturé',
+    
+    // Empty & Errors
+    no_risks_found: 'Aucun risque ne correspond à vos filtres',
+    no_risks_desc: 'Ajustez vos termes de recherche ou réinitialisez les filtres pour voir tous les risques.',
+    reset_filters: 'Réinitialiser les Filtres',
+  },
+
+  // Suppliers Page
+  suppliers_page: {
+    title: 'Fournisseurs & Répertoire Mondial',
+    subtitle: 'Annuaire Sourcing CMF & Empreinte Industrielle Globale',
+    description: 'Répertoire centralisé des fournisseurs Tier-1 et Direct Materials, usines de production, notations qualité et allocations capacitaires mensuelles.',
+    new_supplier: 'Ajouter un Fournisseur',
+    export_directory: 'Exporter',
+    export_csv: 'Exporter en CSV',
+    export_json: 'Exporter JSON',
+    print_directory: 'Imprimer / Rapport PDF',
+    
+    // KPIs
+    kpi_total_suppliers: 'Total Fournisseurs',
+    kpi_total_desc: 'Partenaires industriels mondiaux enregistrés',
+    kpi_active_suppliers: 'Actifs & Certifiés',
+    kpi_active_desc: 'Validés pour les volumes de production active',
+    kpi_assessed_suppliers: 'Capacités Évaluées',
+    kpi_assessed_desc: 'Évalués avec engagements capacitaires mensuels',
+    kpi_tier1_suppliers: 'Fournisseurs Stratégiques Tier-1',
+    kpi_tier1_desc: 'Fournisseurs de modules et commodités clés',
+    kpi_at_risk_suppliers: 'À Risque / Inactifs',
+    kpi_at_risk_desc: 'Fournisseurs à réexaminer ou sur liste noire',
+    
+    // Views
+    view_table: 'Vue Tableau',
+    view_cards: 'Cartes Fournisseurs',
+    view_capacity: 'Couverture Capacité',
+    
+    // Table Columns
+    col_supplier: 'Fournisseur & Code',
+    col_contact: 'Contact Principal',
+    col_communication: 'Email & Téléphone',
+    col_location: 'Localisation / Adresse',
+    col_status: 'Statut',
+    col_actions: 'Actions',
+    
+    // Filters & Presets
+    search_placeholder: 'Rechercher par nom, code, contact, email ou ville...',
+    filter_status: 'Statut',
+    filter_all: 'Tous les Statuts',
+    quick_all: 'Tous les Fournisseurs',
+    quick_active: 'Actifs Uniquement',
+    quick_inactive: 'Inactifs',
+    quick_blacklisted: 'Liste Noire',
+    quick_has_email: 'Avec Email Direct',
+    clear_filters: 'Effacer les Filtres',
+    
+    // Modals & Actions
+    quick_view_title: 'Fiche Fournisseur',
+    assign_project_title: 'Affecter le Fournisseur au Projet',
+    assign_project_desc: 'Lier ce fournisseur à un programme de plateforme véhicule CMF.',
+    select_project: 'Sélectionner le Projet Cible',
+    assign_btn: 'Affecter au Programme',
+    contact_person: 'Contact Référent',
+    email: 'Email',
+    phone: 'Téléphone',
+    website: 'Site Web',
+    address: 'Adresse',
+    notes: 'Notes Achats',
+    status: 'Statut Fournisseur',
+    
+    // Empty State
+    no_suppliers_found: 'Aucun fournisseur ne correspond à vos filtres',
+    no_suppliers_desc: 'Ajustez vos termes de recherche ou réinitialisez les filtres.',
+    reset_filters: 'Réinitialiser les Filtres',
+  },
+
   // Actions & Buttons
   common: {
     save: 'Enregistrer',

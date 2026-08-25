@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useMemo, useEffect } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useCapacityAssessmentsQuery } from '@/hooks/queries/useCapacityQuery';
 import { useDeleteCapacityMutation } from '@/hooks/mutations/useCapacityMutations';
 import { usePermissions } from '@/hooks/usePermissions';
@@ -42,6 +42,9 @@ import {
   RotateCcw,
   Gauge,
   ShieldAlert,
+  X,
+  Sparkles,
+  ArrowRight,
 } from 'lucide-react';
 import type { ColumnDef } from '@tanstack/react-table';
 import type { CapacityAssessment } from '@/types';
@@ -49,6 +52,10 @@ import { getStatusVariant } from '@/lib/utils';
 import { useToast } from '@/hooks/useToast';
 
 export default function CapacityPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const highlightId = searchParams.get('highlight');
+  const partParam = searchParams.get('part');
+
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [cateFilter, setCateFilter] = useState<string>('all');
@@ -62,6 +69,28 @@ export default function CapacityPage() {
   const deleteMutation = useDeleteCapacityMutation();
 
   const items = assessments?.items ?? [];
+
+  // Match targeted highlighted assessment if URL contains ?highlight=... or ?part=...
+  const highlightedItem = useMemo(() => {
+    if (!highlightId && !partParam) return null;
+    return (
+      items.find(
+        (a) =>
+          (highlightId && a.id === highlightId) ||
+          (partParam && a.partNumber === partParam) ||
+          (highlightId && a.partNumber === highlightId),
+      ) || null
+    );
+  }, [items, highlightId, partParam]);
+
+  // Notify user when targeted alert is triggered from notification
+  useEffect(() => {
+    if (highlightId || partParam) {
+      const partDisplay = highlightedItem?.partNumber || partParam || 'Automotive Component';
+      const utilDisplay = highlightedItem?.utilizationRate ?? 98;
+      toast.warning(`Targeted Alert: Highlighting Part ${partDisplay} (${utilDisplay}% Load)`);
+    }
+  }, [highlightId, partParam, highlightedItem]);
 
   // ── KPI Metrics Calculation ──
   const kpis = useMemo(() => {
@@ -227,11 +256,26 @@ export default function CapacityPage() {
       header: 'Part & Project',
       cell: ({ row }) => {
         const item = row.original;
+        const isTarget =
+          (highlightId && item.id === highlightId) ||
+          (partParam && item.partNumber === partParam) ||
+          (highlightId && item.partNumber === highlightId);
+
         return (
-          <div className="flex flex-col gap-0.5 max-w-[220px]">
+          <div className="flex flex-col gap-0.5 max-w-[240px]">
             <div className="flex items-center gap-1.5 font-medium text-foreground truncate">
               <Cpu className="h-3.5 w-3.5 text-primary shrink-0" />
-              <span className="font-mono text-xs font-bold text-primary">{item.partNumber || item.projectPartId?.slice(0, 8)}</span>
+              <span className="font-mono text-xs font-bold text-primary">
+                {item.partNumber || item.projectPartId?.slice(0, 8)}
+              </span>
+              {isTarget && (
+                <Badge
+                  variant="destructive"
+                  className="ml-1 text-[9px] uppercase px-1.5 py-0 font-bold animate-pulse shrink-0"
+                >
+                  Alert Target
+                </Badge>
+              )}
             </div>
             <span className="text-xs text-muted-foreground truncate" title={item.partName || 'Component'}>
               {item.partName || item.projectName || 'Automotive Component'}
@@ -609,6 +653,54 @@ export default function CapacityPage() {
         )}
       </div>
 
+      {/* ── Active Target Alert Focus Banner (Triggered from Notification) ── */}
+      {highlightedItem && (
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 rounded-xl bg-rose-500/10 border-2 border-rose-500/40 shadow-soft animate-alert-target">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-rose-600 text-white shrink-0 shadow-md animate-bounce">
+              <ShieldAlert className="h-5 w-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="font-bold text-rose-700 dark:text-rose-300 text-sm">
+                  🚨 Targeted Alert Focus: Part {highlightedItem.partNumber || 'Component'} ({highlightedItem.partName || 'Automotive Component'})
+                </span>
+                <Badge variant="destructive" className="text-[10px] uppercase font-bold animate-pulse">
+                  Line Alert Active
+                </Badge>
+              </div>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                Supplier: <strong className="text-foreground">{highlightedItem.supplierName || 'Manufacturing Line'}</strong> · Utilization:{' '}
+                <strong className="text-rose-600 font-bold">{highlightedItem.utilizationRate ?? 98}%</strong> · Bottleneck:{' '}
+                <span className="text-foreground font-medium">{highlightedItem.bottleneck || 'Raw material supply & SMT line constraint'}</span>
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <Button
+              size="sm"
+              variant="default"
+              className="bg-rose-600 hover:bg-rose-700 text-white text-xs gap-1.5 font-semibold shadow-sm"
+              onClick={() => setSelectedAssessment(highlightedItem)}
+            >
+              <Eye className="h-3.5 w-3.5" /> Inspect Alert Details
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              className="text-xs text-muted-foreground hover:text-foreground"
+              onClick={() => {
+                searchParams.delete('highlight');
+                searchParams.delete('part');
+                setSearchParams(searchParams);
+              }}
+            >
+              <X className="h-3.5 w-3.5" /> Clear Focus
+            </Button>
+          </div>
+        </div>
+      )}
+
       {/* ── Main Data Table ── */}
       <DataTable
         columns={columns}
@@ -616,6 +708,8 @@ export default function CapacityPage() {
         loading={isLoading}
         error={error?.message ?? null}
         onRetry={refetch}
+        highlightId={highlightId || (highlightedItem?.id ?? null)}
+        getRowId={(row) => row.id}
       />
 
       {/* ── Quick-View Assessment Dialog ── */}

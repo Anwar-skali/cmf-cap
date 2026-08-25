@@ -401,10 +401,13 @@ export default function NotificationsPage() {
                       {notification.link && (
                         <Link
                           to={notification.link}
-                          className="text-primary hover:underline font-semibold flex items-center gap-1"
+                          onClick={() => {
+                            if (isUnread) markReadMutation.mutate(notification.id);
+                          }}
+                          className="text-primary hover:underline font-bold flex items-center gap-1 group/link bg-primary/5 hover:bg-primary/10 px-2 py-0.5 rounded-md transition-colors"
                         >
-                          {t('notifications_page.view_details', 'View Details')}
-                          <ArrowRight className="h-3 w-3" />
+                          <span>{t('notifications_page.view_details', 'Inspect Alert Target')}</span>
+                          <ArrowRight className="h-3 w-3 group-hover/link:translate-x-0.5 transition-transform text-primary" />
                         </Link>
                       )}
                     </div>

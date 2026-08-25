@@ -197,6 +197,184 @@ export const en = {
     mark_as_read: 'Mark as read',
   },
 
+  // Risks Page
+  risks_page: {
+    title: 'Quality & Project Risks',
+    subtitle: 'CMF Risk Registry & Non-Conformity Management',
+    description: 'Track, assess, and mitigate technical non-conformities, supplier capacity risks, and project quality deviations across vehicle platforms.',
+    log_new_risk: 'Log New Risk',
+    quick_mitigate: 'Quick Mitigate',
+    export_report: 'Export',
+    export_csv: 'Export to CSV',
+    export_json: 'Export JSON',
+    print_report: 'Print / PDF Report',
+    
+    // KPI metrics
+    kpi_total_risks: 'Total Risks Tracked',
+    kpi_total_desc: 'Non-conformities and deviations logged',
+    kpi_critical_risks: 'Critical & High Exposure',
+    kpi_critical_desc: 'Severe impact requiring immediate mitigation',
+    kpi_open_risks: 'Open Non-Conformities',
+    kpi_open_desc: 'Pending mitigation or assignment',
+    kpi_in_mitigation: 'In Mitigation',
+    kpi_in_mitigation_desc: 'Active resolution plans underway',
+    kpi_mitigated_rate: 'Resolution Rate',
+    kpi_mitigated_desc: 'Mitigated or closed risks',
+    
+    // Views
+    view_table: 'Table View',
+    view_kanban: 'Kanban Board',
+    view_matrix: '5x5 Heatmap Matrix',
+    
+    // Matrix
+    matrix_title: '5x5 Risk Assessment Matrix',
+    matrix_subtitle: 'Probability vs Severity Heatmap (Click any cell to filter)',
+    matrix_toggle_show: 'Show Risk Matrix',
+    matrix_toggle_hide: 'Hide Risk Matrix',
+    matrix_severity_axis: 'Severity (Impact)',
+    matrix_prob_axis: 'Probability (Likelihood)',
+    
+    // Analytics
+    analytics_title: 'Risk Analytics & Distribution',
+    severity_breakdown: 'Severity Distribution',
+    category_breakdown: 'Risks by Category',
+    status_breakdown: 'Status Pipeline',
+    
+    // Filters
+    search_placeholder: 'Search by title, description, part, project, or owner...',
+    filter_severity: 'Severity',
+    filter_status: 'Status',
+    filter_probability: 'Probability',
+    filter_category: 'Category / Type',
+    filter_project: 'Project',
+    filter_all: 'All',
+    clear_filters: 'Clear Filters',
+    quick_filter_all: 'All Risks',
+    quick_filter_critical: 'Critical Only',
+    quick_filter_high: 'High & Critical',
+    quick_filter_open: 'Open & Unmitigated',
+    quick_filter_overdue: 'Overdue Mitigations',
+    quick_filter_sqd: 'SQD Audited',
+    
+    // Table Columns
+    col_title: 'Risk Title & Category',
+    col_severity: 'Severity & Score',
+    col_probability: 'Probability',
+    col_status: 'Status',
+    col_project_part: 'Project & Part',
+    col_assignee: 'Owner & Due Date',
+    col_actions: 'Actions',
+    
+    // Kanban
+    kanban_open: 'Open / Discovered',
+    kanban_mitigating: 'In Mitigation',
+    kanban_mitigated: 'Mitigated',
+    kanban_closed: 'Closed & Validated',
+    
+    // Modals
+    modal_quick_mitigate_title: 'Quick Mitigation Plan',
+    modal_quick_mitigate_desc: 'Submit or update mitigation actions and advance risk resolution.',
+    modal_quick_view_title: 'Risk Details',
+    modal_save_mitigation: 'Save Mitigation Plan',
+    modal_mark_mitigated: 'Mark as Mitigated',
+    modal_mark_closed: 'Close Risk',
+    mitigation_plan_label: 'Mitigation Plan & Action Steps',
+    contingency_plan_label: 'Contingency Fallback Plan',
+    due_date_label: 'Target Resolution Date',
+    status_label: 'Resolution Status',
+    
+    // Severities
+    sev_critical: 'Critical',
+    sev_high: 'High',
+    sev_medium: 'Medium',
+    sev_low: 'Low',
+    
+    // Probabilities
+    prob_rare: 'Rare (1)',
+    prob_unlikely: 'Unlikely (2)',
+    prob_possible: 'Possible (3)',
+    prob_likely: 'Likely (4)',
+    prob_almost_certain: 'Almost Certain (5)',
+    
+    // Statuses
+    status_open: 'Open',
+    status_mitigating: 'In Mitigation',
+    status_mitigated: 'Mitigated',
+    status_closed: 'Closed',
+    
+    // Empty & Errors
+    no_risks_found: 'No risks match your filter criteria',
+    no_risks_desc: 'Try adjusting your search terms or clearing active filters to see all recorded risks.',
+    reset_filters: 'Reset All Filters',
+  },
+
+  // Suppliers Page
+  suppliers_page: {
+    title: 'Supplier & Vendor Registry',
+    subtitle: 'CMF Sourcing Directory & Global Manufacturing Footprint',
+    description: 'Centralized registry of Tier-1 and Direct Material suppliers, manufacturing facilities, quality ratings, and monthly capacity allocations.',
+    new_supplier: 'Add New Supplier',
+    export_directory: 'Export',
+    export_csv: 'Export to CSV',
+    export_json: 'Export JSON',
+    print_directory: 'Print / PDF Report',
+    
+    // KPIs
+    kpi_total_suppliers: 'Total Suppliers',
+    kpi_total_desc: 'Registered global manufacturing vendors',
+    kpi_active_suppliers: 'Active & Certified',
+    kpi_active_desc: 'Approved for active production volumes',
+    kpi_assessed_suppliers: 'Capacity Assessed',
+    kpi_assessed_desc: 'Evaluated with monthly capacity commitments',
+    kpi_tier1_suppliers: 'Tier-1 Critical Vendors',
+    kpi_tier1_desc: 'Primary commodity and systems suppliers',
+    kpi_at_risk_suppliers: 'At Risk / Inactive',
+    kpi_at_risk_desc: 'Vendors requiring review or blacklisted',
+    
+    // Views
+    view_table: 'Table View',
+    view_cards: 'Vendor Cards',
+    view_capacity: 'Capacity Readiness',
+    
+    // Table Columns
+    col_supplier: 'Supplier Name & Code',
+    col_contact: 'Primary Contact',
+    col_communication: 'Email & Phone',
+    col_location: 'Location / Address',
+    col_status: 'Status',
+    col_actions: 'Actions',
+    
+    // Filters & Presets
+    search_placeholder: 'Search by vendor name, code, contact, email, or city...',
+    filter_status: 'Status',
+    filter_all: 'All Statuses',
+    quick_all: 'All Suppliers',
+    quick_active: 'Active Only',
+    quick_inactive: 'Inactive',
+    quick_blacklisted: 'Blacklisted',
+    quick_has_email: 'Has Direct Email',
+    clear_filters: 'Clear Filters',
+    
+    // Modals & Actions
+    quick_view_title: 'Supplier Profile',
+    assign_project_title: 'Assign Supplier to Project',
+    assign_project_desc: 'Link this vendor to a CMF vehicle platform program.',
+    select_project: 'Select Target Project',
+    assign_btn: 'Assign to Program',
+    contact_person: 'Contact Person',
+    email: 'Email',
+    phone: 'Phone',
+    website: 'Website',
+    address: 'Address',
+    notes: 'Procurement Notes',
+    status: 'Supplier Status',
+    
+    // Empty State
+    no_suppliers_found: 'No suppliers match your filter criteria',
+    no_suppliers_desc: 'Try adjusting your search terms or clearing active filters.',
+    reset_filters: 'Reset All Filters',
+  },
+
   // Actions & Buttons
   common: {
     save: 'Save',

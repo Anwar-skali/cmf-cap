@@ -1,4 +1,4 @@
-import { useState, useMemo, type ReactNode } from 'react';
+import { useState, useMemo, useEffect, type ReactNode } from 'react';
 import {
   flexRender,
   getCoreRowModel,
@@ -66,6 +66,9 @@ interface DataTableProps<TData> {
   onSortingChange?: (sorting: Updater<SortingState>) => void;
   filterable?: boolean;
   rightContent?: ReactNode;
+  highlightId?: string | null;
+  getRowId?: (row: TData) => string;
+  rowClassName?: (row: TData) => string | undefined;
 }
 
 function DataTableInternal<TData extends object>({
@@ -90,6 +93,9 @@ function DataTableInternal<TData extends object>({
   onSortingChange: externalOnSortingChange,
   filterable = true,
   rightContent,
+  highlightId,
+  getRowId,
+  rowClassName,
 }: DataTableProps<TData>) {
   const [internalSorting, setInternalSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -128,6 +134,19 @@ function DataTableInternal<TData extends object>({
   const selectedRows = useMemo(() => {
     return table.getSelectedRowModel().rows.map((row) => row.original);
   }, [rowSelection, data]);
+
+  // Auto-scroll to highlighted row when highlightId changes
+  useEffect(() => {
+    if (highlightId && !loading) {
+      const timer = setTimeout(() => {
+        const el = document.getElementById(`row-${highlightId}`);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 250);
+      return () => clearTimeout(timer);
+    }
+  }, [highlightId, loading]);
 
   if (error) {
     return (
@@ -253,15 +272,34 @@ function DataTableInternal<TData extends object>({
                 </TableRow>
               ))
             ) : table.getRowModel().rows.length > 0 ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
+              table.getRowModel().rows.map((row) => {
+                const item = row.original as any;
+                const rowId = getRowId ? getRowId(row.original) : (item?.id || item?.partNumber || row.id);
+                const isHighlighted = highlightId && (
+                  rowId === highlightId ||
+                  item?.id === highlightId ||
+                  item?.partNumber === highlightId
+                );
+
+                return (
+                  <TableRow
+                    key={row.id}
+                    id={`row-${rowId}`}
+                    data-state={row.getIsSelected() && 'selected'}
+                    className={cn(
+                      rowClassName?.(row.original),
+                      isHighlighted &&
+                        'animate-alert-target border-l-4 border-l-rose-500 font-medium ring-2 ring-rose-500/80 shadow-md relative z-10',
+                    )}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                );
+              })
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-48 text-center">
