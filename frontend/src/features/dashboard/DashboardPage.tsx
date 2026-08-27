@@ -1,16 +1,13 @@
 import React from 'react';
-import { useTemplate } from '@/context/TemplateContext';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useLanguage } from '@/context/LanguageContext';
 import { useAuthStore } from '@/stores/authStore';
 import { KPICard } from '@/components/ui/KPICard';
-import { DynamicDashboard } from '@/components/template-engine/DynamicDashboard';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ErrorState } from '@/components/ui/error-state';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { useProjectsQuery } from '@/hooks/queries/useProjectsQuery';
 import {
   useCmfDashboardData,
   MOCK_CAPACITY_TREND,
@@ -22,7 +19,6 @@ import {
   Gauge,
   ShieldCheck,
   PlusCircle,
-  TrendingUp,
   Sparkles,
   ChevronRight,
   UserCheck,
@@ -35,6 +31,7 @@ import {
   Activity,
   Target,
   Calendar,
+  TrendingUp,
 } from 'lucide-react';
 import {
   BarChart,
@@ -94,8 +91,6 @@ function StatRow({ label, value, color = 'text-foreground' }: {
 export default function DashboardPage() {
   const { t } = useLanguage();
   const navigate = useNavigate();
-  const { activeTemplate, templates } = useTemplate();
-  const { data: projectsData } = useProjectsQuery();
   const { roleMeta, isBuyer, isCapacityManager, isSQD, isAdmin } = usePermissions();
   const { state: authState } = useAuthStore();
 
@@ -105,28 +100,6 @@ export default function DashboardPage() {
   const userName = currentUser
     ? `${currentUser.firstName || ''} ${currentUser.lastName || ''}`.trim()
     : '';
-
-  const currentTemplate = activeTemplate || templates[0];
-  const rawProjects = projectsData?.items || [];
-  const projectsList = rawProjects.filter((p: any) => {
-    if (!currentTemplate) return true;
-    const projTemplateId = p.templateId || p.template_id;
-    const projTemplateCode = (
-      p.templateCode ||
-      p.template_code ||
-      p.data?.template_code ||
-      p.data?.templateCode ||
-      ''
-    ).toUpperCase();
-    const curCode = (currentTemplate.code || '').toUpperCase();
-    if (projTemplateId && currentTemplate.id) {
-      return String(projTemplateId) === String(currentTemplate.id);
-    }
-    if (projTemplateCode) {
-      return projTemplateCode === curCode;
-    }
-    return true;
-  });
 
   const RoleIcon = roleMeta.icon;
 
@@ -321,11 +294,7 @@ export default function DashboardPage() {
             <TrendingUp className="h-5 w-5 text-blue-600" />
             <span>CMF Analytics</span>
           </h2>
-          {currentTemplate && (
-            <Badge variant="outline" className="border-border bg-card text-muted-foreground text-xs font-bold rounded-full px-3 py-1">
-              Active Structure: {currentTemplate.code} v{currentTemplate.version}
-            </Badge>
-          )}
+
         </div>
 
         {/* Row 1: Capacity Overview + Project Status */}
@@ -490,24 +459,97 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* ── Dynamic Template Dashboard (unchanged — shown when template is active) */}
-      {currentTemplate && (
-        <div className="space-y-4 pt-4">
-          <div className="flex items-center justify-between border-b border-border pb-3 px-1">
-            <h2 className="text-lg font-bold tracking-tight text-foreground flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-blue-600" />
-              <span>
-                {t('dashboard.capacity_fulfillment', 'Capacity & Template Analytics')} ({currentTemplate.code})
-              </span>
-            </h2>
-            <Badge variant="outline" className="border-border bg-card text-muted-foreground text-xs font-bold rounded-full px-3 py-1">
-              Template Version {currentTemplate.version}
-            </Badge>
-          </div>
-
-          <DynamicDashboard template={currentTemplate} projects={projectsList} />
+      {/* ── Secondary Executive KPI Row ───────────────────────────────────── */}
+      <div className="space-y-4 pt-2">
+        <div className="flex items-center justify-between px-1">
+          <h2 className="text-lg font-bold tracking-tight text-foreground flex items-center gap-2">
+            <BarChart3 className="h-4.5 w-4.5 text-indigo-600" />
+            <span>Operational Indicators</span>
+          </h2>
         </div>
-      )}
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-4">
+          <KPICard
+            variant="ltos"
+            title="On Track Projects"
+            value={cmf.projectsOnTrack}
+            icon={CheckCircle2}
+            subtitle="Projects meeting schedule & quality targets"
+            trend={{ value: 'On schedule', isPositive: true }}
+            actionText="View Projects"
+            onClickAction={() => navigate('/projects')}
+          />
+
+          <KPICard
+            variant="ltos"
+            title="Delayed Projects"
+            value={cmf.projectsDelayed}
+            icon={Clock}
+            subtitle="Projects with schedule delays or overruns"
+            trend={{ value: cmf.projectsDelayed > 0 ? `${cmf.projectsDelayed} delayed` : 'None', isPositive: cmf.projectsDelayed === 0 }}
+            actionText="Review"
+            onClickAction={() => navigate('/projects')}
+          />
+
+          <KPICard
+            variant="ltos"
+            title="Completed"
+            value={cmf.projectsCompleted}
+            icon={Target}
+            subtitle="Successfully closed & validated CMF projects"
+            trend={{ value: '+3 this quarter', isPositive: true }}
+            actionText="Archive"
+            onClickAction={() => navigate('/projects')}
+          />
+
+          <KPICard
+            variant="ltos"
+            title="Open Quality Issues"
+            value={cmf.openQualityIssues}
+            icon={ShieldCheck}
+            subtitle="Active SQD non-conformities under review"
+            trend={{ value: cmf.criticalQualityIssues > 0 ? `${cmf.criticalQualityIssues} critical` : 'None critical', isPositive: cmf.criticalQualityIssues === 0 }}
+            actionText="SQD Risks"
+            onClickAction={() => navigate('/risks')}
+          />
+
+          <KPICard
+            variant="ltos"
+            title="Open Actions"
+            value={cmf.openActions}
+            icon={AlertTriangle}
+            subtitle="Corrective actions pending resolution"
+            trend={{ value: 'In progress', isPositive: false }}
+            actionText="View"
+            onClickAction={() => navigate('/risks')}
+          />
+
+          <KPICard
+            variant="ltos"
+            title="Upcoming Milestones"
+            value={cmf.upcomingMilestones}
+            icon={Calendar}
+            subtitle="Key program gate reviews due this month"
+            trend={{ value: 'This month', isPositive: true }}
+            actionText="Calendar"
+            onClickAction={() => navigate('/projects')}
+          />
+
+          <KPICard
+            variant="ltos"
+            title="Supplier Status"
+            value={cmf.supplierQualityStatus}
+            icon={UserCheck}
+            subtitle="Aggregate supplier quality health indicator"
+            trend={{
+              value: cmf.supplierQualityStatus === 'GREEN' ? 'All Clear' : cmf.supplierQualityStatus === 'YELLOW' ? 'Monitor' : 'Action Needed',
+              isPositive: cmf.supplierQualityStatus === 'GREEN',
+            }}
+            actionText="Suppliers"
+            onClickAction={() => navigate('/suppliers')}
+          />
+        </div>
+      </div>
     </div>
   );
 }

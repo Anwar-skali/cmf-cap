@@ -31,7 +31,7 @@ export default function PartNewPage() {
       quantity: 1,
       unit: 'pcs',
       material: '',
-      weight: undefined,
+      weight: '' as unknown as number,
       status: 'active',
       description: '',
       notes: '',
@@ -201,8 +201,11 @@ export default function PartNewPage() {
                         type="number"
                         step="0.01"
                         placeholder="e.g. 1.25"
-                        {...field}
-                        onChange={(e) => field.onChange(e.target.value ? Number(e.target.value) : undefined)}
+                        value={field.value ?? ''}
+                        onChange={(e) => field.onChange(e.target.value === '' ? undefined : Number(e.target.value))}
+                        onBlur={field.onBlur}
+                        name={field.name}
+                        ref={field.ref}
                       />
                     </FormControl>
                     <FormMessage />

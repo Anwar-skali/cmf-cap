@@ -11,10 +11,13 @@ interface PartFilter {
 }
 
 export function usePartsQuery(filter?: PartFilter) {
+  // Build a stable key: always include the filter object (even if empty/undefined)
+  // so that mutations invalidating queryKeys.parts.lists() correctly match.
+  const filterKey = filter ?? {};
   return useQuery({
-    queryKey: queryKeys.parts.list(filter as Record<string, unknown>),
+    queryKey: [...queryKeys.parts.lists(), filterKey] as const,
     queryFn: () => partsApi.getParts(filter),
-    staleTime: 30_000,
+    staleTime: 0,      // always re-fetch after invalidation
     gcTime: 60_000,
   });
 }

@@ -48,9 +48,6 @@ import {
   Layers,
   ArrowUpDown,
   Sparkles,
-  TrendingUp,
-  PieChart as PieChartIcon,
-  BarChart3,
   X,
 } from 'lucide-react';
 import type { ColumnDef } from '@tanstack/react-table';
@@ -70,18 +67,6 @@ import { RiskKanbanBoard } from './components/RiskKanbanBoard';
 import { QuickMitigateModal } from './components/QuickMitigateModal';
 import { RiskQuickViewModal } from './components/RiskQuickViewModal';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip as RechartsTooltip,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-} from 'recharts';
 
 type ViewMode = 'table' | 'kanban' | 'matrix';
 
@@ -144,33 +129,6 @@ export default function RisksPage() {
   const inMitigationCount = rawRisks.filter((r) => r.status === 'mitigating').length;
   const resolvedCount = rawRisks.filter((r) => r.status === 'mitigated' || r.status === 'closed').length;
   const resolutionRate = totalCount > 0 ? Math.round((resolvedCount / totalCount) * 100) : 100;
-
-  // Chart data calculations
-  const severityChartData = useMemo(() => {
-    const counts: Record<string, number> = { critical: 0, high: 0, medium: 0, low: 0 };
-    rawRisks.forEach((r) => {
-      const sev = (r.severity || 'medium').toLowerCase();
-      if (counts[sev] !== undefined) counts[sev]++;
-    });
-    return [
-      { name: 'Critical', value: counts.critical, color: SEVERITY_COLORS.critical },
-      { name: 'High', value: counts.high, color: SEVERITY_COLORS.high },
-      { name: 'Medium', value: counts.medium, color: SEVERITY_COLORS.medium },
-      { name: 'Low', value: counts.low, color: SEVERITY_COLORS.low },
-    ].filter((item) => item.value > 0);
-  }, [rawRisks]);
-
-  const categoryChartData = useMemo(() => {
-    const counts: Record<string, number> = {};
-    rawRisks.forEach((r) => {
-      const cat = r.riskType || 'Technical';
-      counts[cat] = (counts[cat] || 0) + 1;
-    });
-    return Object.entries(counts).map(([name, count]) => ({
-      name,
-      count,
-    }));
-  }, [rawRisks]);
 
   // Filter pipeline
   const filteredRisks = useMemo(() => {
@@ -655,66 +613,13 @@ export default function RisksPage() {
         </div>
       </div>
 
-      {/* ── Analytics & Heatmap Grid Section ────────────────────────────── */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left 2 Cols: 5x5 Heatmap Matrix */}
-        <div className="lg:col-span-2">
-          <RiskHeatmapMatrix
-            risks={rawRisks}
-            selectedCell={selectedMatrixCell}
-            onSelectCell={(cell) => setSelectedMatrixCell(cell)}
-          />
-        </div>
+      {/* ── Risk Heatmap Matrix (full width) ────────────────────────────── */}
+      <RiskHeatmapMatrix
+        risks={rawRisks}
+        selectedCell={selectedMatrixCell}
+        onSelectCell={(cell) => setSelectedMatrixCell(cell)}
+      />
 
-        {/* Right Col: Severity & Category Breakdown */}
-        <div className="space-y-4">
-          <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-card p-5 shadow-sm space-y-4">
-            <div className="flex items-center gap-2 border-b border-border pb-3">
-              <PieChartIcon className="h-4 w-4 text-blue-600" />
-              <h3 className="text-base font-extrabold text-foreground">Severity Distribution</h3>
-            </div>
-            <div className="h-44 w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={severityChartData}
-                    dataKey="value"
-                    nameKey="name"
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={38}
-                    outerRadius={65}
-                    paddingAngle={3}
-                  >
-                    {severityChartData.map((entry) => (
-                      <Cell key={entry.name} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <RechartsTooltip />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-            <div className="grid grid-cols-2 gap-2 pt-1 border-t border-border text-xs font-semibold">
-              <div className="flex items-center gap-1.5">
-                <span className="h-2.5 w-2.5 rounded-full bg-rose-500" />
-                <span>Critical: {rawRisks.filter((r) => r.severity === 'critical').length}</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="h-2.5 w-2.5 rounded-full bg-amber-500" />
-                <span>High: {rawRisks.filter((r) => r.severity === 'high').length}</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="h-2.5 w-2.5 rounded-full bg-blue-500" />
-                <span>Medium: {rawRisks.filter((r) => r.severity === 'medium').length}</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
-                <span>Low: {rawRisks.filter((r) => r.severity === 'low').length}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* ── View Modes & Multi-Criteria Filtering Toolbar ──────────────── */}
       <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-card p-5 shadow-sm space-y-4">

@@ -5,8 +5,9 @@ import { DynamicForm } from '@/components/template-engine/DynamicForm';
 import { useCreateProjectMutation } from '@/hooks/mutations/useProjectMutations';
 import { useAuthStore } from '@/stores/authStore';
 import { CrudFormHeader } from '@/components/layout/CrudFormHeader';
-import { InputSourcePicker, InputSourceType } from '@/components/ui/InputSourcePicker';
-import { Layers, ShieldAlert, UploadCloud } from 'lucide-react';
+import { InputSourcePicker, type InputSourceType } from '@/components/ui/InputSourcePicker';
+import { Layers, ShieldAlert, FileSpreadsheet, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 
 export default function ProjectNewPage() {
@@ -46,7 +47,6 @@ export default function ProjectNewPage() {
         return;
       }
 
-      // K0 uses part_name; K9 uses part_name too. Code: K0 uses part_number/line_item, K9 uses unique_id
       const name =
         formValues.part_name ||
         formValues.project_name ||
@@ -104,7 +104,7 @@ export default function ProjectNewPage() {
           { label: 'Create Object' },
         ]}
         title={`Create Direct Material Object (${currentTemplate.code})`}
-        subtitle="Create a new object for Purchase. You can either upload a CSV file with data or manually enter the values."
+        subtitle="Create a new object for Purchase. Select Manual Input to fill the form, or Import from Excel to upload a file via the Document repository."
         versionBadge={`Latest validated LTP version: V${currentTemplate.version || '20260629_V5'}`}
         extraActions={
           <div className="flex items-center gap-2 bg-slate-900/90 border border-slate-700 px-3.5 py-1.5 rounded-full text-xs text-slate-200">
@@ -146,57 +146,51 @@ export default function ProjectNewPage() {
 
       {/* White Floating Form Card Container */}
       <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-card p-6 sm:p-8 shadow-xl space-y-8">
-        {/* Choose Input Source 2x2 Picker Grid */}
+
+        {/* Input Source Picker — only 2 options: Manual & Excel */}
         <InputSourcePicker
           selectedSource={inputSource}
           onChange={setInputSource}
           title="Choose Input Source"
         />
 
-        {/* CSV Dropzone view if CSV selected */}
-        {inputSource === 'csv' && (
-          <div className="rounded-2xl border-2 border-dashed border-blue-500/40 bg-blue-50/20 dark:bg-blue-950/20 p-8 text-center space-y-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-600 mx-auto">
-              <UploadCloud className="h-6 w-6" />
+        {/* Excel → info banner with redirect to Documents page */}
+        {inputSource === 'excel' && (
+          <div className="rounded-2xl border border-emerald-500/30 bg-emerald-50/20 dark:bg-emerald-950/20 p-6 flex flex-col sm:flex-row items-start sm:items-center gap-5">
+            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400">
+              <FileSpreadsheet className="h-7 w-7" />
             </div>
-            <div>
-              <h4 className="text-base font-bold text-foreground">Upload CSV File</h4>
-              <p className="text-xs text-muted-foreground max-w-sm mx-auto mt-1">
-                Select a standard .csv or .xlsx file containing direct material object attributes.
+            <div className="flex-1 space-y-1">
+              <h4 className="text-base font-extrabold text-foreground">Excel Import via Document Repository</h4>
+              <p className="text-xs text-muted-foreground leading-relaxed max-w-xl">
+                Excel-based project creation is managed through the <strong>Document repository</strong>.
+                Upload your <code className="font-mono bg-muted px-1 py-0.5 rounded text-[11px]">.xlsx</code> file
+                there and the system will parse and import the direct material objects automatically.
               </p>
             </div>
-            <input
-              type="file"
-              accept=".csv,.xlsx"
-              id="csv-upload-input"
-              className="hidden"
-              onChange={(e) => {
-                if (e.target.files?.[0]) {
-                  toast.success(`File "${e.target.files[0].name}" attached for import`);
-                }
-              }}
-            />
-            <label
-              htmlFor="csv-upload-input"
-              className="inline-flex items-center justify-center rounded-full bg-[#0066CC] hover:bg-[#0052A3] text-white text-xs font-bold px-6 py-2 transition-colors cursor-pointer shadow-sm"
+            <Button
+              onClick={() => navigate('/documents')}
+              className="shrink-0 bg-[#0066CC] hover:bg-[#0052A3] text-white font-bold rounded-full px-6 py-2 text-xs shadow-md shadow-blue-500/20 gap-2 cursor-pointer"
             >
-              Browse CSV File
-            </label>
+              Go to Documents <ArrowRight className="h-4 w-4" />
+            </Button>
           </div>
         )}
 
-        {/* Manual or Form Fill Input */}
-        <div className="pt-2">
-          <DynamicForm
-            template={creationTemplate}
-            onSave={handleSave}
-            isSaving={createMutation.isPending}
-            userRole={userRole}
-            readOnly={isCMFTemplate && !canCreateCMF}
-            title={`Enter Details (${currentTemplate.name})`}
-            onCancel={() => navigate('/projects')}
-          />
-        </div>
+        {/* Manual form */}
+        {inputSource === 'manual' && (
+          <div className="pt-2">
+            <DynamicForm
+              template={creationTemplate}
+              onSave={handleSave}
+              isSaving={createMutation.isPending}
+              userRole={userRole}
+              readOnly={isCMFTemplate && !canCreateCMF}
+              title={`Enter Details (${currentTemplate.name})`}
+              onCancel={() => navigate('/projects')}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

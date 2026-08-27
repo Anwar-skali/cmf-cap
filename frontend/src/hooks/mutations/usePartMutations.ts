@@ -11,7 +11,8 @@ export function useCreatePartMutation() {
   return useMutation({
     mutationFn: (data: CreateProjectPartRequest) => partsApi.createPart(data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.parts.lists() });
+      // Invalidate the entire 'parts' tree so every list query (regardless of filter) refetches
+      queryClient.invalidateQueries({ queryKey: queryKeys.parts.all });
       toast.success('Part created successfully');
     },
     onError: (error: Error) => {
@@ -28,7 +29,7 @@ export function useUpdatePartMutation() {
     mutationFn: ({ id, data }: { id: string; data: Partial<CreateProjectPartRequest> }) =>
       partsApi.updatePart(id, data),
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.parts.lists() });
+      queryClient.invalidateQueries({ queryKey: queryKeys.parts.all });
       queryClient.invalidateQueries({ queryKey: queryKeys.parts.detail(variables.id) });
       toast.success('Part updated successfully');
     },
@@ -45,7 +46,7 @@ export function useDeletePartMutation() {
   return useMutation({
     mutationFn: (id: string) => partsApi.deletePart(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.parts.lists() });
+      queryClient.invalidateQueries({ queryKey: queryKeys.parts.all });
       toast.success('Part deleted successfully');
     },
     onError: (error: Error) => {
