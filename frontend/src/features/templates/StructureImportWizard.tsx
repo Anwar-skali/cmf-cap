@@ -25,6 +25,8 @@ import {
   Wand2,
   Info,
   Trash2,
+  ShieldCheck,
+  ChevronDown,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -47,6 +49,19 @@ interface StructureImportWizardProps {
 
 type WizardMode = 'excel' | 'json' | 'manual';
 type WizardStep = 'source' | 'excel-file' | 'json' | 'analysis' | 'structure' | 'metadata';
+
+/** The three project roles that can be assigned permissions on fields. */
+const PROJECT_ROLES = [
+  { key: 'capacity_manager', label: 'Cap. Manager', color: 'blue' },
+  { key: 'sqd',              label: 'SQD',          color: 'violet' },
+  { key: 'buyer',            label: 'Buyer',        color: 'amber' },
+] as const;
+
+/** Toggle a role in/out of a string[] (immutable). */
+function toggleRole(list: string[] | undefined, role: string): string[] {
+  const arr = list ?? [];
+  return arr.includes(role) ? arr.filter((r) => r !== role) : [...arr, role];
+}
 
 const FIELD_TYPE_OPTIONS: FieldType[] = [
   'text',
@@ -138,8 +153,85 @@ function applyFieldSelection(
   );
 }
 
+/** Toggle all fields across all sections and groups in the entire structure */
+function toggleAllFieldsInStructure(
+  setSections: React.Dispatch<React.SetStateAction<TemplateSection[]>>,
+  enabled: boolean,
+) {
+  setSections((prev) =>
+    prev.map((sec) => ({
+      ...sec,
+      groups: sec.groups.map((grp) => ({
+        ...grp,
+        fields: grp.fields.map((fld) => ({
+          ...fld,
+          visible: enabled,
+        })),
+      })),
+    })),
+  );
+}
+
+/** Toggle all fields in a specific section */
+function toggleAllFieldsInSection(
+  setSections: React.Dispatch<React.SetStateAction<TemplateSection[]>>,
+  sectionIdx: number,
+  enabled: boolean,
+) {
+  setSections((prev) =>
+    prev.map((sec, si) =>
+      si !== sectionIdx
+        ? sec
+        : {
+            ...sec,
+            groups: sec.groups.map((grp) => ({
+              ...grp,
+              fields: grp.fields.map((fld) => ({
+                ...fld,
+                visible: enabled,
+              })),
+            })),
+          },
+    ),
+  );
+}
+
+/** Toggle all fields in a specific group */
+function toggleAllFieldsInGroup(
+  setSections: React.Dispatch<React.SetStateAction<TemplateSection[]>>,
+  sectionIdx: number,
+  groupIdx: number,
+  enabled: boolean,
+) {
+  setSections((prev) =>
+    prev.map((sec, si) =>
+      si !== sectionIdx
+        ? sec
+        : {
+            ...sec,
+            groups: sec.groups.map((grp, gi) =>
+              gi !== groupIdx
+                ? grp
+                : {
+                    ...grp,
+                    fields: grp.fields.map((fld) => ({
+                      ...fld,
+                      visible: enabled,
+                    })),
+                  },
+            ),
+          },
+    ),
+  );
+}
+
 export function StructureImportWizard({ initialMode = 'excel', onClose, onSaved }: StructureImportWizardProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  /** Tracks which field rows have their permissions panel open. Key = "si-gi-fi" */
+  const [openPerms, setOpenPerms] = useState<Record<string, boolean>>({});
+  const togglePerms = (si: number, gi: number, fi: number) =>
+    setOpenPerms((prev) => { const k = `${si}-${gi}-${fi}`; return { ...prev, [k]: !prev[k] }; });
 
   const [mode, setMode] = useState<WizardMode>(initialMode);
   const [step, setStep] = useState<WizardStep>(initialMode === 'manual' ? 'structure' : initialMode === 'json' ? 'json' : 'source');
@@ -485,19 +577,12 @@ export function StructureImportWizard({ initialMode = 'excel', onClose, onSaved 
                 title: 'Import JSON Schema',
                 desc: 'Paste or upload an existing CMF Template JSON to adopt as the Project Structure.',
               },
-              {
-                key: 'manual' as WizardMode,
-                icon: <PenSquare className="h-5 w-5 text-violet-600" />,
-                title: 'Manual Definition',
-                desc: 'Define name, code, and schema manually (no source file required).',
-              },
             ].map((opt) => (
               <button
                 key={opt.key}
                 onClick={() => {
                   setMode(opt.key);
-                  if (opt.key === 'manual') goNext('structure');
-                  else if (opt.key === 'json') goNext('json');
+                  if (opt.key === 'json') goNext('json');
                   else goNext('excel-file');
                 }}
                 className="flex flex-col items-start text-left p-5 rounded-xl border-2 border-slate-200 dark:border-slate-800 hover:border-primary/50 hover:shadow-md transition-all gap-3"
@@ -507,6 +592,23 @@ export function StructureImportWizard({ initialMode = 'excel', onClose, onSaved 
                 <span className="text-xs text-muted-foreground leading-relaxed">{opt.desc}</span>
               </button>
             ))}
+
+            {/* Manual Definition — Coming Soon */}
+            <div
+              className="relative flex flex-col items-start text-left p-5 rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-800 gap-3 opacity-50 cursor-not-allowed select-none"
+              aria-disabled="true"
+            >
+              {/* Coming Soon badge */}
+              <span className="absolute top-3 right-3 inline-flex items-center gap-1 rounded-full bg-violet-100 dark:bg-violet-900/40 px-2 py-0.5 text-[10px] font-semibold text-violet-600 dark:text-violet-400 border border-violet-200 dark:border-violet-700">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a10 10 0 1 1 0 20A10 10 0 0 1 12 2z"/><polyline points="12 6 12 12 16 14"/></svg>
+                Coming Soon
+              </span>
+              <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800">
+                <PenSquare className="h-5 w-5 text-violet-600" />
+              </div>
+              <span className="text-sm font-bold text-foreground">Manual Definition</span>
+              <span className="text-xs text-muted-foreground leading-relaxed">Define name, code, and schema manually (no source file required).</span>
+            </div>
           </CardContent>
         </Card>
       )}
@@ -784,7 +886,27 @@ export function StructureImportWizard({ initialMode = 'excel', onClose, onSaved 
                   Structure.
                 </CardDescription>
               </div>
-              <Badge variant="outline" className="text-xs">{totalFields} Fields</Badge>
+              <div className="flex items-center gap-2 flex-wrap">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => toggleAllFieldsInStructure(setEditableSections, true)}
+                  className="h-7 text-xs font-bold text-blue-600 border-blue-200 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-950/30 hover:bg-blue-100 dark:hover:bg-blue-900/40 cursor-pointer"
+                >
+                  Enable All
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => toggleAllFieldsInStructure(setEditableSections, false)}
+                  className="h-7 text-xs font-bold text-muted-foreground hover:text-foreground cursor-pointer"
+                >
+                  Disable All
+                </Button>
+                <Badge variant="outline" className="text-xs">{totalFields} Fields</Badge>
+              </div>
             </div>
           </CardHeader>
           <CardContent className="space-y-4 max-h-[46vh] overflow-y-auto pr-1">
@@ -857,11 +979,18 @@ export function StructureImportWizard({ initialMode = 'excel', onClose, onSaved 
                 </p>
               </div>
             ) : (
-              editableSections.map((sec, si) => (
+              editableSections.map((sec, si) => {
+                const secFields = sec.groups.flatMap((g) => g.fields);
+                const secTotalCount = secFields.length;
+                const secEnabledCount = secFields.filter((f) => f.visible !== false).length;
+                const secAllEnabled = secTotalCount > 0 && secEnabledCount === secTotalCount;
+                const secSomeEnabled = secEnabledCount > 0 && secEnabledCount < secTotalCount;
+
+                return (
                 <div key={sec.id || `sec-${si}`} className="rounded-xl border p-4 space-y-3">
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between flex-wrap gap-2">
                     <div className="flex items-center gap-2">
-                      <Layers className="h-4 w-4 text-blue-600" />
+                      <Layers className="h-4 w-4 text-blue-600 shrink-0" />
                       <Input
                         value={sec.name}
                         onChange={(e) =>
@@ -872,155 +1001,319 @@ export function StructureImportWizard({ initialMode = 'excel', onClose, onSaved 
                         className="h-8 w-64 text-xs font-bold"
                       />
                     </div>
-                    <Badge variant="secondary" className="text-[10px]">
-                      {sec.groups.reduce((a, g) => a + g.fields.length, 0)} fields
-                    </Badge>
+                    <div className="flex items-center gap-2">
+                      {/* Section Master Checkbox Toggle */}
+                      <label className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground cursor-pointer bg-slate-100 dark:bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700 transition-colors select-none">
+                        <input
+                          type="checkbox"
+                          checked={secAllEnabled}
+                          ref={(el) => {
+                            if (el) el.indeterminate = secSomeEnabled;
+                          }}
+                          onChange={(e) => toggleAllFieldsInSection(setEditableSections, si, e.target.checked)}
+                          className="h-3.5 w-3.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                        />
+                        <span className="text-[11px] font-bold">
+                          {secAllEnabled ? 'All on' : secSomeEnabled ? `${secEnabledCount}/${secTotalCount} on` : 'All off'}
+                        </span>
+                      </label>
+                      <Badge variant="secondary" className="text-[10px]">
+                        {secEnabledCount}/{secTotalCount} fields
+                      </Badge>
+                    </div>
                   </div>
 
-                  {sec.groups.map((grp, gi) => (
+                  {sec.groups.map((grp, gi) => {
+                    const grpTotalCount = grp.fields.length;
+                    const grpEnabledCount = grp.fields.filter((f) => f.visible !== false).length;
+                    const grpAllEnabled = grpTotalCount > 0 && grpEnabledCount === grpTotalCount;
+                    const grpSomeEnabled = grpEnabledCount > 0 && grpEnabledCount < grpTotalCount;
+
+                    return (
                     <div key={grp.id || `grp-${si}-${gi}`} className="pl-2 space-y-2">
-                      <div className="flex items-center gap-2">
-                        <TableIcon className="h-3 w-3 text-blue-500 shrink-0" />
-                        <span className="text-[11px] font-extrabold uppercase tracking-wider text-foreground">
-                          {grp.name || 'General'}
-                        </span>
-                        <span className="text-[10px] text-muted-foreground">
-                          {grp.fields.filter((f) => f.visible !== false).length}/{grp.fields.length} enabled
-                        </span>
+                      <div className="flex items-center justify-between flex-wrap gap-2 py-0.5">
+                        <div className="flex items-center gap-2">
+                          {/* Group Master Checkbox Toggle */}
+                          <input
+                            type="checkbox"
+                            checked={grpAllEnabled}
+                            ref={(el) => {
+                              if (el) el.indeterminate = grpSomeEnabled;
+                            }}
+                            onChange={(e) => toggleAllFieldsInGroup(setEditableSections, si, gi, e.target.checked)}
+                            className="h-3.5 w-3.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                            title={grpAllEnabled ? 'Disable all fields in group' : 'Enable all fields in group'}
+                          />
+                          <TableIcon className="h-3 w-3 text-blue-500 shrink-0" />
+                          <span className="text-[11px] font-extrabold uppercase tracking-wider text-foreground">
+                            {grp.name || 'General'}
+                          </span>
+                          <span className="text-[10px] text-muted-foreground">
+                            {grpEnabledCount}/{grpTotalCount} enabled
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <button
+                            type="button"
+                            onClick={() => toggleAllFieldsInGroup(setEditableSections, si, gi, true)}
+                            className="text-[10px] font-bold text-blue-600 hover:underline px-1 py-0.5 cursor-pointer"
+                          >
+                            All
+                          </button>
+                          <span className="text-muted-foreground text-[10px]">|</span>
+                          <button
+                            type="button"
+                            onClick={() => toggleAllFieldsInGroup(setEditableSections, si, gi, false)}
+                            className="text-[10px] font-bold text-muted-foreground hover:underline px-1 py-0.5 cursor-pointer"
+                          >
+                            None
+                          </button>
+                        </div>
                       </div>
 
                       <div className="space-y-2">
-                        {grp.fields.map((fld, fi) => (
+                        {grp.fields.map((fld, fi) => {
+                          const permKey = `${si}-${gi}-${fi}`;
+                          const isPermOpen = !!openPerms[permKey];
+                          const viewRoles  = fld.permissions?.rolesAllowedToView  ?? [];
+                          const editRoles  = fld.permissions?.rolesAllowedToEdit  ?? [];
+                          const hasPerms   = viewRoles.length > 0 || editRoles.length > 0;
+                          // Detect the single restricting role (if any) for the inline badge
+                          const ROLE_KEYS = ['buyer', 'capacity_manager', 'sqd'] as const;
+                          const autoRole = editRoles.find((r) => (ROLE_KEYS as readonly string[]).includes(r)) as
+                            | 'buyer' | 'capacity_manager' | 'sqd' | undefined;
+                          const roleMeta: Record<'buyer'|'capacity_manager'|'sqd', {label:string;cls:string}> = {
+                            buyer:            { label: 'Buyer',       cls: 'bg-amber-100 text-amber-700 border-amber-300 dark:bg-amber-900/30 dark:text-amber-300' },
+                            capacity_manager: { label: 'Cap. Mgr',   cls: 'bg-blue-100 text-blue-700 border-blue-300 dark:bg-blue-900/30 dark:text-blue-300' },
+                            sqd:              { label: 'SQD',         cls: 'bg-violet-100 text-violet-700 border-violet-300 dark:bg-violet-900/30 dark:text-violet-300' },
+                          };
+                          return (
                           <Fragment key={fld.id || `fld-${si}-${gi}-${fi}`}>
+                          {/* ── Main field row ── */}
                           <div
-                            className={`grid grid-cols-12 gap-2 items-center rounded-lg border px-2.5 py-2 text-xs ${
+                            className={`rounded-lg border text-xs ${
                               fld.visible === false ? 'opacity-50 bg-muted/40' : ''
                             }`}
                           >
-                            <div className="col-span-1 flex items-center justify-center">
-                              <input
-                                type="checkbox"
-                                checked={fld.visible !== false}
-                                onChange={(e) =>
-                                  applyFieldSelection(editableSections, setEditableSections, si, gi, fi, (f) => ({
-                                    ...f,
-                                    visible: e.target.checked,
-                                  }))
-                                }
-                                className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
-                              />
-                            </div>
-                            <div className="col-span-5">
-                              <input
-                                type="text"
-                                value={fld.label}
-                                onChange={(e) =>
-                                  applyFieldSelection(editableSections, setEditableSections, si, gi, fi, (f) => ({
-                                    ...f,
-                                    label: e.target.value,
-                                    internalName: toInternalName(e.target.value) || f.internalName,
-                                  }))
-                                }
-                                className="w-full h-7 rounded-md border border-slate-300 dark:border-slate-700 px-2 text-xs bg-background focus:outline-none focus:ring-1 focus:ring-blue-500"
-                              />
-                            </div>
-                            <div className="col-span-2 font-mono text-[10px] text-muted-foreground truncate" title={fld.internalName}>
-                              {fld.internalName}
-                            </div>
-                            <div className="col-span-2">
-                              <select
-                                value={fld.type}
-                                onChange={(e) =>
-                                  applyFieldSelection(editableSections, setEditableSections, si, gi, fi, (f) => ({
-                                    ...f,
-                                    type: e.target.value as FieldType,
-                                  }))
-                                }
-                                className="w-full h-7 rounded-md border border-slate-300 dark:border-slate-700 px-1.5 text-[11px] bg-background focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer"
-                              >
-                                {FIELD_TYPE_OPTIONS.map((t) => (
-                                  <option key={t} value={t}>
-                                    {t}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
-                            <div className="col-span-2 flex items-center justify-end gap-2">
-                              <label className="flex items-center gap-1 text-[10px] text-muted-foreground cursor-pointer">
+                            <div className="grid grid-cols-12 gap-2 items-center px-2.5 py-2">
+                              <div className="col-span-1 flex items-center justify-center">
                                 <input
                                   type="checkbox"
-                                  checked={!!fld.required}
+                                  checked={fld.visible !== false}
                                   onChange={(e) =>
                                     applyFieldSelection(editableSections, setEditableSections, si, gi, fi, (f) => ({
                                       ...f,
-                                      required: e.target.checked,
+                                      visible: e.target.checked,
                                     }))
                                   }
-                                  className="h-3.5 w-3.5 rounded border-slate-300 text-blue-600 cursor-pointer"
+                                  className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
                                 />
-                                Req
-                              </label>
-                              <button
-                                onClick={() =>
-                                  applyFieldSelection(editableSections, setEditableSections, si, gi, fi, (f) => ({
-                                    ...f,
-                                    visible: false,
-                                  }))
-                                }
-                                className="text-muted-foreground hover:text-rose-600 cursor-pointer"
-                                title="Disable field"
-                              >
-                                <Trash2 className="h-3.5 w-3.5" />
-                              </button>
+                              </div>
+                              <div className="col-span-4">
+                                <input
+                                  type="text"
+                                  value={fld.label}
+                                  onChange={(e) =>
+                                    applyFieldSelection(editableSections, setEditableSections, si, gi, fi, (f) => ({
+                                      ...f,
+                                      label: e.target.value,
+                                      internalName: toInternalName(e.target.value) || f.internalName,
+                                    }))
+                                  }
+                                  className="w-full h-7 rounded-md border border-slate-300 dark:border-slate-700 px-2 text-xs bg-background focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                />
+                                {autoRole && (
+                                  <span
+                                    className={`mt-0.5 inline-flex items-center gap-0.5 rounded border px-1.5 py-px text-[9px] font-bold ${roleMeta[autoRole].cls}`}
+                                    title={`Auto-restricted to ${roleMeta[autoRole].label} only`}
+                                  >
+                                    🔒 {roleMeta[autoRole].label} only
+                                  </span>
+                                )}
+                              </div>
+                              <div className="col-span-2 font-mono text-[10px] text-muted-foreground truncate" title={fld.internalName}>
+                                {fld.internalName}
+                              </div>
+                              <div className="col-span-2">
+                                <select
+                                  value={fld.type}
+                                  onChange={(e) =>
+                                    applyFieldSelection(editableSections, setEditableSections, si, gi, fi, (f) => ({
+                                      ...f,
+                                      type: e.target.value as FieldType,
+                                    }))
+                                  }
+                                  className="w-full h-7 rounded-md border border-slate-300 dark:border-slate-700 px-1.5 text-[11px] bg-background focus:outline-none focus:ring-1 focus:ring-blue-500 cursor-pointer"
+                                >
+                                  {FIELD_TYPE_OPTIONS.map((t) => (
+                                    <option key={t} value={t}>{t}</option>
+                                  ))}
+                                </select>
+                              </div>
+                              <div className="col-span-3 flex items-center justify-end gap-1.5">
+                                <label className="flex items-center gap-1 text-[10px] text-muted-foreground cursor-pointer">
+                                  <input
+                                    type="checkbox"
+                                    checked={!!fld.required}
+                                    onChange={(e) =>
+                                      applyFieldSelection(editableSections, setEditableSections, si, gi, fi, (f) => ({
+                                        ...f,
+                                        required: e.target.checked,
+                                      }))
+                                    }
+                                    className="h-3.5 w-3.5 rounded border-slate-300 text-blue-600 cursor-pointer"
+                                  />
+                                  Req
+                                </label>
+                                {/* Permissions toggle button */}
+                                <button
+                                  onClick={() => togglePerms(si, gi, fi)}
+                                  title="Field permissions"
+                                  className={`flex items-center gap-0.5 rounded px-1 py-0.5 text-[10px] font-semibold transition-colors ${
+                                    hasPerms
+                                      ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300'
+                                      : 'text-muted-foreground hover:text-blue-600'
+                                  }`}
+                                >
+                                  <ShieldCheck className="h-3 w-3" />
+                                  <ChevronDown className={`h-2.5 w-2.5 transition-transform ${isPermOpen ? 'rotate-180' : ''}`} />
+                                </button>
+                                <button
+                                  onClick={() =>
+                                    applyFieldSelection(editableSections, setEditableSections, si, gi, fi, (f) => ({
+                                      ...f,
+                                      visible: false,
+                                    }))
+                                  }
+                                  className="text-muted-foreground hover:text-rose-600 cursor-pointer"
+                                  title="Disable field"
+                                >
+                                  <Trash2 className="h-3.5 w-3.5" />
+                                </button>
+                              </div>
                             </div>
+
+                            {/* ── Options row (selectable types) ── */}
+                            {isSelectableType(fld.type) && fld.visible !== false && (
+                              <div className="grid grid-cols-12 gap-2 items-center border-t border-slate-200 dark:border-slate-700 px-2.5 pb-2 pt-1 text-[11px] bg-slate-50/50 dark:bg-slate-900/40">
+                                <div className="col-span-1" />
+                                <div className="col-span-7 space-y-1">
+                                  <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                                    Options (comma-separated)
+                                  </span>
+                                  <input
+                                    type="text"
+                                    value={optionsToText(fld.options)}
+                                    placeholder="e.g. GREEN, ORANGE, RED, OPEN"
+                                    onChange={(e) =>
+                                      applyFieldSelection(editableSections, setEditableSections, si, gi, fi, (f) => ({
+                                        ...f,
+                                        options: textToOptions(e.target.value),
+                                      }))
+                                    }
+                                    className="w-full h-7 rounded-md border border-slate-300 dark:border-slate-700 px-2 text-xs bg-background focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                  />
+                                </div>
+                                <div className="col-span-4 space-y-1">
+                                  <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                                    Default value
+                                  </span>
+                                  <input
+                                    type="text"
+                                    value={fld.defaultValue ?? ''}
+                                    placeholder="(optional)"
+                                    onChange={(e) =>
+                                      applyFieldSelection(editableSections, setEditableSections, si, gi, fi, (f) => ({
+                                        ...f,
+                                        defaultValue: e.target.value || undefined,
+                                      }))
+                                    }
+                                    className="w-full h-7 rounded-md border border-slate-300 dark:border-slate-700 px-2 text-xs bg-background focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                  />
+                                </div>
+                              </div>
+                            )}
+
+                            {/* ── Permissions panel ── */}
+                            {isPermOpen && fld.visible !== false && (
+                              <div className="border-t border-blue-200 dark:border-blue-900/60 bg-blue-50/60 dark:bg-blue-950/20 px-3 py-3 space-y-2">
+                                <div className="flex items-center gap-1.5 mb-1">
+                                  <ShieldCheck className="h-3 w-3 text-blue-600" />
+                                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-blue-700 dark:text-blue-400">
+                                    Role Permissions
+                                  </span>
+                                  <span className="text-[10px] text-muted-foreground ml-1">— click to toggle View / Edit access per role</span>
+                                </div>
+                                <div className="grid grid-cols-3 gap-2">
+                                  {PROJECT_ROLES.map((role) => {
+                                    const canView = viewRoles.includes(role.key);
+                                    const canEdit = editRoles.includes(role.key);
+                                    // colour map
+                                    const viewCls = canView
+                                      ? role.color === 'blue'   ? 'bg-blue-600 text-white border-blue-600'
+                                        : role.color === 'violet' ? 'bg-violet-600 text-white border-violet-600'
+                                        : 'bg-amber-500 text-white border-amber-500'
+                                      : 'bg-background text-muted-foreground border-slate-300 dark:border-slate-700 hover:border-blue-400';
+                                    const editCls = canEdit
+                                      ? role.color === 'blue'   ? 'bg-blue-600 text-white border-blue-600'
+                                        : role.color === 'violet' ? 'bg-violet-600 text-white border-violet-600'
+                                        : 'bg-amber-500 text-white border-amber-500'
+                                      : 'bg-background text-muted-foreground border-slate-300 dark:border-slate-700 hover:border-blue-400';
+                                    return (
+                                      <div key={role.key} className="rounded-lg border border-slate-200 dark:border-slate-700 bg-background p-2 space-y-1.5">
+                                        <span className={`block text-[10px] font-extrabold uppercase tracking-wider ${
+                                          role.color === 'blue' ? 'text-blue-700' : role.color === 'violet' ? 'text-violet-700' : 'text-amber-700'
+                                        }`}>{role.label}</span>
+                                        <div className="flex gap-1">
+                                          <button
+                                            onClick={() =>
+                                              applyFieldSelection(editableSections, setEditableSections, si, gi, fi, (f) => ({
+                                                ...f,
+                                                permissions: {
+                                                  ...f.permissions,
+                                                  rolesAllowedToView: toggleRole(f.permissions?.rolesAllowedToView, role.key),
+                                                },
+                                              }))
+                                            }
+                                            className={`flex-1 rounded border px-1 py-0.5 text-[9px] font-bold transition-colors ${viewCls}`}
+                                          >
+                                            👁 View
+                                          </button>
+                                          <button
+                                            onClick={() =>
+                                              applyFieldSelection(editableSections, setEditableSections, si, gi, fi, (f) => ({
+                                                ...f,
+                                                permissions: {
+                                                  ...f.permissions,
+                                                  rolesAllowedToEdit: toggleRole(f.permissions?.rolesAllowedToEdit, role.key),
+                                                },
+                                              }))
+                                            }
+                                            className={`flex-1 rounded border px-1 py-0.5 text-[9px] font-bold transition-colors ${editCls}`}
+                                          >
+                                            ✏ Edit
+                                          </button>
+                                        </div>
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                                <p className="text-[9px] text-muted-foreground leading-relaxed pt-0.5">
+                                  Active = coloured chip. No selection = all roles can access (open field).
+                                  If only View is set, the role can see but not modify the field.
+                                </p>
+                              </div>
+                            )}
                           </div>
 
-                          {isSelectableType(fld.type) && fld.visible !== false && (
-                            <div className="grid grid-cols-12 gap-2 items-center rounded-lg border-t-0 border-slate-300 dark:border-slate-700 px-2.5 pb-2 pt-1 text-[11px] bg-slate-50/50 dark:bg-slate-900/40">
-                              <div className="col-span-1" />
-                              <div className="col-span-7 space-y-1">
-                                <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                                  Options (comma-separated)
-                                </span>
-                                <input
-                                  type="text"
-                                  value={optionsToText(fld.options)}
-                                  placeholder="e.g. GREEN, ORANGE, RED, OPEN"
-                                  onChange={(e) =>
-                                    applyFieldSelection(editableSections, setEditableSections, si, gi, fi, (f) => ({
-                                      ...f,
-                                      options: textToOptions(e.target.value),
-                                    }))
-                                  }
-                                  className="w-full h-7 rounded-md border border-slate-300 dark:border-slate-700 px-2 text-xs bg-background focus:outline-none focus:ring-1 focus:ring-blue-500"
-                                />
-                              </div>
-                              <div className="col-span-4 space-y-1">
-                                <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                                  Default value
-                                </span>
-                                <input
-                                  type="text"
-                                  value={fld.defaultValue ?? ''}
-                                  placeholder="(optional)"
-                                  onChange={(e) =>
-                                    applyFieldSelection(editableSections, setEditableSections, si, gi, fi, (f) => ({
-                                      ...f,
-                                      defaultValue: e.target.value || undefined,
-                                    }))
-                                  }
-                                  className="w-full h-7 rounded-md border border-slate-300 dark:border-slate-700 px-2 text-xs bg-background focus:outline-none focus:ring-1 focus:ring-blue-500"
-                                />
-                              </div>
-                            </div>
-                          )}
-                        </Fragment>
-                        ))}
+                          </Fragment>
+                          );
+                        })}
                       </div>
                     </div>
-                  ))}
+                  ); })}
                 </div>
-              ))
+              ); })
             )}
           </CardContent>
           <div className="px-6 pb-6 flex items-center justify-between border-t border-border pt-4">

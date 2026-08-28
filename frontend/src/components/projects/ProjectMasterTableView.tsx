@@ -22,6 +22,7 @@ import {
   Check,
   X,
   FileSpreadsheet,
+  Lock,
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -82,15 +83,30 @@ export const ProjectMasterTableView: React.FC<ProjectMasterTableViewProps> = ({
   }> = [];
 
   (template?.sections || []).forEach((sec) => {
-    let roleReq: 'buyer' | 'capacity_manager' | 'sqd' | 'all' = 'all';
-    const secIdLower = sec.id.toLowerCase();
-    const secNameLower = sec.name.toLowerCase();
-    if (secIdLower.includes('buyer') || secNameLower.includes('buyer')) roleReq = 'buyer';
-    else if (secIdLower.includes('capacity') || secNameLower.includes('capacity')) roleReq = 'capacity_manager';
-    else if (secIdLower.includes('sqd') || secNameLower.includes('sqd')) roleReq = 'sqd';
+    let secRoleReq: 'buyer' | 'capacity_manager' | 'sqd' | 'all' = 'all';
+    const secAllowed = sec.permissions?.rolesAllowedToEdit;
+    if (secAllowed && secAllowed.length > 0) {
+      if (secAllowed.includes('buyer')) secRoleReq = 'buyer';
+      else if (secAllowed.includes('capacity_manager')) secRoleReq = 'capacity_manager';
+      else if (secAllowed.includes('sqd')) secRoleReq = 'sqd';
+    } else {
+      const secIdLower = sec.id.toLowerCase();
+      const secNameLower = sec.name.toLowerCase();
+      if (secIdLower.includes('buyer') || secNameLower.includes('buyer')) secRoleReq = 'buyer';
+      else if (secIdLower.includes('capacity') || secNameLower.includes('capacity')) secRoleReq = 'capacity_manager';
+      else if (secIdLower.includes('sqd') || secNameLower.includes('sqd')) secRoleReq = 'sqd';
+    }
 
     sec.groups?.forEach((grp) => {
       grp.fields?.forEach((fld) => {
+        let fldRoleReq = secRoleReq;
+        const fldAllowed = fld.permissions?.rolesAllowedToEdit;
+        if (fldAllowed && fldAllowed.length > 0) {
+          if (fldAllowed.includes('buyer')) fldRoleReq = 'buyer';
+          else if (fldAllowed.includes('capacity_manager')) fldRoleReq = 'capacity_manager';
+          else if (fldAllowed.includes('sqd')) fldRoleReq = 'sqd';
+        }
+
         const val = getRawFieldValue(fld.internalName);
         const isFilled = val !== undefined && val !== null && String(val).trim() !== '';
         allFieldsMeta.push({
@@ -99,7 +115,7 @@ export const ProjectMasterTableView: React.FC<ProjectMasterTableViewProps> = ({
           field: fld,
           value: val,
           isFilled,
-          roleRequired: roleReq,
+          roleRequired: fldRoleReq,
         });
       });
     });
@@ -458,11 +474,20 @@ export const ProjectMasterTableView: React.FC<ProjectMasterTableViewProps> = ({
                 ) : (
                   filteredFields.map((item, idx) => {
                     const isEditing = editingFieldKey === item.field.internalName;
+                    const normRole = (userRole || '').trim().toLowerCase().replace(/[\s-]+/g, '_');
+                    const effectiveRole =
+                      normRole === 'capacity' || normRole === 'capacitymanager' || normRole === 'cap_manager'
+                        ? 'capacity_manager'
+                        : normRole === 'purchasing'
+                        ? 'buyer'
+                        : normRole === 'quality' || normRole === 'quality_lead' || normRole === 'sqd_team'
+                        ? 'sqd'
+                        : normRole;
+
                     const canEditItem =
-                      userRole === 'admin' ||
-                      (item.roleRequired === 'buyer' && userRole === 'buyer') ||
-                      (item.roleRequired === 'capacity_manager' && userRole === 'capacity_manager') ||
-                      (item.roleRequired === 'sqd' && userRole === 'sqd');
+                      effectiveRole === 'admin' ||
+                      item.roleRequired === 'all' ||
+                      item.roleRequired === effectiveRole;
 
                     return (
                       <tr
@@ -555,7 +580,7 @@ export const ProjectMasterTableView: React.FC<ProjectMasterTableViewProps> = ({
 
                         {/* Action */}
                         <td className="p-3.5 pr-6 text-right">
-                          {canEditItem && onSave && !isEditing && (
+                          {canEditItem && onSave && !isEditing ? (
                             <Button
                               type="button"
                               variant="ghost"
@@ -565,6 +590,10 @@ export const ProjectMasterTableView: React.FC<ProjectMasterTableViewProps> = ({
                             >
                               <Edit2 className="h-3 w-3 mr-1" /> Edit
                             </Button>
+                          ) : !canEditItem && (
+                            <span className="inline-flex items-center gap-1 text-[10px] text-muted-foreground/60 font-semibold">
+                              <Lock className="h-2.5 w-2.5" /> Read-only
+                            </span>
                           )}
                         </td>
                       </tr>

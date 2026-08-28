@@ -303,17 +303,17 @@ export default function SuppliersPage() {
             <DropdownMenuContent align="start" className="w-36 rounded-xl">
               <DropdownMenuLabel className="text-[10px] uppercase text-muted-foreground">Change Status</DropdownMenuLabel>
               <DropdownMenuItem
-                onClick={() => updateMutation.mutate({ id: supplier.id, data: { status: 'active' } })}
+                onClick={() => updateMutation.mutate({ id: supplier.id, data: { status: 'active' } as any })}
               >
                 Active
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => updateMutation.mutate({ id: supplier.id, data: { status: 'inactive' } })}
+                onClick={() => updateMutation.mutate({ id: supplier.id, data: { status: 'inactive' } as any })}
               >
                 Inactive
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => updateMutation.mutate({ id: supplier.id, data: { status: 'blacklisted' } })}
+                onClick={() => updateMutation.mutate({ id: supplier.id, data: { status: 'blacklisted' } as any })}
               >
                 Blacklisted
               </DropdownMenuItem>

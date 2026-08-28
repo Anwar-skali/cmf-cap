@@ -15,6 +15,7 @@ import { getStatusVariant } from '@/lib/utils';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { ErrorState } from '@/components/ui/error-state';
 import { EmptyState } from '@/components/ui/empty-state';
+import { useAuthStore } from '@/stores/authStore';
 import { toast } from 'sonner';
 
 export default function ProjectDetailPage() {
@@ -24,6 +25,9 @@ export default function ProjectDetailPage() {
   const { templates, activeTemplate } = useTemplate();
   const deleteMutation = useDeleteProjectMutation();
   const updateMutation = useUpdateProjectMutation();
+  const { state: authState } = useAuthStore();
+  const currentUser = authState.user;
+  const userRole = (currentUser?.role || 'buyer').toLowerCase();
 
   const { data: project, isLoading, error, refetch } = useProjectQuery(projectId!);
 
@@ -150,6 +154,7 @@ export default function ProjectDetailPage() {
               templateCode={templateCode}
               onSave={handleSaveK9}
               isSaving={updateMutation.isPending}
+              userRole={userRole}
             />
           )}
         </TabsContent>

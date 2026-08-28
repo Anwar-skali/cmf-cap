@@ -45351,3 +45351,1067 @@ mapped_data={'unique_id': 'UID-0001', 'apqp': 'Completed', 'part_name': 'Brake M
 2026-08-27 16:09:27,282 - app.main - INFO - GET /api/v1/projects -> 200
 2026-08-27 16:09:27,310 - app.main - INFO - GET /api/v1/projects
 2026-08-27 16:09:27,729 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 10:53:46,064 - app.main - INFO - Starting CMF Platform API
+2026-08-28 10:53:46,094 - app.main - INFO - Database tables verified/created (SQLite)
+2026-08-28 10:54:35,195 - app.main - INFO - GET /api/v1/auth/me
+2026-08-28 10:54:35,225 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-28 10:54:35,228 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-28 10:54:35,249 - app.main - INFO - GET /api/v1/auth/me
+2026-08-28 10:54:35,252 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-28 10:54:35,254 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-28 10:54:35,261 - app.main - INFO - GET /api/v1/auth/me -> 401
+2026-08-28 10:54:35,715 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-28 10:54:35,741 - app.main - INFO - GET /api/v1/auth/me
+2026-08-28 10:54:35,816 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-28 10:54:35,876 - app.main - INFO - GET /api/v1/auth/me
+2026-08-28 10:54:35,917 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-28 10:54:35,988 - app.main - INFO - GET /api/v1/notifications
+2026-08-28 10:54:35,992 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 10:54:36,007 - app.main - INFO - GET /api/v1/templates
+2026-08-28 10:54:36,134 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 10:54:36,215 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 10:54:36,230 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-28 10:54:36,235 - app.main - INFO - GET /api/v1/templates
+2026-08-28 10:54:36,282 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 10:54:36,454 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-28 10:54:36,457 - app.main - INFO - GET /api/v1/projects
+2026-08-28 10:54:37,295 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 10:54:37,650 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-28 10:55:06,235 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 10:55:06,323 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 10:55:35,035 - app.main - INFO - GET /api/v1/risks
+2026-08-28 10:55:35,038 - app.main - INFO - GET /api/v1/projects
+2026-08-28 10:55:35,328 - app.main - INFO - GET /api/v1/risks -> 200
+2026-08-28 10:55:35,509 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 10:55:36,369 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 10:55:36,444 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 10:55:44,623 - app.main - INFO - GET /api/v1/parts
+2026-08-28 10:55:45,206 - app.main - INFO - GET /api/v1/parts -> 200
+2026-08-28 10:56:06,489 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 10:56:06,583 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 10:56:10,739 - app.main - INFO - POST /api/v1/risks
+2026-08-28 10:56:10,960 - app.main - INFO - POST /api/v1/risks -> 200
+2026-08-28 10:56:11,345 - app.main - INFO - GET /api/v1/risks
+2026-08-28 10:56:11,352 - app.main - INFO - GET /api/v1/projects
+2026-08-28 10:56:12,009 - app.main - INFO - GET /api/v1/risks -> 200
+2026-08-28 10:56:12,398 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 10:56:29,682 - app.main - INFO - GET /api/v1/projects
+2026-08-28 10:56:29,941 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 10:56:29,959 - app.main - INFO - GET /api/v1/projects
+2026-08-28 10:56:30,226 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 10:56:36,644 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 10:56:36,727 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 10:56:40,755 - app.main - INFO - DELETE /api/v1/templates/8431457c-3c57-43b0-8eff-912eb5278d43
+2026-08-28 10:56:40,965 - app.main - INFO - DELETE /api/v1/templates/8431457c-3c57-43b0-8eff-912eb5278d43 -> 200
+2026-08-28 10:56:40,988 - app.main - INFO - GET /api/v1/templates
+2026-08-28 10:56:41,052 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 11:00:51,904 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:00:51,948 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:01:21,993 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:01:22,072 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:01:52,112 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:01:52,207 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:01:52,896 - app.main - INFO - POST /api/v1/templates
+2026-08-28 11:01:53,101 - app.main - INFO - POST /api/v1/templates -> 200
+2026-08-28 11:01:53,129 - app.main - INFO - GET /api/v1/templates
+2026-08-28 11:01:53,146 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:01:53,229 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 11:01:53,240 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:02:14,040 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-28 11:02:14,046 - app.main - INFO - GET /api/v1/documents
+2026-08-28 11:02:14,244 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 3 published templates in 87.55 ms
+2026-08-28 11:02:14,266 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-28 11:02:14,302 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-28 11:02:14,393 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-28 11:02:14,490 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 3 published templates in 63.78 ms
+2026-08-28 11:02:14,512 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-28 11:02:22,256 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:02:22,345 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:02:24,872 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-28 11:02:24,910 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Sheet: 'Exemple_Projets' | Orient: HORIZONTAL | Headers (65): ['INDICE', 'N° RFQ (SP MDT)', 'Module', 'Designation (Commodity)', 'Complément désignation', 'Supplier', 'Plant localization', 'COFOR Fabricant', 'ASP (Acheteur Programme) / AC (Acheteur Comodité)', 'SMT Manager', 'GM', 'GA MA', 'SQME', 'Entité SD', 'Capacity Manager CYMT', 'Lien vers SCR', 'Date SCR', 'Weekly Capacity (parts/week)1', 'Capacity Step (parts/week)11', 'Weekly Capacity (parts/week)12', 'Capacity Step (parts/week)13', 'Weekly Capacity (parts/week)14', 'Capacity Step (parts/week)15', 'Weekly Capacity (parts/week)16', 'Capacity Step (parts/week)17', 'Weekly Capacity (parts/week)18', 'Capacity Step (parts/week)19', 'Weekly Capacity (parts/week)2', 'Capacity Step (parts/week)21', 'Weekly Capacity (parts/week)22', 'Capacity Step (parts/week)23', 'Weekly Capacity (parts/week)222', 'Capacity Step (parts/week)25', 'Weekly Capacity (parts/week)223', 'Capacity Step (parts/week)27', 'Weekly Capacity (parts/week)224', 'Capacity Step (parts/week)273', 'WEEKLY Capa Contract (parts/week)', 'Availability date', 'Contract (PC, TKO, FETE)', 'COMMENT', 'Volume price matrix (Y/N)', 'Capacity Max without Investment', 'Date update commitment Supplier', 'CAPA to check by SQE for next year in parts/week', 'Weekly Capacity (Ex Standard + Extra Capacity) Year Max (SCR Calculation) parts/week', 'Year Max (SCR Calculation)', 'PCAT Type 1 or 2', 'PCAT forecasted date', 'Run Assessment Date', 'Run Observation Weekly Capacity parts/week', 'Estimated Target Weekly Capacity parts/week', 'Status: Green Orange Red', 'COMMENT2', 'Reschedule or Follow-up Date (including Next Step)', 'DocInfo Link', 'References / Part Number', 'Lien SCR WAR ROOM', 'Date de mise à jour SCR WAR ROOM', 'Alerte date prévisionnelle de blocage SCR WAR ROOM', "Besoin max sur l'année SCR WAR ROOM", 'Dernier état WR (ROV)', 'Budget Feasibility 222', 'Commentaires pilotage', 'Projet Lanceur']
+2026-08-28 11:02:24,934 - app.application.services.ollama_mapping_service - INFO - [OLLAMA] Configured timeout: 5.0s, default model: llama3.2:1b, url: http://localhost:11434
+2026-08-28 11:02:25,060 - app.application.services.ollama_mapping_service - INFO - [IMPORT] 0 columns unresolved. Skipping AI mapping entirely.
+2026-08-28 11:02:25,062 - app.application.services.ollama_mapping_service - INFO - [IMPORT] Workbook parsed: 0.1ms
+[IMPORT] Headers detected: 65
+[IMPORT] Exact mappings: 65
+[IMPORT] Alias mappings: 0
+[IMPORT] Fuzzy mappings: 0
+[IMPORT] Cache mappings: 0
+[IMPORT] Unresolved: 0
+[IMPORT] AI invoked: 0 column(s)
+[IMPORT] AI duration: 0.0ms
+[IMPORT] Total: 125.2ms
+2026-08-28 11:02:25,066 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-28 11:02:50,700 - app.main - INFO - POST /api/v1/import/preview
+2026-08-28 11:02:50,784 - app.application.services.import_engine_service - INFO - [PARSE] Auto-detected header row 1 (0-based idx=0)
+2026-08-28 11:02:50,785 - app.application.services.import_engine_service - INFO - [IMPORT ROW FILTER] sheet=Exemple_Projets header_row=1 physical_rows=2 data_rows=2 empty_rows=0
+2026-08-28 11:02:51,082 - app.main - INFO - POST /api/v1/import/preview -> 200
+2026-08-28 11:02:52,392 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:02:52,475 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:02:53,893 - app.main - INFO - POST /api/v1/import/execute
+2026-08-28 11:02:53,971 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Starting execution for file 'exemple_projets_cmf_mdt.xlsx' with template 'FIN'
+2026-08-28 11:02:53,974 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Selected template: 'FIN'
+2026-08-28 11:02:53,976 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Uploaded filename: 'exemple_projets_cmf_mdt.xlsx' (7346 bytes)
+2026-08-28 11:02:53,979 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Mapped fields: {'INDICE': 'indice', 'Module': 'module', 'Designation (Commodity)': 'designation_commodity', 'Complément désignation': 'compl_ment_d_signation', 'Plant localization': 'plant_localization', 'COFOR Fabricant': 'cofor_fabricant', 'ASP (Acheteur Programme) / AC (Acheteur Comodité)': 'asp_acheteur_programme_ac_acheteur_comodit', 'SMT Manager': 'smt_manager', 'GM': 'gm', 'GA MA': 'ga_ma', 'Entité SD': 'entit_sd', 'Lien vers SCR': 'lien_vers_scr', 'Date SCR': 'date_scr', 'Availability date': 'availability_date', 'Contract (PC, TKO, FETE)': 'contract_pc_tko_fete', 'COMMENT': 'comment', 'Year Max (SCR Calculation)': 'year_max_scr_calculation', 'PCAT Type 1 or 2': 'pcat_type_1_or_2', 'PCAT forecasted date': 'pcat_forecasted_date', 'Run Assessment Date': 'run_assessment_date', 'Status: Green Orange Red': 'status_green_orange_red', 'COMMENT2': 'comment2', 'Reschedule or Follow-up Date (including Next Step)': 'reschedule_or_follow_up_date_including_next_step', 'DocInfo Link': 'docinfo_link', 'References / Part Number': 'references_part_number', 'Lien SCR WAR ROOM': 'lien_scr_war_room', 'Date de mise à jour SCR WAR ROOM': 'date_de_mise_jour_scr_war_room', 'Alerte date prévisionnelle de blocage SCR WAR ROOM': 'alerte_date_pr_visionnelle_de_blocage_scr_war_room', "Besoin max sur l'année SCR WAR ROOM": 'besoin_max_sur_l_ann_e_scr_war_room', 'Dernier état WR (ROV)': 'dernier_tat_wr_rov', 'Budget Feasibility 222': 'budget_feasibility_222', 'Commentaires pilotage': 'commentaires_pilotage', 'Projet Lanceur': 'projet_lanceur', 'N° RFQ (SP MDT)': 'n_rfq_sp_mdt', 'Supplier': 'supplier', 'Volume price matrix (Y/N)': 'volume_price_matrix_y_n', 'Date update commitment Supplier': 'date_update_commitment_supplier', 'Capacity Manager CYMT': 'capacity_manager_cymt', 'Weekly Capacity (parts/week)1': 'weekly_capacity_parts_week_1', 'Capacity Step (parts/week)11': 'capacity_step_parts_week_11', 'Weekly Capacity (parts/week)12': 'weekly_capacity_parts_week_12', 'Capacity Step (parts/week)13': 'capacity_step_parts_week_13', 'Weekly Capacity (parts/week)14': 'weekly_capacity_parts_week_14', 'Capacity Step (parts/week)15': 'capacity_step_parts_week_15', 'Weekly Capacity (parts/week)16': 'weekly_capacity_parts_week_16', 'Capacity Step (parts/week)17': 'capacity_step_parts_week_17', 'Weekly Capacity (parts/week)18': 'weekly_capacity_parts_week_18', 'Capacity Step (parts/week)19': 'capacity_step_parts_week_19', 'Weekly Capacity (parts/week)2': 'weekly_capacity_parts_week_2', 'Capacity Step (parts/week)21': 'capacity_step_parts_week_21', 'Weekly Capacity (parts/week)22': 'weekly_capacity_parts_week_22', 'Capacity Step (parts/week)23': 'capacity_step_parts_week_23', 'Weekly Capacity (parts/week)222': 'weekly_capacity_parts_week_222', 'Capacity Step (parts/week)25': 'capacity_step_parts_week_25', 'Weekly Capacity (parts/week)223': 'weekly_capacity_parts_week_223', 'Capacity Step (parts/week)27': 'capacity_step_parts_week_27', 'Weekly Capacity (parts/week)224': 'weekly_capacity_parts_week_224', 'Capacity Step (parts/week)273': 'capacity_step_parts_week_273', 'WEEKLY Capa Contract (parts/week)': 'weekly_capa_contract_parts_week', 'Capacity Max without Investment': 'capacity_max_without_investment', 'Weekly Capacity (Ex Standard + Extra Capacity) Year Max (SCR Calculation) parts/week': 'weekly_capacity_ex_standard_extra_capacity_year_max_scr_calculation_parts_week', 'Run Observation Weekly Capacity parts/week': 'run_observation_weekly_capacity_parts_week', 'Estimated Target Weekly Capacity parts/week': 'estimated_target_weekly_capacity_parts_week', 'SQME': 'sqme', 'CAPA to check by SQE for next year in parts/week': 'capa_to_check_by_sqe_for_next_year_in_parts_week'}
+2026-08-28 11:02:53,982 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Import mode: 'insert', strategy: 'skip_invalid'
+2026-08-28 11:02:54,068 - app.application.services.import_engine_service - INFO - [PARSE] Auto-detected header row 1 (0-based idx=0)
+2026-08-28 11:02:54,072 - app.application.services.import_engine_service - INFO - [IMPORT ROW FILTER] sheet=Exemple_Projets header_row=1 physical_rows=2 data_rows=2 empty_rows=0
+2026-08-28 11:02:54,874 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Validation summary: Total Rows=2, Valid=2, Errors=0
+2026-08-28 11:02:54,915 - app.application.services.import_engine_service - INFO - [PARSE] Auto-detected header row 1 (0-based idx=0)
+2026-08-28 11:02:54,917 - app.application.services.import_engine_service - INFO - [IMPORT ROW FILTER] sheet=Exemple_Projets header_row=1 physical_rows=2 data_rows=2 empty_rows=0
+2026-08-28 11:02:54,953 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Rows detected: 2
+2026-08-28 11:02:54,957 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Headers detected: ['INDICE', 'N° RFQ (SP MDT)', 'Module', 'Designation (Commodity)', 'Complément désignation', 'Supplier', 'Plant localization', 'COFOR Fabricant', 'ASP (Acheteur Programme) / AC (Acheteur Comodité)', 'SMT Manager', 'GM', 'GA MA', 'SQME', 'Entité SD', 'Capacity Manager CYMT', 'Lien vers SCR', 'Date SCR', 'Weekly Capacity (parts/week)1', 'Capacity Step (parts/week)11', 'Weekly Capacity (parts/week)12', 'Capacity Step (parts/week)13', 'Weekly Capacity (parts/week)14', 'Capacity Step (parts/week)15', 'Weekly Capacity (parts/week)16', 'Capacity Step (parts/week)17', 'Weekly Capacity (parts/week)18', 'Capacity Step (parts/week)19', 'Weekly Capacity (parts/week)2', 'Capacity Step (parts/week)21', 'Weekly Capacity (parts/week)22', 'Capacity Step (parts/week)23', 'Weekly Capacity (parts/week)222', 'Capacity Step (parts/week)25', 'Weekly Capacity (parts/week)223', 'Capacity Step (parts/week)27', 'Weekly Capacity (parts/week)224', 'Capacity Step (parts/week)273', 'WEEKLY Capa Contract (parts/week)', 'Availability date', 'Contract (PC, TKO, FETE)', 'COMMENT', 'Volume price matrix (Y/N)', 'Capacity Max without Investment', 'Date update commitment Supplier', 'CAPA to check by SQE for next year in parts/week', 'Weekly Capacity (Ex Standard + Extra Capacity) Year Max (SCR Calculation) parts/week', 'Year Max (SCR Calculation)', 'PCAT Type 1 or 2', 'PCAT forecasted date', 'Run Assessment Date', 'Run Observation Weekly Capacity parts/week', 'Estimated Target Weekly Capacity parts/week', 'Status: Green Orange Red', 'COMMENT2', 'Reschedule or Follow-up Date (including Next Step)', 'DocInfo Link', 'References / Part Number', 'Lien SCR WAR ROOM', 'Date de mise à jour SCR WAR ROOM', 'Alerte date prévisionnelle de blocage SCR WAR ROOM', "Besoin max sur l'année SCR WAR ROOM", 'Dernier état WR (ROV)', 'Budget Feasibility 222', 'Commentaires pilotage', 'Projet Lanceur']
+2026-08-28 11:02:54,960 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Database transaction: Starting transaction session...
+2026-08-28 11:02:55,056 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Project execution decision:
+project_code=PN-458210-A
+decision=CREATED
+reason=New project created
+existing_project_id=None
+existing_project_code=None
+deleted/active=NONE
+mapped_data={'indice': 1, 'module': 'Powertrain', 'designation_commodity': 'Injector Housing', 'compl_ment_d_signation': 'Rev C', 'plant_localization': 'Casablanca, MA', 'cofor_fabricant': 'Valeo', 'asp_acheteur_programme_ac_acheteur_comodit': 'M. Alaoui', 'smt_manager': 'R. Benkirane', 'gm': 'S. Fassi', 'ga_ma': 'H. Tazi', 'entit_sd': 'SD-Powertrain', 'lien_vers_scr': 'https://scr.example.com/PN-458210-A', 'date_scr': datetime.date(2026, 8, 10), 'availability_date': datetime.date(2027, 1, 15), 'contract_pc_tko_fete': 'PC', 'comment': 'Ramp-up en cours, capacité conforme.', 'year_max_scr_calculation': None, 'pcat_type_1_or_2': 1, 'pcat_forecasted_date': datetime.date(2026, 11, 15), 'run_assessment_date': None, 'status_green_orange_red': 'Green', 'comment2': None, 'reschedule_or_follow_up_date_including_next_step': None, 'docinfo_link': None, 'references_part_number': 'PN-458210-A', 'lien_scr_war_room': None, 'date_de_mise_jour_scr_war_room': None, 'alerte_date_pr_visionnelle_de_blocage_scr_war_room': None, 'besoin_max_sur_l_ann_e_scr_war_room': None, 'dernier_tat_wr_rov': None, 'budget_feasibility_222': None, 'commentaires_pilotage': None, 'projet_lanceur': 'Programme XV22', 'n_rfq_sp_mdt': 'RFQ-2026-0142', 'supplier': 'ACME Industries', 'volume_price_matrix_y_n': 'Y', 'date_update_commitment_supplier': datetime.date(2026, 9, 1), 'capacity_manager_cymt': 'J. Bennani', 'weekly_capacity_parts_week_1': None, 'capacity_step_parts_week_11': None, 'weekly_capacity_parts_week_12': None, 'capacity_step_parts_week_13': None, 'weekly_capacity_parts_week_14': None, 'capacity_step_parts_week_15': None, 'weekly_capacity_parts_week_16': None, 'capacity_step_parts_week_17': None, 'weekly_capacity_parts_week_18': None, 'capacity_step_parts_week_19': None, 'weekly_capacity_parts_week_2': None, 'capacity_step_parts_week_21': None, 'weekly_capacity_parts_week_22': None, 'capacity_step_parts_week_23': None, 'weekly_capacity_parts_week_222': None, 'capacity_step_parts_week_25': None, 'weekly_capacity_parts_week_223': None, 'capacity_step_parts_week_27': None, 'weekly_capacity_parts_week_224': None, 'capacity_step_parts_week_273': None, 'weekly_capa_contract_parts_week': 3500, 'capacity_max_without_investment': 4000, 'weekly_capacity_ex_standard_extra_capacity_year_max_scr_calculation_parts_week': None, 'run_observation_weekly_capacity_parts_week': None, 'estimated_target_weekly_capacity_parts_week': None, 'sqme': 'K. Idrissi', 'capa_to_check_by_sqe_for_next_year_in_parts_week': 3800}
+2026-08-28 11:02:55,059 - app.application.services.import_engine_service - INFO - [K0 IMPORT WORKFLOW]
+project_code=PN-458210-A
+project_id=63cce7af-7d39-4685-b63f-67708604873d
+structure_id=87cd9be1-57db-4b6a-bf8a-f5ab34876858
+structure_code=FIN
+
+buyer_module=Buyer
+buyer_data_created=false
+
+capacity_module=Capacity Manager
+capacity_data_created=false
+
+sqd_module=SQD
+sqd_data_created=false
+
+current_step=1
+workflow_state=Step 1
+2026-08-28 11:02:55,085 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG]
+row=1
+project_code=PN-458210-A
+decision=IMPORTED
+reason=New record created in database
+existing_project_id=None
+existing_project_code=None
+deleted/active=NONE
+validation_errors=[]
+mapped_data={'indice': 1, 'module': 'Powertrain', 'designation_commodity': 'Injector Housing', 'compl_ment_d_signation': 'Rev C', 'plant_localization': 'Casablanca, MA', 'cofor_fabricant': 'Valeo', 'asp_acheteur_programme_ac_acheteur_comodit': 'M. Alaoui', 'smt_manager': 'R. Benkirane', 'gm': 'S. Fassi', 'ga_ma': 'H. Tazi', 'entit_sd': 'SD-Powertrain', 'lien_vers_scr': 'https://scr.example.com/PN-458210-A', 'date_scr': datetime.date(2026, 8, 10), 'availability_date': datetime.date(2027, 1, 15), 'contract_pc_tko_fete': 'PC', 'comment': 'Ramp-up en cours, capacité conforme.', 'year_max_scr_calculation': None, 'pcat_type_1_or_2': 1, 'pcat_forecasted_date': datetime.date(2026, 11, 15), 'run_assessment_date': None, 'status_green_orange_red': 'Green', 'comment2': None, 'reschedule_or_follow_up_date_including_next_step': None, 'docinfo_link': None, 'references_part_number': 'PN-458210-A', 'lien_scr_war_room': None, 'date_de_mise_jour_scr_war_room': None, 'alerte_date_pr_visionnelle_de_blocage_scr_war_room': None, 'besoin_max_sur_l_ann_e_scr_war_room': None, 'dernier_tat_wr_rov': None, 'budget_feasibility_222': None, 'commentaires_pilotage': None, 'projet_lanceur': 'Programme XV22', 'n_rfq_sp_mdt': 'RFQ-2026-0142', 'supplier': 'ACME Industries', 'volume_price_matrix_y_n': 'Y', 'date_update_commitment_supplier': datetime.date(2026, 9, 1), 'capacity_manager_cymt': 'J. Bennani', 'weekly_capacity_parts_week_1': None, 'capacity_step_parts_week_11': None, 'weekly_capacity_parts_week_12': None, 'capacity_step_parts_week_13': None, 'weekly_capacity_parts_week_14': None, 'capacity_step_parts_week_15': None, 'weekly_capacity_parts_week_16': None, 'capacity_step_parts_week_17': None, 'weekly_capacity_parts_week_18': None, 'capacity_step_parts_week_19': None, 'weekly_capacity_parts_week_2': None, 'capacity_step_parts_week_21': None, 'weekly_capacity_parts_week_22': None, 'capacity_step_parts_week_23': None, 'weekly_capacity_parts_week_222': None, 'capacity_step_parts_week_25': None, 'weekly_capacity_parts_week_223': None, 'capacity_step_parts_week_27': None, 'weekly_capacity_parts_week_224': None, 'capacity_step_parts_week_273': None, 'weekly_capa_contract_parts_week': 3500, 'capacity_max_without_investment': 4000, 'weekly_capacity_ex_standard_extra_capacity_year_max_scr_calculation_parts_week': None, 'run_observation_weekly_capacity_parts_week': None, 'estimated_target_weekly_capacity_parts_week': None, 'sqme': 'K. Idrissi', 'capa_to_check_by_sqe_for_next_year_in_parts_week': 3800}
+2026-08-28 11:02:55,146 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Project execution decision:
+project_code=PN-772034-B
+decision=CREATED
+reason=New project created
+existing_project_id=None
+existing_project_code=None
+deleted/active=NONE
+mapped_data={'indice': 2, 'module': 'Chassis', 'designation_commodity': 'Bracket Support', 'compl_ment_d_signation': 'Rev A', 'plant_localization': 'Tanger, MA', 'cofor_fabricant': 'Faurecia', 'asp_acheteur_programme_ac_acheteur_comodit': 'Y. Bensaid', 'smt_manager': 'P. Durand', 'gm': 'A. Cherkaoui', 'ga_ma': 'F. Amrani', 'entit_sd': 'SD-Chassis', 'lien_vers_scr': 'https://scr.example.com/PN-772034-B', 'date_scr': datetime.date(2026, 8, 20), 'availability_date': datetime.date(2027, 2, 1), 'contract_pc_tko_fete': 'TKO', 'comment': 'En attente de validation budget.', 'year_max_scr_calculation': None, 'pcat_type_1_or_2': 2, 'pcat_forecasted_date': datetime.date(2026, 12, 1), 'run_assessment_date': None, 'status_green_orange_red': 'Orange', 'comment2': None, 'reschedule_or_follow_up_date_including_next_step': None, 'docinfo_link': None, 'references_part_number': 'PN-772034-B', 'lien_scr_war_room': None, 'date_de_mise_jour_scr_war_room': None, 'alerte_date_pr_visionnelle_de_blocage_scr_war_room': None, 'besoin_max_sur_l_ann_e_scr_war_room': None, 'dernier_tat_wr_rov': None, 'budget_feasibility_222': None, 'commentaires_pilotage': None, 'projet_lanceur': 'Programme YZ10', 'n_rfq_sp_mdt': 'RFQ-2026-0198', 'supplier': 'GlobalParts SA', 'volume_price_matrix_y_n': 'N', 'date_update_commitment_supplier': datetime.date(2026, 10, 5), 'capacity_manager_cymt': 'L. Moreau', 'weekly_capacity_parts_week_1': None, 'capacity_step_parts_week_11': None, 'weekly_capacity_parts_week_12': None, 'capacity_step_parts_week_13': None, 'weekly_capacity_parts_week_14': None, 'capacity_step_parts_week_15': None, 'weekly_capacity_parts_week_16': None, 'capacity_step_parts_week_17': None, 'weekly_capacity_parts_week_18': None, 'capacity_step_parts_week_19': None, 'weekly_capacity_parts_week_2': None, 'capacity_step_parts_week_21': None, 'weekly_capacity_parts_week_22': None, 'capacity_step_parts_week_23': None, 'weekly_capacity_parts_week_222': None, 'capacity_step_parts_week_25': None, 'weekly_capacity_parts_week_223': None, 'capacity_step_parts_week_27': None, 'weekly_capacity_parts_week_224': None, 'capacity_step_parts_week_273': None, 'weekly_capa_contract_parts_week': 1800, 'capacity_max_without_investment': 2100, 'weekly_capacity_ex_standard_extra_capacity_year_max_scr_calculation_parts_week': None, 'run_observation_weekly_capacity_parts_week': None, 'estimated_target_weekly_capacity_parts_week': None, 'sqme': 'N. Chraibi', 'capa_to_check_by_sqe_for_next_year_in_parts_week': 2000}
+2026-08-28 11:02:55,150 - app.application.services.import_engine_service - INFO - [K0 IMPORT WORKFLOW]
+project_code=PN-772034-B
+project_id=a0e9ea8d-5e25-425b-af74-482bdb2fc581
+structure_id=87cd9be1-57db-4b6a-bf8a-f5ab34876858
+structure_code=FIN
+
+buyer_module=Buyer
+buyer_data_created=false
+
+capacity_module=Capacity Manager
+capacity_data_created=false
+
+sqd_module=SQD
+sqd_data_created=false
+
+current_step=1
+workflow_state=Step 1
+2026-08-28 11:02:55,172 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG]
+row=2
+project_code=PN-772034-B
+decision=IMPORTED
+reason=New record created in database
+existing_project_id=None
+existing_project_code=None
+deleted/active=NONE
+validation_errors=[]
+mapped_data={'indice': 2, 'module': 'Chassis', 'designation_commodity': 'Bracket Support', 'compl_ment_d_signation': 'Rev A', 'plant_localization': 'Tanger, MA', 'cofor_fabricant': 'Faurecia', 'asp_acheteur_programme_ac_acheteur_comodit': 'Y. Bensaid', 'smt_manager': 'P. Durand', 'gm': 'A. Cherkaoui', 'ga_ma': 'F. Amrani', 'entit_sd': 'SD-Chassis', 'lien_vers_scr': 'https://scr.example.com/PN-772034-B', 'date_scr': datetime.date(2026, 8, 20), 'availability_date': datetime.date(2027, 2, 1), 'contract_pc_tko_fete': 'TKO', 'comment': 'En attente de validation budget.', 'year_max_scr_calculation': None, 'pcat_type_1_or_2': 2, 'pcat_forecasted_date': datetime.date(2026, 12, 1), 'run_assessment_date': None, 'status_green_orange_red': 'Orange', 'comment2': None, 'reschedule_or_follow_up_date_including_next_step': None, 'docinfo_link': None, 'references_part_number': 'PN-772034-B', 'lien_scr_war_room': None, 'date_de_mise_jour_scr_war_room': None, 'alerte_date_pr_visionnelle_de_blocage_scr_war_room': None, 'besoin_max_sur_l_ann_e_scr_war_room': None, 'dernier_tat_wr_rov': None, 'budget_feasibility_222': None, 'commentaires_pilotage': None, 'projet_lanceur': 'Programme YZ10', 'n_rfq_sp_mdt': 'RFQ-2026-0198', 'supplier': 'GlobalParts SA', 'volume_price_matrix_y_n': 'N', 'date_update_commitment_supplier': datetime.date(2026, 10, 5), 'capacity_manager_cymt': 'L. Moreau', 'weekly_capacity_parts_week_1': None, 'capacity_step_parts_week_11': None, 'weekly_capacity_parts_week_12': None, 'capacity_step_parts_week_13': None, 'weekly_capacity_parts_week_14': None, 'capacity_step_parts_week_15': None, 'weekly_capacity_parts_week_16': None, 'capacity_step_parts_week_17': None, 'weekly_capacity_parts_week_18': None, 'capacity_step_parts_week_19': None, 'weekly_capacity_parts_week_2': None, 'capacity_step_parts_week_21': None, 'weekly_capacity_parts_week_22': None, 'capacity_step_parts_week_23': None, 'weekly_capacity_parts_week_222': None, 'capacity_step_parts_week_25': None, 'weekly_capacity_parts_week_223': None, 'capacity_step_parts_week_27': None, 'weekly_capacity_parts_week_224': None, 'capacity_step_parts_week_273': None, 'weekly_capa_contract_parts_week': 1800, 'capacity_max_without_investment': 2100, 'weekly_capacity_ex_standard_extra_capacity_year_max_scr_calculation_parts_week': None, 'run_observation_weekly_capacity_parts_week': None, 'estimated_target_weekly_capacity_parts_week': None, 'sqme': 'N. Chraibi', 'capa_to_check_by_sqe_for_next_year_in_parts_week': 2000}
+2026-08-28 11:02:55,175 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Serializer errors count: 0
+2026-08-28 11:02:55,241 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Database transaction: Committed successfully (Imported: 2, Updated: 0, Skipped: 0, Failed: 0)
+2026-08-28 11:02:55,250 - app.application.services.import_engine_service - INFO - [IMPORT DEBUG] Execution time: 1204 ms
+2026-08-28 11:02:55,258 - app.main - INFO - POST /api/v1/import/execute -> 200
+2026-08-28 11:02:55,295 - app.main - INFO - POST /api/v1/import/save-mapping-memory
+2026-08-28 11:02:55,364 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:indice -> indice
+2026-08-28 11:02:55,367 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:module -> module
+2026-08-28 11:02:55,369 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:designation commodity -> designation_commodity
+2026-08-28 11:02:55,372 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:complement designation -> compl_ment_d_signation
+2026-08-28 11:02:55,375 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:plant localization -> plant_localization
+2026-08-28 11:02:55,377 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:cofor fabricant -> cofor_fabricant
+2026-08-28 11:02:55,379 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:asp acheteur programme ac acheteur comodite -> asp_acheteur_programme_ac_acheteur_comodit
+2026-08-28 11:02:55,381 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:smt manager -> smt_manager
+2026-08-28 11:02:55,384 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:gm -> gm
+2026-08-28 11:02:55,387 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:ga ma -> ga_ma
+2026-08-28 11:02:55,389 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:entite sd -> entit_sd
+2026-08-28 11:02:55,391 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:lien vers scr -> lien_vers_scr
+2026-08-28 11:02:55,393 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:date scr -> date_scr
+2026-08-28 11:02:55,395 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:availability date -> availability_date
+2026-08-28 11:02:55,397 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:contract pc tko fete -> contract_pc_tko_fete
+2026-08-28 11:02:55,399 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:comment -> comment
+2026-08-28 11:02:55,402 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:year max scr calculation -> year_max_scr_calculation
+2026-08-28 11:02:55,405 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:pcat type 1 or 2 -> pcat_type_1_or_2
+2026-08-28 11:02:55,408 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:pcat forecasted date -> pcat_forecasted_date
+2026-08-28 11:02:55,409 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:run assessment date -> run_assessment_date
+2026-08-28 11:02:55,412 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:status green orange red -> status_green_orange_red
+2026-08-28 11:02:55,413 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:comment2 -> comment2
+2026-08-28 11:02:55,415 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:reschedule or follow up date including next step -> reschedule_or_follow_up_date_including_next_step
+2026-08-28 11:02:55,418 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:docinfo link -> docinfo_link
+2026-08-28 11:02:55,421 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:references part number -> references_part_number
+2026-08-28 11:02:55,423 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:lien scr war room -> lien_scr_war_room
+2026-08-28 11:02:55,426 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:date de mise a jour scr war room -> date_de_mise_jour_scr_war_room
+2026-08-28 11:02:55,429 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:alerte date previsionnelle de blocage scr war room -> alerte_date_pr_visionnelle_de_blocage_scr_war_room
+2026-08-28 11:02:55,431 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:besoin max sur l annee scr war room -> besoin_max_sur_l_ann_e_scr_war_room
+2026-08-28 11:02:55,433 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:dernier etat wr rov -> dernier_tat_wr_rov
+2026-08-28 11:02:55,435 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:budget feasibility 222 -> budget_feasibility_222
+2026-08-28 11:02:55,437 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:commentaires pilotage -> commentaires_pilotage
+2026-08-28 11:02:55,440 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:projet lanceur -> projet_lanceur
+2026-08-28 11:02:55,441 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:n rfq sp mdt -> n_rfq_sp_mdt
+2026-08-28 11:02:55,445 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:supplier -> supplier
+2026-08-28 11:02:55,447 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:volume price matrix y n -> volume_price_matrix_y_n
+2026-08-28 11:02:55,449 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:date update commitment supplier -> date_update_commitment_supplier
+2026-08-28 11:02:55,452 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:capacity manager cymt -> capacity_manager_cymt
+2026-08-28 11:02:55,453 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:weekly capacity parts week 1 -> weekly_capacity_parts_week_1
+2026-08-28 11:02:55,456 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:capacity step parts week 11 -> capacity_step_parts_week_11
+2026-08-28 11:02:55,459 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:weekly capacity parts week 12 -> weekly_capacity_parts_week_12
+2026-08-28 11:02:55,460 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:capacity step parts week 13 -> capacity_step_parts_week_13
+2026-08-28 11:02:55,462 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:weekly capacity parts week 14 -> weekly_capacity_parts_week_14
+2026-08-28 11:02:55,464 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:capacity step parts week 15 -> capacity_step_parts_week_15
+2026-08-28 11:02:55,467 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:weekly capacity parts week 16 -> weekly_capacity_parts_week_16
+2026-08-28 11:02:55,470 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:capacity step parts week 17 -> capacity_step_parts_week_17
+2026-08-28 11:02:55,472 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:weekly capacity parts week 18 -> weekly_capacity_parts_week_18
+2026-08-28 11:02:55,474 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:capacity step parts week 19 -> capacity_step_parts_week_19
+2026-08-28 11:02:55,477 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:weekly capacity parts week 2 -> weekly_capacity_parts_week_2
+2026-08-28 11:02:55,479 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:capacity step parts week 21 -> capacity_step_parts_week_21
+2026-08-28 11:02:55,481 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:weekly capacity parts week 22 -> weekly_capacity_parts_week_22
+2026-08-28 11:02:55,484 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:capacity step parts week 23 -> capacity_step_parts_week_23
+2026-08-28 11:02:55,487 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:weekly capacity parts week 222 -> weekly_capacity_parts_week_222
+2026-08-28 11:02:55,489 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:capacity step parts week 25 -> capacity_step_parts_week_25
+2026-08-28 11:02:55,493 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:weekly capacity parts week 223 -> weekly_capacity_parts_week_223
+2026-08-28 11:02:55,495 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:capacity step parts week 27 -> capacity_step_parts_week_27
+2026-08-28 11:02:55,499 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:weekly capacity parts week 224 -> weekly_capacity_parts_week_224
+2026-08-28 11:02:55,502 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:capacity step parts week 273 -> capacity_step_parts_week_273
+2026-08-28 11:02:55,505 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:weekly capa contract parts week -> weekly_capa_contract_parts_week
+2026-08-28 11:02:55,508 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:capacity max without investment -> capacity_max_without_investment
+2026-08-28 11:02:55,510 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:weekly capacity ex standard extra capacity year max scr calculation parts week -> weekly_capacity_ex_standard_extra_capacity_year_max_scr_calculation_parts_week
+2026-08-28 11:02:55,512 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:run observation weekly capacity parts week -> run_observation_weekly_capacity_parts_week
+2026-08-28 11:02:55,514 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:estimated target weekly capacity parts week -> estimated_target_weekly_capacity_parts_week
+2026-08-28 11:02:55,516 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:sqme -> sqme
+2026-08-28 11:02:55,520 - app.application.services.mapping_cache_service - INFO - [MAPPING CACHE] Saved mapping memory for FIN:capa to check by sqe for next year in parts week -> capa_to_check_by_sqe_for_next_year_in_parts_week
+2026-08-28 11:02:55,528 - app.main - INFO - POST /api/v1/import/save-mapping-memory -> 200
+2026-08-28 11:03:00,320 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:03:00,516 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:03:06,692 - app.main - INFO - GET /api/v1/projects/a0e9ea8d-5e25-425b-af74-482bdb2fc581
+2026-08-28 11:03:06,763 - app.main - INFO - GET /api/v1/projects/a0e9ea8d-5e25-425b-af74-482bdb2fc581 -> 200
+2026-08-28 11:03:06,937 - app.main - INFO - GET /api/v1/suppliers
+2026-08-28 11:03:06,940 - app.main - INFO - GET /api/v1/users
+2026-08-28 11:03:07,183 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-28 11:03:07,335 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-28 11:03:22,510 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:03:22,607 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:03:28,321 - app.main - INFO - GET /api/v1/projects/a0e9ea8d-5e25-425b-af74-482bdb2fc581
+2026-08-28 11:03:28,448 - app.main - INFO - GET /api/v1/projects/a0e9ea8d-5e25-425b-af74-482bdb2fc581 -> 200
+2026-08-28 11:03:52,661 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:03:52,759 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:04:13,522 - app.main - INFO - GET /api/v1/projects/a0e9ea8d-5e25-425b-af74-482bdb2fc581
+2026-08-28 11:04:13,591 - app.main - INFO - GET /api/v1/projects/a0e9ea8d-5e25-425b-af74-482bdb2fc581 -> 200
+2026-08-28 11:04:15,701 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:04:15,762 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:04:15,779 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:04:15,876 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:04:22,816 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:04:22,905 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:04:52,951 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:04:53,105 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:10:28,669 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:10:28,710 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:10:58,757 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:10:58,852 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:11:28,918 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:11:28,990 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:11:59,043 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:11:59,129 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:12:29,184 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:12:29,264 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:12:59,322 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:12:59,406 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:13:29,454 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:13:29,527 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:13:34,871 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-28 11:13:34,877 - app.main - INFO - GET /api/v1/documents
+2026-08-28 11:13:35,104 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 3 published templates in 52.13 ms
+2026-08-28 11:13:35,124 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-28 11:13:35,163 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-28 11:13:35,176 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-28 11:13:35,251 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 3 published templates in 26.99 ms
+2026-08-28 11:13:35,256 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-28 11:13:48,648 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:13:48,864 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:13:48,881 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:13:48,957 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:14:04,120 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-28 11:14:04,213 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 3 published templates in 32.55 ms
+2026-08-28 11:14:04,224 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-28 11:14:04,253 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-28 11:14:04,340 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 3 published templates in 28.97 ms
+2026-08-28 11:14:04,348 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-28 11:14:05,697 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:14:05,876 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:14:29,593 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:14:29,687 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:19:08,774 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:19:08,824 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:19:17,090 - app.main - INFO - DELETE /api/v1/templates/87cd9be1-57db-4b6a-bf8a-f5ab34876858
+2026-08-28 11:19:17,321 - app.main - INFO - DELETE /api/v1/templates/87cd9be1-57db-4b6a-bf8a-f5ab34876858 -> 200
+2026-08-28 11:19:17,370 - app.main - INFO - GET /api/v1/templates
+2026-08-28 11:19:17,460 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 11:19:17,530 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:19:18,042 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:19:38,875 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:19:38,967 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:19:56,596 - app.main - INFO - GET /api/v1/auth/me
+2026-08-28 11:19:56,733 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-28 11:19:56,774 - app.main - INFO - GET /api/v1/auth/me
+2026-08-28 11:19:56,897 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-28 11:19:56,979 - app.main - INFO - GET /api/v1/notifications
+2026-08-28 11:19:56,982 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:19:56,993 - app.main - INFO - GET /api/v1/templates
+2026-08-28 11:19:57,089 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:19:57,168 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 11:19:57,200 - app.main - INFO - GET /api/v1/templates
+2026-08-28 11:19:57,211 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-28 11:19:57,266 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 11:19:57,296 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:19:57,526 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:20:01,422 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:20:01,714 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:20:07,782 - app.main - INFO - GET /api/v1/suppliers
+2026-08-28 11:20:07,798 - app.main - INFO - GET /api/v1/users
+2026-08-28 11:20:08,321 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-28 11:20:08,376 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-28 11:20:22,440 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:20:22,846 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:20:22,862 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:20:23,152 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:20:27,151 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:20:27,240 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:20:53,065 - app.main - INFO - POST /api/v1/templates
+2026-08-28 11:20:53,262 - app.main - INFO - POST /api/v1/templates -> 200
+2026-08-28 11:20:53,319 - app.main - INFO - GET /api/v1/templates
+2026-08-28 11:20:53,341 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:20:53,425 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 11:20:53,432 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:20:57,302 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:20:57,406 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:21:07,760 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:21:07,871 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:24:07,219 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:24:07,306 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:24:07,336 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:24:07,403 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:24:10,249 - app.main - INFO - DELETE /api/v1/templates/c57f38c3-7429-423e-a04d-b8ff1441e5ec
+2026-08-28 11:24:10,390 - app.main - INFO - DELETE /api/v1/templates/c57f38c3-7429-423e-a04d-b8ff1441e5ec -> 200
+2026-08-28 11:24:10,471 - app.main - INFO - GET /api/v1/templates
+2026-08-28 11:24:10,534 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 11:24:10,579 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:24:11,049 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:24:27,511 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:24:27,599 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:24:57,649 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:24:57,659 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-28 11:24:57,664 - app.main - INFO - GET /api/v1/notifications/unread-count -> 401
+2026-08-28 11:24:57,709 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-28 11:24:57,827 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-28 11:24:57,852 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:24:57,912 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:25:48,314 - app.main - INFO - POST /api/v1/templates
+2026-08-28 11:25:48,620 - app.main - INFO - POST /api/v1/templates -> 200
+2026-08-28 11:25:48,670 - app.main - INFO - GET /api/v1/templates
+2026-08-28 11:25:48,736 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:25:48,865 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 11:25:48,884 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:25:50,968 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:25:51,024 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:25:54,212 - app.main - INFO - GET /api/v1/users
+2026-08-28 11:25:54,457 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-28 11:25:57,952 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:25:58,022 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:26:28,057 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:26:28,112 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:26:36,911 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:26:37,008 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:26:37,057 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:26:37,129 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:28:28,157 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:28:28,203 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:29:28,254 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:29:28,331 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:29:39,788 - app.main - INFO - POST /api/v1/templates
+2026-08-28 11:29:39,895 - app.main - INFO - POST /api/v1/templates -> 200
+2026-08-28 11:29:39,925 - app.main - INFO - GET /api/v1/templates
+2026-08-28 11:29:39,946 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:29:40,038 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:29:40,057 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 11:29:48,327 - app.main - INFO - GET /api/v1/suppliers
+2026-08-28 11:29:48,661 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-28 11:29:54,149 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:29:54,202 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:29:58,388 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:29:58,465 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:32:47,703 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:32:47,831 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:32:49,029 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:32:49,113 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:32:49,143 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:32:49,274 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:32:55,539 - app.main - INFO - DELETE /api/v1/templates/62fbb3c1-0258-4d2c-9f89-7723e0d6df1f
+2026-08-28 11:32:55,670 - app.main - INFO - DELETE /api/v1/templates/62fbb3c1-0258-4d2c-9f89-7723e0d6df1f -> 200
+2026-08-28 11:32:55,710 - app.main - INFO - GET /api/v1/templates
+2026-08-28 11:32:55,870 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 11:32:56,015 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:32:56,468 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:32:58,633 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:32:58,685 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:33:28,748 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:33:28,848 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:33:31,505 - app.main - INFO - POST /api/v1/templates
+2026-08-28 11:33:31,599 - app.main - INFO - POST /api/v1/templates -> 200
+2026-08-28 11:33:31,628 - app.main - INFO - GET /api/v1/templates
+2026-08-28 11:33:31,641 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:33:31,721 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:33:31,735 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 11:33:34,267 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:33:34,364 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:33:37,223 - app.main - INFO - GET /api/v1/suppliers
+2026-08-28 11:33:37,228 - app.main - INFO - GET /api/v1/users
+2026-08-28 11:33:37,558 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-28 11:33:37,631 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-28 11:33:58,899 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:33:58,980 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:34:18,257 - app.main - INFO - POST /api/v1/auth/logout
+2026-08-28 11:34:18,419 - app.main - INFO - POST /api/v1/auth/logout -> 200
+2026-08-28 11:34:28,730 - app.main - INFO - POST /api/v1/auth/login
+2026-08-28 11:34:29,699 - app.main - INFO - POST /api/v1/auth/login -> 200
+2026-08-28 11:34:29,715 - app.main - INFO - GET /api/v1/auth/me
+2026-08-28 11:34:29,805 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-28 11:34:29,918 - app.main - INFO - GET /api/v1/notifications
+2026-08-28 11:34:29,930 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-28 11:34:29,931 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:34:29,932 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:34:29,948 - app.main - INFO - GET /api/v1/templates
+2026-08-28 11:34:30,504 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 11:34:30,547 - app.main - INFO - GET /api/v1/templates
+2026-08-28 11:34:30,553 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:34:30,885 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-28 11:34:31,209 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 11:34:31,986 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:34:32,997 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-28 11:34:33,868 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:34:34,184 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:34:37,617 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:34:37,786 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:34:39,172 - app.main - INFO - GET /api/v1/suppliers
+2026-08-28 11:34:39,179 - app.main - INFO - GET /api/v1/users
+2026-08-28 11:34:39,543 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-28 11:34:39,637 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-28 11:34:54,713 - app.main - INFO - POST /api/v1/projects
+2026-08-28 11:34:55,016 - app.main - INFO - POST /api/v1/projects -> 200
+2026-08-28 11:34:55,266 - app.main - INFO - GET /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f
+2026-08-28 11:34:55,348 - app.main - INFO - GET /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f -> 200
+2026-08-28 11:35:00,648 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:35:00,722 - app.main - INFO - POST /api/v1/auth/logout
+2026-08-28 11:35:00,899 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:35:01,095 - app.main - INFO - POST /api/v1/auth/logout -> 200
+2026-08-28 11:35:10,508 - app.main - INFO - POST /api/v1/auth/login
+2026-08-28 11:35:11,244 - app.main - INFO - POST /api/v1/auth/login -> 200
+2026-08-28 11:35:11,263 - app.main - INFO - GET /api/v1/auth/me
+2026-08-28 11:35:11,346 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-28 11:35:11,504 - app.main - INFO - GET /api/v1/notifications
+2026-08-28 11:35:11,506 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:35:11,540 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:35:11,543 - app.main - INFO - GET /api/v1/templates
+2026-08-28 11:35:11,606 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:35:11,718 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-28 11:35:11,739 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 11:35:11,753 - app.main - INFO - GET /api/v1/templates
+2026-08-28 11:35:12,120 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 11:35:12,348 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:35:14,171 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:35:14,542 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:35:18,227 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:35:18,366 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:35:21,626 - app.main - INFO - GET /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f
+2026-08-28 11:35:21,662 - app.main - INFO - GET /api/v1/suppliers
+2026-08-28 11:35:21,717 - app.main - INFO - GET /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f -> 200
+2026-08-28 11:35:21,905 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-28 11:35:32,935 - app.main - INFO - PUT /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f
+2026-08-28 11:35:33,097 - app.main - WARNING - ForbiddenException: Capacity Manager role cannot edit Buyer or SQD fields: project_name, project_code
+2026-08-28 11:35:33,102 - app.main - INFO - PUT /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f -> 403
+2026-08-28 11:35:41,804 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:35:41,902 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:35:49,657 - app.main - INFO - PUT /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f
+2026-08-28 11:35:49,795 - app.main - WARNING - ForbiddenException: Capacity Manager role cannot edit Buyer or SQD fields: sqe_name, project_code, project_name, pcat_type, pcat_forecasted_date
+2026-08-28 11:35:49,805 - app.main - INFO - PUT /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f -> 403
+2026-08-28 11:36:05,624 - app.main - INFO - PUT /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f
+2026-08-28 11:36:05,771 - app.main - WARNING - ForbiddenException: Capacity Manager role cannot edit Buyer or SQD fields: sqe_name, project_code, project_name, pcat_type, pcat_forecasted_date
+2026-08-28 11:36:05,779 - app.main - INFO - PUT /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f -> 403
+2026-08-28 11:36:11,948 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:36:12,057 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:36:15,543 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:36:15,713 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:36:18,819 - app.main - INFO - GET /api/v1/suppliers
+2026-08-28 11:36:18,825 - app.main - INFO - GET /api/v1/users
+2026-08-28 11:36:18,830 - app.main - INFO - GET /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f
+2026-08-28 11:36:19,127 - app.main - INFO - GET /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f -> 200
+2026-08-28 11:36:19,423 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-28 11:36:19,536 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-28 11:36:29,606 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:36:29,749 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:36:33,423 - app.main - INFO - GET /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f
+2026-08-28 11:36:33,475 - app.main - INFO - GET /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f -> 200
+2026-08-28 11:36:42,118 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:36:42,188 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:36:52,456 - app.main - INFO - PUT /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f
+2026-08-28 11:36:52,607 - app.main - WARNING - ForbiddenException: Capacity Manager role cannot edit Buyer or SQD fields: project_name, project_code, weekly_capacity_contract
+2026-08-28 11:36:52,614 - app.main - INFO - PUT /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f -> 403
+2026-08-28 11:42:13,339 - app.main - INFO - GET /api/v1/suppliers
+2026-08-28 11:42:13,349 - app.main - INFO - GET /api/v1/users
+2026-08-28 11:42:13,666 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-28 11:42:14,026 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-28 11:42:36,119 - app.main - INFO - GET /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f
+2026-08-28 11:42:36,148 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:42:36,350 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:42:36,397 - app.main - INFO - GET /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f -> 200
+2026-08-28 11:42:39,414 - app.main - INFO - GET /api/v1/auth/me
+2026-08-28 11:42:39,546 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-28 11:42:39,567 - app.main - INFO - GET /api/v1/auth/me
+2026-08-28 11:42:39,709 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-28 11:42:39,880 - app.main - INFO - GET /api/v1/notifications
+2026-08-28 11:42:39,897 - app.main - INFO - GET /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f
+2026-08-28 11:42:39,901 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:42:39,903 - app.main - INFO - GET /api/v1/templates
+2026-08-28 11:42:40,152 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:42:40,214 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 11:42:40,237 - app.main - INFO - GET /api/v1/templates
+2026-08-28 11:42:40,261 - app.main - INFO - GET /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f -> 200
+2026-08-28 11:42:40,324 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-28 11:42:40,373 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 11:42:40,393 - app.main - INFO - GET /api/v1/suppliers
+2026-08-28 11:42:40,404 - app.main - INFO - GET /api/v1/users
+2026-08-28 11:42:40,670 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-28 11:42:40,754 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-28 11:43:05,487 - app.main - INFO - PUT /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f
+2026-08-28 11:43:05,651 - app.main - WARNING - ForbiddenException: Capacity Manager role cannot edit Buyer or SQD fields: sqe_name, project_code, project_name, pcat_type, pcat_forecasted_date
+2026-08-28 11:43:05,659 - app.main - INFO - PUT /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f -> 403
+2026-08-28 11:43:07,530 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:43:07,842 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:43:10,199 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:43:10,320 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:43:11,448 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:43:11,611 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:43:14,616 - app.main - INFO - GET /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f
+2026-08-28 11:43:14,723 - app.main - INFO - GET /api/v1/suppliers
+2026-08-28 11:43:14,777 - app.main - INFO - GET /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f -> 200
+2026-08-28 11:43:14,975 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-28 11:43:15,657 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:43:15,806 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:43:17,881 - app.main - INFO - GET /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f
+2026-08-28 11:43:17,983 - app.main - INFO - GET /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f -> 200
+2026-08-28 11:43:20,197 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:43:20,307 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:43:23,787 - app.main - INFO - DELETE /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f
+2026-08-28 11:43:24,367 - app.main - INFO - DELETE /api/v1/projects/968a5ee1-a546-4f0b-a7aa-9443539dc22f -> 200
+2026-08-28 11:43:24,406 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:43:24,563 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:43:24,579 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:43:24,655 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:43:26,285 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:43:26,398 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:43:26,425 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:43:26,576 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:43:38,182 - app.main - INFO - DELETE /api/v1/templates/0634ba1f-3f9f-4c3a-82fc-0e2a1b02ccc6
+2026-08-28 11:43:38,413 - app.main - INFO - DELETE /api/v1/templates/0634ba1f-3f9f-4c3a-82fc-0e2a1b02ccc6 -> 200
+2026-08-28 11:43:38,452 - app.main - INFO - GET /api/v1/templates
+2026-08-28 11:43:38,532 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 11:43:38,604 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:43:39,184 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:43:40,376 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:43:40,512 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:44:10,606 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:44:10,701 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:44:24,205 - app.main - INFO - POST /api/v1/templates
+2026-08-28 11:44:24,279 - app.main - WARNING - ConflictException: Template code 'TEST' already exists
+2026-08-28 11:44:24,285 - app.main - INFO - POST /api/v1/templates -> 409
+2026-08-28 11:44:29,426 - app.main - INFO - POST /api/v1/templates
+2026-08-28 11:44:29,577 - app.main - INFO - POST /api/v1/templates -> 200
+2026-08-28 11:44:29,607 - app.main - INFO - GET /api/v1/templates
+2026-08-28 11:44:29,648 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:44:29,779 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:44:29,823 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 11:44:32,175 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:44:32,336 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:44:40,750 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:44:40,914 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:44:43,000 - app.main - INFO - GET /api/v1/suppliers
+2026-08-28 11:44:43,003 - app.main - INFO - GET /api/v1/users
+2026-08-28 11:44:43,396 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-28 11:44:43,467 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-28 11:45:10,968 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:45:11,033 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:45:12,219 - app.main - INFO - POST /api/v1/projects
+2026-08-28 11:45:12,324 - app.main - WARNING - ForbiddenException: Only Buyers or Administrators can create CMF projects.
+2026-08-28 11:45:12,333 - app.main - INFO - POST /api/v1/projects -> 403
+2026-08-28 11:45:41,149 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:45:41,258 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:45:43,475 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:45:43,541 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:45:51,600 - app.main - INFO - GET /api/v1/suppliers
+2026-08-28 11:45:51,618 - app.main - INFO - GET /api/v1/users
+2026-08-28 11:45:52,216 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-28 11:45:52,365 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-28 11:46:10,878 - app.main - INFO - POST /api/v1/auth/logout
+2026-08-28 11:46:11,039 - app.main - INFO - POST /api/v1/auth/logout -> 200
+2026-08-28 11:46:18,546 - app.main - INFO - POST /api/v1/auth/login
+2026-08-28 11:46:19,314 - app.main - INFO - POST /api/v1/auth/login -> 200
+2026-08-28 11:46:19,331 - app.main - INFO - GET /api/v1/auth/me
+2026-08-28 11:46:19,419 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-28 11:46:19,529 - app.main - INFO - GET /api/v1/notifications
+2026-08-28 11:46:19,550 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:46:19,557 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:46:19,560 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-28 11:46:19,605 - app.main - INFO - GET /api/v1/templates
+2026-08-28 11:46:20,006 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 11:46:20,051 - app.main - INFO - GET /api/v1/templates
+2026-08-28 11:46:20,163 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:46:20,724 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 11:46:20,897 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-28 11:46:21,599 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:46:21,962 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:46:22,265 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:46:22,727 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-28 11:46:44,447 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:46:44,647 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:46:45,816 - app.main - INFO - GET /api/v1/suppliers
+2026-08-28 11:46:46,155 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-28 11:46:50,213 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:46:50,378 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:47:04,405 - app.main - INFO - POST /api/v1/projects
+2026-08-28 11:47:04,673 - app.main - INFO - POST /api/v1/projects -> 200
+2026-08-28 11:47:04,923 - app.main - INFO - GET /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0
+2026-08-28 11:47:05,052 - app.main - INFO - GET /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0 -> 200
+2026-08-28 11:47:05,281 - app.main - INFO - GET /api/v1/users
+2026-08-28 11:47:05,499 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-28 11:47:11,301 - app.main - INFO - POST /api/v1/auth/logout
+2026-08-28 11:47:11,576 - app.main - INFO - POST /api/v1/auth/logout -> 200
+2026-08-28 11:47:17,567 - app.main - INFO - POST /api/v1/auth/login
+2026-08-28 11:47:18,193 - app.main - WARNING - UnauthorizedException: Invalid email or password
+2026-08-28 11:47:18,197 - app.main - INFO - POST /api/v1/auth/login -> 401
+2026-08-28 11:47:25,788 - app.main - INFO - POST /api/v1/auth/login
+2026-08-28 11:47:26,578 - app.main - INFO - POST /api/v1/auth/login -> 200
+2026-08-28 11:47:26,607 - app.main - INFO - GET /api/v1/auth/me
+2026-08-28 11:47:26,755 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-28 11:47:27,058 - app.main - INFO - GET /api/v1/notifications
+2026-08-28 11:47:27,066 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:47:27,164 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:47:27,168 - app.main - INFO - GET /api/v1/templates
+2026-08-28 11:47:27,172 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-28 11:47:27,498 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:47:27,652 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-28 11:47:27,692 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 11:47:27,714 - app.main - INFO - GET /api/v1/templates
+2026-08-28 11:47:27,991 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 11:47:28,522 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:47:28,948 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-28 11:47:29,620 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:47:29,808 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:47:34,081 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:47:34,238 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 11:47:37,024 - app.main - INFO - GET /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0
+2026-08-28 11:47:37,063 - app.main - INFO - GET /api/v1/suppliers
+2026-08-28 11:47:37,201 - app.main - INFO - GET /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0 -> 200
+2026-08-28 11:47:37,426 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-28 11:47:57,634 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:47:57,764 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:47:58,315 - app.main - INFO - PUT /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0
+2026-08-28 11:47:58,381 - app.main - WARNING - ForbiddenException: Capacity Manager role cannot edit Buyer or SQD fields: project_name, project_code
+2026-08-28 11:47:58,385 - app.main - INFO - PUT /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0 -> 403
+2026-08-28 11:48:30,287 - app.main - INFO - GET /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0
+2026-08-28 11:48:30,408 - app.main - INFO - GET /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0 -> 200
+2026-08-28 11:48:48,855 - app.main - INFO - GET /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0
+2026-08-28 11:48:48,979 - app.main - INFO - GET /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0 -> 200
+2026-08-28 11:49:56,539 - app.main - INFO - GET /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0
+2026-08-28 11:49:56,602 - app.main - INFO - GET /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0 -> 200
+2026-08-28 11:58:34,075 - app.main - INFO - GET /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0
+2026-08-28 11:58:34,097 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:58:34,244 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:58:34,280 - app.main - INFO - GET /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0 -> 200
+2026-08-28 11:59:33,645 - app.main - INFO - GET /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0
+2026-08-28 11:59:33,739 - app.main - INFO - GET /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0 -> 200
+2026-08-28 11:59:34,276 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 11:59:34,345 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 11:59:50,013 - app.main - INFO - GET /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0
+2026-08-28 11:59:50,095 - app.main - INFO - GET /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0 -> 200
+2026-08-28 11:59:56,533 - app.main - INFO - PUT /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0
+2026-08-28 11:59:56,681 - app.main - WARNING - ForbiddenException: Capacity Manager role cannot edit Buyer or SQD fields: project_name, project_code
+2026-08-28 11:59:56,684 - app.main - INFO - PUT /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0 -> 403
+2026-08-28 11:59:58,354 - app.main - INFO - GET /api/v1/projects
+2026-08-28 11:59:58,798 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 12:00:01,559 - app.main - INFO - GET /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0
+2026-08-28 12:00:01,599 - app.main - INFO - GET /api/v1/users
+2026-08-28 12:00:01,601 - app.main - INFO - GET /api/v1/suppliers
+2026-08-28 12:00:01,703 - app.main - INFO - GET /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0 -> 200
+2026-08-28 12:00:01,992 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-28 12:00:02,078 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-28 12:00:04,372 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:00:04,580 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:00:16,246 - app.main - INFO - PUT /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0
+2026-08-28 12:00:16,305 - app.main - WARNING - ForbiddenException: Capacity Manager role cannot edit Buyer or SQD fields: project_name, project_code
+2026-08-28 12:00:16,309 - app.main - INFO - PUT /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0 -> 403
+2026-08-28 12:00:20,308 - app.main - INFO - PUT /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0
+2026-08-28 12:00:20,375 - app.main - WARNING - ForbiddenException: Capacity Manager role cannot edit Buyer or SQD fields: project_name, project_code
+2026-08-28 12:00:20,380 - app.main - INFO - PUT /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0 -> 403
+2026-08-28 12:00:30,272 - app.main - INFO - PUT /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0
+2026-08-28 12:00:30,339 - app.main - WARNING - ForbiddenException: Capacity Manager role cannot edit Buyer or SQD fields: project_name, weekly_capacity_contract, project_code
+2026-08-28 12:00:30,343 - app.main - INFO - PUT /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0 -> 403
+2026-08-28 12:00:34,613 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:00:34,692 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:03:32,414 - app.main - INFO - GET /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0
+2026-08-28 12:03:32,509 - app.main - INFO - GET /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0 -> 200
+2026-08-28 12:03:34,742 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:03:34,820 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:03:37,222 - app.main - INFO - PUT /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0
+2026-08-28 12:03:37,358 - app.main - WARNING - ForbiddenException: Capacity Manager role cannot edit Buyer or SQD fields: project_name, weekly_capacity_contract, project_code
+2026-08-28 12:03:37,364 - app.main - INFO - PUT /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0 -> 403
+2026-08-28 12:03:39,959 - app.main - INFO - GET /api/v1/projects
+2026-08-28 12:03:40,022 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 12:03:45,180 - app.main - INFO - GET /api/v1/auth/me
+2026-08-28 12:03:45,291 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-28 12:03:45,309 - app.main - INFO - GET /api/v1/auth/me
+2026-08-28 12:03:45,390 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-28 12:03:45,488 - app.main - INFO - GET /api/v1/notifications
+2026-08-28 12:03:45,498 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:03:45,500 - app.main - INFO - GET /api/v1/projects
+2026-08-28 12:03:45,508 - app.main - INFO - GET /api/v1/templates
+2026-08-28 12:03:45,875 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 12:03:45,889 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:03:45,904 - app.main - INFO - GET /api/v1/templates
+2026-08-28 12:03:45,932 - app.main - INFO - GET /api/v1/projects
+2026-08-28 12:03:46,261 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-28 12:03:46,317 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 12:03:46,658 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 12:03:46,749 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 12:03:52,000 - app.main - INFO - GET /api/v1/projects
+2026-08-28 12:03:52,163 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 12:03:54,613 - app.main - INFO - GET /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0
+2026-08-28 12:03:54,809 - app.main - INFO - GET /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0 -> 200
+2026-08-28 12:03:55,190 - app.main - INFO - GET /api/v1/suppliers
+2026-08-28 12:03:55,207 - app.main - INFO - GET /api/v1/users
+2026-08-28 12:03:55,893 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-28 12:03:55,987 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-28 12:04:07,044 - app.main - INFO - PUT /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0
+2026-08-28 12:04:07,186 - app.main - WARNING - ForbiddenException: Capacity Manager role cannot edit Buyer or SQD fields: project_name, project_code
+2026-08-28 12:04:07,195 - app.main - INFO - PUT /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0 -> 403
+2026-08-28 12:04:14,501 - app.main - INFO - PUT /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0
+2026-08-28 12:04:14,563 - app.main - WARNING - ForbiddenException: Capacity Manager role cannot edit Buyer or SQD fields: project_name, weekly_capacity_contract, project_code
+2026-08-28 12:04:14,567 - app.main - INFO - PUT /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0 -> 403
+2026-08-28 12:04:15,944 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:04:16,075 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:04:17,309 - app.main - INFO - GET /api/v1/auth/me
+2026-08-28 12:04:17,407 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-28 12:04:17,423 - app.main - INFO - GET /api/v1/auth/me
+2026-08-28 12:04:17,517 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-28 12:04:17,559 - app.main - INFO - GET /api/v1/notifications
+2026-08-28 12:04:17,563 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:04:17,583 - app.main - INFO - GET /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0
+2026-08-28 12:04:17,603 - app.main - INFO - GET /api/v1/templates
+2026-08-28 12:04:17,807 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:04:17,954 - app.main - INFO - GET /api/v1/projects/ba16a495-5c48-4051-bd37-a031dcaec5d0 -> 200
+2026-08-28 12:04:18,042 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 12:04:18,060 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-28 12:04:18,091 - app.main - INFO - GET /api/v1/templates
+2026-08-28 12:04:18,237 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 12:04:42,501 - app.main - INFO - GET /api/v1/auth/me
+2026-08-28 12:04:42,649 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-28 12:04:42,673 - app.main - INFO - GET /api/v1/auth/me
+2026-08-28 12:04:42,829 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-28 12:04:42,971 - app.main - INFO - GET /api/v1/notifications
+2026-08-28 12:04:42,979 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:04:43,012 - app.main - INFO - GET /api/v1/templates
+2026-08-28 12:04:43,195 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:04:43,253 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 12:04:43,259 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-28 12:04:43,270 - app.main - INFO - GET /api/v1/templates
+2026-08-28 12:04:43,326 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 12:04:43,496 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-28 12:04:43,498 - app.main - INFO - GET /api/v1/projects
+2026-08-28 12:04:44,907 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 12:04:45,384 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-28 12:04:45,424 - app.main - INFO - GET /api/v1/projects
+2026-08-28 12:04:46,024 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 12:04:46,050 - app.main - INFO - GET /api/v1/projects
+2026-08-28 12:04:46,526 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 12:04:53,598 - app.main - INFO - DELETE /api/v1/templates/e68e284a-2676-4e9a-8d4a-36a2a3a32b1a
+2026-08-28 12:04:53,745 - app.main - INFO - DELETE /api/v1/templates/e68e284a-2676-4e9a-8d4a-36a2a3a32b1a -> 200
+2026-08-28 12:04:53,772 - app.main - INFO - GET /api/v1/templates
+2026-08-28 12:04:53,862 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 12:05:13,273 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:05:13,422 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:06:43,493 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:06:43,615 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:07:02,903 - app.main - INFO - POST /api/v1/templates
+2026-08-28 12:07:03,053 - app.main - INFO - POST /api/v1/templates -> 200
+2026-08-28 12:07:03,145 - app.main - INFO - GET /api/v1/templates
+2026-08-28 12:07:03,165 - app.main - INFO - GET /api/v1/projects
+2026-08-28 12:07:03,278 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 12:07:03,287 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 12:07:09,465 - app.main - INFO - GET /api/v1/projects
+2026-08-28 12:07:09,528 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 12:07:11,544 - app.main - INFO - GET /api/v1/suppliers
+2026-08-28 12:07:11,556 - app.main - INFO - GET /api/v1/users
+2026-08-28 12:07:11,973 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-28 12:07:12,042 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-28 12:07:13,680 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:07:13,798 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:07:21,048 - app.main - INFO - POST /api/v1/projects
+2026-08-28 12:07:21,151 - app.main - WARNING - ForbiddenException: Only Buyers or Administrators can create CMF projects.
+2026-08-28 12:07:21,159 - app.main - INFO - POST /api/v1/projects -> 403
+2026-08-28 12:07:29,726 - app.main - INFO - POST /api/v1/auth/logout
+2026-08-28 12:07:29,935 - app.main - INFO - POST /api/v1/auth/logout -> 200
+2026-08-28 12:07:39,955 - app.main - INFO - POST /api/v1/auth/login
+2026-08-28 12:07:40,614 - app.main - WARNING - UnauthorizedException: Invalid email or password
+2026-08-28 12:07:40,620 - app.main - INFO - POST /api/v1/auth/login -> 401
+2026-08-28 12:07:48,427 - app.main - INFO - POST /api/v1/auth/login
+2026-08-28 12:07:49,295 - app.main - INFO - POST /api/v1/auth/login -> 200
+2026-08-28 12:07:49,310 - app.main - INFO - GET /api/v1/auth/me
+2026-08-28 12:07:49,401 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-28 12:07:49,509 - app.main - INFO - GET /api/v1/notifications
+2026-08-28 12:07:49,515 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:07:49,524 - app.main - INFO - GET /api/v1/projects
+2026-08-28 12:07:49,525 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-28 12:07:49,530 - app.main - INFO - GET /api/v1/templates
+2026-08-28 12:07:50,237 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 12:07:50,331 - app.main - INFO - GET /api/v1/templates
+2026-08-28 12:07:50,388 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:07:50,911 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-28 12:07:51,154 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 12:07:51,959 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 12:07:52,489 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-28 12:07:55,481 - app.main - INFO - GET /api/v1/projects
+2026-08-28 12:07:55,695 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 12:08:20,452 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:08:20,595 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:08:25,872 - app.main - INFO - GET /api/v1/projects
+2026-08-28 12:08:26,047 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 12:08:28,136 - app.main - INFO - GET /api/v1/suppliers
+2026-08-28 12:08:28,145 - app.main - INFO - GET /api/v1/users
+2026-08-28 12:08:28,966 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-28 12:08:29,063 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-28 12:08:47,254 - app.main - INFO - POST /api/v1/projects
+2026-08-28 12:08:47,510 - app.main - INFO - POST /api/v1/projects -> 200
+2026-08-28 12:08:47,740 - app.main - INFO - GET /api/v1/projects/347f1601-04e7-4c13-866b-7908e60dbd44
+2026-08-28 12:08:47,823 - app.main - INFO - GET /api/v1/projects/347f1601-04e7-4c13-866b-7908e60dbd44 -> 200
+2026-08-28 12:08:50,647 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:08:50,783 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:08:57,620 - app.main - INFO - GET /api/v1/projects
+2026-08-28 12:08:57,717 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 12:08:59,494 - app.main - INFO - POST /api/v1/auth/logout
+2026-08-28 12:08:59,758 - app.main - INFO - POST /api/v1/auth/logout -> 200
+2026-08-28 12:09:09,418 - app.main - INFO - POST /api/v1/auth/login
+2026-08-28 12:09:10,187 - app.main - WARNING - UnauthorizedException: Invalid email or password
+2026-08-28 12:09:10,191 - app.main - INFO - POST /api/v1/auth/login -> 401
+2026-08-28 12:09:17,227 - app.main - INFO - POST /api/v1/auth/login
+2026-08-28 12:09:18,084 - app.main - INFO - POST /api/v1/auth/login -> 200
+2026-08-28 12:09:18,101 - app.main - INFO - GET /api/v1/auth/me
+2026-08-28 12:09:18,162 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-28 12:09:18,306 - app.main - INFO - GET /api/v1/notifications
+2026-08-28 12:09:18,314 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:09:18,358 - app.main - INFO - GET /api/v1/projects
+2026-08-28 12:09:18,376 - app.main - INFO - GET /api/v1/templates
+2026-08-28 12:09:18,379 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-28 12:09:18,434 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:09:18,595 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-28 12:09:18,635 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 12:09:18,718 - app.main - INFO - GET /api/v1/templates
+2026-08-28 12:09:18,935 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 12:09:19,425 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 12:09:20,048 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-28 12:09:20,758 - app.main - INFO - GET /api/v1/projects
+2026-08-28 12:09:20,968 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 12:09:24,821 - app.main - INFO - GET /api/v1/projects
+2026-08-28 12:09:25,044 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 12:09:27,571 - app.main - INFO - GET /api/v1/projects/347f1601-04e7-4c13-866b-7908e60dbd44
+2026-08-28 12:09:27,618 - app.main - INFO - GET /api/v1/suppliers
+2026-08-28 12:09:27,678 - app.main - INFO - GET /api/v1/projects/347f1601-04e7-4c13-866b-7908e60dbd44 -> 200
+2026-08-28 12:09:27,897 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-28 12:09:38,332 - app.main - INFO - PUT /api/v1/projects/347f1601-04e7-4c13-866b-7908e60dbd44
+2026-08-28 12:09:38,445 - app.main - WARNING - ForbiddenException: Capacity Manager role cannot edit Buyer or SQD fields: project_name, project_code, weekly_capacity_contract
+2026-08-28 12:09:38,449 - app.main - INFO - PUT /api/v1/projects/347f1601-04e7-4c13-866b-7908e60dbd44 -> 403
+2026-08-28 12:09:47,280 - app.main - INFO - PUT /api/v1/projects/347f1601-04e7-4c13-866b-7908e60dbd44
+2026-08-28 12:09:47,346 - app.main - WARNING - ForbiddenException: Capacity Manager role cannot edit Buyer or SQD fields: project_name, project_code, weekly_capacity_contract
+2026-08-28 12:09:47,349 - app.main - INFO - PUT /api/v1/projects/347f1601-04e7-4c13-866b-7908e60dbd44 -> 403
+2026-08-28 12:09:48,670 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:09:48,752 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:11:45,893 - app.main - INFO - Shutting down CMF Platform API
+2026-08-28 12:11:53,686 - app.main - INFO - Starting CMF Platform API
+2026-08-28 12:11:53,714 - app.main - INFO - Database tables verified/created (SQLite)
+2026-08-28 12:12:16,513 - app.main - INFO - GET /api/v1/projects/347f1601-04e7-4c13-866b-7908e60dbd44
+2026-08-28 12:12:16,848 - app.main - INFO - GET /api/v1/projects/347f1601-04e7-4c13-866b-7908e60dbd44 -> 200
+2026-08-28 12:12:40,945 - app.main - INFO - GET /api/v1/projects/347f1601-04e7-4c13-866b-7908e60dbd44
+2026-08-28 12:12:41,096 - app.main - INFO - GET /api/v1/projects/347f1601-04e7-4c13-866b-7908e60dbd44 -> 200
+2026-08-28 12:13:06,649 - app.main - INFO - GET /api/v1/projects/347f1601-04e7-4c13-866b-7908e60dbd44
+2026-08-28 12:13:06,741 - app.main - INFO - GET /api/v1/projects/347f1601-04e7-4c13-866b-7908e60dbd44 -> 200
+2026-08-28 12:13:14,696 - app.main - INFO - GET /api/v1/projects/347f1601-04e7-4c13-866b-7908e60dbd44
+2026-08-28 12:13:14,891 - app.main - INFO - GET /api/v1/projects/347f1601-04e7-4c13-866b-7908e60dbd44 -> 200
+2026-08-28 12:13:22,478 - app.main - INFO - GET /api/v1/projects/347f1601-04e7-4c13-866b-7908e60dbd44
+2026-08-28 12:13:22,571 - app.main - INFO - GET /api/v1/projects/347f1601-04e7-4c13-866b-7908e60dbd44 -> 200
+2026-08-28 12:13:25,787 - app.main - INFO - PUT /api/v1/projects/347f1601-04e7-4c13-866b-7908e60dbd44
+2026-08-28 12:13:26,043 - app.main - INFO - PUT /api/v1/projects/347f1601-04e7-4c13-866b-7908e60dbd44 -> 200
+2026-08-28 12:13:26,063 - app.main - INFO - GET /api/v1/projects/347f1601-04e7-4c13-866b-7908e60dbd44
+2026-08-28 12:13:26,140 - app.main - INFO - GET /api/v1/projects/347f1601-04e7-4c13-866b-7908e60dbd44 -> 200
+2026-08-28 12:13:26,162 - app.main - INFO - GET /api/v1/projects/347f1601-04e7-4c13-866b-7908e60dbd44
+2026-08-28 12:13:26,238 - app.main - INFO - GET /api/v1/projects/347f1601-04e7-4c13-866b-7908e60dbd44 -> 200
+2026-08-28 12:13:29,888 - app.main - INFO - GET /api/v1/projects
+2026-08-28 12:13:30,003 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 12:13:33,607 - app.main - INFO - GET /api/v1/suppliers
+2026-08-28 12:13:33,619 - app.main - INFO - GET /api/v1/projects/347f1601-04e7-4c13-866b-7908e60dbd44
+2026-08-28 12:13:33,620 - app.main - INFO - GET /api/v1/users
+2026-08-28 12:13:33,955 - app.main - INFO - GET /api/v1/projects/347f1601-04e7-4c13-866b-7908e60dbd44 -> 200
+2026-08-28 12:13:34,205 - app.main - INFO - GET /api/v1/users -> 200
+2026-08-28 12:13:34,270 - app.main - INFO - GET /api/v1/suppliers -> 200
+2026-08-28 12:13:37,865 - app.main - INFO - POST /api/v1/auth/logout
+2026-08-28 12:13:38,020 - app.main - INFO - POST /api/v1/auth/logout -> 200
+2026-08-28 12:13:52,157 - app.main - INFO - POST /api/v1/auth/login
+2026-08-28 12:13:53,104 - app.main - INFO - POST /api/v1/auth/login -> 200
+2026-08-28 12:13:53,122 - app.main - INFO - GET /api/v1/auth/me
+2026-08-28 12:13:53,178 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-28 12:13:53,300 - app.main - INFO - GET /api/v1/notifications
+2026-08-28 12:13:53,311 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:13:53,315 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-28 12:13:53,320 - app.main - INFO - GET /api/v1/templates
+2026-08-28 12:13:53,323 - app.main - INFO - GET /api/v1/projects
+2026-08-28 12:13:53,512 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:13:53,611 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-28 12:13:53,628 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 12:13:53,662 - app.main - INFO - GET /api/v1/templates
+2026-08-28 12:13:53,826 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 12:13:54,703 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 12:13:55,112 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-28 12:23:55,564 - app.main - INFO - GET /api/v1/projects
+2026-08-28 12:23:56,155 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 12:23:57,533 - app.main - INFO - GET /api/v1/projects
+2026-08-28 12:23:57,934 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 12:23:57,951 - app.main - INFO - GET /api/v1/projects
+2026-08-28 12:23:58,230 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 12:24:23,599 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:24:23,688 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:24:53,734 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:24:53,823 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:25:23,871 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:25:23,971 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:25:54,030 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:25:54,153 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:26:24,217 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:26:24,358 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:26:54,417 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:26:54,511 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:27:24,561 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:27:24,672 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:27:54,806 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:27:54,888 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:47:50,977 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:47:50,985 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-28 12:47:50,989 - app.main - INFO - GET /api/v1/notifications/unread-count -> 401
+2026-08-28 12:47:51,006 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-28 12:47:51,138 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-28 12:47:51,211 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:47:51,270 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:48:21,390 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:48:21,512 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:48:52,711 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:48:52,842 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:49:23,388 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:49:23,522 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:49:53,592 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:49:53,651 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:50:53,686 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:50:53,748 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:51:23,809 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:51:23,887 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:51:38,634 - app.main - INFO - POST /api/v1/templates
+2026-08-28 12:51:38,884 - app.main - INFO - POST /api/v1/templates -> 200
+2026-08-28 12:51:38,922 - app.main - INFO - GET /api/v1/templates
+2026-08-28 12:51:38,953 - app.main - INFO - GET /api/v1/projects
+2026-08-28 12:51:39,205 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 12:51:39,220 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 12:51:43,666 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-28 12:51:43,676 - app.main - INFO - GET /api/v1/documents
+2026-08-28 12:51:43,833 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 70.76 ms
+2026-08-28 12:51:43,850 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-28 12:51:43,876 - app.main - INFO - GET /api/v1/import/import-templates
+2026-08-28 12:51:43,898 - app.main - INFO - GET /api/v1/documents -> 200
+2026-08-28 12:51:43,963 - app.api.v1.endpoints.import_endpoints - INFO - Loaded 5 published templates in 25.42 ms
+2026-08-28 12:51:43,973 - app.main - INFO - GET /api/v1/import/import-templates -> 200
+2026-08-28 12:51:53,943 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:51:54,043 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:52:25,038 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:52:25,107 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:52:55,157 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:52:55,211 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:52:55,691 - app.main - INFO - POST /api/v1/import/ollama-map
+2026-08-28 12:52:55,797 - app.api.v1.endpoints.import_endpoints - INFO - [OLLAMA MAP DEBUG] Sheet: 'Monitoring' | Orient: HORIZONTAL | Headers (256): ['INDICE', 'N° RFQ\r\n(SP MDT)', 'Module', 'Designation (Commodity)', 'Complément désignation', 'Supplier', 'Plant Location', 'COFOR', 'ASP (Acheteur Programme) / AC (Acheteur Comodité)', 'SMT Manager', 'GM', 'GA MA', 'SQME', 'Entité SD', 'Capacity Manager\r\nCYMT', 'Lien vers SCR', 'Date SCR', 'Lien LTOS', 'Date LTOS', 'Weekly Capacity (parts/week)26', 'Capacity Step (parts/week)17', 'Weekly Capacity (parts/week)27', 'Capacity Step (parts/week)17', 'Weekly Capacity (parts/week)18', 'Capacity Step (parts/week)19', 'Weekly Capacity (parts/week)2', 'Capacity Step (parts/week)21', 'Weekly Capacity (parts/week)22', 'Capacity Step (parts/week)23', 'Weekly Capacity (parts/week)22', 'Capacity Step (parts/week)25', 'Weekly Capacity (parts/week)22', 'Capacity Step (parts/week)27', 'Weekly Capacity (parts/week)22', 'Capacity Step (parts/week)273', 'Weekly Capacity (parts/week)22', 'Capacity Step (parts/week)273', 'Weekly Capacity (parts/week)22', 'Capacity Step (parts/week)273', 'Weekly Capacity (parts/week)22', 'Capacity Step (parts/week)273', 'WEEKLY Capa Contract\r\n(parts/week)', 'Availability date', 'Contract (PC, TKO, FETE)', 'COMMENT', 'Volume price matrix (Y/N)', 'Capacity Max without Investment', 'Date update commitment Supplier', 'CAPA to check by SQE for current year in parts/week', 'Weekly Capacity (Ex Standard + Extra Capacity)\r\nYear Max (SCR Calculation)\r\nparts/week', 'Year Max\r\n(SCR Calculation)', 'CAT TYPE', 'PCAT forecast date', 'Run Assessment Date', 'Run Observation \r\nparts/week', 'Estimated Target\r\nparts/week', 'RATING', 'COMMENTS', 'BLUE JUSTIFICATION / BUYER INFORMATION', 'PARETO', 'Number of issues', 'Reschedule or Follow-up Date \r\n(including Next Step)', 'SQE assessment or \r\nSupplier Self-assessment', 'DocInfo\r\nLink', 'References / Part Number', 'Lien\r\nSCR WAR ROOM', 'Date de mise à jour SCR WAR ROOM', 'Alerte date prévisionnelle de blocage\r\nSCR WAR ROOM', "Besoin max sur l'année\r\nSCR WAR ROOM", 'Dernier état WR (ROV)', 'PARETO', 'Commentaires pilotage', 'Projet Lanceur', 'A88\r\nEU', 'B61\r\nEU', 'B78\r\nEU', 'C84\r\nEU', 'D34\r\nEU', 'K0\r\nEU', 'K0 NA', 'K9\r\nEU', 'P1M0\r\nEU', 'P1UO\r\nEU', 'P2JO\r\nEU', 'P2QO\r\nEU', 'M3/M4\r\nEU', 'P84\r\nEU', 'P87\r\nEU', 'P8MV\r\nEU', 'R8\r\nEU', 'X74\r\nEU', 'P21\r\nEU', 'P24\r\nEU', 'P51\r\nEU', 'P52\r\nEU', 'P54\r\nEU', 'P64\r\nEU', 'P74\r\nEU', 'J4U\r\nEU', 'J4U\r\nNA', 'J4U\r\nMR', 'C4U NA', 'C41\r\nEU', 'C43\r\nEU', 'CR3\r\nEU', 'D41\r\nEU', 'F364 F EU', 'F966 A EU', 'F516 J EU', 'L21 EU', 'Jeep Renegade', 'L74\r\nEU', 'D74\r\nEIC', 'A4U EU', 'E43 EIC\r\nEU', 'OV51\r\nEU', 'OV52\r\nEU', 'OV64\r\nEU', 'D85\r\nEU', 'X250\r\nEU', 'CC21 EU', 'CC24 EU', 'OV24 EU', 'F1H\r\nEU', 'F2X\r\nEU', 'F2U\r\nEU', 'A5U\r\nEU', 'A5U GEN2 EU', 'A5S\r\nEU', 'M6U\r\nEU', 'M9S\r\nEU', 'P1X\r\nEU', 'E1J\r\nEU', 'P1H\r\nEU', 'O1H\r\nEU', 'O3H EU (old O2X)', 'O2H EU', 'O2H EU', 'S1H EU (old S1W&S2X)', 'O1X\r\nEU', 'C6X\r\nNA', 'D6U\r\nNA', 'RSP\r\nNA', 'C6L\r\nNA', 'A6U\r\nEU', 'J6U/ J6L\r\nNA', 'XEV_EU', 'XEV_NA', 'P3U-EU', 'J2U_EU', 'J1X_EU', 'P21\r\nMA', 'FMT (X0J) MA', 'B PICKUP MR', 'A94\r\nMR', 'F3\r\nMR', 'P21\r\nMR', 'P24\r\nMR', 'M69\r\nMR', 'CC21\r\nMR', 'CC22\r\nMR', 'CC24\r\nMR', 'F2X MR', 'F2U MR', 'F1H MR', 'B Pickup MR', 'F 516 MR', 'F376 MR', 'F226 MR', 'J520 MR', 'J598 MR', 'A88\r\nC1', 'C43\r\nC1', 'C84\r\nC1', 'CR3\r\nC1', 'E43\r\nC1', 'X81\r\nC1', 'M443\r\nC1', 'P24\r\nC1', 'P54\r\nC1', 'P74\r\nC1', 'P84\r\nC1', 'P87\r\nC1', 'R83\r\nC1', 'D74\r\nC2', 'KP1\r\nC2', 'X74\r\nC2', 'X83\r\nC2', 'CC21 IN', 'CC22 IN', 'CC24 IN', 'J4U IN', 'F332 EU', 'L846 EU', 'F358MR', 'F359MR', 'M161EU', 'F226 MR', 'F139 EU', 'J520 EU', 'J-WL NA', 'W5U NA', 'D6C NA', 'D6S NA', 'J5O NA', 'HD PICKUP NA', 'W-WS NA', 'LD PICKUP NA', 'J5U NA', 'C6X NA', 'D6U NA', 'X250 NA', 'Commentaire DSC\r\n(SCR)', 'Concaténation', 'K', 'K9', 'P2QO', 'Résultat', 'Colonne12', 'C4', 'Smart Car', 'B-Pilot', 'OV5', 'P64', 'P5', 'Résultat deuxième bloc projets', 'VAGUE P2X', 'VAGUE CP4', 'Colonne 2', 'CC21', 'CC24', 'OV24', 'Smart Car2', 'Colonne 6', 'P642', 'P74', 'OV64', 'CR3', 'OV85', 'D85', 'D74', 'L74', 'THIRD WAVE', 'CDPO WAVE', 'Colonne2', 'A5U', 'A5S', 'M6U', 'M9S', 'LP3', 'Résultat deuxième bloc projets24', 'J4UEU', 'J4UNA', 'J4UMR', 'J4UIN', 'J4U WW']
+2026-08-28 12:52:55,871 - app.application.services.ollama_mapping_service - INFO - [OLLAMA] Configured timeout: 5.0s, default model: llama3.2:1b, url: http://localhost:11434
+2026-08-28 12:52:58,100 - app.application.services.ollama_mapping_service - INFO - [IMPORT] 0 columns unresolved. Skipping AI mapping entirely.
+2026-08-28 12:52:58,101 - app.application.services.ollama_mapping_service - INFO - [IMPORT] Workbook parsed: 5.3ms
+[IMPORT] Headers detected: 256
+[IMPORT] Exact mappings: 240
+[IMPORT] Alias mappings: 0
+[IMPORT] Fuzzy mappings: 0
+[IMPORT] Cache mappings: 0
+[IMPORT] Unresolved: 0
+[IMPORT] AI invoked: 0 column(s)
+[IMPORT] AI duration: 0.0ms
+[IMPORT] Total: 2226.3ms
+2026-08-28 12:52:58,114 - app.main - INFO - POST /api/v1/import/ollama-map -> 200
+2026-08-28 12:54:55,543 - app.main - INFO - GET /api/v1/auth/me
+2026-08-28 12:54:55,607 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-28 12:54:55,624 - app.main - INFO - GET /api/v1/auth/me
+2026-08-28 12:54:55,684 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-28 12:54:55,770 - app.main - INFO - GET /api/v1/notifications
+2026-08-28 12:54:55,782 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:54:55,801 - app.main - INFO - GET /api/v1/templates
+2026-08-28 12:54:55,920 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:54:55,959 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 12:54:55,980 - app.main - INFO - GET /api/v1/templates
+2026-08-28 12:54:55,989 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-28 12:54:56,058 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 12:54:56,371 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-28 12:54:56,375 - app.main - INFO - GET /api/v1/projects
+2026-08-28 12:54:58,156 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-28 12:54:58,571 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-28 12:55:04,136 - app.main - INFO - Shutting down CMF Platform API
+2026-08-28 12:55:22,748 - app.main - INFO - Starting CMF Platform API
+2026-08-28 12:55:22,773 - app.main - INFO - Database tables verified/created (SQLite)
+2026-08-28 12:55:26,064 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:55:26,682 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:55:27,342 - app.main - INFO - DELETE /api/v1/templates/e8d258ac-c857-4012-a910-0d2cc9ef7d23
+2026-08-28 12:55:27,555 - app.main - INFO - DELETE /api/v1/templates/e8d258ac-c857-4012-a910-0d2cc9ef7d23 -> 200
+2026-08-28 12:55:27,601 - app.main - INFO - GET /api/v1/templates
+2026-08-28 12:55:27,679 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 12:55:33,886 - app.main - INFO - DELETE /api/v1/templates/b521e7ac-09e3-4b44-a561-a2adec042e89
+2026-08-28 12:55:34,079 - app.main - INFO - DELETE /api/v1/templates/b521e7ac-09e3-4b44-a561-a2adec042e89 -> 200
+2026-08-28 12:55:34,124 - app.main - INFO - GET /api/v1/templates
+2026-08-28 12:55:34,238 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-28 12:55:56,727 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:55:56,808 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:56:26,848 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:56:26,922 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:56:56,965 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:56:57,037 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:57:27,084 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:57:27,173 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:57:57,225 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:57:57,297 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200

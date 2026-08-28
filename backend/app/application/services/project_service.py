@@ -245,12 +245,29 @@ class ProjectService:
             capacity_fields |= schema_sets.get("capacity_manager") or set()
             sqd_fields |= schema_sets.get("sqd") or set()
 
-            # Check only keys in incoming_data that are NEW or MODIFIED compared to existing project.data
+            # Check only keys in incoming_data that are NEW or genuinely MODIFIED compared to existing project data
             existing_data = project.data or {}
-            actually_modified_keys = {
-                k for k, v in incoming_data.items()
-                if k not in existing_data or existing_data.get(k) != v
-            }
+            actually_modified_keys = set()
+            for k, v in incoming_data.items():
+                # Check root entity properties and aliases first
+                if k in ("project_name", "name", "part_name") and (v == project.name or (v in (None, "") and not project.name)):
+                    continue
+                if k in ("project_code", "code", "unique_id", "part_number", "line_item") and (v == project.code or (v in (None, "") and not project.code)):
+                    continue
+                if k == "status" and (v == project.status or (v in (None, "") and not project.status)):
+                    continue
+                if k in ("template_code", "creation_source", "workflow_step"):
+                    continue
+
+                old_val = existing_data.get(k)
+                # Both empty/None -> not modified
+                if (old_val is None or old_val == "") and (v is None or v == ""):
+                    continue
+                # Exact match or stringified match -> not modified
+                if old_val == v or (old_val is not None and v is not None and str(old_val).strip() == str(v).strip()):
+                    continue
+
+                actually_modified_keys.add(k)
 
             if role_str == "buyer":
                 prohibited = actually_modified_keys & (capacity_fields | sqd_fields)

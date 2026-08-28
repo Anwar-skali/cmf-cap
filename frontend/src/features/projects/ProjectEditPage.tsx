@@ -60,10 +60,10 @@ export default function ProjectEditPage() {
 
   // Merge base properties into dynamic data
   const initialValues = {
+    ...(project.data || {}),
     project_name: project.name,
     project_code: project.code,
     status: project.status,
-    ...(project.data || {}),
   };
 
   const handleSave = async (sectionValues: Record<string, any>) => {
@@ -73,7 +73,10 @@ export default function ProjectEditPage() {
 
       const payload = {
         name,
-        data: sectionValues,
+        data: {
+          ...(project.data || {}),
+          ...sectionValues,
+        },
       };
 
       updateMutation.mutate(
@@ -146,7 +149,9 @@ export default function ProjectEditPage() {
           initialValues={initialValues}
           onSave={handleSave}
           isSaving={updateMutation.isPending}
+          userRole={userRole}
           title={`Edit Project - ${project.name}`}
+          onCancel={() => navigate(`/projects/${projectId}`)}
         />
       )}
     </div>

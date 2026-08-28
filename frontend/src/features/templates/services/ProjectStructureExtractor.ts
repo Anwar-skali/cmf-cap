@@ -76,6 +76,72 @@ function isRequiredByName(name: string): boolean {
   );
 }
 
+/**
+ * Secondary type upgrade: if inferFieldType() returned 'text', try to
+ * up-classify based on the field *name* (column header / label).
+ * This catches role-person fields, status columns, percentage fields, etc.
+ * that only contain text-like sample values in the Excel sheet.
+ */
+function inferFieldTypeByName(internalName: string, label: string, baseType: FieldType): FieldType {
+  if (baseType !== 'text' && baseType !== 'textarea') return baseType;
+  const n = internalName.toLowerCase();
+  const l = label.toLowerCase();
+
+  // User / person / owner fields
+  if (/\b(buyer|purchas|procure)\b/.test(n) || /\b(buyer|purchas|procure)\b/.test(l)) return 'user';
+  if (/\b(sqd|sqe|sqm|quality_lead|quality_eng|quality_contact)\b/.test(n) || /\b(sqd|sqe|quality.*lead|quality.*eng)\b/.test(l)) return 'user';
+  if (/\b(cap(acity)?_?mana?ge?r?|cap_mgr|capac.*mgr)\b/.test(n) || /\b(capacity.*manager|cap.*mgr)\b/.test(l)) return 'user';
+  if (/\b(owner|responsible|contact|engineer|manager|lead|rep|head)\b/.test(n)) return 'user';
+  if (/\b(owner|responsible|contact|engineer|manager|lead|rep|head)\b/.test(l)) return 'user';
+
+  // Status / phase fields
+  if (/\b(status|phase|stage|state|flag|level|tier|rank)\b/.test(n)) return 'status';
+  if (/\b(status|phase|stage|state|flag)\b/.test(l)) return 'status';
+
+  // Percentage fields
+  if (/\b(percent|pct|completion|progress|rate|ratio)\b/.test(n)) return 'percentage';
+
+  // Email
+  if (/\b(email|e_mail|mail)\b/.test(n)) return 'email';
+
+  // Phone
+  if (/\b(phone|tel|mobile|fax)\b/.test(n)) return 'phone';
+
+  return baseType;
+}
+
+/**
+ * Infers role-based permission restrictions from a field's name/label.
+ * Returns a PermissionRule when the field clearly belongs to one of the
+ * three project roles; undefined otherwise (= open to all roles).
+ */
+function autoPermissionsFromName(internalName: string, label: string): PermissionRule | undefined {
+  const n = internalName.toLowerCase();
+  const l = label.toLowerCase();
+
+  let role: 'buyer' | 'capacity_manager' | 'sqd' | null = null;
+
+  if (/\b(buyer|purchas|procure|rfq|package|commercial|price|contract|commitment|po_)\b/.test(n) ||
+      /\b(buyer|purchas|procure|rfq|package|commercial|price|contract|commitment)\b/.test(l)) {
+    role = 'buyer';
+  } else if (/\b(sqd|sqe|sqm|apqp|ppap|quality|audit|eval|cat_status)\b/.test(n) ||
+             /\b(sqd|sqe|quality|apqp|audit)\b/.test(l)) {
+    role = 'sqd';
+  } else if (/\b(cap(acity)?_?mana?ge?r?|cap_mgr|capac.*mgr)\b/.test(n) ||
+             /\b(capacity.*manager|cap.*mgr)\b/.test(l)) {
+    role = 'capacity_manager';
+  } else if (/\b(capacity|volume|weekly|shift|tooling)\b/.test(n) ||
+             /\b(capacity|volume)\b/.test(l)) {
+    role = 'capacity_manager';
+  }
+
+  if (!role) return undefined;
+  return {
+    rolesAllowedToEdit: [role, 'admin'],
+    rolesAllowedToView: ALL_ROLES.concat(['admin', 'viewer']),
+  };
+}
+
 /** Maps common JSON schema field types onto the CMF FieldType vocabulary. */
 const JSON_FIELD_TYPE_MAP: Record<string, FieldType> = {
   string: 'text',
@@ -168,6 +234,18 @@ function normalizeFieldDefault(f: any): any {
   return f.defaultValue !== undefined ? f.defaultValue : f.default !== undefined ? f.default : undefined;
 }
 
+/**
+ * Derives the project role that owns a *section* based on its name.
+ * Used as a fallback when individual fields have no role keywords.
+ */
+function sectionRoleFromName(sectionName: string): 'buyer' | 'capacity_manager' | 'sqd' | null {
+  const n = sectionName.toLowerCase();
+  if (/\b(buyer|purchas|procure|commercial|rfq)\b/.test(n)) return 'buyer';
+  if (/\b(sqd|sqe|sqm|quality|apqp|ppap|audit)\b/.test(n)) return 'sqd';
+  if (/\b(cap(acity)?|volume|tooling)\b/.test(n)) return 'capacity_manager';
+  return null;
+}
+
 /** Canonical role name, e.g. 'CAPACITY MANAGER' -> 'capacity_manager'. */
 function canonicalRole(value: any): 'buyer' | 'capacity_manager' | 'sqd' | null {
   if (value == null) return null;
@@ -184,17 +262,27 @@ const ROLE_VIEW_ROLES = ['buyer', 'capacity_manager', 'sqd', 'admin', 'viewer'];
 /**
  * Preserves explicit role/permission metadata from a source field so the
  * imported structure retains the role distinction required by Manuel Project.
+ * @param f       Raw field object from parsed JSON.
+ * @param sectionRole  Role inferred from the parent section name (fallback).
+ * @param fieldRole    Role inferred from the field name/label (takes precedence).
  */
-function normalizeFieldPermissions(f: any): PermissionRule | undefined {
+function normalizeFieldPermissions(
+  f: any,
+  sectionRole?: 'buyer' | 'capacity_manager' | 'sqd' | null,
+  fieldRole?: 'buyer' | 'capacity_manager' | 'sqd' | null,
+): PermissionRule | undefined {
   const perms: PermissionRule = {};
   const raw = f?.permissions;
   if (isRecord(raw)) {
     if (Array.isArray(raw.rolesAllowedToEdit)) perms.rolesAllowedToEdit = raw.rolesAllowedToEdit;
     if (Array.isArray(raw.rolesAllowedToView)) perms.rolesAllowedToView = raw.rolesAllowedToView;
   }
-  const role = canonicalRole(f?.role ?? f?.fieldRole ?? f?.owner);
-  if (role) {
-    if (!perms.rolesAllowedToEdit) perms.rolesAllowedToEdit = [role, 'admin'];
+  // Explicit JSON role property
+  const jsonRole = canonicalRole(f?.role ?? f?.fieldRole ?? f?.owner);
+  // Priority: explicit JSON role > section role (author's module grouping) > field-name keyword
+  const resolvedRole = jsonRole ?? sectionRole ?? fieldRole ?? null;
+  if (resolvedRole) {
+    if (!perms.rolesAllowedToEdit) perms.rolesAllowedToEdit = [resolvedRole, 'admin'];
     if (!perms.rolesAllowedToView) perms.rolesAllowedToView = [...ROLE_VIEW_ROLES];
   }
   return perms.rolesAllowedToEdit || perms.rolesAllowedToView ? perms : undefined;
@@ -211,8 +299,8 @@ function classifyFieldRole(f: TemplateField): 'buyer' | 'capacity_manager' | 'sq
 
   const name = (f.internalName || '').toLowerCase();
   const label = (f.label || '').toLowerCase();
-  const buyerName = ['buyer', 'part', 'supplier', 'package', 'rfq', 'price', 'currency'];
-  const buyerLabel = ['buyer', 'part', 'supplier'];
+  const buyerName = ['buyer', 'part', 'supplier', 'package', 'rfq', 'price', 'currency', 'contract', 'commitment', 'po_'];
+  const buyerLabel = ['buyer', 'part', 'supplier', 'contract', 'commitment'];
   const capName = ['capacity', 'volume', 'weekly', 'shift', 'tooling'];
   const capLabel = ['capacity', 'volume'];
   const sqdName = ['sqd', 'sqe', 'sqm', 'apqp', 'ppap', 'quality', 'audit', 'eval', 'cat'];
@@ -245,6 +333,7 @@ function extractHierarchicalStructure(parsed: any): {
 
   modules.forEach((mod, modIdx) => {
     const groups: FieldGroup[] = [];
+    const modSectionRole = sectionRoleFromName(mod.name || mod.code || '');
 
     // 1. Direct fields under module (e.g. mod.fields)
     if (Array.isArray(mod.fields) && mod.fields.length > 0) {
@@ -254,11 +343,15 @@ function extractHierarchicalStructure(parsed: any): {
         fieldCount += 1;
         const rawName = toInternalName(f.name || f.internalName || f.label || `field_${fIdx + 1}`);
         const label = f.label || f.name || f.internalName || `Field ${fIdx + 1}`;
+        const baseType = normalizeJsonFieldType(f.type);
+        const type = inferFieldTypeByName(rawName, label, baseType);
+        // field-name keyword role (may be null)
+        const nameRole = (() => { const p = autoPermissionsFromName(rawName, label); return p ? (p.rolesAllowedToEdit?.[0] as 'buyer'|'capacity_manager'|'sqd'|undefined ?? null) : null; })();
         return {
           id: f.id || `fld_${rawName}`,
           internalName: rawName,
           label,
-          type: normalizeJsonFieldType(f.type),
+          type,
           required: Boolean(f.required),
           placeholder: f.placeholder || undefined,
           helpText: f.helpText || f.description || undefined,
@@ -267,7 +360,7 @@ function extractHierarchicalStructure(parsed: any): {
           editable: f.editable !== false,
           options: normalizeFieldOptions(f.options),
           defaultValue: normalizeFieldDefault(f),
-          permissions: normalizeFieldPermissions(f),
+          permissions: normalizeFieldPermissions(f, modSectionRole, nameRole),
         };
       });
 
@@ -283,15 +376,19 @@ function extractHierarchicalStructure(parsed: any): {
     const tables: any[] = Array.isArray(mod.tables) ? mod.tables : [];
     tables.forEach((tbl, tblIdx) => {
       tableCount += 1;
+      const tblSectionRole = sectionRoleFromName(tbl.name || tbl.title || '') ?? modSectionRole;
       const fields: TemplateField[] = (Array.isArray(tbl.fields) ? tbl.fields : []).map((f: any, fIdx: number) => {
         fieldCount += 1;
         const rawName = toInternalName(f.name || f.internalName || f.label || `field_${fIdx + 1}`);
         const label = f.label || f.name || f.internalName || `Field ${fIdx + 1}`;
+        const baseType = normalizeJsonFieldType(f.type);
+        const type = inferFieldTypeByName(rawName, label, baseType);
+        const nameRole = (() => { const p = autoPermissionsFromName(rawName, label); return p ? (p.rolesAllowedToEdit?.[0] as 'buyer'|'capacity_manager'|'sqd'|undefined ?? null) : null; })();
         return {
           id: f.id || `fld_${rawName}`,
           internalName: rawName,
           label,
-          type: normalizeJsonFieldType(f.type),
+          type,
           required: Boolean(f.required),
           placeholder: f.placeholder || undefined,
           helpText: f.helpText || f.description || undefined,
@@ -300,7 +397,7 @@ function extractHierarchicalStructure(parsed: any): {
           editable: f.editable !== false,
           options: normalizeFieldOptions(f.options),
           defaultValue: normalizeFieldDefault(f),
-          permissions: normalizeFieldPermissions(f),
+          permissions: normalizeFieldPermissions(f, tblSectionRole, nameRole),
         };
       });
 
@@ -317,6 +414,14 @@ function extractHierarchicalStructure(parsed: any): {
       name: mod.name || mod.code || `Module ${modIdx + 1}`,
       order: typeof mod.order === 'number' ? mod.order : modIdx + 1,
       description: mod.description || '',
+      ...(modSectionRole
+        ? {
+            permissions: {
+              rolesAllowedToEdit: [modSectionRole, 'admin'],
+              rolesAllowedToView: [...ROLE_VIEW_ROLES],
+            },
+          }
+        : {}),
       groups,
     });
   });
@@ -353,10 +458,6 @@ export class ProjectStructureExtractor {
           const data = e.target?.result;
           if (!data) throw new Error('Failed to read Excel file payload.');
 
-          // Reuse the existing workbook-analysis service to obtain per-sheet
-          // scores, the recommended worksheet, and the resolved orientation.
-          // This is the SAME scoring engine used by the project import wizard —
-          // no duplicate analysis logic is introduced here.
           let sheetScores: WorksheetScore[] = [];
           let detectedSheetName = '';
 
@@ -391,7 +492,6 @@ export class ProjectStructureExtractor {
             throw new Error('Worksheet contains no populated rows.');
           }
 
-          // Orientation detection (existing engine, honors user override)
           const orientationInfo = ExcelHeaderExtractor.detectOrientation(
             rows,
             undefined,
@@ -407,7 +507,6 @@ export class ProjectStructureExtractor {
           const detectedFields: TemplateField[] = [];
 
           if (isVertical) {
-            // ── VERTICAL MODE: Col A = Field Name, Col B = Sample Value ──
             const seenKeys = new Set<string>();
 
             for (let i = 0; i < rows.length; i++) {
@@ -420,8 +519,10 @@ export class ProjectStructureExtractor {
               if (!internalName || seenKeys.has(internalName)) continue;
               seenKeys.add(internalName);
 
-              const type = inferFieldType(sampleVal);
+              const baseType = inferFieldType(sampleVal);
+              const type = inferFieldTypeByName(internalName, rawLabel, baseType);
               const required = isRequiredByName(internalName);
+              const permissions = autoPermissionsFromName(internalName, rawLabel);
 
               detectedFields.push({
                 id: `fld_${internalName}`,
@@ -433,10 +534,10 @@ export class ProjectStructureExtractor {
                 order: detectedFields.length + 1,
                 visible: true,
                 editable: true,
+                ...(permissions ? { permissions } : {}),
               });
             }
           } else {
-            // ── HORIZONTAL MODE: Row 1 = Headers, Row 2+ = Sample Data ──
             const headerRow = rows[0] || [];
             const sampleDataRow = rows[1] || [];
             const seenKeys = new Set<string>();
@@ -450,8 +551,10 @@ export class ProjectStructureExtractor {
               seenKeys.add(internalName);
 
               const sampleVal = sampleDataRow[c] != null ? String(sampleDataRow[c]).trim() : '';
-              const type = inferFieldType(sampleVal);
+              const baseType = inferFieldType(sampleVal);
+              const type = inferFieldTypeByName(internalName, rawLabel, baseType);
               const required = isRequiredByName(internalName);
+              const permissions = autoPermissionsFromName(internalName, rawLabel);
 
               detectedFields.push({
                 id: `fld_${internalName}`,
@@ -463,6 +566,7 @@ export class ProjectStructureExtractor {
                 order: detectedFields.length + 1,
                 visible: true,
                 editable: true,
+                ...(permissions ? { permissions } : {}),
               });
             }
           }
@@ -471,7 +575,6 @@ export class ProjectStructureExtractor {
             throw new Error('No valid field structures could be extracted from the file.');
           }
 
-          // Build Module Sections (e.g. Buyer, Capacity, SQD, or General)
           const sections = ProjectStructureExtractor.groupFieldsIntoSections(detectedFields);
 
           const baseName = customName || file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
@@ -503,10 +606,6 @@ export class ProjectStructureExtractor {
 
   /**
    * Parse a JSON schema file into a Project Structure.
-   * Recognizes the hierarchical layout (structure / modules -> tables -> fields /
-   * relationships) as well as an already-normalized CMF template (sections).
-   * Throws a structured error for unrecognized JSON shapes — it never flattens
-   * arbitrary top-level keys into fields.
    */
   static extractFromJson(jsonContent: string | object, fileFileName?: string): StructureExtractResult {
     const parsed = typeof jsonContent === 'string' ? JSON.parse(jsonContent) : jsonContent;
@@ -531,8 +630,6 @@ export class ProjectStructureExtractor {
         status: (meta.status || parsed.status) === 'DRAFT' ? 'DRAFT' : 'PUBLISHED',
         description: meta.description || parsed.description || `Project structure imported from JSON with ${hierarchical.fieldCount} fields.`,
         orientation,
-        // Bucket fields into the role sections the Manuel Project workflow
-        // renders (Buyer / Capacity Manager / SQD), preserving the role info.
         sections: ProjectStructureExtractor.bucketIntoRoleSections(hierarchical.sections),
         detectedFieldCount: hierarchical.fieldCount,
         detectedModuleCount: hierarchical.sections.length,
@@ -547,35 +644,48 @@ export class ProjectStructureExtractor {
     if (Array.isArray(rawSections)) {
       let detectedFieldsCount = 0;
 
-      const sections: TemplateSection[] = rawSections.map((sec: any, secIdx: number) => ({
-        id: sec.id || `sec_${secIdx + 1}`,
-        name: sec.name || `Module ${secIdx + 1}`,
-        order: sec.order || secIdx + 1,
-        description: sec.description || '',
-        groups: (sec.groups || []).map((grp: any, grpIdx: number) => ({
-          id: grp.id || `grp_${grpIdx + 1}`,
-          name: grp.name || `Group ${grpIdx + 1}`,
-          order: grp.order || grpIdx + 1,
-          description: grp.description || '',
-          fields: (grp.fields || []).map((f: any, fIdx: number) => {
-            detectedFieldsCount++;
-            return {
-              id: f.id || `fld_${toInternalName(f.label || f.internalName || `field_${fIdx + 1}`)}`,
-              internalName: toInternalName(f.internalName || f.label || `field_${fIdx + 1}`),
-              label: f.label || f.internalName || `Field ${fIdx + 1}`,
-              type: normalizeJsonFieldType(f.type),
-              required: Boolean(f.required),
-              placeholder: f.placeholder,
-              helpText: f.helpText,
-              order: f.order || fIdx + 1,
-              visible: f.visible !== false,
-              editable: f.editable !== false,
-              options: normalizeFieldOptions(f.options),
-              defaultValue: normalizeFieldDefault(f),
-            };
-          }),
-        })),
-      }));
+      const sections: TemplateSection[] = rawSections.map((sec: any, secIdx: number) => {
+        const secRole = sectionRoleFromName(sec.name || '');
+        const sectionPerms: PermissionRule | undefined = secRole
+          ? { rolesAllowedToEdit: [secRole, 'admin'], rolesAllowedToView: [...ROLE_VIEW_ROLES] }
+          : undefined;
+        return {
+          id: sec.id || `sec_${secIdx + 1}`,
+          name: sec.name || `Module ${secIdx + 1}`,
+          order: sec.order || secIdx + 1,
+          description: sec.description || '',
+          ...(sectionPerms && !sec.permissions ? { permissions: sectionPerms } : sec.permissions ? { permissions: sec.permissions } : {}),
+          groups: (sec.groups || []).map((grp: any, grpIdx: number) => ({
+            id: grp.id || `grp_${grpIdx + 1}`,
+            name: grp.name || `Group ${grpIdx + 1}`,
+            order: grp.order || grpIdx + 1,
+            description: grp.description || '',
+            fields: (grp.fields || []).map((f: any, fIdx: number) => {
+              detectedFieldsCount++;
+              const internalName = toInternalName(f.internalName || f.label || `field_${fIdx + 1}`);
+              const label = f.label || f.internalName || `Field ${fIdx + 1}`;
+              const baseType = normalizeJsonFieldType(f.type);
+              const type = inferFieldTypeByName(internalName, label, baseType);
+              const nameRole = (() => { const p = autoPermissionsFromName(internalName, label); return p ? (p.rolesAllowedToEdit?.[0] as 'buyer'|'capacity_manager'|'sqd'|undefined ?? null) : null; })();
+              return {
+                id: f.id || `fld_${internalName}`,
+                internalName,
+                label,
+                type,
+                required: Boolean(f.required),
+                placeholder: f.placeholder,
+                helpText: f.helpText,
+                order: f.order || fIdx + 1,
+                visible: f.visible !== false,
+                editable: f.editable !== false,
+                options: normalizeFieldOptions(f.options),
+                defaultValue: normalizeFieldDefault(f),
+                permissions: normalizeFieldPermissions(f, secRole, nameRole),
+              };
+            }),
+          })),
+        };
+      });
 
       const code = (parsed.code || (fileFileName ? fileFileName.replace(/\.[^/.]+$/, '') : 'JSON_STRUCT')).toUpperCase();
       const name = parsed.name || (fileFileName ? fileFileName.replace(/\.[^/.]+$/, '') : 'JSON Structure');
@@ -608,7 +718,7 @@ export class ProjectStructureExtractor {
       };
     }
 
-    // ── 3. Unrecognized shape → structured error, never flat fields ──────
+    // ── 3. Unrecognized shape → structured error
     throw new Error(
       'Invalid Project Structure JSON: expected a "modules" array (modules → tables → fields) or a "sections" array. Got: ' +
         Object.keys(parsed).join(', '),
@@ -635,10 +745,21 @@ export class ProjectStructureExtractor {
         name.includes('rfq') ||
         name.includes('price') ||
         name.includes('currency') ||
+        name.includes('contract') ||
+        name.includes('commitment') ||
+        name.includes('po_') ||
         label.includes('buyer') ||
-        label.includes('supplier')
+        label.includes('supplier') ||
+        label.includes('contract') ||
+        label.includes('commitment')
       ) {
-        buyerFields.push(f);
+        buyerFields.push({
+          ...f,
+          permissions: f.permissions || {
+            rolesAllowedToEdit: ['buyer', 'admin'],
+            rolesAllowedToView: [...ROLE_VIEW_ROLES],
+          },
+        });
       } else if (
         name.includes('capacity') ||
         name.includes('volume') ||
@@ -648,7 +769,13 @@ export class ProjectStructureExtractor {
         label.includes('capacity') ||
         label.includes('volume')
       ) {
-        capacityFields.push(f);
+        capacityFields.push({
+          ...f,
+          permissions: f.permissions || {
+            rolesAllowedToEdit: ['capacity_manager', 'admin'],
+            rolesAllowedToView: [...ROLE_VIEW_ROLES],
+          },
+        });
       } else if (
         name.includes('sqd') ||
         name.includes('sqe') ||
@@ -660,7 +787,13 @@ export class ProjectStructureExtractor {
         label.includes('quality') ||
         label.includes('apqp')
       ) {
-        sqdFields.push(f);
+        sqdFields.push({
+          ...f,
+          permissions: f.permissions || {
+            rolesAllowedToEdit: ['sqd', 'admin'],
+            rolesAllowedToView: [...ROLE_VIEW_ROLES],
+          },
+        });
       } else {
         generalFields.push(f);
       }
@@ -703,6 +836,10 @@ export class ProjectStructureExtractor {
         name: 'Buyer Module',
         order: secOrder++,
         description: 'Purchasing, RFQ packages, and commercial attributes.',
+        permissions: {
+          rolesAllowedToEdit: ['buyer', 'admin'],
+          rolesAllowedToView: [...ROLE_VIEW_ROLES],
+        },
         groups: [
           {
             id: 'grp_buyer_data',
@@ -720,6 +857,10 @@ export class ProjectStructureExtractor {
         name: 'Capacity Manager Module',
         order: secOrder++,
         description: 'Weekly capacity, volume requirements, and tooling assessment.',
+        permissions: {
+          rolesAllowedToEdit: ['capacity_manager', 'admin'],
+          rolesAllowedToView: [...ROLE_VIEW_ROLES],
+        },
         groups: [
           {
             id: 'grp_capacity_data',
@@ -737,6 +878,10 @@ export class ProjectStructureExtractor {
         name: 'SQD Quality Module',
         order: secOrder++,
         description: 'Supplier quality development, APQP status, and quality ratings.',
+        permissions: {
+          rolesAllowedToEdit: ['sqd', 'admin'],
+          rolesAllowedToView: [...ROLE_VIEW_ROLES],
+        },
         groups: [
           {
             id: 'grp_sqd_data',

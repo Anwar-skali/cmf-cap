@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { CMFTemplate, TemplateSection, TemplateField, ConditionalRule } from '@/types/template';
 import { FieldRenderer } from './fields/FieldRenderer';
-import { ChevronDown, ChevronRight, Save, RotateCcw, CheckCircle2, AlertCircle, Layers, FileText, Activity } from 'lucide-react';
+import { ChevronDown, ChevronRight, Save, RotateCcw, CheckCircle2, AlertCircle, Layers, FileText, Activity, ShieldAlert, Lock } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface DynamicFormProps {
@@ -15,16 +15,62 @@ interface DynamicFormProps {
   onCancel?: () => void;
 }
 
+// ── Role-permission helpers ───────────────────────────────────────────────
+
+/** Normalise a raw role string to the canonical project-role key. */
+function normaliseRole(raw: string): string {
+  const r = raw.trim().toLowerCase().replace(/[\s-]+/g, '_');
+  if (r === 'buyer' || r === 'purchasing') return 'buyer';
+  if (r === 'capacity_manager' || r === 'capacity' || r === 'capacitymanager' || r === 'cap_manager') return 'capacity_manager';
+  if (r === 'sqd' || r === 'quality' || r === 'sqd_team' || r === 'quality_lead') return 'sqd';
+  if (r === 'admin' || r === 'administrator') return 'admin';
+  return r;
+}
+
+/** Returns true when the current user may edit a field. */
+function canEditField(field: TemplateField, userRole: string): boolean {
+  if (userRole === 'admin') return true;
+  const allowed = field.permissions?.rolesAllowedToEdit;
+  if (!allowed || allowed.length === 0) return true;
+  return allowed.includes(userRole);
+}
+
+/** Returns true when the current user may view a section. */
+function canViewSection(section: TemplateSection, userRole: string): boolean {
+  if (userRole === 'admin') return true;
+  const allowed = section.permissions?.rolesAllowedToView;
+  if (!allowed || allowed.length === 0) return true;
+  return allowed.includes(userRole);
+}
+
+/** Returns true when the current user may edit the section (any of its fields). */
+function canEditSectionRole(section: TemplateSection, userRole: string): boolean {
+  if (userRole === 'admin') return true;
+  const allowed = section.permissions?.rolesAllowedToEdit;
+  if (!allowed || allowed.length === 0) return true;
+  return allowed.includes(userRole);
+}
+
+const ROLE_DISPLAY: Record<string, { label: string; cls: string }> = {
+  buyer:            { label: 'Buyer',            cls: 'text-amber-600 bg-amber-50 border-amber-200 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-700' },
+  capacity_manager: { label: 'Capacity Manager', cls: 'text-blue-600 bg-blue-50 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-700' },
+  sqd:              { label: 'SQD',              cls: 'text-violet-600 bg-violet-50 border-violet-200 dark:bg-violet-900/30 dark:text-violet-300 dark:border-violet-700' },
+  admin:            { label: 'Admin',            cls: 'text-emerald-600 bg-emerald-50 border-emerald-200' },
+};
+
 export const DynamicForm: React.FC<DynamicFormProps> = ({
   template,
   initialValues = {},
   onSave,
-  userRole = 'admin',
+  userRole: rawUserRole = 'admin',
   isSaving = false,
   title,
   readOnly = false,
   onCancel,
 }) => {
+  // Normalise so 'Capacity Manager', 'capacity_manager', 'cap_manager' → same key
+  const userRole = normaliseRole(rawUserRole);
+
   const [formValues, setFormValues] = useState<Record<string, any>>(initialValues);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
@@ -157,10 +203,15 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({
     const newErrors: Record<string, string> = {};
 
     template.sections?.forEach((sec) => {
+      // Skip sections the user cannot view
+      if (!canViewSection(sec, userRole)) return;
+
       sec.groups?.forEach((grp) => {
         grp.fields?.forEach((fld) => {
-          // Skip fields that are conditionally hidden
+          // Skip fields that are conditionally hidden or not editable by current user role
           if (!isFieldVisible(fld, formValues)) return;
+          if (!canEditField(fld, userRole)) return;
+
           const val = formValues[fld.internalName];
           if (fld.required && (val === undefined || val === null || val === '' || (Array.isArray(val) && val.length === 0))) {
             newErrors[fld.internalName] = `${fld.label} is required`;
@@ -264,6 +315,13 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({
       {/* Sections Accordion */}
       <div className="space-y-4">
         {template.sections?.map((section, idx) => {
+          // Hide sections the user has no view access to
+          if (!canViewSection(section, userRole)) return null;
+
+          const sectionEditable = canEditSectionRole(section, userRole);
+          const sectionEditRoles = section.permissions?.rolesAllowedToEdit ?? [];
+          const ownerRole = sectionEditRoles.find((r) => r !== 'admin') ?? null;
+
           const isOpen = openSections[section.id] ?? false;
 
           let fieldCount = 0;
@@ -276,7 +334,11 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({
           return (
             <div
               key={section.id}
-              className="rounded-2xl border border-slate-300 dark:border-slate-700 bg-card shadow-xs overflow-hidden transition-all duration-200"
+              className={`rounded-2xl border bg-card shadow-xs overflow-hidden transition-all duration-200 ${
+                !sectionEditable
+                  ? 'border-slate-300/70 dark:border-slate-700/70 opacity-90'
+                  : 'border-slate-300 dark:border-slate-700'
+              }`}
             >
               {/* Section Header Bar */}
               <button
@@ -295,11 +357,18 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({
                     <span className="text-xs font-bold">{idx + 1}</span>
                   </div>
                   <div>
-                    <h3 className="text-base font-bold text-foreground group-hover:text-blue-600 transition-colors flex items-center gap-2.5">
+                    <h3 className="text-base font-bold text-foreground group-hover:text-blue-600 transition-colors flex items-center gap-2.5 flex-wrap">
                       <span>{section.name}</span>
                       <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800/50">
                         {fieldCount} fields
                       </span>
+                      {/* Role-restriction badge */}
+                      {!sectionEditable && ownerRole && ROLE_DISPLAY[ownerRole] && (
+                        <span className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-bold ${ROLE_DISPLAY[ownerRole].cls}`}>
+                          <Lock className="h-2.5 w-2.5" />
+                          {ROLE_DISPLAY[ownerRole].label} only
+                        </span>
+                      )}
                     </h3>
                     {section.description && (
                       <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">{section.description}</p>
@@ -323,6 +392,18 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({
                     transition={{ duration: 0.25 }}
                     className="p-5 space-y-6 border-t border-slate-200 dark:border-slate-800 bg-slate-50/20 dark:bg-slate-950/20"
                   >
+                    {/* Read-only section notice */}
+                    {!sectionEditable && (
+                      <div className="flex items-center gap-2.5 rounded-xl border border-amber-300/60 bg-amber-50 dark:bg-amber-950/20 px-4 py-2.5 text-xs font-semibold text-amber-700 dark:text-amber-400">
+                        <ShieldAlert className="h-4 w-4 shrink-0" />
+                        <span>
+                          This section is managed by{' '}
+                          <strong>{ownerRole ? (ROLE_DISPLAY[ownerRole]?.label ?? ownerRole) : 'another role'}</strong>.
+                          You can view these fields but cannot modify them.
+                        </span>
+                      </div>
+                    )}
+
                     {section.groups?.map((group) => (
                       <div
                         key={group.id}
@@ -352,17 +433,33 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({
                           {group.fields?.map((field) => {
                             if (!isFieldVisible(field, formValues)) return null;
 
+                            // Disabled when: global readOnly OR this specific field is not editable by this role
+                            const fieldEditable = canEditField(field, userRole);
+                            const isFieldDisabled = readOnly || !fieldEditable;
+                            const fieldEditRoles = field.permissions?.rolesAllowedToEdit ?? [];
+                            const fieldOwnerRole = fieldEditRoles.find((r) => r !== 'admin') ?? null;
+
                             return (
-                              <FieldRenderer
-                                key={field.id}
-                                field={field}
-                                value={formValues[field.internalName]}
-                                onChange={(val) => handleFieldChange(field.internalName, val)}
-                                disabled={readOnly}
-                                error={errors[field.internalName]}
-                                formValues={formValues}
-                                userRole={userRole}
-                              />
+                              <div key={field.id} className="space-y-0.5">
+                                <FieldRenderer
+                                  field={field}
+                                  value={formValues[field.internalName]}
+                                  onChange={(val) => handleFieldChange(field.internalName, val)}
+                                  disabled={isFieldDisabled}
+                                  error={errors[field.internalName]}
+                                  formValues={formValues}
+                                  userRole={userRole}
+                                />
+                                {/* Per-field lock badge */}
+                                {!fieldEditable && fieldOwnerRole && ROLE_DISPLAY[fieldOwnerRole] && (
+                                  <span
+                                    className={`inline-flex items-center gap-0.5 rounded border px-1.5 py-px text-[9px] font-bold ${ROLE_DISPLAY[fieldOwnerRole].cls}`}
+                                    title={`Only ${ROLE_DISPLAY[fieldOwnerRole].label} can edit this field`}
+                                  >
+                                    <Lock className="h-2 w-2" /> {ROLE_DISPLAY[fieldOwnerRole].label} only
+                                  </span>
+                                )}
+                              </div>
                             );
                           })}
                         </div>
@@ -375,6 +472,7 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({
           );
         })}
       </div>
+
 
       {/* LTOS Bottom Right Action Bar */}
       {!readOnly && (

@@ -66,6 +66,10 @@ export default function ProjectNewPage() {
         template_version: currentTemplate?.version,
         data: {
           ...formValues,
+          project_name: name,
+          project_code: code,
+          part_name: name,
+          part_number: code,
           template_code: currentTemplate?.code,
           creation_source: inputSource,
         },

@@ -56,7 +56,7 @@ export default function ProfilePage() {
   // Profile Edit Form State
   const [firstName, setFirstName] = useState(user?.firstName || '');
   const [lastName, setLastName] = useState(user?.lastName || '');
-  const [phone, setPhone] = useState(user?.phone || '');
+  const [phone, setPhone] = useState((user as any)?.phone || '');
   const [organization, setOrganization] = useState(user?.organization || 'Stellantis Global Purchasing & Quality');
 
   // Password Change Form
