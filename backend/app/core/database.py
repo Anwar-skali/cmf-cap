@@ -15,22 +15,32 @@ from sqlalchemy.orm import Session, sessionmaker
 from app.core.config import settings
 
 
+def _get_engine_options(uri: str) -> dict[str, Any]:
+    options: dict[str, Any] = {
+        "echo": False,
+        "future": True,
+    }
+    # SQLite does not support standard pool_size/max_overflow or pool_pre_ping in the same way
+    if not uri.startswith("sqlite"):
+        options.update({
+            "pool_pre_ping": True,
+            "pool_size": 20,
+            "max_overflow": 10,
+        })
+    return options
+
+
+async_uri = settings.get_db_uri(sync=False)
+sync_uri = settings.get_db_uri(sync=True)
+
 async_engine = create_async_engine(
-    settings.get_db_uri(sync=False),
-    echo=False,
-    future=True,
-    pool_pre_ping=True,
-    pool_size=20,
-    max_overflow=10,
+    async_uri,
+    **_get_engine_options(async_uri),
 )
 
 sync_engine = create_engine(
-    settings.get_db_uri(sync=True),
-    echo=False,
-    future=True,
-    pool_pre_ping=True,
-    pool_size=20,
-    max_overflow=10,
+    sync_uri,
+    **_get_engine_options(sync_uri),
 )
 
 async_session_maker = async_sessionmaker(

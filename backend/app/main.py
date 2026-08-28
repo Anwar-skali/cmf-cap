@@ -26,42 +26,28 @@ logger = get_logger(__name__)
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, Any]:
     setup_logging()
     logger.info("Starting CMF Platform API")
-    if settings.is_development:
-        _create_tables_if_sqlite()
-    else:
-        _run_alembic_migrations()
+    _init_database()
     yield
     logger.info("Shutting down CMF Platform API")
 
 
-def _run_alembic_migrations() -> None:
-    """Run Alembic migrations to head on production startup (PostgreSQL)."""
-    try:
-        from alembic.config import Config
-        from alembic import command
-        import os
-
-        # Locate alembic.ini relative to this file's package root (backend/)
-        base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-        alembic_cfg = Config(os.path.join(base_dir, "alembic.ini"))
-        # Override the sqlalchemy.url with the live DATABASE_URL from settings
-        alembic_cfg.set_main_option("sqlalchemy.url", settings.get_db_uri(sync=True))
-        command.upgrade(alembic_cfg, "head")
-        logger.info("Alembic migrations applied successfully")
-    except Exception as exc:
-        # Log but don't crash — tables may already be up-to-date
-        logger.warning("Alembic migration failed (may be harmless): %s", exc)
-
-
-def _create_tables_if_sqlite() -> None:
+def _init_database() -> None:
+    """Ensure all database tables exist, run self-healing migrations, and seed superuser."""
     try:
         from app.infrastructure.persistence.models.base import Base
+        import app.infrastructure.persistence.models  # noqa: F401
         from app.core.database import sync_engine
         from sqlalchemy import inspect, text
 
+        # 1. Create all tables on the database (works for PostgreSQL & SQLite)
         Base.metadata.create_all(bind=sync_engine)
-        
-        # Self-healing migration for new capacity_assessments columns
+        logger.info("Database tables verified/created successfully")
+
+        # 2. Run Alembic in production if available
+        if not settings.is_development:
+            _run_alembic_migrations()
+
+        # 3. Self-healing migration for new capacity_assessments columns
         inspector = inspect(sync_engine)
         if "capacity_assessments" in inspector.get_table_names():
             existing_cols = {c["name"] for c in inspector.get_columns("capacity_assessments")}
@@ -79,9 +65,58 @@ def _create_tables_if_sqlite() -> None:
                         conn.execute(text(f"ALTER TABLE capacity_assessments ADD COLUMN {col_name} {col_type}"))
                         logger.info("Added column %s to capacity_assessments", col_name)
 
-        logger.info("Database tables verified/created (SQLite)")
+        # 4. Seed initial superuser if not already present
+        _seed_initial_superuser(sync_engine)
+
     except Exception as exc:
-        logger.warning("Could not create/migrate tables: %s", exc)
+        logger.warning("Could not initialize database: %s", exc)
+
+
+def _seed_initial_superuser(engine: Any) -> None:
+    """Seed initial superuser if not present."""
+    try:
+        from sqlalchemy.orm import Session
+        from app.infrastructure.persistence.models.user import User
+        from app.domain.enums import UserRole
+        from app.core.security import get_password_hash
+
+        with Session(engine) as session:
+            admin_email = (settings.FIRST_SUPERUSER_EMAIL or "admin@cmf-platform.com").strip().lower()
+            existing_user = session.query(User).filter(User.email == admin_email).first()
+            if not existing_user:
+                logger.info("Seeding initial superuser: %s", admin_email)
+                superuser = User(
+                    id=uuid.uuid4(),
+                    email=admin_email,
+                    username=admin_email.split("@")[0],
+                    password_hash=get_password_hash(settings.FIRST_SUPERUSER_PASSWORD or "admin"),
+                    first_name="Admin",
+                    last_name="CMF",
+                    role=UserRole.ADMIN.value,
+                    is_active=True,
+                    is_superuser=True,
+                )
+                session.add(superuser)
+                session.commit()
+                logger.info("Initial superuser (%s) created successfully", admin_email)
+    except Exception as exc:
+        logger.warning("Failed to seed initial superuser (harmless if already exists): %s", exc)
+
+
+def _run_alembic_migrations() -> None:
+    """Run Alembic migrations to head on production startup (PostgreSQL)."""
+    try:
+        from alembic.config import Config
+        from alembic import command
+        import os
+
+        base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        alembic_cfg = Config(os.path.join(base_dir, "alembic.ini"))
+        alembic_cfg.set_main_option("sqlalchemy.url", settings.get_db_uri(sync=True))
+        command.upgrade(alembic_cfg, "head")
+        logger.info("Alembic migrations applied successfully")
+    except Exception as exc:
+        logger.warning("Alembic migration check completed: %s", exc)
 
 
 def create_application() -> FastAPI:

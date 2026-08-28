@@ -1,9 +1,17 @@
 from __future__ import annotations
 
 import uuid
+import warnings
 from datetime import datetime
 from typing import Any, Literal
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
+
+# Filter Pydantic v2 warning for schema_json shadowing deprecated BaseModel.schema_json
+warnings.filterwarnings(
+    "ignore",
+    message=r'.*shadows an attribute in parent "BaseModel".*',
+    category=UserWarning,
+)
 
 
 FieldTypeEnum = Literal[
@@ -161,6 +169,8 @@ class TemplateSchemaContent(BaseModel):
 
 
 class CreateTemplateRequest(BaseModel):
+    model_config = ConfigDict(protected_namespaces=())
+
     code: str
     name: str
     description: str | None = None
@@ -170,6 +180,8 @@ class CreateTemplateRequest(BaseModel):
 
 
 class UpdateTemplateRequest(BaseModel):
+    model_config = ConfigDict(protected_namespaces=())
+
     name: str | None = None
     description: str | None = None
     status: str | None = None
@@ -178,6 +190,8 @@ class UpdateTemplateRequest(BaseModel):
 
 
 class TemplateResponse(BaseModel):
+    model_config = ConfigDict(protected_namespaces=())
+
     id: uuid.UUID
     code: str
     name: str

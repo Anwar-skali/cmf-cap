@@ -62,9 +62,19 @@ class Settings(BaseSettings):
     @classmethod
     def parse_cors_origins(cls, v: str | list[str]) -> list[str]:
         if isinstance(v, str):
-            if not v or v.strip() == "":
+            v = v.strip()
+            if not v:
                 return []
-            return [origin.strip() for origin in v.split(",")]
+            if v.startswith("[") and v.endswith("]"):
+                import json
+                try:
+                    parsed = json.loads(v)
+                    if isinstance(parsed, list):
+                        return [str(origin).strip() for origin in parsed if str(origin).strip()]
+                except Exception:
+                    pass
+                v = v.strip("[]")
+            return [origin.strip().strip("'\"") for origin in v.split(",") if origin.strip().strip("'\"")]
         return v
 
     @field_validator("MAX_UPLOAD_SIZE", mode="before")
@@ -80,61 +90,71 @@ class Settings(BaseSettings):
         return v
 
     @model_validator(mode="after")
-    def build_database_url(self) -> "Settings":
-        if self.DATABASE_URL is not None:
-            return self
-        is_dev = self.ENVIRONMENT == "development"
-        if is_dev:
-            self.DATABASE_URL = "sqlite+aiosqlite:///./cmf.db"
-            self.DATABASE_ASYNC_PREFIX = "sqlite+aiosqlite"
-            self.DATABASE_SYNC_PREFIX = "sqlite"
-        else:
-            self.DATABASE_ASYNC_PREFIX = "postgresql+asyncpg"
-            self.DATABASE_SYNC_PREFIX = "postgresql+psycopg2"
-            # Don't override DATABASE_URL if it's already set
-            if self.DATABASE_URL is None:
-                self.DATABASE_URL = (
-                    f"{self.DATABASE_ASYNC_PREFIX}://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}"
-                    f"@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
-                )
-        return self
-
-    @model_validator(mode="after")
     def ensure_dev_cors_origins(self) -> "Settings":
-        required_origins = [
-            "http://localhost:5173",
-            "http://127.0.0.1:5173",
-        ]
-        for origin in required_origins:
-            if origin not in self.CORS_ORIGINS:
-                self.CORS_ORIGINS.append(origin)
+        if self.is_development:
+            required_origins = [
+                "http://localhost:5173",
+                "http://127.0.0.1:5173",
+            ]
+            for origin in required_origins:
+                if origin not in self.CORS_ORIGINS:
+                    self.CORS_ORIGINS.append(origin)
         return self
 
     def get_db_uri(self, sync: bool = False) -> str:
-        if self.ENVIRONMENT == "development":
+        """
+        Return the correct database URI for sync (psycopg2 / sqlite) or async (asyncpg / aiosqlite).
+        Handles any input URL scheme: postgres://, postgresql://, postgresql+asyncpg://, sqlite://, etc.
+        """
+        raw_url = self.DATABASE_URL
+        if raw_url and raw_url.strip():
+            url = raw_url.strip()
+
+            # SQLite URLs
+            if url.startswith("sqlite://") or url.startswith("sqlite+aiosqlite://"):
+                if sync:
+                    if url.startswith("sqlite+aiosqlite://"):
+                        return url.replace("sqlite+aiosqlite://", "sqlite://", 1)
+                    return url
+                else:
+                    if url.startswith("sqlite://") and not url.startswith("sqlite+aiosqlite://"):
+                        return url.replace("sqlite://", "sqlite+aiosqlite://", 1)
+                    return url
+
+            # PostgreSQL URLs
+            for prefix in ("postgresql+asyncpg://", "postgresql+psycopg2://", "postgresql://", "postgres://"):
+                if url.startswith(prefix):
+                    rest = url[len(prefix):]
+                    break
+            else:
+                rest = url
+
             if sync:
-                return "sqlite:///./cmf.db"
-            return self.DATABASE_URL or "sqlite+aiosqlite:///./cmf.db"
+                return f"postgresql+psycopg2://{rest}"
+            else:
+                return f"postgresql+asyncpg://{rest}"
+
+        # No DATABASE_URL provided -> fallback depending on environment
+        if self.is_development:
+            return "sqlite:///./cmf.db" if sync else "sqlite+aiosqlite:///./cmf.db"
         else:
-            prefix = self.DATABASE_SYNC_PREFIX if sync else self.DATABASE_ASYNC_PREFIX
-            if self.DATABASE_URL and (self.DATABASE_ASYNC_PREFIX in self.DATABASE_URL or self.DATABASE_SYNC_PREFIX in self.DATABASE_URL):
-                return self.DATABASE_URL
+            driver = "postgresql+psycopg2" if sync else "postgresql+asyncpg"
             return (
-                f"{prefix}://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}"
+                f"{driver}://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}"
                 f"@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
             )
 
     @property
     def is_development(self) -> bool:
-        return self.ENVIRONMENT == "development"
+        return self.ENVIRONMENT.lower() == "development"
 
     @property
     def is_production(self) -> bool:
-        return self.ENVIRONMENT == "production"
+        return self.ENVIRONMENT.lower() == "production"
 
     @property
     def is_testing(self) -> bool:
-        return self.ENVIRONMENT == "testing"
+        return self.ENVIRONMENT.lower() == "testing"
 
 
 settings = Settings()
