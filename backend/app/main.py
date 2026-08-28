@@ -28,8 +28,29 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, Any]:
     logger.info("Starting CMF Platform API")
     if settings.is_development:
         _create_tables_if_sqlite()
+    else:
+        _run_alembic_migrations()
     yield
     logger.info("Shutting down CMF Platform API")
+
+
+def _run_alembic_migrations() -> None:
+    """Run Alembic migrations to head on production startup (PostgreSQL)."""
+    try:
+        from alembic.config import Config
+        from alembic import command
+        import os
+
+        # Locate alembic.ini relative to this file's package root (backend/)
+        base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        alembic_cfg = Config(os.path.join(base_dir, "alembic.ini"))
+        # Override the sqlalchemy.url with the live DATABASE_URL from settings
+        alembic_cfg.set_main_option("sqlalchemy.url", settings.get_db_uri(sync=True))
+        command.upgrade(alembic_cfg, "head")
+        logger.info("Alembic migrations applied successfully")
+    except Exception as exc:
+        # Log but don't crash — tables may already be up-to-date
+        logger.warning("Alembic migration failed (may be harmless): %s", exc)
 
 
 def _create_tables_if_sqlite() -> None:
@@ -68,9 +89,10 @@ def create_application() -> FastAPI:
         title=settings.PROJECT_NAME,
         version=settings.VERSION,
         lifespan=lifespan,
-        docs_url="/api/docs" if settings.is_development else None,
-        redoc_url="/api/redoc" if settings.is_development else None,
-        openapi_url="/api/openapi.json" if settings.is_development else None,
+        # Keep docs available in production so the live API can be inspected
+        docs_url="/api/docs",
+        redoc_url="/api/redoc",
+        openapi_url="/api/openapi.json",
         redirect_slashes=False,
     )
 

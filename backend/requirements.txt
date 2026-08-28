@@ -4,6 +4,8 @@ sqlalchemy>=2.0
 asyncpg
 aiosqlite
 alembic
+mako
+psycopg2-binary
 pydantic>=2.0
 pydantic-settings
 python-jose[cryptography]

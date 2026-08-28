@@ -46415,3 +46415,14 @@ mapped_data={'indice': 2, 'module': 'Chassis', 'designation_commodity': 'Bracket
 2026-08-28 12:57:27,173 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
 2026-08-28 12:57:57,225 - app.main - INFO - GET /api/v1/notifications/unread-count
 2026-08-28 12:57:57,297 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 12:58:27,342 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 12:58:27,409 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 13:08:07,063 - app.main - INFO - Shutting down CMF Platform API
+2026-08-28 13:08:15,976 - app.main - INFO - Starting CMF Platform API
+2026-08-28 13:08:16,010 - app.main - INFO - Database tables verified/created (SQLite)
+2026-08-28 13:11:56,381 - app.main - INFO - Shutting down CMF Platform API
+2026-08-28 13:12:09,026 - app.main - INFO - Starting CMF Platform API
+2026-08-28 13:12:09,068 - app.main - INFO - Database tables verified/created (SQLite)
+2026-08-28 13:12:48,190 - app.main - INFO - Shutting down CMF Platform API
+2026-08-28 13:12:56,620 - app.main - INFO - Starting CMF Platform API
+2026-08-28 13:12:56,649 - app.main - INFO - Database tables verified/created (SQLite)
