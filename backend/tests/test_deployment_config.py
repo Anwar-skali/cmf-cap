@@ -10,7 +10,7 @@ def test_sqlite_development_uris():
 def test_neon_postgres_url_transformation():
     neon_url = "postgres://user:pass@ep-cool-db.neon.tech/neondb?sslmode=require"
     s = Settings(ENVIRONMENT="production", DATABASE_URL=neon_url)
-    assert s.get_db_uri(sync=False) == "postgresql+asyncpg://user:pass@ep-cool-db.neon.tech/neondb?sslmode=require"
+    assert s.get_db_uri(sync=False) == "postgresql+asyncpg://user:pass@ep-cool-db.neon.tech/neondb?ssl=require"
     assert s.get_db_uri(sync=True) == "postgresql+psycopg2://user:pass@ep-cool-db.neon.tech/neondb?sslmode=require"
 
 

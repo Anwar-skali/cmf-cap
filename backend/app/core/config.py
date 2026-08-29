@@ -122,6 +122,8 @@ class Settings(BaseSettings):
                     return url
 
             # PostgreSQL URLs
+            from urllib.parse import parse_qsl, urlencode, urlsplit
+
             for prefix in ("postgresql+asyncpg://", "postgresql+psycopg2://", "postgresql://", "postgres://"):
                 if url.startswith(prefix):
                     rest = url[len(prefix):]
@@ -129,10 +131,29 @@ class Settings(BaseSettings):
             else:
                 rest = url
 
+            # Parse query parameters from rest
+            dummy_parsed = urlsplit(f"http://{rest}")
+            query_dict = dict(parse_qsl(dummy_parsed.query, keep_blank_values=True))
+
             if sync:
-                return f"postgresql+psycopg2://{rest}"
+                # psycopg2 / libpq uses sslmode, not ssl
+                if "ssl" in query_dict and "sslmode" not in query_dict:
+                    query_dict["sslmode"] = query_dict.pop("ssl")
+                driver = "postgresql+psycopg2"
             else:
-                return f"postgresql+asyncpg://{rest}"
+                # asyncpg uses ssl, does NOT accept sslmode
+                if "sslmode" in query_dict:
+                    sslmode_val = query_dict.pop("sslmode")
+                    if "ssl" not in query_dict:
+                        query_dict["ssl"] = sslmode_val
+                driver = "postgresql+asyncpg"
+
+            new_query = urlencode(query_dict)
+            netloc_and_path = dummy_parsed.netloc + dummy_parsed.path
+            final_url = f"{driver}://{netloc_and_path}"
+            if new_query:
+                final_url = f"{final_url}?{new_query}"
+            return final_url
 
         # No DATABASE_URL provided -> fallback depending on environment
         if self.is_development:
