@@ -141,11 +141,23 @@ class Settings(BaseSettings):
                     query_dict["sslmode"] = query_dict.pop("ssl")
                 driver = "postgresql+psycopg2"
             else:
-                # asyncpg uses ssl, does NOT accept sslmode
+                # asyncpg uses ssl, does NOT accept libpq query params (sslmode, channel_binding, etc.)
                 if "sslmode" in query_dict:
                     sslmode_val = query_dict.pop("sslmode")
-                    if "ssl" not in query_dict:
-                        query_dict["ssl"] = sslmode_val
+                    if "ssl" not in query_dict and sslmode_val != "disable":
+                        query_dict["ssl"] = "require"
+                # Strip all unsupported libpq parameters from asyncpg URL
+                valid_asyncpg_params = {
+                    "ssl",
+                    "timeout",
+                    "command_timeout",
+                    "statement_cache_size",
+                    "max_cached_statement_lifetime",
+                    "max_cacheable_statement_size",
+                    "server_settings",
+                    "target_session_attrs",
+                }
+                query_dict = {k: v for k, v in query_dict.items() if k in valid_asyncpg_params}
                 driver = "postgresql+asyncpg"
 
             new_query = urlencode(query_dict)
