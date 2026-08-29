@@ -46426,3 +46426,16 @@ mapped_data={'indice': 2, 'module': 'Chassis', 'designation_commodity': 'Bracket
 2026-08-28 13:12:48,190 - app.main - INFO - Shutting down CMF Platform API
 2026-08-28 13:12:56,620 - app.main - INFO - Starting CMF Platform API
 2026-08-28 13:12:56,649 - app.main - INFO - Database tables verified/created (SQLite)
+2026-08-28 13:23:36,984 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 13:23:37,049 - app.main - WARNING - UnauthorizedException: Invalid or expired token
+2026-08-28 13:23:37,054 - app.main - INFO - GET /api/v1/notifications/unread-count -> 401
+2026-08-28 13:23:37,071 - app.main - INFO - POST /api/v1/auth/refresh
+2026-08-28 13:23:37,471 - app.main - INFO - POST /api/v1/auth/refresh -> 200
+2026-08-28 13:23:37,503 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-28 13:23:37,595 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-28 13:25:45,911 - app.main - INFO - Shutting down CMF Platform API
+2026-08-28 13:25:55,952 - app.main - INFO - Starting CMF Platform API
+2026-08-28 13:25:55,993 - app.main - INFO - Database tables verified/created (SQLite)
+2026-08-28 13:26:02,549 - app.main - INFO - Shutting down CMF Platform API
+2026-08-28 13:26:12,008 - app.main - INFO - Starting CMF Platform API
+2026-08-28 13:26:12,064 - app.main - INFO - Database tables verified/created (SQLite)

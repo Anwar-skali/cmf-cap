@@ -1,0 +1,6 @@
+backend/
+cmf.db
+*.db
+*.xlsm
+logs/
+.pytest_cache/

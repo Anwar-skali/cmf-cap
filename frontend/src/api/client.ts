@@ -83,7 +83,12 @@ class ApiClient {
   private isRefreshing = false;
 
   constructor(baseURL: string) {
-    this.baseURL = baseURL;
+    this.baseURL = baseURL.replace(/\/+$/, '');
+  }
+
+  private buildUrl(path: string): string {
+    const cleanPath = path.startsWith('/') ? path : `/${path}`;
+    return `${this.baseURL}${cleanPath}`;
   }
 
   private getToken(): string | null {
@@ -100,7 +105,7 @@ class ApiClient {
 
     this.isRefreshing = true;
     try {
-      const response = await fetch(`${this.baseURL}/auth/refresh`, {
+      const response = await fetch(this.buildUrl('/auth/refresh'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(toSnakeCase({ refreshToken })),
@@ -132,7 +137,7 @@ class ApiClient {
   private async request<T>(url: string, options: RequestOptions = {}): Promise<T> {
     const { body, params, ...rest } = options;
 
-    let fullUrl = `${this.baseURL}${url}`;
+    let fullUrl = this.buildUrl(url);
 
     if (params) {
       const searchParams = new URLSearchParams();
@@ -263,7 +268,7 @@ class ApiClient {
       return fd;
     };
 
-    let response = await fetch(`${this.baseURL}${url}`, {
+    let response = await fetch(this.buildUrl(url), {
       method: 'POST',
       headers: makeHeaders(),
       body: formData,
@@ -280,7 +285,7 @@ class ApiClient {
 
         if (refreshed) {
           // Rebuild FormData for the retry to avoid consumed stream issues
-          response = await fetch(`${this.baseURL}${url}`, {
+          response = await fetch(this.buildUrl(url), {
             method: 'POST',
             headers: makeHeaders(),
             body: rebuildFormData(),
