@@ -190,6 +190,19 @@ class ProjectService:
             "details": {"code": code, "name": data.name},
         })
 
+        if user_id:
+            try:
+                await self._uow.notifications.create({
+                    "user_id": user_id,
+                    "title": f"Project Created: {data.name}",
+                    "message": f"CMF project '{code}' has been initialized with workflow step {inner_data.get('workflow_step', 1)}.",
+                    "type": "success",
+                    "link": f"/projects/{project.id}",
+                    "is_read": False,
+                })
+            except Exception as notif_err:
+                pass
+
         await self._uow.commit()
 
         if self._cache is not None:

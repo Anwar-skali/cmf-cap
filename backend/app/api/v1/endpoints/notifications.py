@@ -26,13 +26,19 @@ async def list_notifications(
     unread_only: bool = Query(False),
     skip: int = Query(0, ge=0),
     limit: int = Query(20, ge=1, le=100),
+    page: int | None = Query(None, ge=1),
+    page_size: int | None = Query(None, ge=1, le=100),
+    pageSize: int | None = Query(None, ge=1, le=100),
     current_user: User = Depends(get_current_active_user),
     notification_service: NotificationService = Depends(get_notification_service),
 ) -> Any:
+    effective_limit = pageSize or page_size or limit
+    effective_skip = ((page - 1) * effective_limit) if page is not None else skip
+
     return await notification_service.get_notifications(
         user_id=current_user.id,
-        skip=skip,
-        limit=limit,
+        skip=effective_skip,
+        limit=effective_limit,
         unread_only=unread_only,
     )
 

@@ -1517,6 +1517,22 @@ class ImportEngineService:
                 }
             )
 
+            # Dispatch Notification to User
+            if user_id:
+                try:
+                    await uow.notifications.create(
+                        {
+                            "user_id": user_id,
+                            "title": f"Import Completed: {entity_type}",
+                            "message": f"Processed '{file_name}': {imported_count} imported, {updated_count} updated, {skipped_count} skipped.",
+                            "type": "success" if failed_count == 0 else "warning",
+                            "link": "/projects",
+                            "is_read": False,
+                        }
+                    )
+                except Exception as notif_err:
+                    logger.warning("Failed to create notification on import: %s", notif_err)
+
             await uow.commit()
             logger.info(
                 "[IMPORT DEBUG] Database transaction: Committed successfully (Imported: %d, Updated: %d, Skipped: %d, Failed: %d)",

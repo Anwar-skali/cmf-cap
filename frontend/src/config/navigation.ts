@@ -55,7 +55,7 @@ export const navGroups: NavGroup[] = [
   },
   {
     items: [
-      { label: 'Notifications', icon: Bell, path: '/notifications', badge: 3 },
+      { label: 'Notifications', icon: Bell, path: '/notifications' },
       { label: 'Admin', icon: Shield, path: '/admin', adminOnly: true },
     ],
   },

@@ -27,6 +27,9 @@ class NotificationListResponse(BaseModel):
     unread_count: int = 0
     skip: int = 0
     limit: int = 20
+    page: int = 1
+    page_size: int = 20
+    total_pages: int = 1
 
 
 class MarkAsReadRequest(BaseModel):

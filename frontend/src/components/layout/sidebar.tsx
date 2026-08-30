@@ -31,6 +31,7 @@ import {
 } from '@/components/ui/tooltip';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useLanguage } from '@/context/LanguageContext';
+import { useUnreadCountQuery } from '@/hooks/queries/useNotificationsQuery';
 
 interface SidebarNavItem {
   label: string;
@@ -50,6 +51,8 @@ export function Sidebar() {
   const { state } = useAuthStore();
   const { roleMeta, isAdmin } = usePermissions();
   const { t } = useLanguage();
+  const { data: unreadData } = useUnreadCountQuery();
+  const unreadCount = unreadData?.count ?? 0;
   const RoleIcon = roleMeta.icon;
 
   const navGroups: SidebarNavGroup[] = [
@@ -83,7 +86,12 @@ export function Sidebar() {
     },
     {
       items: [
-        { label: t('header.notifications', 'Notifications'), icon: Bell, path: '/notifications', badge: 3 },
+        {
+          label: t('header.notifications', 'Notifications'),
+          icon: Bell,
+          path: '/notifications',
+          badge: unreadCount > 0 ? unreadCount : undefined,
+        },
         { label: t('nav.admin', 'Admin'), icon: Shield, path: '/admin', adminOnly: true },
       ],
     },
