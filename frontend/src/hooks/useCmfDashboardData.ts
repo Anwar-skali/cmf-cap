@@ -103,14 +103,22 @@ export function useCmfDashboardData(): CmfDashboardData {
   const capacityGap = stats?.capacityGap ?? Math.max(0, totalCapacity - allocatedCapacity);
 
   // Projects & Use cases
-  const projectsOnTrack = stats?.projectsOnTrack ?? 0;
-  const projectsDelayed = stats?.delayedProjects ?? 0;
-  const projectsCompleted = stats?.completedProjects ?? 0;
+  const projectsOnTrack = stats?.projectsOnTrack ?? (stats as any)?.projects_on_track ?? 0;
+  const projectsDelayed = stats?.delayedProjects ?? (stats as any)?.delayed_projects ?? 0;
+  const projectsCompleted =
+    stats?.completedProjects ??
+    (stats as any)?.completed_projects ??
+    rawProjects.filter((p: any) => String(p.status).toLowerCase() === 'completed').length ??
+    0;
   const useCaseProjects = rawProjects.filter((p: any) => p.data?.use_case);
-  const projectUseCases = stats?.projectUseCases ?? (useCaseProjects.length > 0 ? useCaseProjects.length : totalProjects);
-  const delayedProjectUseCases = stats?.delayedProjectUseCases ?? (
-    rawProjects.filter((p: any) => (p.status === 'on_hold' || p.data?.status === 'delayed' || p.status === 'delayed') && p.data?.use_case).length || projectsDelayed
-  );
+  const projectUseCases =
+    stats?.projectUseCases ??
+    (stats as any)?.project_use_cases ??
+    (useCaseProjects.length > 0 ? useCaseProjects.length : totalProjects);
+  const delayedProjectUseCases =
+    stats?.delayedProjectUseCases ??
+    (stats as any)?.delayed_project_use_cases ??
+    (rawProjects.filter((p: any) => (p.status === 'on_hold' || p.data?.status === 'delayed' || p.status === 'delayed') && p.data?.use_case).length || projectsDelayed);
 
   // Risks & SQD
   const projectsAtRisk = stats?.openRisks ?? 0;
