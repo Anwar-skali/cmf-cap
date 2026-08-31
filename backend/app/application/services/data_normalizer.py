@@ -83,6 +83,9 @@ class DataNormalizer:
         if field_type in ("integer", "number"):
             return cls._normalize_numeric(raw_val, val_str, field_type)
 
+        elif field_type == "week" or spec.key in ("cat1_forecast_date_cw", "cat2_forecast_date", "cat3_forecast_date"):
+            return cls._normalize_week_or_cat_date(raw_val, val_str, spec)
+
         elif field_type == "date":
             return cls._normalize_date(raw_val, val_str, spec)
 
@@ -91,6 +94,90 @@ class DataNormalizer:
 
         else:  # string, text, textarea, etc.
             return cls._normalize_string(raw_val, val_str)
+
+    @classmethod
+    def _normalize_week_or_cat_date(
+        cls, raw_val: Any, val_str: str, spec: ImportColumnSpec
+    ) -> NormalizationResult:
+        # 1. If integer/number like 22, 29, 31, 202612:
+        if isinstance(raw_val, (int, float)) and not isinstance(raw_val, bool):
+            if raw_val >= 30000:
+                try:
+                    from datetime import timedelta
+                    excel_epoch = datetime(1899, 12, 30)
+                    d_val = (excel_epoch + timedelta(days=float(raw_val))).date()
+                    return NormalizationResult(
+                        original_value=raw_val,
+                        normalized_value=d_val,
+                        is_null=False,
+                        warning=None,
+                        was_normalized=True,
+                    )
+                except Exception:
+                    pass
+            # For calendar week / integer CW numbers (e.g. 18, 22, 29, 31):
+            return NormalizationResult(
+                original_value=raw_val,
+                normalized_value=int(raw_val),
+                is_null=False,
+                warning=None,
+                was_normalized=False,
+            )
+
+        # 2. Check string integer (e.g. "29", "22", "31")
+        if re.match(r"^\d{1,4}$", val_str):
+            int_val = int(val_str)
+            return NormalizationResult(
+                original_value=raw_val,
+                normalized_value=int_val,
+                is_null=False,
+                warning=None,
+                was_normalized=True,
+            )
+
+        # 3. Check week formats like "CW 22", "CW22", "W22", "2026-W18", "W18"
+        week_match = re.match(r"^(?:CW\s*|W\s*)(\d{1,2})$", val_str, re.IGNORECASE)
+        if week_match:
+            return NormalizationResult(
+                original_value=raw_val,
+                normalized_value=int(week_match.group(1)),
+                is_null=False,
+                warning=None,
+                was_normalized=True,
+            )
+
+        # 4. Also try date formats in case it's an actual date string:
+        date_formats = (
+            "%d/%m/%Y",
+            "%m/%d/%Y",
+            "%Y-%m-%d",
+            "%d-%m-%Y",
+            "%Y/%m/%d",
+            "%d.%m.%Y",
+            "%Y.%m.%d",
+        )
+        for fmt in date_formats:
+            try:
+                dt = datetime.strptime(val_str, fmt)
+                d_val = dt.date()
+                return NormalizationResult(
+                    original_value=raw_val,
+                    normalized_value=d_val,
+                    is_null=False,
+                    warning=None,
+                    was_normalized=True,
+                )
+            except ValueError:
+                continue
+
+        # 5. Otherwise return string
+        return NormalizationResult(
+            original_value=raw_val,
+            normalized_value=val_str,
+            is_null=False,
+            warning=None,
+            was_normalized=False,
+        )
 
     @classmethod
     def _normalize_numeric(

@@ -1967,10 +1967,25 @@ class ImportEngineService:
                     return matched_enum, None
                 allowed = ", ".join(spec.enum_values)
                 return None, f"Invalid value '{val_str}'. Allowed values: {allowed}"
-            return clean_val, None
+        elif field_type == "week" or spec.key in ("cat1_forecast_date_cw", "cat2_forecast_date", "cat3_forecast_date"):
+            if isinstance(val, (int, float)) and not isinstance(val, bool):
+                return int(val), None
+            if isinstance(val, (datetime, date)):
+                d_val = val.date() if isinstance(val, datetime) else val
+                return d_val.isoformat(), None
+            clean_s = str(val).strip()
+            if re.match(r"^\d+$", clean_s):
+                return int(clean_s), None
+            if clean_s:
+                return clean_s, None
+            return None, None
 
         elif field_type == "date":
             # For date types, if DataNormalizer returned a date, it was already handled above.
+            if isinstance(val, (int, float)) and not isinstance(val, bool):
+                return int(val), None
+            if isinstance(val, str) and re.match(r"^\d+$", val.strip()):
+                return int(val.strip()), None
             # If it's a string here, it failed date normalization.
             return None, f"Invalid date format for '{spec.label}'. Expected YYYY-MM-DD."
 
