@@ -362,6 +362,7 @@ export interface RiskDistributionSummary {
 }
 
 export interface DashboardStats {
+  totalCmf: number;
   totalProjects: number;
   activeProjects: number;
   completedProjects: number;

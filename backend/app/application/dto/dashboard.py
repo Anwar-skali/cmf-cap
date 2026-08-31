@@ -11,6 +11,7 @@ from app.application.dto.risks import RiskDistributionResponse
 
 
 class DashboardStatsResponse(BaseModel):
+    total_cmf: int = 0
     total_projects: int = 0
     active_projects: int = 0
     completed_projects: int = 0

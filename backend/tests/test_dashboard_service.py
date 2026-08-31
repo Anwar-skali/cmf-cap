@@ -7,10 +7,27 @@ from app.infrastructure.persistence.models.supplier import Supplier
 from app.infrastructure.persistence.models.risk import Risk
 from app.infrastructure.persistence.models.project_part import ProjectPart
 from app.infrastructure.persistence.models.capacity_assessment import CapacityAssessment
+from app.infrastructure.persistence.models.template import Template
 
 
 @pytest.mark.asyncio
 async def test_dashboard_service_computes_live_stats(unit_of_work):
+    # 0. Seed CMF Structure Templates (e.g. K9, K0)
+    t1 = Template(
+        code="K9",
+        name="CMF K9 Project Template",
+        version="2.0",
+        status="PUBLISHED",
+    )
+    t2 = Template(
+        code="K0",
+        name="CMF K0 Project Template",
+        version="1.0",
+        status="PUBLISHED",
+    )
+    unit_of_work._session.add_all([t1, t2])
+    await unit_of_work.commit()
+
     # 1. Seed Projects
     p1 = Project(
         code="PRJ-001",
@@ -19,6 +36,7 @@ async def test_dashboard_service_computes_live_stats(unit_of_work):
         client_name="Stellantis",
         end_date=datetime.now(timezone.utc) + timedelta(days=30),
         data={"use_case": "Standard Pack"},
+        template_id=t1.id,
     )
     p2 = Project(
         code="PRJ-002",
@@ -27,12 +45,14 @@ async def test_dashboard_service_computes_live_stats(unit_of_work):
         client_name="Renault Group",
         end_date=datetime.now(timezone.utc) - timedelta(days=5),
         data={"use_case": "HV Box", "status": "delayed"},
+        template_id=t2.id,
     )
     p3 = Project(
         code="PRJ-003",
         name="Motor Core Gamma",
         status=ProjectStatus.COMPLETED,
         client_name="Stellantis",
+        template_id=t1.id,
     )
     unit_of_work._session.add_all([p1, p2, p3])
     await unit_of_work.commit()
@@ -93,6 +113,10 @@ async def test_dashboard_service_computes_live_stats(unit_of_work):
     service = DashboardService(unit_of_work)
     stats = await service.get_dashboard_stats()
 
+    # Verify Total CMF structures (K9, K0 = 2)
+    assert stats.total_cmf == 2
+
+    # Verify Projects & Use Cases
     assert stats.total_projects == 3
     assert stats.active_projects == 2
     assert stats.completed_projects == 1
@@ -101,6 +125,7 @@ async def test_dashboard_service_computes_live_stats(unit_of_work):
     assert stats.project_use_cases == 2
     assert stats.delayed_project_use_cases == 1
 
+    # Verify Suppliers & Risks
     assert stats.total_suppliers == 1
     assert stats.total_risks == 2
     assert stats.open_risks == 2
@@ -108,10 +133,12 @@ async def test_dashboard_service_computes_live_stats(unit_of_work):
     assert stats.critical_quality_issues == 1
     assert stats.supplier_quality_status in ("YELLOW", "RED")
 
+    # Verify Capacity
     assert stats.total_capacity == 50000.0
     assert stats.allocated_capacity == 40000.0
     assert stats.average_utilization_pct == 80.0
 
+    # Verify Customer Breakdown
     assert len(stats.projects_by_customer) >= 2
     assert stats.projects_by_customer[0]["customer"] == "Stellantis"
     assert stats.projects_by_customer[0]["count"] == 2

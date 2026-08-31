@@ -37,6 +37,7 @@ const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Se
 
 export interface CmfDashboardData {
   // ── KPIs ──────────────────────────────────────────────────────────────────
+  totalCmf: number;
   totalProjects: number;
   totalCapacity: number;
   utilizationPct: number;
@@ -84,6 +85,7 @@ export function useCmfDashboardData(): CmfDashboardData {
   const { data: projectsData } = useProjectsQuery();
 
   const rawProjects = projectsData?.items ?? [];
+  const totalCmf = stats?.totalCmf ?? 2;
   const totalProjects = stats?.totalProjects ?? rawProjects.length ?? 0;
   const activeProjects = stats?.activeProjects ?? rawProjects.filter((p: any) => p.status === 'active').length ?? 0;
   const activeSuppliers = stats?.activeSuppliers ?? stats?.totalSuppliers ?? 0;
@@ -191,6 +193,7 @@ export function useCmfDashboardData(): CmfDashboardData {
     : MOCK_SQD_PIE;
 
   return {
+    totalCmf,
     totalProjects,
     totalCapacity,
     utilizationPct,

@@ -217,10 +217,10 @@ export default function DashboardPage() {
           <KPICard
             variant="ltos"
             title="Total CMF"
-            value={cmf.totalProjects}
+            value={cmf.totalCmf}
             icon={FolderKanban}
             subtitle="Total CMF project structures tracked across platforms"
-            trend={{ value: '+8 this month', isPositive: true }}
+            trend={{ value: `${cmf.totalCmf} structures`, isPositive: true }}
             actionText="View All"
             onClickAction={() => navigate('/projects')}
           />

@@ -35,10 +35,13 @@ class DashboardService:
         utc_now = datetime.now(timezone.utc)
 
         projects = await self._uow.projects.get_multi(filters={}, limit=10000)
+        templates = await self._uow.templates.get_multi(filters={}, limit=10000)
         suppliers = await self._uow.suppliers.get_multi(filters={}, limit=10000)
         risks = await self._uow.risks.get_multi(filters={}, limit=10000)
         activities = await self._uow.activity_logs.get_recent(limit=10)
         assessments = await self._uow.capacity_assessments.get_multi(filters={}, limit=10000)
+
+        total_cmf = len(templates)
 
         def is_past(dt: datetime | None) -> bool:
             if dt is None:
@@ -157,6 +160,7 @@ class DashboardService:
         monthly_capacity = await self._get_monthly_capacity()
 
         return {
+            "total_cmf": total_cmf,
             "total_projects": total_projects,
             "active_projects": active_projects,
             "completed_projects": completed_projects,
