@@ -40,8 +40,15 @@ class DashboardService:
         risks = await self._uow.risks.get_multi(filters={}, limit=10000)
         activities = await self._uow.activity_logs.get_recent(limit=10)
         assessments = await self._uow.capacity_assessments.get_multi(filters={}, limit=10000)
+        parts = await self._uow.project_parts.get_multi(filters={}, limit=10000)
 
         total_cmf = len(templates)
+        total_parts = len(parts) if parts else len(projects)
+        active_parts = (
+            sum(1 for pt in parts if str(getattr(pt, 'status', 'active') or 'active').lower() in ('active', 'in_progress', 'valid'))
+            if parts
+            else len(projects)
+        )
 
         def is_past(dt: datetime | None) -> bool:
             if dt is None:
@@ -180,6 +187,8 @@ class DashboardService:
             "projects_on_track": projects_on_track,
             "project_use_cases": project_use_cases,
             "delayed_project_use_cases": delayed_project_use_cases,
+            "total_parts": total_parts,
+            "active_parts": active_parts,
             "total_suppliers": total_suppliers,
             "active_suppliers": active_suppliers,
             "total_risks": total_risks,

@@ -19,6 +19,8 @@ class DashboardStatsResponse(BaseModel):
     projects_on_track: int = 0
     project_use_cases: int = 0
     delayed_project_use_cases: int = 0
+    total_parts: int = 0
+    active_parts: int = 0
     total_suppliers: int = 0
     active_suppliers: int = 0
     total_risks: int = 0

@@ -27,6 +27,7 @@ import {
   Target,
   TrendingUp,
   Layers,
+  Package,
 } from 'lucide-react';
 import {
   BarChart,
@@ -473,16 +474,16 @@ export default function DashboardPage() {
 
           <KPICard
             variant="ltos"
-            title="Projects On Track"
-            value={cmf.projectsOnTrack}
-            icon={CheckCircle2}
-            subtitle="Active project use cases progressing on schedule"
+            title="Active Parts"
+            value={cmf.activeParts}
+            icon={Package}
+            subtitle="Total active parts tracked across CMF structures"
             trend={{
-              value: cmf.totalProjects > 0 ? `${Math.round((cmf.projectsOnTrack / cmf.totalProjects) * 100)}% on schedule` : `${cmf.projectsOnTrack} on track`,
+              value: cmf.totalParts > 0 ? `${cmf.activeParts} of ${cmf.totalParts} active` : `${cmf.activeParts} active parts`,
               isPositive: true,
             }}
-            actionText="View Projects"
-            onClickAction={() => navigate('/projects')}
+            actionText="View Parts"
+            onClickAction={() => navigate('/parts')}
           />
 
           <KPICard

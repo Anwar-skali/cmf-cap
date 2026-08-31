@@ -7,6 +7,7 @@
 
 import { useDashboardStatsQuery } from '@/hooks/queries/useDashboardQuery';
 import { useProjectsQuery } from '@/hooks/queries/useProjectsQuery';
+import { usePartsQuery } from '@/hooks/queries/usePartsQuery';
 
 // ─── ZERO / FALLBACK CONSTANTS FOR EMPTY / DEMO DB STATES ───────────────────
 export const MOCK_CAPACITY_TREND: Array<{ month: string; available: number; allocated: number; used: number }> = [
@@ -59,6 +60,8 @@ export interface CmfDashboardData {
   projectsCompleted: number;
   projectUseCases: number;
   delayedProjectUseCases: number;
+  totalParts: number;
+  activeParts: number;
 
   // ── SQD Overview ─────────────────────────────────────────────────────────
   openQualityIssues: number;
@@ -141,6 +144,19 @@ export function useCmfDashboardData(): CmfDashboardData {
     stats?.delayedProjectUseCases ??
     (stats as any)?.delayed_project_use_cases ??
     (rawProjects.filter((p: any) => (p.status === 'on_hold' || p.data?.status === 'delayed' || p.status === 'delayed') && p.data?.use_case).length || projectsDelayed);
+
+  const { data: partsData } = usePartsQuery({ pageSize: 1000 });
+  const rawParts = partsData?.items ?? [];
+  const totalParts =
+    stats?.totalParts ??
+    (stats as any)?.total_parts ??
+    (rawParts.length > 0 ? (partsData?.total ?? rawParts.length) : (useCaseProjects.length > 0 ? useCaseProjects.length : totalProjects));
+  const activeParts =
+    stats?.activeParts ??
+    (stats as any)?.active_parts ??
+    (rawParts.length > 0
+      ? rawParts.filter((p: any) => (p.status || 'active').toLowerCase() !== 'obsolete' && (p.status || 'active').toLowerCase() !== 'inactive').length
+      : totalParts);
 
   // Risks & SQD
   const projectsAtRisk = stats?.openRisks ?? 0;
@@ -245,6 +261,8 @@ export function useCmfDashboardData(): CmfDashboardData {
     projectsCompleted,
     projectUseCases,
     delayedProjectUseCases,
+    totalParts,
+    activeParts,
 
     openQualityIssues,
     criticalQualityIssues,
