@@ -116,8 +116,17 @@ export function useCmfDashboardData(): CmfDashboardData {
   const capacityGap = stats?.capacityGap ?? (stats as any)?.capacity_gap ?? Math.max(0, totalCapacity - allocatedCapacity);
 
   // Projects & Use cases
-  const projectsOnTrack = stats?.projectsOnTrack ?? (stats as any)?.projects_on_track ?? 0;
   const projectsDelayed = stats?.delayedProjects ?? (stats as any)?.delayed_projects ?? 0;
+  const rawOnTrack = rawProjects.filter((p: any) => {
+    const s = String(p.status || '').toLowerCase().trim();
+    const ds = String(p.data?.status || '').toLowerCase().trim();
+    const isDelayed = s === 'delayed' || ds === 'delayed' || s === 'on_hold';
+    return !isDelayed && !isCompleted(p);
+  }).length;
+  const projectsOnTrack =
+    stats?.projectsOnTrack ??
+    (stats as any)?.projects_on_track ??
+    (rawOnTrack > 0 ? rawOnTrack : Math.max(0, totalProjects - projectsDelayed));
   const projectsCompleted =
     stats?.completedProjects ??
     (stats as any)?.completed_projects ??

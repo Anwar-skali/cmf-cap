@@ -473,15 +473,15 @@ export default function DashboardPage() {
 
           <KPICard
             variant="ltos"
-            title="Completed"
-            value={cmf.projectsCompleted}
-            icon={Target}
-            subtitle="Successfully closed & validated CMF projects"
+            title="Projects On Track"
+            value={cmf.projectsOnTrack}
+            icon={CheckCircle2}
+            subtitle="Active project use cases progressing on schedule"
             trend={{
-              value: cmf.totalProjects > 0 ? `${Math.round((cmf.projectsCompleted / cmf.totalProjects) * 100)}% complete` : `${cmf.projectsCompleted} closed`,
-              isPositive: cmf.projectsCompleted > 0,
+              value: cmf.totalProjects > 0 ? `${Math.round((cmf.projectsOnTrack / cmf.totalProjects) * 100)}% on schedule` : `${cmf.projectsOnTrack} on track`,
+              isPositive: true,
             }}
-            actionText="Archive"
+            actionText="View Projects"
             onClickAction={() => navigate('/projects')}
           />
 
