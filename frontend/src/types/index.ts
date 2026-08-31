@@ -347,16 +347,52 @@ export interface ActivityLog {
   createdAt: string;
 }
 
+export interface MonthlyCapacity {
+  month: number;
+  year: number;
+  totalCapacity: number;
+  utilized: number;
+  rate: number;
+}
+
+export interface RiskDistributionSummary {
+  bySeverity: Record<string, number>;
+  byType: Record<string, number>;
+  byStatus: Record<string, number>;
+}
+
 export interface DashboardStats {
   totalProjects: number;
   activeProjects: number;
+  completedProjects: number;
+  delayedProjects: number;
+  projectsOnTrack: number;
+  projectUseCases: number;
+  delayedProjectUseCases: number;
   totalSuppliers: number;
   activeSuppliers: number;
-  totalParts: number;
+  totalRisks: number;
   openRisks: number;
   criticalRisks: number;
-  pendingAssessments: number;
+  mitigatedRisks: number;
+  openQualityIssues: number;
+  criticalQualityIssues: number;
+  openActions: number;
+  supplierQualityStatus: string;
+  totalCapacity: number;
+  allocatedCapacity: number;
+  usedCapacity: number;
+  remainingCapacity: number;
+  capacityGap: number;
+  averageUtilizationPct: number;
+  capacityCoveragePercentage: number;
+  projectsByCustomer: Array<{ customer: string; count: number }>;
+  upcomingMilestones: number;
   recentActivities: ActivityLog[];
+  monthlyCapacity: MonthlyCapacity[];
+  riskDistribution: RiskDistributionSummary;
+  projectStatusDistribution: Record<string, number>;
+  upcomingDeadlines?: Project[];
 }
 
 export interface CapacityCoverage {
@@ -366,14 +402,6 @@ export interface CapacityCoverage {
   averageScore: number;
   lastAssessmentDate?: string;
   status: CapacityStatus;
-}
-
-export interface MonthlyCapacity {
-  month: string;
-  year: number;
-  planned: number;
-  completed: number;
-  failed: number;
 }
 
 export interface RiskDistribution {

@@ -32,33 +32,102 @@ class DashboardService:
         return response
 
     async def _compute_stats(self) -> dict[str, Any]:
+        utc_now = datetime.now(timezone.utc)
+
         projects = await self._uow.projects.get_multi(filters={}, limit=10000)
         suppliers = await self._uow.suppliers.get_multi(filters={}, limit=10000)
         risks = await self._uow.risks.get_multi(filters={}, limit=10000)
         activities = await self._uow.activity_logs.get_recent(limit=10)
+        assessments = await self._uow.capacity_assessments.get_multi(filters={}, limit=10000)
+
+        def is_past(dt: datetime | None) -> bool:
+            if dt is None:
+                return False
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+            return dt < utc_now
 
         total_projects = len(projects)
         active_projects = sum(1 for p in projects if p.status == ProjectStatus.ACTIVE)
         completed_projects = sum(1 for p in projects if p.status == ProjectStatus.COMPLETED)
-        delayed_projects = len([
-            p for p in projects
+        projects_on_track = sum(
+            1 for p in projects
+            if p.status == ProjectStatus.ACTIVE and (p.end_date is None or not is_past(p.end_date))
+        )
+        delayed_projects = sum(
+            1 for p in projects
             if p.status in (ProjectStatus.ACTIVE, ProjectStatus.DRAFT, ProjectStatus.ON_HOLD)
-            and p.end_date is not None
-            and p.end_date < datetime.utcnow()
-        ])
+            and is_past(p.end_date)
+        )
+
+        use_case_projects = [
+            p for p in projects
+            if isinstance(p.data, dict) and p.data.get("use_case")
+        ]
+        project_use_cases = len(use_case_projects) if use_case_projects else total_projects
+        delayed_project_use_cases = sum(
+            1 for p in (use_case_projects if use_case_projects else projects)
+            if p.status in (ProjectStatus.ON_HOLD, "delayed")
+            or (isinstance(p.data, dict) and p.data.get("status") == "delayed")
+            or (is_past(p.end_date) and p.status != ProjectStatus.COMPLETED)
+        )
 
         total_suppliers = len(suppliers)
-        active_suppliers = sum(1 for s in suppliers if getattr(s, 'status', None) == 'active')
+        active_suppliers = sum(1 for s in suppliers if getattr(s, 'status', None) == 'active') or total_suppliers
 
         total_risks = len(risks)
         open_risks = sum(1 for r in risks if r.status == 'open')
-        critical_risks = sum(1 for r in risks if r.severity == RiskSeverity.CRITICAL)
-        mitigated_risks = sum(1 for r in risks if r.status == 'mitigated')
+        critical_risks = sum(
+            1 for r in risks
+            if r.severity == RiskSeverity.CRITICAL or str(r.severity).lower() == 'critical'
+        )
+        mitigated_risks = sum(1 for r in risks if r.status in ('mitigated', 'closed'))
+
+        open_quality_issues = sum(
+            1 for r in risks
+            if r.status == 'open' and str(getattr(r, 'risk_type', '') or '').lower() == 'quality'
+        )
+        critical_quality_issues = sum(
+            1 for r in risks
+            if (r.severity == RiskSeverity.CRITICAL or str(r.severity).lower() == 'critical')
+            and str(getattr(r, 'risk_type', '') or '').lower() == 'quality'
+        )
+        open_actions = open_risks
+
+        if critical_risks > 2 or critical_quality_issues > 1:
+            supplier_quality_status = "RED"
+        elif critical_risks > 0 or open_quality_issues > 3:
+            supplier_quality_status = "YELLOW"
+        else:
+            supplier_quality_status = "GREEN"
+
+        # Capacity metrics
+        total_cap = sum(float(a.maximum_capacity) for a in assessments if a.maximum_capacity)
+        allocated_cap = sum(float(a.current_capacity) for a in assessments if a.current_capacity)
+        used_cap = allocated_cap
+        remaining_cap = max(0.0, total_cap - used_cap)
+        capacity_gap = max(0.0, total_cap - allocated_cap)
+        avg_util_pct = round((allocated_cap / total_cap * 100), 2) if total_cap > 0 else 0.0
 
         capacity_stats = await self._uow.capacity_assessments.get_coverage_stats()
-        total_cap = capacity_stats.get("total", 0)
-        assessed_cap = capacity_stats.get("assessed", 0) + capacity_stats.get("confirmed", 0)
-        coverage_pct = round((assessed_cap / total_cap * 100), 2) if total_cap > 0 else 0.0
+        total_assessed = capacity_stats.get("total", 0)
+        assessed_cap_count = capacity_stats.get("assessed", 0) + capacity_stats.get("confirmed", 0)
+        coverage_pct = round((assessed_cap_count / total_assessed * 100), 2) if total_assessed > 0 else 0.0
+
+        # Customer breakdown
+        customer_counts: dict[str, int] = {}
+        for p in projects:
+            cname = (
+                p.client_name
+                or (p.data.get("customer") if isinstance(p.data, dict) else None)
+                or (p.data.get("client_name") if isinstance(p.data, dict) else None)
+                or "Other"
+            )
+            customer_counts[cname] = customer_counts.get(cname, 0) + 1
+        projects_by_customer = [
+            {"customer": k, "count": v}
+            for k, v in sorted(customer_counts.items(), key=lambda x: x[1], reverse=True)
+        ]
 
         by_severity: dict[str, int] = {}
         by_type: dict[str, int] = {}
@@ -75,15 +144,15 @@ class DashboardService:
             status_val = p.status.value if hasattr(p.status, 'value') else str(p.status)
             project_status_dist[status_val] = project_status_dist.get(status_val, 0) + 1
 
-        utc_now = datetime.utcnow()
         upcoming = [
             p for p in projects
             if p.status == ProjectStatus.ACTIVE
             and p.end_date is not None
-            and p.end_date > utc_now
+            and not is_past(p.end_date)
         ]
         upcoming.sort(key=lambda p: p.end_date if p.end_date else utc_now)
-        upcoming = upcoming[:5]
+        upcoming_deadlines = upcoming[:5]
+        upcoming_milestones = len(upcoming)
 
         monthly_capacity = await self._get_monthly_capacity()
 
@@ -92,13 +161,28 @@ class DashboardService:
             "active_projects": active_projects,
             "completed_projects": completed_projects,
             "delayed_projects": delayed_projects,
+            "projects_on_track": projects_on_track,
+            "project_use_cases": project_use_cases,
+            "delayed_project_use_cases": delayed_project_use_cases,
             "total_suppliers": total_suppliers,
             "active_suppliers": active_suppliers,
             "total_risks": total_risks,
             "open_risks": open_risks,
             "critical_risks": critical_risks,
             "mitigated_risks": mitigated_risks,
+            "open_quality_issues": open_quality_issues,
+            "critical_quality_issues": critical_quality_issues,
+            "open_actions": open_actions,
+            "supplier_quality_status": supplier_quality_status,
+            "total_capacity": total_cap,
+            "allocated_capacity": allocated_cap,
+            "used_capacity": used_cap,
+            "remaining_capacity": remaining_cap,
+            "capacity_gap": capacity_gap,
+            "average_utilization_pct": avg_util_pct,
             "capacity_coverage_percentage": coverage_pct,
+            "projects_by_customer": projects_by_customer,
+            "upcoming_milestones": upcoming_milestones,
             "recent_activities": [self._activity_to_response(a) for a in activities],
             "monthly_capacity": monthly_capacity,
             "risk_distribution": RiskDistributionResponse(
@@ -107,13 +191,14 @@ class DashboardService:
                 by_status=by_status,
             ),
             "project_status_distribution": project_status_dist,
-            "upcoming_deadlines": [self._project_to_response(p) for p in upcoming],
+            "upcoming_deadlines": [self._project_to_response(p) for p in upcoming_deadlines],
         }
 
     async def _get_monthly_capacity(self) -> list[MonthlyCapacityResponse]:
         now = datetime.now(timezone.utc)
         results = []
-        for i in range(6):
+        # Return last 6 months in chronological order (from 5 months ago to current month)
+        for i in range(5, -1, -1):
             m = now.month - i
             y = now.year
             while m < 1:

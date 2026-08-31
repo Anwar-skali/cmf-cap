@@ -8,12 +8,7 @@ import { ErrorState } from '@/components/ui/error-state';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import {
-  useCmfDashboardData,
-  MOCK_CAPACITY_TREND,
-  MOCK_SQD_PIE,
-  MOCK_PROJECT_STATUS_BAR,
-} from '@/hooks/useCmfDashboardData';
+import { useCmfDashboardData } from '@/hooks/useCmfDashboardData';
 import {
   FolderKanban,
   Gauge,
@@ -30,8 +25,8 @@ import {
   Zap,
   Activity,
   Target,
-  Calendar,
   TrendingUp,
+  Layers,
 } from 'lucide-react';
 import {
   BarChart,
@@ -206,7 +201,7 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* ── 6 CMF Top-Level KPI Cards ────────────────────────────────────── */}
+      {/* ── 6 CMF Top-Level KPI Cards (Executive Overview) ──────────────── */}
       <div className="space-y-4">
         <div className="flex items-center justify-between px-1">
           <h2 className="text-lg font-bold tracking-tight text-foreground flex items-center gap-2">
@@ -221,10 +216,10 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
           <KPICard
             variant="ltos"
-            title="Total Projects"
+            title="Total CMF"
             value={cmf.totalProjects}
             icon={FolderKanban}
-            subtitle="All active CMF projects tracked across structures"
+            subtitle="Total CMF project structures tracked across platforms"
             trend={{ value: '+8 this month', isPositive: true }}
             actionText="View All"
             onClickAction={() => navigate('/projects')}
@@ -287,14 +282,13 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* ── Four CMF Section Panels ──────────────────────────────────────── */}
-      <div className="space-y-4 pt-2">
+      {/* ── CMF Section Panels ───────────────────────────────────────────── */}
+      <div className="space-y-6 pt-2">
         <div className="flex items-center justify-between border-b border-border pb-3 px-1">
           <h2 className="text-lg font-bold tracking-tight text-foreground flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-blue-600" />
             <span>CMF Analytics</span>
           </h2>
-
         </div>
 
         {/* Row 1: Capacity Overview + Project Status */}
@@ -335,7 +329,7 @@ export default function DashboardPage() {
             {/* Monthly trend chart */}
             <div className="h-48 w-full pt-2">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={MOCK_CAPACITY_TREND}>
+                <LineChart data={cmf.capacityTrend}>
                   <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
                   <XAxis dataKey="month" stroke="#888888" fontSize={11} />
                   <YAxis stroke="#888888" fontSize={10} tickFormatter={(v) => `${(v / 1000).toFixed(0)}K`} />
@@ -360,13 +354,13 @@ export default function DashboardPage() {
             </div>
             <div className="h-56 w-full pt-1">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={MOCK_PROJECT_STATUS_BAR} layout="vertical" margin={{ left: 10 }}>
+                <BarChart data={cmf.projectStatusBar} layout="vertical" margin={{ left: 10 }}>
                   <CartesianGrid strokeDasharray="3 3" opacity={0.2} horizontal={false} />
                   <XAxis type="number" stroke="#888888" fontSize={11} />
                   <YAxis type="category" dataKey="name" stroke="#888888" fontSize={11} width={70} />
                   <Tooltip />
                   <Bar dataKey="count" radius={[0, 6, 6, 0]} name="Projects">
-                    {MOCK_PROJECT_STATUS_BAR.map((entry, index) => {
+                    {cmf.projectStatusBar.map((entry, index) => {
                       const colors = ['#0066CC', '#10b981', '#ef4444', '#f59e0b', '#94a3b8'];
                       return <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />;
                     })}
@@ -377,89 +371,54 @@ export default function DashboardPage() {
           </SectionCard>
         </div>
 
-        {/* Row 2: SQD Overview + Buyer/Project Overview */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
+        {/* Row 2: SQD Overview */}
+        <div className="w-full">
           {/* ── SQD Overview ──────────────────────────────────────────── */}
           <SectionCard title="SQD Overview" subtitle="Supplier Quality & Delivery performance" icon={ShieldCheck}>
-            <div className="grid grid-cols-2 gap-3 mb-2">
-              {[
-                { label: 'Open Quality Issues',    value: cmf.openQualityIssues,    icon: AlertTriangle, color: 'text-amber-600' },
-                { label: 'Critical Issues',        value: cmf.criticalQualityIssues, icon: AlertTriangle, color: 'text-rose-600' },
-                { label: 'Open Actions',           value: cmf.openActions,           icon: CheckCircle2,  color: 'text-blue-600' },
-                { label: 'Supplier Quality Status',value: cmf.supplierQualityStatus, icon: ShieldCheck,   color: cmf.supplierQualityStatus === 'GREEN' ? 'text-emerald-600' : cmf.supplierQualityStatus === 'YELLOW' ? 'text-amber-600' : 'text-rose-600' },
-              ].map(({ label, value, icon: RowIcon, color }) => (
-                <div key={label} className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-3 space-y-1 flex flex-col">
-                  <div className={`flex items-center gap-1.5 ${color}`}>
-                    <RowIcon className="h-3.5 w-3.5" />
-                    <p className="text-[11px] font-bold">{label}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  { label: 'Open Quality Issues',    value: cmf.openQualityIssues,    icon: AlertTriangle, color: 'text-amber-600' },
+                  { label: 'Critical Issues',        value: cmf.criticalQualityIssues, icon: AlertTriangle, color: 'text-rose-600' },
+                  { label: 'Open Actions',           value: cmf.openActions,           icon: CheckCircle2,  color: 'text-blue-600' },
+                  { label: 'Supplier Quality Status',value: cmf.supplierQualityStatus, icon: ShieldCheck,   color: cmf.supplierQualityStatus === 'GREEN' ? 'text-emerald-600' : cmf.supplierQualityStatus === 'YELLOW' ? 'text-amber-600' : 'text-rose-600' },
+                ].map(({ label, value, icon: RowIcon, color }) => (
+                  <div key={label} className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-3 space-y-1 flex flex-col">
+                    <div className={`flex items-center gap-1.5 ${color}`}>
+                      <RowIcon className="h-3.5 w-3.5" />
+                      <p className="text-[11px] font-bold">{label}</p>
+                    </div>
+                    <p className={`text-xl font-extrabold ${color}`}>{value}</p>
                   </div>
-                  <p className={`text-xl font-extrabold ${color}`}>{value}</p>
-                </div>
-              ))}
-            </div>
-            <div className="h-52 w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={MOCK_SQD_PIE}
-                    dataKey="value"
-                    nameKey="name"
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={80}
-                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                  >
-                    {MOCK_SQD_PIE.map((_, index) => (
-                      <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                  <Legend fontSize={11} />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-          </SectionCard>
-
-          {/* ── Buyer / Project Overview ──────────────────────────────── */}
-          <SectionCard title="Buyer / Project Overview" subtitle="Project distribution by customer & buyer activity" icon={BarChart3}>
-            <div className="space-y-1 mb-3">
-              <StatRow label="Active Projects"       value={cmf.activeProjects}     color="text-blue-600" />
-              <StatRow label="Upcoming Milestones"   value={cmf.upcomingMilestones} color="text-amber-600" />
-              <StatRow label="Projects at Risk"      value={cmf.projectsAtRisk}     color="text-rose-600" />
-            </div>
-            <h4 className="text-xs font-extrabold text-muted-foreground uppercase tracking-wider mb-2">Projects by Customer</h4>
-            <div className="h-52 w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={cmf.projectsByCustomer} margin={{ left: -10 }}>
-                  <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
-                  <XAxis dataKey="customer" stroke="#888888" fontSize={10} tick={{ dy: 4 }} />
-                  <YAxis stroke="#888888" fontSize={11} />
-                  <Tooltip />
-                  <Bar dataKey="count" fill="#0066CC" radius={[6, 6, 0, 0]} name="Projects">
-                    {cmf.projectsByCustomer.map((_, index) => {
-                      const shades = ['#0066CC', '#0052A3', '#3385d6', '#1a73e8', '#64a8f0'];
-                      return <Cell key={`cell-${index}`} fill={shades[index % shades.length]} />;
-                    })}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-            <div className="pt-2 flex flex-wrap gap-2">
-              {cmf.projectsByCustomer.map(({ customer, count }) => (
-                <span
-                  key={customer}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-[10px] font-bold px-2.5 py-0.5"
-                >
-                  <span className="font-black">{count}</span> {customer}
-                </span>
-              ))}
+                ))}
+              </div>
+              <div className="h-52 w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={cmf.sqdPie}
+                      dataKey="value"
+                      nameKey="name"
+                      cx="50%"
+                      cy="50%"
+                      outerRadius={80}
+                      label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                    >
+                      {cmf.sqdPie.map((_, index) => (
+                        <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip />
+                    <Legend fontSize={11} />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
             </div>
           </SectionCard>
         </div>
       </div>
 
-      {/* ── Secondary Executive KPI Row ───────────────────────────────────── */}
+      {/* ── Operational Indicators ────────────────────────────────────────── */}
       <div className="space-y-4 pt-2">
         <div className="flex items-center justify-between px-1">
           <h2 className="text-lg font-bold tracking-tight text-foreground flex items-center gap-2">
@@ -468,25 +427,25 @@ export default function DashboardPage() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
           <KPICard
             variant="ltos"
-            title="On Track Projects"
-            value={cmf.projectsOnTrack}
-            icon={CheckCircle2}
-            subtitle="Projects meeting schedule & quality targets"
-            trend={{ value: 'On schedule', isPositive: true }}
+            title="Project Use Cases"
+            value={cmf.projectUseCases}
+            icon={Layers}
+            subtitle="Total project use cases defined across CMF structures"
+            trend={{ value: 'Active', isPositive: true }}
             actionText="View Projects"
             onClickAction={() => navigate('/projects')}
           />
 
           <KPICard
             variant="ltos"
-            title="Delayed Projects"
-            value={cmf.projectsDelayed}
+            title="Delayed Project Use Cases"
+            value={cmf.delayedProjectUseCases}
             icon={Clock}
-            subtitle="Projects with schedule delays or overruns"
-            trend={{ value: cmf.projectsDelayed > 0 ? `${cmf.projectsDelayed} delayed` : 'None', isPositive: cmf.projectsDelayed === 0 }}
+            subtitle="Project use cases with schedule delays or overruns"
+            trend={{ value: cmf.delayedProjectUseCases > 0 ? `${cmf.delayedProjectUseCases} delayed` : 'None', isPositive: cmf.delayedProjectUseCases === 0 }}
             actionText="Review"
             onClickAction={() => navigate('/projects')}
           />
@@ -522,17 +481,6 @@ export default function DashboardPage() {
             trend={{ value: 'In progress', isPositive: false }}
             actionText="View"
             onClickAction={() => navigate('/risks')}
-          />
-
-          <KPICard
-            variant="ltos"
-            title="Upcoming Milestones"
-            value={cmf.upcomingMilestones}
-            icon={Calendar}
-            subtitle="Key program gate reviews due this month"
-            trend={{ value: 'This month', isPositive: true }}
-            actionText="Calendar"
-            onClickAction={() => navigate('/projects')}
           />
 
           <KPICard
