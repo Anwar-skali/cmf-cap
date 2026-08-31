@@ -14,6 +14,7 @@ from openpyxl.utils import get_column_letter
 from app.domain.enums import ActivityAction
 from app.domain.import_schema import ENTITY_IMPORT_SCHEMAS, EntityImportSchema, ImportColumnSpec
 from app.application.services.data_normalizer import DataNormalizer, NormalizationResult
+from app.application.services.header_normalizer import normalize_header
 from app.infrastructure.persistence.unit_of_work import UnitOfWork
 import logging
 
