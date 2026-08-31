@@ -200,33 +200,41 @@ export const FieldRenderer: React.FC<FieldRendererProps> = ({
           </div>
         );
 
-      case 'date':
+      case 'date': {
+        const dateStr = value !== undefined && value !== null ? String(value).split('T')[0] : '';
+        const isIsoDate = /^\d{4}-\d{2}-\d{2}$/.test(dateStr);
         return (
           <div className="relative">
             <input
-              type="date"
+              type={isIsoDate ? 'date' : 'text'}
               id={field.internalName}
-              value={value ? String(value).split('T')[0] : ''}
+              value={dateStr}
               onChange={(e) => onChange(e.target.value)}
               disabled={!isEditable}
+              placeholder={field.placeholder || 'YYYY-MM-DD (e.g. 2026-08-20 or 29)'}
               className={baseInputClass}
             />
           </div>
         );
+      }
 
-      case 'week':
+      case 'week': {
+        const weekStr = value !== undefined && value !== null ? String(value) : '';
+        const isIsoWeek = /^\d{4}-W\d{2}$/.test(weekStr);
         return (
           <div className="relative">
             <input
-              type="week"
+              type={isIsoWeek ? 'week' : 'text'}
               id={field.internalName}
-              value={value ?? ''}
+              value={weekStr}
               onChange={(e) => onChange(e.target.value)}
               disabled={!isEditable}
+              placeholder={field.placeholder || 'e.g. 29, CW 29, or 2026-W29'}
               className={baseInputClass}
             />
           </div>
         );
+      }
 
       case 'email':
         return (
