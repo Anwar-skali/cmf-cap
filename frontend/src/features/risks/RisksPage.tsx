@@ -186,7 +186,6 @@ export default function RisksPage() {
     selectedStatus,
     selectedCategory,
     selectedProject,
-    selectedMatrixCell,
     quickFilter,
   ]);
 
@@ -196,8 +195,7 @@ export default function RisksPage() {
     selectedStatus !== 'all' ||
     selectedCategory !== 'all' ||
     selectedProject !== 'all' ||
-    quickFilter !== 'all' ||
-    selectedMatrixCell !== null;
+    quickFilter !== 'all';
 
   const handleClearFilters = () => {
     setSearch('');
@@ -206,7 +204,6 @@ export default function RisksPage() {
     setSelectedCategory('all');
     setSelectedProject('all');
     setQuickFilter('all');
-    setSelectedMatrixCell(null);
   };
 
   const handleDeleteConfirm = () => {
