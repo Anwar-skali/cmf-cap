@@ -670,7 +670,7 @@ class ImportEngineService:
                     key=f.key,
                     label=f.label,
                     required=f.required,
-                    type=f.type if f.type in ["string", "integer", "number", "date", "enum", "textarea", "text"] else "string",
+                    type=f.type if f.type in ["string", "integer", "number", "date", "week", "enum", "textarea", "text"] else "string",
                     aliases=f.aliases,
                     description=f.description,
                     unique_key=is_unique,
@@ -955,6 +955,12 @@ class ImportEngineService:
             else:
                 for header, val in zip(headers, row_vals):
                     db_key = column_mapping.get(header)
+                    if not db_key:
+                        norm_h = normalize_header(header)
+                        for m_hdr, m_k in column_mapping.items():
+                            if m_hdr and normalize_header(m_hdr) == norm_h:
+                                db_key = m_k
+                                break
                     if db_key:
                         row_raw_dict[db_key] = val
 
@@ -1274,10 +1280,15 @@ class ImportEngineService:
                 "[K0 IMPORT] processing_data_rows=%d",
                 len(data_rows),
             )
+        elif effective_column_mapping:
+            column_mapping = self._normalize_column_mapping(effective_column_mapping, schema, headers)
+            k0_execute_index_map = {}
         else:
+            column_mapping = self.auto_map_columns(headers, schema)
             k0_execute_index_map = {}
         logger.info("[IMPORT DEBUG] Rows detected: %d", len(data_rows))
         logger.info("[IMPORT DEBUG] Headers detected: %r", headers)
+        logger.info("[IMPORT DEBUG] Column mapping: %r", column_mapping)
 
         # Categorize validation errors for row-level skip logic
         is_project_entity = entity_type.lower() not in ("suppliers", "parts", "risks", "capacity")
@@ -1313,6 +1324,13 @@ class ImportEngineService:
         # Runtime batch tracking for inserted unique keys
         inserted_in_batch: set[str] = set()
 
+        from app.application.services.header_normalizer import normalize_header
+
+        norm_column_mapping: dict[str, str] = {}
+        for m_hdr, m_k in column_mapping.items():
+            if m_hdr and m_k:
+                norm_column_mapping[normalize_header(m_hdr)] = m_k
+
         logger.info("[IMPORT DEBUG] Database transaction: Starting transaction session...")
         async with self._uow as uow:
             for row_idx, row_vals in enumerate(data_rows, start=1):
@@ -1328,6 +1346,9 @@ class ImportEngineService:
                 else:
                     for header, val in zip(headers, row_vals):
                         db_key = column_mapping.get(header)
+                        if not db_key:
+                            norm_h = normalize_header(header)
+                            db_key = norm_column_mapping.get(norm_h)
                         if db_key:
                             row_dict[db_key] = val
 
@@ -1399,6 +1420,11 @@ class ImportEngineService:
                             coerced_row[col_spec.key] = c_val
                         else:
                             coerced_row[col_spec.key] = None
+
+                # Also preserve any non-schema dynamic fields present in row_dict
+                for k, v in row_dict.items():
+                    if k not in coerced_row and v is not None:
+                        coerced_row[k] = v
 
                 # 4. Check runtime duplicate in current batch run
                 u_val_str = None
