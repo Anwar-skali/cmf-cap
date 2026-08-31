@@ -83,24 +83,37 @@ export interface CmfDashboardData {
 
 export function useCmfDashboardData(): CmfDashboardData {
   const { data: stats, isLoading, error, refetch } = useDashboardStatsQuery();
-  const { data: projectsData } = useProjectsQuery();
+  const { data: projectsData } = useProjectsQuery({ pageSize: 1000 });
 
   const rawProjects = projectsData?.items ?? [];
-  const totalCmf = stats?.totalCmf ?? 2;
-  const totalProjects = stats?.totalProjects ?? rawProjects.length ?? 0;
-  const activeProjects = stats?.activeProjects ?? rawProjects.filter((p: any) => p.status === 'active').length ?? 0;
-  const totalSuppliers = stats?.totalSuppliers ?? 5;
-  const activeSuppliers = stats?.activeSuppliers ?? stats?.totalSuppliers ?? 0;
+  const isCompleted = (p: any) => {
+    const s = String(p.status || '').toLowerCase().trim();
+    const ds = String(p.data?.status || '').toLowerCase().trim();
+    return (
+      ['completed', 'closed', 'validated', 'done', 'complete'].includes(s) ||
+      ['completed', 'closed', 'validated', 'done', 'complete'].includes(ds)
+    );
+  };
+  const isActive = (p: any) => {
+    const s = String(p.status || '').toLowerCase().trim();
+    return ['active', 'in_progress', 'started'].includes(s);
+  };
+
+  const totalCmf = stats?.totalCmf ?? (stats as any)?.total_cmf ?? 2;
+  const totalProjects = stats?.totalProjects ?? (stats as any)?.total_projects ?? rawProjects.length ?? 0;
+  const activeProjects = stats?.activeProjects ?? (stats as any)?.active_projects ?? rawProjects.filter(isActive).length ?? 0;
+  const totalSuppliers = stats?.totalSuppliers ?? (stats as any)?.total_suppliers ?? 5;
+  const activeSuppliers = stats?.activeSuppliers ?? (stats as any)?.active_suppliers ?? stats?.totalSuppliers ?? 0;
 
   // Capacity metrics
-  const totalCapacity = stats?.totalCapacity ?? 0;
-  const allocatedCapacity = stats?.allocatedCapacity ?? 0;
-  const usedCapacity = stats?.usedCapacity ?? allocatedCapacity;
-  const remainingCapacity = stats?.remainingCapacity ?? Math.max(0, totalCapacity - usedCapacity);
-  const utilizationPct = stats?.averageUtilizationPct
-    ? Math.round(stats.averageUtilizationPct)
+  const totalCapacity = stats?.totalCapacity ?? (stats as any)?.total_capacity ?? 0;
+  const allocatedCapacity = stats?.allocatedCapacity ?? (stats as any)?.allocated_capacity ?? 0;
+  const usedCapacity = stats?.usedCapacity ?? (stats as any)?.used_capacity ?? allocatedCapacity;
+  const remainingCapacity = stats?.remainingCapacity ?? (stats as any)?.remaining_capacity ?? Math.max(0, totalCapacity - usedCapacity);
+  const utilizationPct = stats?.averageUtilizationPct ?? (stats as any)?.average_utilization_pct
+    ? Math.round(stats?.averageUtilizationPct ?? (stats as any)?.average_utilization_pct)
     : (totalCapacity > 0 ? Math.round((usedCapacity / totalCapacity) * 100) : 0);
-  const capacityGap = stats?.capacityGap ?? Math.max(0, totalCapacity - allocatedCapacity);
+  const capacityGap = stats?.capacityGap ?? (stats as any)?.capacity_gap ?? Math.max(0, totalCapacity - allocatedCapacity);
 
   // Projects & Use cases
   const projectsOnTrack = stats?.projectsOnTrack ?? (stats as any)?.projects_on_track ?? 0;
@@ -108,7 +121,7 @@ export function useCmfDashboardData(): CmfDashboardData {
   const projectsCompleted =
     stats?.completedProjects ??
     (stats as any)?.completed_projects ??
-    rawProjects.filter((p: any) => String(p.status).toLowerCase() === 'completed').length ??
+    rawProjects.filter(isCompleted).length ??
     0;
   const useCaseProjects = rawProjects.filter((p: any) => p.data?.use_case);
   const projectUseCases =

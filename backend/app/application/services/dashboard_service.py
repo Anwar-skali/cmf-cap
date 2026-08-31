@@ -50,17 +50,23 @@ class DashboardService:
                 dt = dt.replace(tzinfo=timezone.utc)
             return dt < utc_now
 
+        def is_status(p: Any, *targets: str) -> bool:
+            s = str(getattr(p, 'status', '') or '').lower().strip()
+            data_s = str((p.data or {}).get('status', '')).lower().strip() if isinstance(p.data, dict) else ''
+            target_set = {t.lower().strip() for t in targets}
+            return s in target_set or data_s in target_set
+
         total_projects = len(projects)
-        active_projects = sum(1 for p in projects if p.status == ProjectStatus.ACTIVE)
-        completed_projects = sum(1 for p in projects if p.status == ProjectStatus.COMPLETED)
+        active_projects = sum(1 for p in projects if is_status(p, 'active', 'in_progress', 'started'))
+        completed_projects = sum(1 for p in projects if is_status(p, 'completed', 'closed', 'validated', 'done', 'complete'))
         projects_on_track = sum(
             1 for p in projects
-            if p.status == ProjectStatus.ACTIVE and (p.end_date is None or not is_past(p.end_date))
+            if is_status(p, 'active', 'in_progress') and (p.end_date is None or not is_past(p.end_date))
         )
         delayed_projects = sum(
             1 for p in projects
-            if p.status in (ProjectStatus.ACTIVE, ProjectStatus.DRAFT, ProjectStatus.ON_HOLD)
-            and is_past(p.end_date)
+            if is_status(p, 'delayed')
+            or (is_status(p, 'active', 'draft', 'on_hold') and is_past(p.end_date))
         )
 
         use_case_projects = [
@@ -70,9 +76,8 @@ class DashboardService:
         project_use_cases = len(use_case_projects) if use_case_projects else total_projects
         delayed_project_use_cases = sum(
             1 for p in (use_case_projects if use_case_projects else projects)
-            if p.status in (ProjectStatus.ON_HOLD, "delayed")
-            or (isinstance(p.data, dict) and p.data.get("status") == "delayed")
-            or (is_past(p.end_date) and p.status != ProjectStatus.COMPLETED)
+            if is_status(p, 'delayed', 'on_hold')
+            or (is_past(p.end_date) and not is_status(p, 'completed', 'closed', 'validated'))
         )
 
         total_suppliers = len(suppliers)
