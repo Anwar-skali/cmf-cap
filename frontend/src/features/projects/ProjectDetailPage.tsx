@@ -161,16 +161,16 @@ export default function ProjectDetailPage() {
               <div
                 className={`flex items-center gap-3 p-3.5 rounded-xl border transition-all ${
                   currentStep >= 1
-                    ? 'bg-emerald-500/10 border-emerald-500/40 text-emerald-600 dark:text-emerald-400'
+                    ? 'bg-green-500/10 border-green-500/40 text-green-700 dark:text-green-400'
                     : 'bg-muted/30 border-border text-muted-foreground'
                 }`}
               >
                 <div
                   className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg font-extrabold text-xs ${
-                    currentStep >= 1 ? 'bg-emerald-500 text-white' : 'bg-muted text-muted-foreground'
+                    currentStep >= 1 ? 'bg-green-500 text-white' : 'bg-muted text-muted-foreground'
                   }`}
                 >
-                  1
+                  {currentStep > 1 ? '✓' : '1'}
                 </div>
                 <div>
                   <p className="text-xs font-bold leading-tight">{t('workflow.step1_buyer', 'Step 1: Buyer')}</p>
@@ -182,16 +182,16 @@ export default function ProjectDetailPage() {
               <div
                 className={`flex items-center gap-3 p-3.5 rounded-xl border transition-all ${
                   currentStep >= 2
-                    ? 'bg-blue-500/10 border-blue-500/40 text-blue-600 dark:text-blue-400'
+                    ? 'bg-green-500/10 border-green-500/40 text-green-700 dark:text-green-400'
                     : 'bg-muted/30 border-border text-muted-foreground'
                 }`}
               >
                 <div
                   className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg font-extrabold text-xs ${
-                    currentStep >= 2 ? 'bg-blue-500 text-white' : 'bg-muted text-muted-foreground'
+                    currentStep >= 2 ? 'bg-green-500 text-white' : 'bg-muted text-muted-foreground'
                   }`}
                 >
-                  2
+                  {currentStep > 2 ? '✓' : '2'}
                 </div>
                 <div>
                   <p className="text-xs font-bold leading-tight">{t('workflow.step2_capacity', 'Step 2: Capacity')}</p>
@@ -203,16 +203,16 @@ export default function ProjectDetailPage() {
               <div
                 className={`flex items-center gap-3 p-3.5 rounded-xl border transition-all ${
                   currentStep >= 3
-                    ? 'bg-amber-500/10 border-amber-500/40 text-amber-600 dark:text-amber-400'
+                    ? 'bg-green-500/10 border-green-500/40 text-green-700 dark:text-green-400'
                     : 'bg-muted/30 border-border text-muted-foreground'
                 }`}
               >
                 <div
                   className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg font-extrabold text-xs ${
-                    currentStep >= 3 ? 'bg-amber-500 text-white' : 'bg-muted text-muted-foreground'
+                    currentStep >= 3 ? 'bg-green-500 text-white' : 'bg-muted text-muted-foreground'
                   }`}
                 >
-                  3
+                  {currentStep > 3 ? '✓' : '3'}
                 </div>
                 <div>
                   <p className="text-xs font-bold leading-tight">{t('workflow.step3_sqd', 'Step 3: SQD')}</p>
@@ -224,16 +224,16 @@ export default function ProjectDetailPage() {
               <div
                 className={`flex items-center gap-3 p-3.5 rounded-xl border transition-all ${
                   currentStep === 4
-                    ? 'bg-purple-500/10 border-purple-500/40 text-purple-600 dark:text-purple-400'
+                    ? 'bg-green-500/10 border-green-500/40 text-green-700 dark:text-green-400'
                     : 'bg-muted/30 border-border text-muted-foreground'
                 }`}
               >
                 <div
                   className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg font-extrabold text-xs ${
-                    currentStep === 4 ? 'bg-purple-500 text-white' : 'bg-muted text-muted-foreground'
+                    currentStep === 4 ? 'bg-green-500 text-white' : 'bg-muted text-muted-foreground'
                   }`}
                 >
-                  4
+                  {currentStep === 4 ? '✓' : '4'}
                 </div>
                 <div>
                   <p className="text-xs font-bold leading-tight">{t('workflow.step4_complete', 'Step 4: Complete')}</p>
