@@ -498,7 +498,7 @@ class ImportEngineService:
         Level 2: Known aliases match
         Level 3: Fuzzy matching (>= 0.90 confidence)
         """
-        from app.application.services.header_normalizer import normalize_header, compute_similarity
+        from app.application.services.header_normalizer import normalize_header, compute_similarity, strip_module_prefix
 
         mapping: dict[str, str | None] = {}
         assigned_keys: set[str] = set()
@@ -510,11 +510,18 @@ class ImportEngineService:
                 mapping[header] = None
                 continue
 
+            stripped_header = strip_module_prefix(norm_header)
             matched_key: str | None = None
             for col in schema.columns:
                 if col.key in assigned_keys:
                     continue
-                if norm_header == normalize_header(col.key) or norm_header == normalize_header(col.label):
+                norm_col_key = normalize_header(col.key)
+                norm_col_label = normalize_header(col.label)
+                if (
+                    norm_header == norm_col_key
+                    or norm_header == norm_col_label
+                    or (stripped_header and (stripped_header == norm_col_key or stripped_header == norm_col_label))
+                ):
                     matched_key = col.key
                     assigned_keys.add(col.key)
                     break
@@ -531,12 +538,13 @@ class ImportEngineService:
                 mapping[header] = None
                 continue
 
+            stripped_header = strip_module_prefix(norm_header)
             matched_key = None
             for col in schema.columns:
                 if col.key in assigned_keys:
                     continue
                 norm_aliases = [normalize_header(a) for a in col.aliases if a]
-                if norm_header in norm_aliases:
+                if norm_header in norm_aliases or (stripped_header and stripped_header in norm_aliases):
                     matched_key = col.key
                     assigned_keys.add(col.key)
                     break

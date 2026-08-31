@@ -40,10 +40,60 @@ def normalize_header(header: str | None) -> str:
     return normalized
 
 
+def _canonicalize_tokens(norm: str) -> str:
+    """
+    Normalizes common automotive CMF word variations and abbreviations:
+    - 'forecasted', 'forecasting' -> 'forecast'
+    - 'eval', 'evaluation' -> 'evaluation'
+    - 'mgr' -> 'manager'
+    - 'no', 'num', 'n' -> 'number'
+    """
+    if not norm:
+        return ""
+    words = norm.split()
+    mapped = []
+    synonyms = {
+        "forecasted": "forecast",
+        "forecasting": "forecast",
+        "eval": "evaluation",
+        "evaluations": "evaluation",
+        "mgr": "manager",
+        "no": "number",
+        "num": "number",
+        "n": "number",
+        "standard": "standard",
+        "supplier": "supplier",
+        "utilization": "utilization",
+        "measured": "measured",
+    }
+    for w in words:
+        mapped.append(synonyms.get(w, w))
+    return " ".join(mapped)
+
+
+def strip_module_prefix(norm: str) -> str:
+    """
+    Strips module and section prefixes that frequently appear in merged/multi-line Excel headers:
+    e.g. 'sqd cat1 forecasted date cw' -> 'cat1 forecasted date cw'
+         'buyer supplier name' -> 'supplier name'
+         'capacity manager contracted capacity' -> 'contracted capacity'
+    """
+    if not norm:
+        return ""
+    cleaned = re.sub(
+        r"^(sqd|buyer|capacity\s+manager|capacity|cap|scr|planning|fete\s+tko|management|documentation|team)\s+",
+        "",
+        norm,
+    ).strip()
+    return cleaned
+
+
 def compute_similarity(header_norm: str, candidate_norm: str) -> float:
     """
     Computes a composite similarity score between 0.0 and 1.0 based on:
     - Exact equality (1.0)
+    - Prefix-stripped equality (1.0)
+    - Canonicalized token equality (1.0)
     - Substring containment with length weighting
     - Token set overlap (Jaccard similarity)
     - SequenceMatcher string distance
@@ -54,12 +104,33 @@ def compute_similarity(header_norm: str, candidate_norm: str) -> float:
     if header_norm == candidate_norm:
         return 1.0
 
+    # Check prefix-stripped match
+    stripped_h = strip_module_prefix(header_norm)
+    stripped_c = strip_module_prefix(candidate_norm)
+    if stripped_h == candidate_norm or header_norm == stripped_c or (stripped_h and stripped_h == stripped_c):
+        return 1.0
+
+    # Check canonicalized token match
+    canon_h = _canonicalize_tokens(header_norm)
+    canon_c = _canonicalize_tokens(candidate_norm)
+    if canon_h == canon_c:
+        return 1.0
+
+    canon_sh = _canonicalize_tokens(stripped_h)
+    canon_sc = _canonicalize_tokens(stripped_c)
+    if canon_sh == canon_c or canon_h == canon_sc or (canon_sh and canon_sh == canon_sc):
+        return 1.0
+
     # Sequence distance
-    seq_ratio = difflib.SequenceMatcher(None, header_norm, candidate_norm).ratio()
+    seq_ratio = max(
+        difflib.SequenceMatcher(None, header_norm, candidate_norm).ratio(),
+        difflib.SequenceMatcher(None, stripped_h, candidate_norm).ratio(),
+        difflib.SequenceMatcher(None, canon_h, canon_c).ratio(),
+    )
 
     # Token overlap
-    tokens_h = set(header_norm.split())
-    tokens_c = set(candidate_norm.split())
+    tokens_h = set(canon_h.split()) | set(canon_sh.split())
+    tokens_c = set(canon_c.split())
     if tokens_h and tokens_c:
         jaccard = len(tokens_h & tokens_c) / len(tokens_h | tokens_c)
         containment = len(tokens_h & tokens_c) / min(len(tokens_h), len(tokens_c))
@@ -69,10 +140,11 @@ def compute_similarity(header_norm: str, candidate_norm: str) -> float:
 
     # Substring check with length penalty
     substring_score = 0.0
-    if len(header_norm) >= 3 and len(candidate_norm) >= 3:
-        if header_norm in candidate_norm or candidate_norm in header_norm:
-            min_len = min(len(header_norm), len(candidate_norm))
-            max_len = max(len(header_norm), len(candidate_norm))
-            substring_score = min_len / max_len * 0.95
+    for h_test in (header_norm, stripped_h, canon_h, canon_sh):
+        if len(h_test) >= 3 and len(candidate_norm) >= 3:
+            if h_test in candidate_norm or candidate_norm in h_test:
+                min_len = min(len(h_test), len(candidate_norm))
+                max_len = max(len(h_test), len(candidate_norm))
+                substring_score = max(substring_score, min_len / max_len * 0.95)
 
     return max(seq_ratio, jaccard, substring_score, containment * 0.85)

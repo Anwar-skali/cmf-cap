@@ -728,42 +728,6 @@ export default function ReportsPage() {
                 )}
               </CardContent>
             </Card>
-
-            {/* Chart 3: Simple Dual-Bar Capacity Demand vs Capability */}
-            <Card className="shadow-sm border-border/60 lg:col-span-2">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-base font-bold flex items-center justify-between">
-                  <span className="flex items-center gap-2">
-                    <TrendingUp className="h-4 w-4 text-emerald-500" /> Production Capacity Demand vs Max Capability
-                  </span>
-                  <Badge variant="outline" className="font-mono text-[10px]">
-                    Fleet Load: {avgUtilization}%
-                  </Badge>
-                </CardTitle>
-                <CardDescription className="text-xs">
-                  Side-by-side comparison of required monthly demand versus maximum installed supplier capacity (pcs/mo)
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="h-[300px]">
-                {isLoading ? (
-                  <div className="h-full flex items-center justify-center">
-                    <Skeleton className="h-[200px] w-full" />
-                  </div>
-                ) : (
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={capacityVolumeData} margin={{ top: 15, right: 30, left: 0, bottom: 5 }}>
-                      <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
-                      <XAxis dataKey="name" />
-                      <YAxis />
-                      <RechartsTooltip formatter={(val: number) => [`${val.toLocaleString()} pcs`, 'Volume']} />
-                      <Legend />
-                      <Bar dataKey="required" name="Required Demand (pcs/mo)" fill="#f59e0b" radius={[4, 4, 0, 0]} />
-                      <Bar dataKey="maximum" name="Max Capability (pcs/mo)" fill="#2563eb" radius={[4, 4, 0, 0]} />
-                    </BarChart>
-                  </ResponsiveContainer>
-                )}
-              </CardContent>
-            </Card>
           </div>
         </TabsContent>
 

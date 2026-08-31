@@ -10,7 +10,7 @@ import httpx
 
 from app.application.services.template_context_service import TemplateContext, TemplateFieldSpec
 from app.application.services.mapping_cache_service import MappingCacheService
-from app.application.services.header_normalizer import normalize_header, compute_similarity
+from app.application.services.header_normalizer import normalize_header, compute_similarity, strip_module_prefix
 
 logger = logging.getLogger(__name__)
 
@@ -136,7 +136,8 @@ class OllamaMappingService:
                 if not norm_hdr:
                     continue
 
-                if norm_hdr == norm_key or norm_hdr == norm_label:
+                stripped_hdr = strip_module_prefix(norm_hdr)
+                if norm_hdr == norm_key or norm_hdr == norm_label or (stripped_hdr and (stripped_hdr == norm_key or stripped_hdr == norm_label)):
                     result_mapping[field.key] = {
                         "excel": hdr,
                         "confidence": 1.0,
@@ -160,7 +161,8 @@ class OllamaMappingService:
                 if not norm_hdr:
                     continue
 
-                if norm_hdr in norm_aliases:
+                stripped_hdr = strip_module_prefix(norm_hdr)
+                if norm_hdr in norm_aliases or (stripped_hdr and stripped_hdr in norm_aliases):
                     result_mapping[field.key] = {
                         "excel": hdr,
                         "confidence": 0.96,
