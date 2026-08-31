@@ -42,6 +42,7 @@ export interface CmfDashboardData {
   totalCapacity: number;
   utilizationPct: number;
   capacityGap: number;
+  totalSuppliers: number;
   activeSuppliers: number;
   projectsAtRisk: number;
 
@@ -88,6 +89,7 @@ export function useCmfDashboardData(): CmfDashboardData {
   const totalCmf = stats?.totalCmf ?? 2;
   const totalProjects = stats?.totalProjects ?? rawProjects.length ?? 0;
   const activeProjects = stats?.activeProjects ?? rawProjects.filter((p: any) => p.status === 'active').length ?? 0;
+  const totalSuppliers = stats?.totalSuppliers ?? 5;
   const activeSuppliers = stats?.activeSuppliers ?? stats?.totalSuppliers ?? 0;
 
   // Capacity metrics
@@ -198,6 +200,7 @@ export function useCmfDashboardData(): CmfDashboardData {
     totalCapacity,
     utilizationPct,
     capacityGap,
+    totalSuppliers,
     activeSuppliers,
     projectsAtRisk,
 

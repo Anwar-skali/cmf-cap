@@ -231,7 +231,10 @@ export default function DashboardPage() {
             value={`${(cmf.totalCapacity / 1000).toFixed(1)}K`}
             icon={Gauge}
             subtitle="Available production capacity units across suppliers"
-            trend={{ value: 'Stable', isPositive: true }}
+            trend={{
+              value: cmf.totalCapacity > 0 ? `${Math.round(cmf.utilizationPct)}% utilized` : '0 capacity',
+              isPositive: cmf.utilizationPct <= 85,
+            }}
             actionText="Capacity Matrix"
             onClickAction={() => navigate('/capacity')}
           />
@@ -242,7 +245,10 @@ export default function DashboardPage() {
             value={`${cmf.utilizationPct}%`}
             icon={Activity}
             subtitle="Current capacity utilization across all lines"
-            trend={{ value: cmf.utilizationPct > 85 ? 'High Load' : 'Healthy', isPositive: cmf.utilizationPct <= 85 }}
+            trend={{
+              value: cmf.utilizationPct > 90 ? 'Critical Load' : cmf.utilizationPct > 80 ? 'High Load' : 'Healthy Load',
+              isPositive: cmf.utilizationPct <= 85,
+            }}
             actionText="Details"
             onClickAction={() => navigate('/capacity')}
           />
@@ -253,7 +259,10 @@ export default function DashboardPage() {
             value={`${(cmf.capacityGap / 1000).toFixed(1)}K`}
             icon={Zap}
             subtitle="Allocated minus used — available buffer capacity"
-            trend={{ value: 'Buffer OK', isPositive: true }}
+            trend={{
+              value: cmf.capacityGap > 0 ? `${(cmf.capacityGap / 1000).toFixed(1)}K buffer` : 'No buffer',
+              isPositive: cmf.capacityGap >= 0,
+            }}
             actionText="Analyse"
             onClickAction={() => navigate('/capacity')}
           />
@@ -264,7 +273,10 @@ export default function DashboardPage() {
             value={cmf.activeSuppliers}
             icon={Users}
             subtitle="Suppliers with active capacity assessments"
-            trend={{ value: '+2 this quarter', isPositive: true }}
+            trend={{
+              value: `${cmf.activeSuppliers} of ${cmf.totalSuppliers || cmf.activeSuppliers} active`,
+              isPositive: cmf.activeSuppliers > 0,
+            }}
             actionText="Suppliers"
             onClickAction={() => navigate('/suppliers')}
           />
@@ -275,7 +287,10 @@ export default function DashboardPage() {
             value={cmf.projectsAtRisk}
             icon={AlertTriangle}
             subtitle="Projects flagged with open risks or capacity shortfalls"
-            trend={{ value: cmf.projectsAtRisk > 0 ? `${cmf.projectsAtRisk} open` : 'None', isPositive: cmf.projectsAtRisk === 0 }}
+            trend={{
+              value: cmf.projectsAtRisk > 0 ? `${cmf.projectsAtRisk} open risks` : '0 risks',
+              isPositive: cmf.projectsAtRisk === 0,
+            }}
             actionText="View Risks"
             onClickAction={() => navigate('/risks')}
           />
@@ -434,7 +449,10 @@ export default function DashboardPage() {
             value={cmf.projectUseCases}
             icon={Layers}
             subtitle="Total project use cases defined across CMF structures"
-            trend={{ value: 'Active', isPositive: true }}
+            trend={{
+              value: cmf.totalProjects > 0 ? `${Math.round((cmf.projectUseCases / cmf.totalProjects) * 100)}% of projects` : `${cmf.projectUseCases} active`,
+              isPositive: true,
+            }}
             actionText="View Projects"
             onClickAction={() => navigate('/projects')}
           />
@@ -445,7 +463,10 @@ export default function DashboardPage() {
             value={cmf.delayedProjectUseCases}
             icon={Clock}
             subtitle="Project use cases with schedule delays or overruns"
-            trend={{ value: cmf.delayedProjectUseCases > 0 ? `${cmf.delayedProjectUseCases} delayed` : 'None', isPositive: cmf.delayedProjectUseCases === 0 }}
+            trend={{
+              value: cmf.delayedProjectUseCases > 0 ? `${cmf.delayedProjectUseCases} delayed` : '0 delayed',
+              isPositive: cmf.delayedProjectUseCases === 0,
+            }}
             actionText="Review"
             onClickAction={() => navigate('/projects')}
           />
@@ -456,7 +477,10 @@ export default function DashboardPage() {
             value={cmf.projectsCompleted}
             icon={Target}
             subtitle="Successfully closed & validated CMF projects"
-            trend={{ value: '+3 this quarter', isPositive: true }}
+            trend={{
+              value: cmf.totalProjects > 0 ? `${Math.round((cmf.projectsCompleted / cmf.totalProjects) * 100)}% complete` : `${cmf.projectsCompleted} closed`,
+              isPositive: cmf.projectsCompleted > 0,
+            }}
             actionText="Archive"
             onClickAction={() => navigate('/projects')}
           />
@@ -467,7 +491,10 @@ export default function DashboardPage() {
             value={cmf.openQualityIssues}
             icon={ShieldCheck}
             subtitle="Active SQD non-conformities under review"
-            trend={{ value: cmf.criticalQualityIssues > 0 ? `${cmf.criticalQualityIssues} critical` : 'None critical', isPositive: cmf.criticalQualityIssues === 0 }}
+            trend={{
+              value: cmf.criticalQualityIssues > 0 ? `${cmf.criticalQualityIssues} critical` : cmf.openQualityIssues > 0 ? `${cmf.openQualityIssues} open` : '0 issues',
+              isPositive: cmf.criticalQualityIssues === 0 && cmf.openQualityIssues === 0,
+            }}
             actionText="SQD Risks"
             onClickAction={() => navigate('/risks')}
           />
@@ -478,7 +505,10 @@ export default function DashboardPage() {
             value={cmf.openActions}
             icon={AlertTriangle}
             subtitle="Corrective actions pending resolution"
-            trend={{ value: 'In progress', isPositive: false }}
+            trend={{
+              value: cmf.openActions > 0 ? `${cmf.openActions} pending actions` : 'All resolved',
+              isPositive: cmf.openActions === 0,
+            }}
             actionText="View"
             onClickAction={() => navigate('/risks')}
           />
@@ -490,7 +520,7 @@ export default function DashboardPage() {
             icon={UserCheck}
             subtitle="Aggregate supplier quality health indicator"
             trend={{
-              value: cmf.supplierQualityStatus === 'GREEN' ? 'All Clear' : cmf.supplierQualityStatus === 'YELLOW' ? 'Monitor' : 'Action Needed',
+              value: cmf.supplierQualityStatus === 'GREEN' ? 'All Clear' : cmf.supplierQualityStatus === 'YELLOW' ? 'Monitor Risks' : 'Action Needed',
               isPositive: cmf.supplierQualityStatus === 'GREEN',
             }}
             actionText="Suppliers"

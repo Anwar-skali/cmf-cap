@@ -88,12 +88,19 @@ class DashboardService:
 
         open_quality_issues = sum(
             1 for r in risks
-            if r.status == 'open' and str(getattr(r, 'risk_type', '') or '').lower() == 'quality'
+            if r.status == 'open'
+            and (
+                not r.risk_type
+                or str(r.risk_type).lower() in ('quality', 'technical', 'sqd', 'sqe', 'supplier', 'process')
+            )
         )
         critical_quality_issues = sum(
             1 for r in risks
             if (r.severity == RiskSeverity.CRITICAL or str(r.severity).lower() == 'critical')
-            and str(getattr(r, 'risk_type', '') or '').lower() == 'quality'
+            and (
+                not r.risk_type
+                or str(r.risk_type).lower() in ('quality', 'technical', 'sqd', 'sqe', 'supplier', 'process')
+            )
         )
         open_actions = open_risks
 
