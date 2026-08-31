@@ -46439,3 +46439,70 @@ mapped_data={'indice': 2, 'module': 'Chassis', 'designation_commodity': 'Bracket
 2026-08-28 13:26:02,549 - app.main - INFO - Shutting down CMF Platform API
 2026-08-28 13:26:12,008 - app.main - INFO - Starting CMF Platform API
 2026-08-28 13:26:12,064 - app.main - INFO - Database tables verified/created (SQLite)
+2026-08-31 14:47:06,244 - app.main - INFO - Starting CMF Platform API
+2026-08-31 14:47:06,259 - app.main - INFO - Database tables verified/created successfully
+2026-08-31 14:47:20,803 - app.main - INFO - POST /api/v1/auth/login
+2026-08-31 14:47:21,950 - app.main - INFO - POST /api/v1/auth/login -> 200
+2026-08-31 14:47:21,983 - app.main - INFO - GET /api/v1/auth/me
+2026-08-31 14:47:22,142 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-31 14:47:22,385 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-31 14:47:22,424 - app.main - INFO - GET /api/v1/projects
+2026-08-31 14:47:22,427 - app.main - INFO - GET /api/v1/notifications
+2026-08-31 14:47:22,430 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-31 14:47:22,458 - app.main - INFO - GET /api/v1/templates
+2026-08-31 14:47:23,043 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-31 14:47:23,341 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-31 14:47:23,398 - app.main - INFO - GET /api/v1/templates
+2026-08-31 14:47:24,036 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-31 14:47:24,252 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-31 14:47:25,122 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-31 14:47:26,084 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-31 14:47:49,694 - app.main - INFO - GET /api/v1/projects
+2026-08-31 14:47:50,109 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-31 14:48:08,596 - app.main - INFO - GET /api/v1/projects
+2026-08-31 14:48:08,894 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-31 14:48:11,062 - app.main - INFO - GET /api/v1/projects
+2026-08-31 14:48:11,545 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-31 14:48:24,733 - app.main - INFO - GET /api/v1/projects
+2026-08-31 14:48:25,230 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-31 14:48:26,884 - app.main - INFO - GET /api/v1/auth/me
+2026-08-31 14:48:26,980 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-31 14:48:26,995 - app.main - INFO - GET /api/v1/auth/me
+2026-08-31 14:48:27,107 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-31 14:48:27,110 - app.main - INFO - GET /api/v1/notifications
+2026-08-31 14:48:27,115 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-08-31 14:48:27,131 - app.main - INFO - GET /api/v1/projects
+2026-08-31 14:48:27,132 - app.main - INFO - GET /api/v1/templates
+2026-08-31 14:48:27,153 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-08-31 14:48:27,327 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-31 14:48:27,945 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-31 14:48:28,026 - app.main - INFO - GET /api/v1/templates
+2026-08-31 14:48:28,442 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-31 14:48:28,689 - app.main - INFO - GET /api/v1/templates -> 200
+2026-08-31 14:48:29,449 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-31 14:48:30,059 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-08-31 14:48:40,994 - app.main - INFO - GET /api/v1/projects
+2026-08-31 14:48:41,670 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-31 14:49:40,063 - app.main - INFO - GET /api/v1/projects
+2026-08-31 14:49:40,694 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-31 14:49:46,031 - app.main - INFO - GET /api/v1/projects
+2026-08-31 14:49:47,129 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-31 14:49:53,334 - app.main - INFO - GET /api/v1/projects
+2026-08-31 14:49:54,001 - app.main - INFO - GET /api/v1/projects -> 200
+2026-08-31 14:49:56,672 - app.main - INFO - PATCH /api/v1/notifications/7cf59828-c2f0-43fe-83b5-aaff441b678d/read
+2026-08-31 14:49:56,856 - app.main - INFO - PATCH /api/v1/notifications/7cf59828-c2f0-43fe-83b5-aaff441b678d/read -> 200
+2026-08-31 14:49:56,908 - app.main - INFO - GET /api/v1/notifications
+2026-08-31 14:49:56,910 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-31 14:49:57,086 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-31 14:49:57,130 - app.main - INFO - GET /api/v1/capacity
+2026-08-31 14:49:57,153 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-08-31 14:49:57,411 - app.main - INFO - GET /api/v1/capacity -> 200
+2026-08-31 14:50:27,681 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-08-31 14:50:27,794 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-08-31 14:51:09,275 - app.main - INFO - Shutting down CMF Platform API
+2026-08-31 14:51:17,239 - app.main - INFO - Starting CMF Platform API
+2026-08-31 14:51:17,257 - app.main - INFO - Database tables verified/created successfully
+2026-08-31 14:51:17,601 - app.main - INFO - Shutting down CMF Platform API
+2026-08-31 14:51:23,191 - app.main - INFO - Starting CMF Platform API
+2026-08-31 14:51:23,204 - app.main - INFO - Database tables verified/created successfully
+2026-08-31 14:51:23,419 - app.infrastructure.persistence.seeds.auto_seed - INFO - Database already contains 443 projects — skipping auto-seed

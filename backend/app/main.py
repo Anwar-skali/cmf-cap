@@ -68,6 +68,10 @@ def _init_database() -> None:
         # 4. Seed initial superuser if not already present
         _seed_initial_superuser(sync_engine)
 
+        # 5. Auto-seed initial project, template, supplier, and risk data on fresh database
+        from app.infrastructure.persistence.seeds.auto_seed import run_auto_seed
+        run_auto_seed(sync_engine)
+
     except Exception as exc:
         logger.warning("Could not initialize database: %s", exc)
 
