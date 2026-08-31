@@ -36,7 +36,6 @@ import {
   Printer,
   Table as TableIcon,
   Kanban,
-  Grid,
   RefreshCw,
   MoreHorizontal,
   Eye,
@@ -62,13 +61,12 @@ import {
   exportRisksToCsv,
   exportRisksToJson,
 } from './utils/riskUtils';
-import { RiskHeatmapMatrix } from './components/RiskHeatmapMatrix';
 import { RiskKanbanBoard } from './components/RiskKanbanBoard';
 import { QuickMitigateModal } from './components/QuickMitigateModal';
 import { RiskQuickViewModal } from './components/RiskQuickViewModal';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 
-type ViewMode = 'table' | 'kanban' | 'matrix';
+type ViewMode = 'table' | 'kanban';
 
 const SEVERITY_COLORS: Record<string, string> = {
   critical: '#ef4444',
@@ -96,7 +94,6 @@ export default function RisksPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedProject, setSelectedProject] = useState<string>('all');
   const [quickFilter, setQuickFilter] = useState<string>('all');
-  const [selectedMatrixCell, setSelectedMatrixCell] = useState<{ severity: string; probability: string } | null>(null);
 
   // Modals state
   const [activeMitigateRisk, setActiveMitigateRisk] = useState<Risk | null>(null);
@@ -166,14 +163,7 @@ export default function RisksPage() {
         return false;
       }
 
-      // 6. Matrix cell filter
-      if (selectedMatrixCell) {
-        const matchesSev = (r.severity || '').toLowerCase() === selectedMatrixCell.severity.toLowerCase();
-        const matchesProb = (r.probability || '').toLowerCase() === selectedMatrixCell.probability.toLowerCase();
-        if (!matchesSev || !matchesProb) return false;
-      }
-
-      // 7. Quick filters
+      // 6. Quick filters
       if (quickFilter === 'critical') {
         if (r.severity !== 'critical') return false;
       } else if (quickFilter === 'high') {
@@ -607,18 +597,11 @@ export default function RisksPage() {
             icon={CheckCircle2}
             subtitle="Mitigated or validated & closed"
             trend={{ value: `${resolvedCount} resolved`, isPositive: resolutionRate >= 75 }}
-            actionText="Matrix"
-            onClickAction={() => setViewMode('matrix')}
+            actionText="View Table"
+            onClickAction={() => setViewMode('table')}
           />
         </div>
       </div>
-
-      {/* ── Risk Heatmap Matrix (full width) ────────────────────────────── */}
-      <RiskHeatmapMatrix
-        risks={rawRisks}
-        selectedCell={selectedMatrixCell}
-        onSelectCell={(cell) => setSelectedMatrixCell(cell)}
-      />
 
 
       {/* ── View Modes & Multi-Criteria Filtering Toolbar ──────────────── */}
@@ -648,17 +631,6 @@ export default function RisksPage() {
             >
               <Kanban className="h-3.5 w-3.5 text-amber-500" />
               <span>{t('risks_page.view_kanban', 'Kanban Board')}</span>
-            </button>
-            <button
-              onClick={() => setViewMode('matrix')}
-              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
-                viewMode === 'matrix'
-                  ? 'bg-card text-foreground shadow-xs border border-border'
-                  : 'text-muted-foreground hover:text-foreground'
-              }`}
-            >
-              <Grid className="h-3.5 w-3.5 text-emerald-500" />
-              <span>{t('risks_page.view_matrix', 'Heatmap View')}</span>
             </button>
           </div>
 
@@ -803,34 +775,6 @@ export default function RisksPage() {
           onOpenQuickView={(r) => setActiveQuickViewRisk(r)}
           onOpenMitigate={(r) => setActiveMitigateRisk(r)}
         />
-      )}
-
-      {viewMode === 'matrix' && (
-        <div className="space-y-4">
-          <RiskHeatmapMatrix
-            risks={rawRisks}
-            selectedCell={selectedMatrixCell}
-            onSelectCell={(cell) => setSelectedMatrixCell(cell)}
-          />
-          <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-card p-4 shadow-sm">
-            <div className="flex items-center justify-between mb-3 px-2">
-              <h3 className="text-sm font-extrabold text-foreground">
-                {selectedMatrixCell
-                  ? `Risks matching ${selectedMatrixCell.severity.toUpperCase()} severity & ${selectedMatrixCell.probability.toUpperCase()} probability (${filteredRisks.length})`
-                  : `All Filtered Risks (${filteredRisks.length})`}
-              </h3>
-            </div>
-            <DataTable
-              columns={columns}
-              data={filteredRisks}
-              loading={isLoading}
-              error={error?.message ?? null}
-              onRetry={refetch}
-              searchable={false}
-              filterable={false}
-            />
-          </div>
-        </div>
       )}
 
       {/* ── Modals & Dialogs ────────────────────────────────────────────── */}
