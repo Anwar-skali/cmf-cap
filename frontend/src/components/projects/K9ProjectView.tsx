@@ -256,27 +256,6 @@ export const K9ProjectView: React.FC<K9ProjectViewProps> = ({
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
-            <div className="inline-flex rounded-xl border border-slate-300 dark:border-slate-700 p-0.5 bg-card shadow-xs">
-              <button
-                type="button"
-                onClick={() => setMainMode('master_table')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg transition-colors cursor-pointer ${
-                  mainMode === 'master_table' ? 'bg-blue-600 text-white shadow-xs' : 'text-muted-foreground hover:text-foreground'
-                }`}
-              >
-                <TableIcon className="h-3.5 w-3.5" /> Full Master Table View
-              </button>
-              <button
-                type="button"
-                onClick={() => setMainMode('role_forms')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg transition-colors cursor-pointer ${
-                  mainMode === 'role_forms' ? 'bg-blue-600 text-white shadow-xs' : 'text-muted-foreground hover:text-foreground'
-                }`}
-              >
-                <FormInput className="h-3.5 w-3.5" /> Edit by Role Module
-              </button>
-            </div>
-
             <div className="flex items-center gap-2 bg-muted/40 px-3.5 py-1.5 rounded-xl border border-border">
               <span className="text-xs font-medium text-muted-foreground">{t('header.active_role', 'Active Role')}:</span>
               <span className="text-xs font-bold text-primary capitalize px-2 py-0.5 rounded-md bg-primary/10">

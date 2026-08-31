@@ -1,37 +1,25 @@
 import React, { useState } from 'react';
 import { CMFTemplate, TemplateField, TemplateSection } from '@/types/template';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useSuppliersQuery } from '@/hooks/queries/useSuppliersQuery';
 import { useUsersQuery } from '@/hooks/queries/useUsersQuery';
 import {
-  Layers,
   Search,
   CheckCircle2,
   AlertCircle,
   ExternalLink,
-  Table as TableIcon,
   Grid,
   Filter,
   UserCheck,
   Building2,
-  Award,
-  Sparkles,
-  Edit2,
-  Check,
-  X,
   FileSpreadsheet,
-  Lock,
 } from 'lucide-react';
-import { toast } from 'sonner';
 
 interface ProjectMasterTableViewProps {
   project: any;
   template: CMFTemplate;
   templateCode?: string;
-  onSave?: (updatedData: Record<string, any>) => void | Promise<void>;
-  isSaving?: boolean;
   userRole?: string;
 }
 
@@ -39,18 +27,10 @@ export const ProjectMasterTableView: React.FC<ProjectMasterTableViewProps> = ({
   project,
   template,
   templateCode,
-  onSave,
-  isSaving = false,
-  userRole = 'buyer',
 }) => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedSectionFilter, setSelectedSectionFilter] = useState<string>('ALL');
   const [statusFilter, setStatusFilter] = useState<'ALL' | 'FILLED' | 'MISSING'>('ALL');
-  const [viewStyle, setViewStyle] = useState<'architecture' | 'horizontal_matrix'>('architecture');
-
-  // Quick Inline Edit State
-  const [editingFieldKey, setEditingFieldKey] = useState<string | null>(null);
-  const [editingValue, setEditingValue] = useState<any>('');
 
   // Fetch suppliers and users for ID → display name resolution in read-only view
   const { data: suppliersData } = useSuppliersQuery({ pageSize: 200 });
@@ -66,7 +46,12 @@ export const ProjectMasterTableView: React.FC<ProjectMasterTableViewProps> = ({
       return projectData[internalName];
     }
     if (internalName === 'part_name' || internalName === 'project_name') return project.name;
-    if (internalName === 'part_number' || internalName === 'unique_id' || internalName === 'project_code' || internalName === 'line_item') {
+    if (
+      internalName === 'part_number' ||
+      internalName === 'unique_id' ||
+      internalName === 'project_code' ||
+      internalName === 'line_item'
+    ) {
       return project.code;
     }
     return '';
@@ -151,37 +136,11 @@ export const ProjectMasterTableView: React.FC<ProjectMasterTableViewProps> = ({
     return true;
   });
 
-  // Handle Quick Save
-  const handleStartInlineEdit = (item: (typeof allFieldsMeta)[0]) => {
-    setEditingFieldKey(item.field.internalName);
-    setEditingValue(item.value ?? '');
-  };
-
-  const handleCancelInlineEdit = () => {
-    setEditingFieldKey(null);
-    setEditingValue('');
-  };
-
-  const handleSaveInlineEdit = async (internalName: string) => {
-    if (!onSave) return;
-    try {
-      const updated = {
-        ...projectData,
-        [internalName]: editingValue,
-      };
-      await onSave(updated);
-      toast.success(`Updated field "${internalName}"`);
-      setEditingFieldKey(null);
-    } catch {
-      toast.error('Failed to save value');
-    }
-  };
-
   // Value Renderer Formatter
   const renderFormattedValue = (field: TemplateField, rawVal: any) => {
     if (rawVal === undefined || rawVal === null || String(rawVal).trim() === '') {
       return (
-        <span className="text-muted-foreground/60 italic text-xs flex items-center gap-1">
+        <span className="text-muted-foreground/50 italic text-xs flex items-center gap-1">
           {field.required && <AlertCircle className="h-3 w-3 text-amber-500 shrink-0" />}
           — Not set —
         </span>
@@ -307,19 +266,17 @@ export const ProjectMasterTableView: React.FC<ProjectMasterTableViewProps> = ({
       {/* Metrics Banner Card */}
       <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-card p-6 shadow-xl space-y-4">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2.5">
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-600/10 text-blue-600 font-extrabold border border-blue-500/20">
-                <FileSpreadsheet className="h-5 w-5" />
-              </div>
-              <div>
-                <h2 className="text-xl font-extrabold text-foreground tracking-tight">
-                  Master Project Data Table ({activeTemplateCode})
-                </h2>
-                <p className="text-xs text-muted-foreground">
-                  Comprehensive 100% full view of all project attributes across template sections & field groups.
-                </p>
-              </div>
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-600/10 text-blue-600 font-extrabold border border-blue-500/20">
+              <FileSpreadsheet className="h-5 w-5" />
+            </div>
+            <div>
+              <h2 className="text-xl font-extrabold text-foreground tracking-tight">
+                CMF {activeTemplateCode} Horizontal Data Matrix
+              </h2>
+              <p className="text-xs text-muted-foreground">
+                Complete horizontal matrix view of all project parameters across lifecycle stages.
+              </p>
             </div>
           </div>
 
@@ -335,28 +292,6 @@ export const ProjectMasterTableView: React.FC<ProjectMasterTableViewProps> = ({
               <div className="h-9 w-9 rounded-full border-2 border-blue-600 flex items-center justify-center text-[10px] font-extrabold text-foreground bg-blue-500/10">
                 {completionPercentage}%
               </div>
-            </div>
-
-            {/* View Switcher Toggle */}
-            <div className="inline-flex rounded-xl border border-slate-300 dark:border-slate-700 p-0.5 bg-card">
-              <button
-                type="button"
-                onClick={() => setViewStyle('architecture')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg transition-colors cursor-pointer ${
-                  viewStyle === 'architecture' ? 'bg-blue-600 text-white shadow-xs' : 'text-muted-foreground hover:text-foreground'
-                }`}
-              >
-                <TableIcon className="h-3.5 w-3.5" /> Structured Table
-              </button>
-              <button
-                type="button"
-                onClick={() => setViewStyle('horizontal_matrix')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg transition-colors cursor-pointer ${
-                  viewStyle === 'horizontal_matrix' ? 'bg-blue-600 text-white shadow-xs' : 'text-muted-foreground hover:text-foreground'
-                }`}
-              >
-                <Grid className="h-3.5 w-3.5" /> Horizontal Matrix
-              </button>
             </div>
           </div>
         </div>
@@ -435,225 +370,52 @@ export const ProjectMasterTableView: React.FC<ProjectMasterTableViewProps> = ({
         </div>
       </div>
 
-      {/* VIEW 1: STRUCTURED ARCHITECTURE MASTER TABLE */}
-      {viewStyle === 'architecture' && (
-        <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-card overflow-hidden shadow-xl">
-          <div className="p-4 border-b border-border bg-slate-50/80 dark:bg-slate-900/80 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-blue-600" />
-              <span className="text-xs font-extrabold text-foreground">
-                Displaying {filteredFields.length} Attributes in Master Data Table
-              </span>
-            </div>
-            <span className="text-[11px] font-semibold text-muted-foreground">
-              Template Code: {activeTemplateCode} v{template?.version}
-            </span>
-          </div>
-
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs border-collapse">
-              <thead className="bg-slate-100 dark:bg-slate-800/90 font-extrabold uppercase text-muted-foreground tracking-wider border-b border-border">
-                <tr>
-                  <th className="p-3.5 pl-6 w-48">Section / Module</th>
-                  <th className="p-3.5 w-44">Field Group</th>
-                  <th className="p-3.5 w-52">Attribute Label</th>
-                  <th className="p-3.5 w-40 font-mono text-[11px]">Internal Key</th>
-                  <th className="p-3.5 w-28">Type</th>
-                  <th className="p-3.5">Current Project Value</th>
-                  <th className="p-3.5 w-24 text-center">Status</th>
-                  <th className="p-3.5 pr-6 w-24 text-right">Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border">
-                {filteredFields.length === 0 ? (
-                  <tr>
-                    <td colSpan={8} className="p-8 text-center text-muted-foreground text-xs">
-                      No matching project attributes found for your search or filter parameters.
-                    </td>
-                  </tr>
-                ) : (
-                  filteredFields.map((item, idx) => {
-                    const isEditing = editingFieldKey === item.field.internalName;
-                    const normRole = (userRole || '').trim().toLowerCase().replace(/[\s-]+/g, '_');
-                    const effectiveRole =
-                      normRole === 'capacity' || normRole === 'capacitymanager' || normRole === 'cap_manager'
-                        ? 'capacity_manager'
-                        : normRole === 'purchasing'
-                        ? 'buyer'
-                        : normRole === 'quality' || normRole === 'quality_lead' || normRole === 'sqd_team'
-                        ? 'sqd'
-                        : normRole;
-
-                    const canEditItem =
-                      effectiveRole === 'admin' ||
-                      item.roleRequired === 'all' ||
-                      item.roleRequired === effectiveRole;
-
-                    return (
-                      <tr
-                        key={`${item.section.id}-${item.field.internalName}-${idx}`}
-                        className={`hover:bg-accent/40 transition-colors ${
-                          !item.isFilled && item.field.required ? 'bg-amber-500/5' : ''
-                        }`}
-                      >
-                        {/* Section */}
-                        <td className="p-3.5 pl-6 font-bold text-foreground">
-                          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-primary">
-                            {item.roleRequired === 'buyer' && <UserCheck className="h-3.5 w-3.5 text-blue-500" />}
-                            {item.roleRequired === 'capacity_manager' && <Building2 className="h-3.5 w-3.5 text-amber-500" />}
-                            {item.roleRequired === 'sqd' && <Award className="h-3.5 w-3.5 text-emerald-500" />}
-                            {item.section.name}
-                          </span>
-                        </td>
-
-                        {/* Field Group */}
-                        <td className="p-3.5 font-semibold text-muted-foreground text-[11px]">
-                          {item.groupName}
-                        </td>
-
-                        {/* Attribute Label */}
-                        <td className="p-3.5 font-extrabold text-foreground">
-                          <span className="flex items-center gap-1">
-                            {item.field.label}
-                            {item.field.required && <span className="text-rose-500 font-black">*</span>}
-                          </span>
-                        </td>
-
-                        {/* Internal Key */}
-                        <td className="p-3.5 font-mono text-muted-foreground text-[11px]">
-                          {item.field.internalName}
-                        </td>
-
-                        {/* Type */}
-                        <td className="p-3.5 font-mono text-[10px]">
-                          <span className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold px-2 py-0.5 rounded-md border border-border">
-                            {item.field.type}
-                          </span>
-                        </td>
-
-                        {/* Stored Value */}
-                        <td className="p-3.5">
-                          {isEditing ? (
-                            <div className="flex items-center gap-2">
-                              <Input
-                                type="text"
-                                value={editingValue}
-                                onChange={(e) => setEditingValue(e.target.value)}
-                                className="text-xs h-8 py-1 rounded-lg border-blue-500 focus:ring-blue-500"
-                                autoFocus
-                              />
-                              <Button
-                                size="icon"
-                                variant="default"
-                                className="h-7 w-7 bg-emerald-600 hover:bg-emerald-700 text-white shrink-0"
-                                onClick={() => handleSaveInlineEdit(item.field.internalName)}
-                                disabled={isSaving}
-                              >
-                                <Check className="h-3.5 w-3.5" />
-                              </Button>
-                              <Button
-                                size="icon"
-                                variant="ghost"
-                                className="h-7 w-7 shrink-0"
-                                onClick={handleCancelInlineEdit}
-                              >
-                                <X className="h-3.5 w-3.5" />
-                              </Button>
-                            </div>
-                          ) : (
-                            renderFormattedValue(item.field, item.value)
-                          )}
-                        </td>
-
-                        {/* Status */}
-                        <td className="p-3.5 text-center">
-                          {item.isFilled ? (
-                            <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
-                              <CheckCircle2 className="h-3 w-3" /> Valid
-                            </span>
-                          ) : (
-                            <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
-                              <AlertCircle className="h-3 w-3" /> Pending
-                            </span>
-                          )}
-                        </td>
-
-                        {/* Action */}
-                        <td className="p-3.5 pr-6 text-right">
-                          {canEditItem && onSave && !isEditing ? (
-                            <Button
-                              type="button"
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => handleStartInlineEdit(item)}
-                              className="h-7 px-2 text-[11px] font-bold text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/40 rounded-lg"
-                            >
-                              <Edit2 className="h-3 w-3 mr-1" /> Edit
-                            </Button>
-                          ) : !canEditItem && (
-                            <span className="inline-flex items-center gap-1 text-[10px] text-muted-foreground/60 font-semibold">
-                              <Lock className="h-2.5 w-2.5" /> Read-only
-                            </span>
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  })
-                )}
-              </tbody>
-            </table>
-          </div>
+      {/* HORIZONTAL MATRIX SPREADSHEET TABLE */}
+      <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-card overflow-hidden shadow-xl space-y-2">
+        <div className="p-4 border-b border-border bg-slate-50/80 dark:bg-slate-900/80 flex items-center justify-between">
+          <span className="text-xs font-bold text-foreground flex items-center gap-2">
+            <Grid className="h-4 w-4 text-blue-600" /> Full Horizontal Matrix View ({filteredFields.length} Attributes)
+          </span>
+          <span className="text-[11px] text-muted-foreground">Scroll horizontally to inspect all columns</span>
         </div>
-      )}
 
-      {/* VIEW 2: HORIZONTAL MATRIX SPREADSHEET TABLE */}
-      {viewStyle === 'horizontal_matrix' && (
-        <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-card overflow-hidden shadow-xl space-y-2">
-          <div className="p-4 border-b border-border bg-slate-50/80 dark:bg-slate-900/80 flex items-center justify-between">
-            <span className="text-xs font-bold text-foreground flex items-center gap-2">
-              <Grid className="h-4 w-4 text-blue-600" /> Full Horizontal Matrix View (Every Field Column)
-            </span>
-            <span className="text-[11px] text-muted-foreground">Scroll horizontally to inspect all columns</span>
-          </div>
-
-          <div className="overflow-x-auto max-w-full">
-            <table className="w-full text-left text-xs border-collapse whitespace-nowrap">
-              <thead className="bg-slate-100 dark:bg-slate-800/90 font-extrabold uppercase text-muted-foreground tracking-wider border-b border-border">
-                <tr>
-                  <th className="p-3.5 pl-6 sticky left-0 z-20 bg-slate-200 dark:bg-slate-800 shadow-sm min-w-[200px]">
-                    Project Code / Name
-                  </th>
-                  {filteredFields.map((item, idx) => (
-                    <th key={`hdr-${item.field.internalName}-${idx}`} className="p-3.5 border-l border-border min-w-[160px]">
-                      <div className="flex flex-col">
-                        <span className="text-[10px] text-blue-600 dark:text-blue-400 font-mono">{item.section.name}</span>
-                        <span className="text-xs text-foreground font-bold">{item.field.label}</span>
-                        <span className="text-[10px] font-mono text-muted-foreground">{item.field.internalName}</span>
-                      </div>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border">
-                <tr className="hover:bg-accent/40">
-                  <td className="p-3.5 pl-6 sticky left-0 z-10 bg-card font-extrabold text-foreground border-r border-border shadow-xs">
-                    <div>
-                      <p className="font-black text-sm text-primary">{project.name}</p>
-                      <p className="font-mono text-[11px] text-muted-foreground">{project.code}</p>
+        <div className="overflow-x-auto max-w-full">
+          <table className="w-full text-left text-xs border-collapse whitespace-nowrap">
+            <thead className="bg-slate-100 dark:bg-slate-800/90 font-extrabold uppercase text-muted-foreground tracking-wider border-b border-border">
+              <tr>
+                <th className="p-3.5 pl-6 sticky left-0 z-20 bg-slate-200 dark:bg-slate-800 shadow-sm min-w-[220px]">
+                  Project Code / Name
+                </th>
+                {filteredFields.map((item, idx) => (
+                  <th key={`hdr-${item.field.internalName}-${idx}`} className="p-3.5 border-l border-border min-w-[170px]">
+                    <div className="flex flex-col">
+                      <span className="text-[10px] text-blue-600 dark:text-blue-400 font-mono">{item.section.name}</span>
+                      <span className="text-xs text-foreground font-bold">{item.field.label}</span>
+                      <span className="text-[10px] font-mono text-muted-foreground">{item.field.internalName}</span>
                     </div>
-                  </td>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border">
+              <tr className="hover:bg-accent/40 transition-colors">
+                <td className="p-3.5 pl-6 sticky left-0 z-10 bg-card font-extrabold text-foreground border-r border-border shadow-xs">
+                  <div>
+                    <p className="font-black text-sm text-primary">{project.name}</p>
+                    <p className="font-mono text-[11px] text-muted-foreground">{project.code}</p>
+                  </div>
+                </td>
 
-                  {filteredFields.map((item, idx) => (
-                    <td key={`cell-${item.field.internalName}-${idx}`} className="p-3.5 border-l border-border">
-                      {renderFormattedValue(item.field, item.value)}
-                    </td>
-                  ))}
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                {filteredFields.map((item, idx) => (
+                  <td key={`cell-${item.field.internalName}-${idx}`} className="p-3.5 border-l border-border">
+                    {renderFormattedValue(item.field, item.value)}
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
         </div>
-      )}
+      </div>
     </div>
   );
 };
