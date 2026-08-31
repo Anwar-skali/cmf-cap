@@ -27,13 +27,16 @@ export default function PartNewPage() {
       name: '',
       partNumber: '',
       projectId: '',
+      apqp: '',
       supplierId: '',
+      manufacturingCofor: '',
+      useCase: '',
       quantity: 1,
       unit: 'pcs',
       material: '',
-      weight: '' as unknown as number,
       status: 'active',
       description: '',
+      comments: '',
       notes: '',
     },
   });
@@ -65,9 +68,10 @@ export default function PartNewPage() {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <div className="border-b border-slate-200 dark:border-slate-800 pb-3">
               <h2 className="text-xl font-bold tracking-tight text-foreground">Component Specification</h2>
-              <p className="text-xs text-muted-foreground">Fill in the part details below.</p>
+              <p className="text-xs text-muted-foreground">Fill in the part details below according to CMF standards.</p>
             </div>
 
+            {/* Row 1: Part Name & Part Number */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
@@ -75,7 +79,7 @@ export default function PartNewPage() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Part Name *</FormLabel>
-                    <FormControl><Input placeholder="Enter part name" {...field} /></FormControl>
+                    <FormControl><Input placeholder="e.g. Front Bumper LH" {...field} /></FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -87,13 +91,14 @@ export default function PartNewPage() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Part Number *</FormLabel>
-                    <FormControl><Input placeholder="e.g. PN-1002" {...field} /></FormControl>
+                    <FormControl><Input placeholder="e.g. PN-994821" {...field} /></FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
 
+            {/* Row 2: Project & APQP */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
@@ -122,6 +127,21 @@ export default function PartNewPage() {
 
               <FormField
                 control={form.control}
+                name="apqp"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>APQP</FormLabel>
+                    <FormControl><Input placeholder="e.g. APQP-Phase-2" {...field} /></FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            {/* Row 3: Supplier & Manufacturing COFOR (same line) */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
                 name="supplierId"
                 render={({ field }) => (
                   <FormItem>
@@ -144,9 +164,34 @@ export default function PartNewPage() {
                   </FormItem>
                 )}
               />
+
+              <FormField
+                control={form.control}
+                name="manufacturingCofor"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Manufacturing COFOR</FormLabel>
+                    <FormControl><Input placeholder="e.g. COFOR-12948" {...field} /></FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {/* Row 4: Use Case, Quantity & Material */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <FormField
+                control={form.control}
+                name="useCase"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Use Case</FormLabel>
+                    <FormControl><Input placeholder="e.g. Mass Production EV Line" {...field} /></FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
               <FormField
                 control={form.control}
                 name="quantity"
@@ -158,21 +203,9 @@ export default function PartNewPage() {
                         type="number"
                         min={1}
                         {...field}
-                        onChange={(e) => field.onChange(Number(e.target.value))}
+                        onChange={(e) => field.onChange(Number(e.target.value) || 1)}
                       />
                     </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="unit"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Unit *</FormLabel>
-                    <FormControl><Input placeholder="e.g. pcs, kg, m" {...field} /></FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -184,76 +217,58 @@ export default function PartNewPage() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Material</FormLabel>
-                    <FormControl><Input placeholder="e.g. Aluminum, Steel" {...field} /></FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="weight"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Weight (kg)</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        step="0.01"
-                        placeholder="e.g. 1.25"
-                        value={field.value ?? ''}
-                        onChange={(e) => field.onChange(e.target.value === '' ? undefined : Number(e.target.value))}
-                        onBlur={field.onBlur}
-                        name={field.name}
-                        ref={field.ref}
-                      />
-                    </FormControl>
+                    <FormControl><Input placeholder="e.g. Plastic, Aluminum, Steel" {...field} /></FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
 
-            <FormField
-              control={form.control}
-              name="status"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Status</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value ?? ''}>
-                    <FormControl>
-                      <SelectTrigger><SelectValue placeholder="Select status" /></SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="active">Active</SelectItem>
-                      <SelectItem value="inactive">Inactive</SelectItem>
-                      <SelectItem value="obsolete">Obsolete</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {/* Row 5: Status */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="status"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Status</FormLabel>
+                    <Select onValueChange={field.onChange} value={field.value ?? ''}>
+                      <FormControl>
+                        <SelectTrigger><SelectValue placeholder="Select status" /></SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="active">Active</SelectItem>
+                        <SelectItem value="inactive">Inactive</SelectItem>
+                        <SelectItem value="obsolete">Obsolete</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
+            {/* Row 6: Description */}
             <FormField
               control={form.control}
               name="description"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Description</FormLabel>
-                  <FormControl><Textarea placeholder="Part description" {...field} /></FormControl>
+                  <FormControl><Textarea placeholder="Technical specifications and part notes..." {...field} /></FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
+            {/* Row 7: Comments & Commercial Notes */}
             <FormField
               control={form.control}
-              name="notes"
+              name="comments"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Notes</FormLabel>
-                  <FormControl><Textarea placeholder="Internal notes or specifications" {...field} /></FormControl>
+                  <FormLabel>Comments & Commercial Notes</FormLabel>
+                  <FormControl><Textarea placeholder="Commercial reference, commitment dates, or purchasing observations..." {...field} /></FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -275,7 +290,7 @@ export default function PartNewPage() {
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0066CC] hover:bg-[#0052A3] text-white text-xs font-bold px-8 py-2.5 transition-all shadow-md shadow-blue-500/20 active:scale-95 cursor-pointer disabled:opacity-50"
               >
                 <Save className="h-4 w-4" />
-                <span>{createMutation.isPending ? 'Creating...' : 'Next'}</span>
+                <span>{createMutation.isPending ? 'Creating...' : 'Create Part'}</span>
               </button>
             </div>
           </form>

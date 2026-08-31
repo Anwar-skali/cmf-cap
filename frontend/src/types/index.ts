@@ -120,12 +120,16 @@ export interface ProjectPart {
   description?: string;
   status: PartStatus;
   quantity: number;
-  unit: string;
+  unit?: string;
+  useCase?: string;
+  apqp?: string;
+  manufacturingCofor?: string;
   material?: string;
   weight?: number;
   supplierId?: string;
   supplier?: Supplier;
   notes?: string;
+  comments?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -135,12 +139,17 @@ export interface CreateProjectPartRequest {
   name: string;
   partNumber: string;
   description?: string;
+  status?: PartStatus;
   quantity: number;
-  unit: string;
+  unit?: string;
+  useCase?: string;
+  apqp?: string;
+  manufacturingCofor?: string;
   material?: string;
   weight?: number;
   supplierId?: string;
   notes?: string;
+  comments?: string;
 }
 
 export type SupplierStatus = 'active' | 'inactive' | 'blacklisted';

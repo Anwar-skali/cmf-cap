@@ -68,10 +68,9 @@ import {
 } from './utils/partUtils';
 import { PartCardGrid } from './components/PartCardGrid';
 import { PartQuickViewModal } from './components/PartQuickViewModal';
-import { PartAnalyticsView } from './components/PartAnalyticsView';
 import { toast } from 'sonner';
 
-type ViewMode = 'table' | 'cards' | 'analytics';
+type ViewMode = 'table' | 'cards';
 
 export default function PartsPage() {
   const { t } = useLanguage();
@@ -852,17 +851,6 @@ export default function PartsPage() {
               >
                 <LayoutGrid className="h-3.5 w-3.5" /> Cards
               </button>
-
-              <button
-                onClick={() => setViewMode('analytics')}
-                className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                  viewMode === 'analytics'
-                    ? 'bg-card text-foreground shadow-xs'
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}
-              >
-                <PieChartIcon className="h-3.5 w-3.5" /> Analytics
-              </button>
             </div>
           </div>
         </div>
@@ -934,8 +922,6 @@ export default function PartsPage() {
           onDeletePart={(part) => setDeleteTargetPart(part)}
         />
       )}
-
-      {viewMode === 'analytics' && <PartAnalyticsView parts={filteredParts} />}
 
       {/* ── Modals & Dialogs ───────────────────────────────────────────── */}
       {/* Quick View Modal */}

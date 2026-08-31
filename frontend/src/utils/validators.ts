@@ -83,12 +83,17 @@ export const createPartSchema = z.object({
   quantity: z
     .number()
     .positive('Quantity must be positive')
-    .int('Quantity must be a whole number'),
-  unit: z.string().min(1, 'Unit is required').max(50, 'Unit is too long'),
+    .int('Quantity must be a whole number')
+    .default(1),
+  unit: z.string().max(50, 'Unit is too long').optional().default('pcs'),
+  useCase: z.string().max(200, 'Use case is too long').optional(),
+  apqp: z.string().max(100, 'APQP is too long').optional(),
+  manufacturingCofor: z.string().max(100, 'COFOR is too long').optional(),
   material: z.string().max(200, 'Material is too long').optional(),
   weight: z.number().positive('Weight must be positive').optional(),
   supplierId: z.string().optional(),
   notes: z.string().max(2000, 'Notes are too long').optional(),
+  comments: z.string().max(2000, 'Comments are too long').optional(),
 });
 
 export const updatePartSchema = createPartSchema.partial();

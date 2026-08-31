@@ -20,6 +20,11 @@ class CreateProjectPartRequest(BaseModel):
     weight: Decimal | None = None
     material: str | None = Field(None, max_length=255)
     notes: str | None = None
+    supplier_id: uuid.UUID | None = None
+    manufacturing_cofor: str | None = None
+    apqp: str | None = None
+    use_case: str | None = None
+    comments: str | None = None
 
 
 class UpdateProjectPartRequest(BaseModel):
@@ -32,6 +37,11 @@ class UpdateProjectPartRequest(BaseModel):
     weight: Decimal | None = None
     material: str | None = Field(None, max_length=255)
     notes: str | None = None
+    supplier_id: uuid.UUID | None = None
+    manufacturing_cofor: str | None = None
+    apqp: str | None = None
+    use_case: str | None = None
+    comments: str | None = None
 
 
 class ProjectPartResponse(BaseModel):

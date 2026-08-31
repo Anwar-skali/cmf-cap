@@ -30,8 +30,34 @@ class ProjectPartService:
         if any(e.project_id == project_id for e in [existing] if existing):
             raise ConflictException(f"Part number '{data.part_number}' already exists in this project")
 
-        part_data = data.model_dump(exclude_unset=True)
-        part_data["project_id"] = project_id
+        # Extract and format CMF metadata into notes if present
+        extra_info = []
+        if data.manufacturing_cofor:
+            extra_info.append(f"COFOR: {data.manufacturing_cofor}")
+        if data.apqp:
+            extra_info.append(f"APQP: {data.apqp}")
+        if data.use_case:
+            extra_info.append(f"Use Case: {data.use_case}")
+        if data.comments:
+            extra_info.append(f"Comments: {data.comments}")
+
+        notes = data.notes or ""
+        if extra_info:
+            prefix = " | ".join(extra_info)
+            notes = f"{prefix}\n{notes}".strip() if notes else prefix
+
+        part_data = {
+            "project_id": project_id,
+            "part_number": data.part_number,
+            "name": data.name,
+            "description": data.description or data.use_case or None,
+            "status": data.status or "active",
+            "quantity": data.quantity or 1,
+            "unit": data.use_case or data.unit or "pcs",
+            "material": data.material,
+            "weight": data.weight,
+            "notes": notes or None,
+        }
 
         part = await self._uow.project_parts.create(part_data)
 
