@@ -129,7 +129,7 @@ export function ImportWizard({
   const [errorFilter, setErrorFilter] = useState<'all' | 'empty' | 'type' | 'duplicate'>('all');
 
   // Step 7: Execution
-  const [mode, setMode] = useState<'insert' | 'upsert'>('insert');
+  const [mode, setMode] = useState<'insert' | 'upsert'>('upsert');
   const [strategy, setStrategy] = useState<'skip_invalid' | 'rollback_all'>('skip_invalid');
   const [isExecuting, setIsExecuting] = useState(false);
   const [importProgress, setImportProgress] = useState(0);
