@@ -183,6 +183,24 @@ function scoreWorksheet(sheet: XLSX.WorkSheet, sheetName: string, extraKeywords?
     isDashboardName
   );
 
+  // Template and project naming bonus (e.g. CMF K9 SCV, K9, K0, etc.)
+  const cleanLower = sheetName.toLowerCase().trim();
+  let nameBonus = 0;
+  if (cleanLower.includes('k9') || cleanLower.includes('scv') || cleanLower.includes('cmf')) {
+    nameBonus += 250;
+  } else if (cleanLower.includes('k0') || cleanLower.includes('battery')) {
+    nameBonus += 250;
+  }
+
+  // Count full non-empty data rows in the entire sheet
+  let totalDataRows = 0;
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i] || [];
+    if (row.some((c) => c != null && String(c).trim() !== '')) {
+      totalDataRows++;
+    }
+  }
+
   const colScore = Math.min(maxColumns, 80) * 4.0;
   const rowScore = Math.min(populatedRows, 20) * 1.5;
   const kwDensity = Math.min((keywordHits / Math.max(maxColumns, 1)) * 40.0, 100.0);
@@ -207,7 +225,7 @@ function scoreWorksheet(sheet: XLSX.WorkSheet, sheetName: string, extraKeywords?
   const pivotPenalty = Math.min(pivotIndicators, 10) * -15;
   const narrowPenalty = maxColumns < 6 ? -25 : 0;
 
-  const rawScore = colScore + rowScore + kwDensity + structBonus + namePenalty + classificationPenalty + pivotPenalty + narrowPenalty;
+  const rawScore = colScore + rowScore + kwDensity + structBonus + namePenalty + nameBonus + classificationPenalty + pivotPenalty + narrowPenalty;
   const maxBenchmark = 510;
 
   let confidence = 5;
@@ -232,7 +250,7 @@ function scoreWorksheet(sheet: XLSX.WorkSheet, sheetName: string, extraKeywords?
     sheetName,
     score: Math.round(rawScore * 100) / 100,
     confidence,
-    populatedRows,
+    populatedRows: totalDataRows > 0 ? totalDataRows - 1 : populatedRows,
     maxColumns,
     keywordHits,
     isDashboardName,
