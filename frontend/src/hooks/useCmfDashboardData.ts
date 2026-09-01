@@ -35,6 +35,7 @@ export interface CmfDashboardData {
   projectsCompleted: number;
   projectUseCases: number;
   delayedProjectUseCases: number;
+  completedProjectUseCases: number;
   totalParts: number;
   activeParts: number;
 
@@ -118,6 +119,9 @@ export function useCmfDashboardData(): CmfDashboardData {
     stats?.delayedProjectUseCases ??
     (stats as any)?.delayed_project_use_cases ??
     projectsDelayed;
+  const completedProjectUseCases =
+    (stats as any)?.completed_project_use_cases ??
+    rawProjects.filter(isCompleted).length;
 
   const { data: partsData } = usePartsQuery({ pageSize: 1000 });
   const rawParts = partsData?.items ?? [];
@@ -217,6 +221,7 @@ export function useCmfDashboardData(): CmfDashboardData {
     projectsCompleted,
     projectUseCases,
     delayedProjectUseCases,
+    completedProjectUseCases,
     totalParts,
     activeParts,
 

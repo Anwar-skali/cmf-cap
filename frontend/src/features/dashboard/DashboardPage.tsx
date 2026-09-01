@@ -475,12 +475,12 @@ export default function DashboardPage() {
 
           <KPICard
             variant="ltos"
-            title="Active Projects"
-            value={cmf.activeProjects}
-            icon={Target}
-            subtitle="Active project workstreams currently in progress"
+            title="Completed Use Cases"
+            value={cmf.completedProjectUseCases}
+            icon={CheckCircle2}
+            subtitle="Project use cases completed across all CMF structures (K0, K9 & custom)"
             trend={{
-              value: cmf.totalProjects > 0 ? `${cmf.activeProjects} of ${cmf.totalProjects} active` : `${cmf.activeProjects} active`,
+              value: cmf.totalProjects > 0 ? `${Math.round((cmf.completedProjectUseCases / cmf.totalProjects) * 100)}% completion rate` : 'No projects yet',
               isPositive: true,
             }}
             actionText="View Projects"

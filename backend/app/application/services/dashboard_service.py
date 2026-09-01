@@ -80,6 +80,17 @@ class DashboardService:
         project_use_cases = total_projects
         delayed_project_use_cases = delayed_projects
 
+        # Completed project use cases: workflow_step == 4 OR status is a completion variant, globally across all templates
+        _completion_statuses = {'completed', 'closed', 'validated', 'done', 'complete'}
+        completed_project_use_cases = sum(
+            1 for p in projects
+            if (
+                (isinstance(p.data, dict) and p.data.get('workflow_step') == 4)
+                or str(getattr(p, 'status', '') or '').lower().strip() in _completion_statuses
+                or str((p.data or {}).get('status', '')).lower().strip() in _completion_statuses
+            )
+        )
+
         total_suppliers = len(suppliers)
         active_suppliers = sum(1 for s in suppliers if getattr(s, 'status', None) == 'active') or total_suppliers
 
@@ -180,6 +191,7 @@ class DashboardService:
             "projects_on_track": projects_on_track,
             "project_use_cases": project_use_cases,
             "delayed_project_use_cases": delayed_project_use_cases,
+            "completed_project_use_cases": completed_project_use_cases,
             "total_parts": total_parts,
             "active_parts": active_parts,
             "total_suppliers": total_suppliers,
