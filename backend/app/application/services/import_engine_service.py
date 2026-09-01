@@ -709,12 +709,25 @@ class ImportEngineService:
 
     @staticmethod
     def _extract_project_code(record: dict[str, Any], schema: EntityImportSchema | None = None) -> str | None:
-        """Extracts the unique project code/identifier from a mapped record dictionary."""
-        # 1. Primary candidate keys
+        """Extracts the unique project code/identifier from a mapped record dictionary.
+
+        Priority order:
+        1. Schema's declared unique_key column (template-specific, e.g. unique_id for K9, part_number for K0)
+        2. Known generic unique-identifier keys as fallback
+        3. Any key containing 'code', 'unique', or 'part_number' as last resort
+        """
+        # 1. Schema unique_key takes highest priority — ensures each template uses its own declared key
+        if schema:
+            for col in schema.columns:
+                if col.unique_key and col.key != "id":
+                    val = record.get(col.key)
+                    if val is not None and str(val).strip() != "":
+                        return str(val).strip()
+
+        # 2. Generic fallback keys (only reached when no schema unique_key found)
         for k in (
-            "project_code",
-            "code",
             "unique_id",
+            "code",
             "part_number",
             "part_no",
             "project_id",
@@ -727,22 +740,15 @@ class ImportEngineService:
             if val is not None and str(val).strip() != "":
                 return str(val).strip()
 
-        # 2. Check schema columns marked unique_key
-        if schema:
-            for col in schema.columns:
-                if col.unique_key and col.key != "id":
-                    val = record.get(col.key)
-                    if val is not None and str(val).strip() != "":
-                        return str(val).strip()
-
-        # 3. Fallback to any key containing "code", "unique", or "part_number"
+        # 3. Last resort: any key containing 'code', 'unique', or 'part_number'
         for k, val in record.items():
             if val is not None and str(val).strip() != "":
                 lower_k = k.lower()
-                if "code" in lower_k or "unique" in lower_k or "part_number" in lower_k:
+                if "unique" in lower_k or "part_number" in lower_k:
                     return str(val).strip()
 
         return None
+
 
     @staticmethod
     def _extract_project_name(record: dict[str, Any], code: str | None = None) -> str:
@@ -1669,6 +1675,8 @@ class ImportEngineService:
         """
         Retrieves existing database records indexed by normalized unique key,
         INCLUDING soft-deleted records for accurate CREATE, UPDATE, and RESTORE operations.
+        For project entities, scopes results to the matching template code so that
+        K9 imports never collide with K0 records and vice versa.
         Returns: { clean_key: {"id": obj_id, "is_deleted": bool, "code": key_str} }
         """
         records: dict[str, dict[str, Any]] = {}
@@ -1711,26 +1719,33 @@ class ImportEngineService:
                     records[clean] = {"id": r.id, "is_deleted": is_del, "title": r.title}
 
         else:
-            # Query all projects INCLUDING soft-deleted
+            # Query projects scoped to the importing template code
+            # so K9 rows never match K0 projects and vice versa
+            tmpl_code = entity_type.upper()
             from app.infrastructure.persistence.models.project import Project as ProjectModel
             from sqlalchemy import select
             stmt = select(ProjectModel)
             res = await self._uow.session.execute(stmt)
             for p in res.scalars().all():
+                # Skip projects that belong to a DIFFERENT template
+                p_tmpl = None
+                if p.data and isinstance(p.data, dict):
+                    p_tmpl = str(p.data.get("template_code") or "").upper().strip()
+                if p_tmpl and p_tmpl != tmpl_code:
+                    continue  # cross-template — never match
+
                 is_del = p.deleted_at is not None
                 info = {"id": p.id, "is_deleted": is_del, "code": p.code}
                 if p.code:
                     records[p.code.strip().lower()] = info
                 if p.data and isinstance(p.data, dict):
-                    for k in (
-                        "unique_id", "code", "project_code", "part_number", "part_no",
-                        "project_id", "ref", "project_ref", "pn"
-                    ):
+                    for k in ("unique_id", "code", "part_number"):
                         v = p.data.get(k)
                         if v:
                             records[str(v).strip().lower()] = info
 
         return records
+
 
     async def _get_existing_db_unique_keys(
         self, entity_type: str, unique_key: str
