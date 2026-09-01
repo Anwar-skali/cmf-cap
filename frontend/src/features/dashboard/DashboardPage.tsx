@@ -478,7 +478,7 @@ export default function DashboardPage() {
             title="Completed Use Cases"
             value={cmf.completedProjectUseCases}
             icon={CheckCircle2}
-            subtitle="Project use cases completed across all CMF structures (K0, K9 & custom)"
+            subtitle="Projects with all 3 modules filled (Buyer + Capacity + SQD) across all structures"
             trend={{
               value: cmf.totalProjects > 0 ? `${Math.round((cmf.completedProjectUseCases / cmf.totalProjects) * 100)}% completion rate` : 'No projects yet',
               isPositive: true,
