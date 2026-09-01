@@ -343,20 +343,28 @@ export default function DashboardPage() {
               </div>
             </div>
             {/* Monthly trend chart */}
-            <div className="h-48 w-full pt-2">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={cmf.capacityTrend}>
-                  <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
-                  <XAxis dataKey="month" stroke="#888888" fontSize={11} />
-                  <YAxis stroke="#888888" fontSize={10} tickFormatter={(v) => `${(v / 1000).toFixed(0)}K`} />
-                  <Tooltip formatter={(v: number) => v.toLocaleString()} />
-                  <Legend fontSize={11} />
-                  <Line type="monotone" dataKey="available" stroke="#94a3b8" strokeWidth={1.5} dot={false} name="Available" strokeDasharray="4 2" />
-                  <Line type="monotone" dataKey="allocated" stroke="#f59e0b" strokeWidth={2} dot={false} name="Allocated" />
-                  <Line type="monotone" dataKey="used"      stroke="#0066CC" strokeWidth={2.5} dot={false} name="Used" />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
+            {cmf.capacityTrend.length > 0 ? (
+              <div className="h-48 w-full pt-2">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={cmf.capacityTrend}>
+                    <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
+                    <XAxis dataKey="month" stroke="#888888" fontSize={11} />
+                    <YAxis stroke="#888888" fontSize={10} tickFormatter={(v) => `${(v / 1000).toFixed(0)}K`} />
+                    <Tooltip formatter={(v: number) => v.toLocaleString()} />
+                    <Legend fontSize={11} />
+                    <Line type="monotone" dataKey="available" stroke="#94a3b8" strokeWidth={1.5} dot={false} name="Available" strokeDasharray="4 2" />
+                    <Line type="monotone" dataKey="allocated" stroke="#f59e0b" strokeWidth={2} dot={false} name="Allocated" />
+                    <Line type="monotone" dataKey="used"      stroke="#0066CC" strokeWidth={2.5} dot={false} name="Used" />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            ) : (
+              <div className="h-48 w-full flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30 text-center p-4">
+                <Gauge className="h-8 w-8 text-slate-400 mb-1.5 opacity-60" />
+                <p className="text-xs font-semibold text-slate-700 dark:text-slate-300">No monthly capacity assessments recorded</p>
+                <p className="text-[11px] text-muted-foreground mt-0.5">Timeline will update dynamically as capacity entries are logged</p>
+              </div>
+            )}
           </SectionCard>
 
           {/* ── Project Status ────────────────────────────────────────── */}
@@ -409,25 +417,33 @@ export default function DashboardPage() {
                 ))}
               </div>
               <div className="h-52 w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={cmf.sqdPie}
-                      dataKey="value"
-                      nameKey="name"
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={80}
-                      label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                    >
-                      {cmf.sqdPie.map((_, index) => (
-                        <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip />
-                    <Legend fontSize={11} />
-                  </PieChart>
-                </ResponsiveContainer>
+                {cmf.sqdPie.length > 0 ? (
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={cmf.sqdPie}
+                        dataKey="value"
+                        nameKey="name"
+                        cx="50%"
+                        cy="50%"
+                        outerRadius={80}
+                        label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                      >
+                        {cmf.sqdPie.map((_, index) => (
+                          <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
+                        ))}
+                      </Pie>
+                      <Tooltip />
+                      <Legend fontSize={11} />
+                    </PieChart>
+                  </ResponsiveContainer>
+                ) : (
+                  <div className="h-full w-full flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30 text-center p-4">
+                    <ShieldCheck className="h-8 w-8 text-emerald-500 mb-1.5" />
+                    <p className="text-xs font-bold text-slate-700 dark:text-slate-200">100% Quality Conformance</p>
+                    <p className="text-[11px] text-muted-foreground mt-0.5">No open quality issues or critical risks registered</p>
+                  </div>
+                )}
               </div>
             </div>
           </SectionCard>

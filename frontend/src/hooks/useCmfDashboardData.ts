@@ -9,31 +9,6 @@ import { useDashboardStatsQuery } from '@/hooks/queries/useDashboardQuery';
 import { useProjectsQuery } from '@/hooks/queries/useProjectsQuery';
 import { usePartsQuery } from '@/hooks/queries/usePartsQuery';
 
-// ─── ZERO / FALLBACK CONSTANTS FOR EMPTY / DEMO DB STATES ───────────────────
-export const MOCK_CAPACITY_TREND: Array<{ month: string; available: number; allocated: number; used: number }> = [
-  { month: 'Mar', available: 48_500, allocated: 38_000, used: 35_200 },
-  { month: 'Apr', available: 48_500, allocated: 39_500, used: 37_100 },
-  { month: 'May', available: 48_500, allocated: 40_100, used: 38_000 },
-  { month: 'Jun', available: 48_500, allocated: 41_800, used: 39_500 },
-  { month: 'Jul', available: 48_500, allocated: 40_600, used: 38_400 },
-  { month: 'Aug', available: 48_500, allocated: 41_200, used: 38_900 },
-];
-
-export const MOCK_SQD_PIE: Array<{ name: string; value: number }> = [
-  { name: 'Open', value: 14 },
-  { name: 'Critical', value: 3 },
-  { name: 'Closed', value: 41 },
-  { name: 'In Progress', value: 9 },
-];
-
-export const MOCK_PROJECT_STATUS_BAR: Array<{ name: string; count: number }> = [
-  { name: 'Active', count: 74 },
-  { name: 'On Track', count: 38 },
-  { name: 'At Risk', count: 9 },
-  { name: 'Delayed', count: 5 },
-  { name: 'Completed', count: 22 },
-];
-
 const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 export interface CmfDashboardData {
@@ -102,10 +77,10 @@ export function useCmfDashboardData(): CmfDashboardData {
     return ['active', 'in_progress', 'started'].includes(s);
   };
 
-  const totalCmf = stats?.totalCmf ?? (stats as any)?.total_cmf ?? 2;
+  const totalCmf = stats?.totalCmf ?? (stats as any)?.total_cmf ?? 0;
   const totalProjects = stats?.totalProjects ?? (stats as any)?.total_projects ?? rawProjects.length ?? 0;
   const activeProjects = stats?.activeProjects ?? (stats as any)?.active_projects ?? rawProjects.filter(isActive).length ?? 0;
-  const totalSuppliers = stats?.totalSuppliers ?? (stats as any)?.total_suppliers ?? 5;
+  const totalSuppliers = stats?.totalSuppliers ?? (stats as any)?.total_suppliers ?? 0;
   const activeSuppliers = stats?.activeSuppliers ?? (stats as any)?.active_suppliers ?? stats?.totalSuppliers ?? 0;
 
   // Capacity metrics
@@ -193,7 +168,6 @@ export function useCmfDashboardData(): CmfDashboardData {
         used: m.utilized || 0,
       }));
     } else if (totalCapacity > 0) {
-      // If monthly capacity assessments aren't segmented by month yet, generate trend baseline
       capacityTrend = stats.monthlyCapacity.map((m) => ({
         month: MONTH_NAMES[(m.month - 1) % 12] || `M${m.month}`,
         available: totalCapacity,
@@ -202,43 +176,26 @@ export function useCmfDashboardData(): CmfDashboardData {
       }));
     }
   }
-  if (capacityTrend.length === 0) {
-    capacityTrend = totalCapacity > 0
-      ? [
-          { month: 'Apr', available: totalCapacity, allocated: Math.round(allocatedCapacity * 0.9), used: Math.round(usedCapacity * 0.88) },
-          { month: 'May', available: totalCapacity, allocated: Math.round(allocatedCapacity * 0.95), used: Math.round(usedCapacity * 0.92) },
-          { month: 'Jun', available: totalCapacity, allocated: allocatedCapacity, used: usedCapacity },
-          { month: 'Jul', available: totalCapacity, allocated: allocatedCapacity, used: usedCapacity },
-          { month: 'Aug', available: totalCapacity, allocated: allocatedCapacity, used: usedCapacity },
-        ]
-      : MOCK_CAPACITY_TREND;
-  }
 
   // Project Status Bar Chart
   const statusDist = stats?.projectStatusDistribution || {};
-  const hasStatusData = Object.keys(statusDist).length > 0 || totalProjects > 0;
-  const projectStatusBar: Array<{ name: string; count: number }> = hasStatusData
-    ? [
-        { name: 'Active', count: statusDist.active ?? activeProjects },
-        { name: 'On Track', count: projectsOnTrack },
-        { name: 'At Risk', count: projectsAtRisk },
-        { name: 'Delayed', count: projectsDelayed },
-        { name: 'Completed', count: statusDist.completed ?? projectsCompleted },
-      ]
-    : MOCK_PROJECT_STATUS_BAR;
+  const projectStatusBar: Array<{ name: string; count: number }> = [
+    { name: 'Active', count: statusDist.active ?? activeProjects },
+    { name: 'On Track', count: projectsOnTrack },
+    { name: 'At Risk', count: projectsAtRisk },
+    { name: 'Delayed', count: projectsDelayed },
+    { name: 'Completed', count: statusDist.completed ?? projectsCompleted },
+  ];
 
   // SQD Pie Chart
   const riskSeverity = stats?.riskDistribution?.bySeverity || {};
   const riskStatus = stats?.riskDistribution?.byStatus || {};
-  const totalRiskCount = stats?.totalRisks ?? 0;
-  const sqdPie: Array<{ name: string; value: number }> = totalRiskCount > 0 || openQualityIssues > 0
-    ? [
-        { name: 'Open', value: riskStatus.open ?? stats?.openRisks ?? 0 },
-        { name: 'Critical', value: riskSeverity.critical ?? stats?.criticalRisks ?? 0 },
-        { name: 'Closed', value: (riskStatus.closed ?? 0) + (riskStatus.mitigated ?? stats?.mitigatedRisks ?? 0) },
-        { name: 'In Progress', value: (riskStatus.mitigating ?? 0) + (riskStatus.in_progress ?? 0) },
-      ].filter((item) => item.value > 0)
-    : MOCK_SQD_PIE;
+  const sqdPie: Array<{ name: string; value: number }> = [
+    { name: 'Open', value: riskStatus.open ?? stats?.openRisks ?? 0 },
+    { name: 'Critical', value: riskSeverity.critical ?? stats?.criticalRisks ?? 0 },
+    { name: 'Closed', value: (riskStatus.closed ?? 0) + (riskStatus.mitigated ?? stats?.mitigatedRisks ?? 0) },
+    { name: 'In Progress', value: (riskStatus.mitigating ?? 0) + (riskStatus.in_progress ?? 0) },
+  ].filter((item) => item.value > 0);
 
   return {
     totalCmf,
@@ -274,7 +231,7 @@ export function useCmfDashboardData(): CmfDashboardData {
 
     capacityTrend,
     projectStatusBar,
-    sqdPie: sqdPie.length > 0 ? sqdPie : MOCK_SQD_PIE,
+    sqdPie,
 
     isLoading,
     error: error ?? null,
