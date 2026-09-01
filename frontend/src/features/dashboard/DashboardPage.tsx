@@ -306,8 +306,8 @@ export default function DashboardPage() {
           </h2>
         </div>
 
-        {/* Row 1: Capacity Overview + Project Status */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Row 1: Capacity Overview */}
+        <div className="w-full">
 
           {/* ── Capacity Overview ─────────────────────────────────────── */}
           <SectionCard title="Capacity Overview" subtitle="Production capacity breakdown (units/week)" icon={Gauge}>
@@ -364,33 +364,6 @@ export default function DashboardPage() {
                 <p className="text-[11px] text-muted-foreground mt-0.5">Timeline will update dynamically as capacity entries are logged</p>
               </div>
             )}
-          </SectionCard>
-
-          {/* ── Project Status ────────────────────────────────────────── */}
-          <SectionCard title="Project Status" subtitle="Distribution of projects by current status" icon={Target}>
-            <div className="space-y-1 mb-2">
-              <StatRow label="Active"    value={cmf.activeProjects}    color="text-slate-700 dark:text-slate-200" />
-              <StatRow label="On Track"  value={cmf.projectsOnTrack}   color="text-slate-700 dark:text-slate-200" />
-              <StatRow label="At Risk"   value={cmf.projectsAtRisk}    color="text-slate-700 dark:text-slate-200" />
-              <StatRow label="Delayed"   value={cmf.projectsDelayed}   color="text-slate-700 dark:text-slate-200" />
-              <StatRow label="Completed" value={cmf.projectsCompleted} color="text-slate-500 dark:text-slate-400" />
-            </div>
-            <div className="h-56 w-full pt-1">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={cmf.projectStatusBar} layout="vertical" margin={{ left: 10 }}>
-                  <CartesianGrid strokeDasharray="3 3" opacity={0.2} horizontal={false} />
-                  <XAxis type="number" stroke="#888888" fontSize={11} />
-                  <YAxis type="category" dataKey="name" stroke="#888888" fontSize={11} width={70} />
-                  <Tooltip />
-                  <Bar dataKey="count" radius={[0, 6, 6, 0]} name="Projects">
-                    {cmf.projectStatusBar.map((entry, index) => {
-                      const colors = ['#64748b', '#78909c', '#90a4ae', '#b0bec5', '#cfd8dc'];
-                      return <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />;
-                    })}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
           </SectionCard>
         </div>
 
