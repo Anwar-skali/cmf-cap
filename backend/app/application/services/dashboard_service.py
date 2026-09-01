@@ -78,6 +78,7 @@ class DashboardService:
 
         # Project use cases spans all project line items/cases across all CMF templates (K0, K9, and custom structures)
         project_use_cases = total_projects
+        delayed_project_use_cases = delayed_projects
 
         total_suppliers = len(suppliers)
         active_suppliers = sum(1 for s in suppliers if getattr(s, 'status', None) == 'active') or total_suppliers
