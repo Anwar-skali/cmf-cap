@@ -98,7 +98,8 @@ class DashboardService:
         open_risks = sum(1 for r in risks if r.status == 'open')
         critical_risks = sum(
             1 for r in risks
-            if r.severity == RiskSeverity.CRITICAL or str(r.severity).lower() == 'critical'
+            if r.status == 'open'
+            and (r.severity == RiskSeverity.CRITICAL or str(r.severity).lower() == 'critical')
         )
         mitigated_risks = sum(1 for r in risks if r.status in ('mitigated', 'closed'))
 
@@ -112,7 +113,8 @@ class DashboardService:
         )
         critical_quality_issues = sum(
             1 for r in risks
-            if (r.severity == RiskSeverity.CRITICAL or str(r.severity).lower() == 'critical')
+            if r.status == 'open'
+            and (r.severity == RiskSeverity.CRITICAL or str(r.severity).lower() == 'critical')
             and (
                 not r.risk_type
                 or str(r.risk_type).lower() in ('quality', 'technical', 'sqd', 'sqe', 'supplier', 'process')
