@@ -314,10 +314,10 @@ export default function DashboardPage() {
           <SectionCard title="Capacity Overview" subtitle="Production capacity breakdown (units/week)" icon={Gauge}>
             <div className="grid grid-cols-2 gap-3 mb-4">
               {[
-                { label: 'Available Capacity', value: cmf.availableCapacity.toLocaleString(), color: 'text-blue-600' },
-                { label: 'Allocated Capacity', value: cmf.allocatedCapacity.toLocaleString(), color: 'text-amber-600' },
-                { label: 'Used Capacity',      value: cmf.usedCapacity.toLocaleString(),      color: 'text-emerald-600' },
-                { label: 'Remaining Capacity', value: cmf.remainingCapacity.toLocaleString(), color: 'text-slate-600 dark:text-slate-300' },
+                { label: 'Available Capacity', value: cmf.availableCapacity.toLocaleString(), color: 'text-slate-700 dark:text-slate-200' },
+                { label: 'Allocated Capacity', value: cmf.allocatedCapacity.toLocaleString(), color: 'text-slate-700 dark:text-slate-200' },
+                { label: 'Used Capacity',      value: cmf.usedCapacity.toLocaleString(),      color: 'text-slate-700 dark:text-slate-200' },
+                { label: 'Remaining Capacity', value: cmf.remainingCapacity.toLocaleString(), color: 'text-slate-700 dark:text-slate-200' },
               ].map(({ label, value, color }) => (
                 <div key={label} className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-3 space-y-0.5">
                   <p className="text-[11px] text-muted-foreground font-medium">{label}</p>
@@ -362,10 +362,10 @@ export default function DashboardPage() {
           {/* ── Project Status ────────────────────────────────────────── */}
           <SectionCard title="Project Status" subtitle="Distribution of projects by current status" icon={Target}>
             <div className="space-y-1 mb-2">
-              <StatRow label="Active"    value={cmf.activeProjects}    color="text-blue-600" />
-              <StatRow label="On Track"  value={cmf.projectsOnTrack}   color="text-emerald-600" />
-              <StatRow label="At Risk"   value={cmf.projectsAtRisk}    color="text-rose-600" />
-              <StatRow label="Delayed"   value={cmf.projectsDelayed}   color="text-amber-600" />
+              <StatRow label="Active"    value={cmf.activeProjects}    color="text-slate-700 dark:text-slate-200" />
+              <StatRow label="On Track"  value={cmf.projectsOnTrack}   color="text-slate-700 dark:text-slate-200" />
+              <StatRow label="At Risk"   value={cmf.projectsAtRisk}    color="text-slate-700 dark:text-slate-200" />
+              <StatRow label="Delayed"   value={cmf.projectsDelayed}   color="text-slate-700 dark:text-slate-200" />
               <StatRow label="Completed" value={cmf.projectsCompleted} color="text-slate-500 dark:text-slate-400" />
             </div>
             <div className="h-56 w-full pt-1">
@@ -377,7 +377,7 @@ export default function DashboardPage() {
                   <Tooltip />
                   <Bar dataKey="count" radius={[0, 6, 6, 0]} name="Projects">
                     {cmf.projectStatusBar.map((entry, index) => {
-                      const colors = ['#0066CC', '#10b981', '#ef4444', '#f59e0b', '#94a3b8'];
+                      const colors = ['#64748b', '#78909c', '#90a4ae', '#b0bec5', '#cfd8dc'];
                       return <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />;
                     })}
                   </Bar>
