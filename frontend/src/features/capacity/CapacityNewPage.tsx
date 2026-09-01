@@ -151,7 +151,7 @@ export default function CapacityNewPage() {
               {isEditing ? `Edit Capacity Assessment #${prefillData.id.slice(0, 8)}` : 'New Capacity Assessment'}
             </h1>
             <p className="text-sm text-muted-foreground">
-              Evaluate production line sizing, supplier capacity constraints, CATE milestone readiness, and line bottlenecks
+              Evaluate production line sizing, supplier capacity constraints, CAT milestone readiness, and line bottlenecks
             </p>
           </div>
         </div>
@@ -250,7 +250,7 @@ export default function CapacityNewPage() {
                 </CardContent>
               </Card>
 
-              {/* Step 2: CATE & Evaluation Status */}
+              {/* Step 2: CAT & Evaluation Status */}
               <Card className="border-border/60 shadow-soft overflow-hidden">
                 <CardHeader className="bg-muted/30 border-b border-border/40 pb-4">
                   <div className="flex items-center justify-between">
@@ -258,14 +258,14 @@ export default function CapacityNewPage() {
                       <div className="h-8 w-8 rounded-lg bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center font-bold text-sm">
                         2
                       </div>
-                      CATE Classification, Status & Risk Level
+                      CAT Classification, Status & Risk Level
                     </CardTitle>
                     <Badge variant="outline" className="text-[11px] text-muted-foreground font-mono">
                       Step 2 of 5
                     </Badge>
                   </div>
                   <CardDescription className="text-xs pt-1">
-                    Set CATE category tier, validation lifecycle status, and evaluated line risk severity
+                    Set CAT category tier, validation lifecycle status, and evaluated line risk severity
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="p-6 space-y-5">
@@ -276,19 +276,19 @@ export default function CapacityNewPage() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="text-xs font-semibold flex items-center gap-1.5">
-                            <Layers className="h-3.5 w-3.5 text-purple-600" /> CATE Tier *
+                            <Layers className="h-3.5 w-3.5 text-purple-600" /> CAT Tier *
                           </FormLabel>
-                          <Select onValueChange={field.onChange} value={field.value ?? 'CATE 1'}>
+                          <Select onValueChange={field.onChange} value={field.value ?? 'CAT 1'}>
                             <FormControl>
                               <SelectTrigger className="h-10 bg-background/80">
-                                <SelectValue placeholder="Select CATE" />
+                                <SelectValue placeholder="Select CAT" />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value="CATE 1">CATE 1 (Critical Safety)</SelectItem>
-                              <SelectItem value="CATE 2">CATE 2 (Major Functional)</SelectItem>
-                              <SelectItem value="CATE 3">CATE 3 (Standard Component)</SelectItem>
-                              <SelectItem value="CATE 4">CATE 4 (Minor Parts)</SelectItem>
+                              <SelectItem value="CAT 1">CAT 1 (Critical Safety)</SelectItem>
+                              <SelectItem value="CAT 2">CAT 2 (Major Functional)</SelectItem>
+                              <SelectItem value="CAT 3">CAT 3 (Standard Component)</SelectItem>
+                              <SelectItem value="CAT 4">CAT 4 (Minor Parts)</SelectItem>
                             </SelectContent>
                           </Select>
                           <FormMessage />

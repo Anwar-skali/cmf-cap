@@ -185,7 +185,7 @@ export default function CapacityPage() {
       'Part Name',
       'Supplier',
       'Supplier Code',
-      'CATE',
+      'CAT',
       'Status',
       'Risk Level',
       'Current Capacity',
@@ -306,13 +306,14 @@ export default function CapacityPage() {
     },
     {
       accessorKey: 'cate',
-      header: 'CATE',
+      header: 'CAT',
       cell: ({ row }) => {
-        const cate = row.original.cate || row.original.gate || 'CATE 1';
+        const rawCate = row.original.cate || row.original.gate || 'CAT 1';
+        const displayCat = rawCate.replace(/CATE/gi, 'CAT');
         return (
-          <Badge variant="outline" className={`gap-1 px-2.5 py-0.5 text-xs font-semibold border ${getCateBadgeStyle(cate)}`}>
+          <Badge variant="outline" className={`gap-1 px-2.5 py-0.5 text-xs font-semibold border ${getCateBadgeStyle(rawCate)}`}>
             <Layers className="h-3 w-3" />
-            {cate}
+            {displayCat}
           </Badge>
         );
       },
@@ -485,8 +486,8 @@ export default function CapacityPage() {
     <div className="space-y-6 animate-fade-in pb-10">
       {/* ── Page Header ── */}
       <PageHeader
-        title="Capacity Management & CATE Tracking"
-        description="Monitor supplier industrial capacity, CATE milestones, deadline adherence, and operational bottlenecks"
+        title="Capacity Management & CAT Tracking"
+        description="Monitor supplier industrial capacity, CAT milestones, deadline adherence, and operational bottlenecks"
       >
         <div className="flex items-center gap-2">
           <Button variant="outline" size="sm" onClick={handleExportCSV} className="gap-1.5">
@@ -580,7 +581,7 @@ export default function CapacityPage() {
         <div className="relative flex-1 min-w-[240px]">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search Part, Supplier, CATE, Bottleneck, Project..."
+            placeholder="Search Part, Supplier, CAT, Bottleneck, Project..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="pl-9 bg-background/80"
@@ -603,18 +604,18 @@ export default function CapacityPage() {
           </Select>
         </div>
 
-        {/* CATE Filter */}
+        {/* CAT Filter */}
         <div className="w-full md:w-44">
           <Select value={cateFilter} onValueChange={setCateFilter}>
             <SelectTrigger className="bg-background/80 text-xs">
-              <SelectValue placeholder="CATE: All" />
+              <SelectValue placeholder="CAT: All" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All CATE</SelectItem>
-              <SelectItem value="cate 1">CATE 1</SelectItem>
-              <SelectItem value="cate 2">CATE 2</SelectItem>
-              <SelectItem value="cate 3">CATE 3</SelectItem>
-              <SelectItem value="cate 4">CATE 4</SelectItem>
+              <SelectItem value="all">All CAT</SelectItem>
+              <SelectItem value="cat 1">CAT 1</SelectItem>
+              <SelectItem value="cat 2">CAT 2</SelectItem>
+              <SelectItem value="cat 3">CAT 3</SelectItem>
+              <SelectItem value="cat 4">CAT 4</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -718,7 +719,7 @@ export default function CapacityPage() {
           <DialogHeader>
             <div className="flex items-center gap-2 mb-1">
               <Badge variant="outline" className={`px-2.5 py-0.5 text-xs font-semibold ${getCateBadgeStyle(selectedAssessment?.cate || selectedAssessment?.gate)}`}>
-                {selectedAssessment?.cate || selectedAssessment?.gate || 'CATE 1'}
+                {(selectedAssessment?.cate || selectedAssessment?.gate || 'CAT 1').replace(/CATE/gi, 'CAT')}
               </Badge>
               <Badge variant={getStatusVariant(selectedAssessment?.status || 'pending')} className="capitalize">
                 {selectedAssessment?.status}

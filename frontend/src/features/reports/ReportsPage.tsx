@@ -195,11 +195,12 @@ export default function ReportsPage() {
     return matrix;
   }, [filteredRisks]);
 
-  // ── CATE Tier Breakdown ──
+  // ── CAT Tier Breakdown ──
   const cateData = useMemo(() => {
     const counts: Record<string, number> = {};
     filteredCapacity.forEach((c) => {
-      const cate = c.cate || c.gate || 'CATE 1';
+      const rawCate = c.cate || c.gate || 'CAT 1';
+      const cate = rawCate.replace(/CATE/gi, 'CAT');
       counts[cate] = (counts[cate] || 0) + 1;
     });
     return Object.entries(counts).map(([name, value]) => ({
@@ -301,11 +302,11 @@ export default function ReportsPage() {
         ]),
       },
       'Capacity Assessments (CMF)': {
-        headers: ['Part Number', 'Supplier', 'CATE', 'Status', 'Required', 'Max Cap', 'Util %'],
+        headers: ['Part Number', 'Supplier', 'CAT', 'Status', 'Required', 'Max Cap', 'Util %'],
         rows: capacity.map((c) => [
           c.partNumber || c.projectPartId?.slice(0, 8) || '-',
           c.supplierName || '-',
-          c.cate || c.gate || 'CATE 1',
+          (c.cate || c.gate || 'CAT 1').replace(/CATE/gi, 'CAT'),
           c.status || 'pending',
           c.currentCapacity?.toLocaleString() || '0',
           c.maximumCapacity?.toLocaleString() || '0',
@@ -363,7 +364,7 @@ export default function ReportsPage() {
       PartName: c.partName || '',
       Supplier: c.supplierName || '',
       SupplierCOFOR: c.supplierCode || '',
-      CATE: c.cate || c.gate || 'CATE 1',
+      CAT: (c.cate || c.gate || 'CAT 1').replace(/CATE/gi, 'CAT'),
       Status: c.status || '',
       RiskLevel: c.riskLevel || 'low',
       CurrentCapacity_Pcs: c.currentCapacity || 0,
@@ -411,7 +412,7 @@ export default function ReportsPage() {
       {/* ── Page Header ── */}
       <PageHeader
         title="Executive Analytics & Enterprise Intelligence"
-        description="Global platform performance dashboard, project portfolio readiness, risk exposure matrix, and CATE capacity forecasts"
+        description="Global platform performance dashboard, project portfolio readiness, risk exposure matrix, and CAT capacity forecasts"
       >
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -640,7 +641,7 @@ export default function ReportsPage() {
             <AlertTriangle className="h-4 w-4" /> Risk Heatmap ({filteredRisks.length})
           </TabsTrigger>
           <TabsTrigger value="capacity" className="gap-2 text-xs font-semibold">
-            <Gauge className="h-4 w-4" /> Capacity & CATE Readiness ({filteredCapacity.length})
+            <Gauge className="h-4 w-4" /> Capacity & CAT Readiness ({filteredCapacity.length})
           </TabsTrigger>
         </TabsList>
 
@@ -881,16 +882,16 @@ export default function ReportsPage() {
           </div>
         </TabsContent>
 
-        {/* TAB 4: CAPACITY & CATE READINESS */}
+        {/* TAB 4: CAPACITY & CAT READINESS */}
         <TabsContent value="capacity" className="space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* CATE Tier Distribution */}
+            {/* CAT Tier Distribution */}
             <Card className="border-border/60 shadow-sm">
               <CardHeader className="pb-3">
                 <CardTitle className="text-base font-bold flex items-center gap-2">
-                  <Layers className="h-4 w-4 text-purple-600" /> CATE Tier Milestone Readiness
+                  <Layers className="h-4 w-4 text-purple-600" /> CAT Tier Milestone Readiness
                 </CardTitle>
-                <CardDescription className="text-xs">Capacity audits split by CATE classification level</CardDescription>
+                <CardDescription className="text-xs">Capacity audits split by CAT classification level</CardDescription>
               </CardHeader>
               <CardContent className="h-[280px]">
                 {isLoading ? (
@@ -929,7 +930,7 @@ export default function ReportsPage() {
                       <tr>
                         <th className="p-3">Part #</th>
                         <th className="p-3">Supplier</th>
-                        <th className="p-3">CATE</th>
+                        <th className="p-3">CAT</th>
                         <th className="p-3">Utilization</th>
                         <th className="p-3">Status</th>
                         <th className="p-3">Bottleneck</th>
@@ -956,7 +957,7 @@ export default function ReportsPage() {
                               <td className="p-3 font-semibold text-foreground">{c.supplierName || 'Assigned Supplier'}</td>
                               <td className="p-3">
                                 <Badge variant="outline" className="font-mono text-[10px]">
-                                  {c.cate || c.gate || 'CATE 1'}
+                                  {(c.cate || c.gate || 'CAT 1').replace(/CATE/gi, 'CAT')}
                                 </Badge>
                               </td>
                               <td className="p-3 font-mono font-bold">

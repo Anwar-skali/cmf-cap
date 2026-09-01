@@ -98,7 +98,7 @@ export default function CapacityDetailPage() {
             <div className="flex items-center gap-2.5 flex-wrap">
               <Badge variant="outline" className={`gap-1 px-2.5 py-0.5 text-xs font-semibold border ${getCateBadgeStyle(assessment.cate || assessment.gate)}`}>
                 <Layers className="h-3.5 w-3.5" />
-                {assessment.cate || assessment.gate || 'CATE 1'}
+                {(assessment.cate || assessment.gate || 'CAT 1').replace(/CATE/gi, 'CAT')}
               </Badge>
               <Badge variant={getStatusVariant(assessment.status)} className="capitalize text-xs font-medium">
                 {assessment.status}
@@ -296,9 +296,9 @@ export default function CapacityDetailPage() {
               <span className="text-foreground">{assessment.projectName || 'CMF Project'}</span>
             </div>
             <div className="flex justify-between py-1.5">
-              <span className="text-muted-foreground">CATE:</span>
+              <span className="text-muted-foreground">CAT:</span>
               <Badge variant="outline" className={`text-xs font-semibold ${getCateBadgeStyle(assessment.cate || assessment.gate)}`}>
-                {assessment.cate || assessment.gate || 'CATE 1'}
+                {(assessment.cate || assessment.gate || 'CAT 1').replace(/CATE/gi, 'CAT')}
               </Badge>
             </div>
           </CardContent>
