@@ -20,7 +20,6 @@ import {
   BarChart3,
   AlertTriangle,
   CheckCircle2,
-  Clock,
   Users,
   Zap,
   Activity,
@@ -476,15 +475,15 @@ export default function DashboardPage() {
 
           <KPICard
             variant="ltos"
-            title="Delayed Project Use Cases"
-            value={cmf.delayedProjectUseCases}
-            icon={Clock}
-            subtitle="Project use cases with schedule delays or overruns"
+            title="Active Projects"
+            value={cmf.activeProjects}
+            icon={Target}
+            subtitle="Active project workstreams currently in progress"
             trend={{
-              value: cmf.delayedProjectUseCases > 0 ? `${cmf.delayedProjectUseCases} delayed` : '0 delayed',
-              isPositive: cmf.delayedProjectUseCases === 0,
+              value: cmf.totalProjects > 0 ? `${cmf.activeProjects} of ${cmf.totalProjects} active` : `${cmf.activeProjects} active`,
+              isPositive: true,
             }}
-            actionText="Review"
+            actionText="View Projects"
             onClickAction={() => navigate('/projects')}
           />
 
