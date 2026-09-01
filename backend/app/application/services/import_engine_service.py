@@ -322,19 +322,9 @@ class ImportEngineService:
             ws = workbook[specified_sheet_name]
             best_rows = list(ws.iter_rows(values_only=True))
         else:
-            max_count = 0
-            for sheet_name in sheets:
-                ws = workbook[sheet_name]
-                sheet_rows = list(ws.iter_rows(values_only=True))
-                if not sheet_rows:
-                    continue
-
-                for r in sheet_rows[:20]:
-                    non_empty_count = len([c for c in r if c is not None and str(c).strip() != ""])
-                    if non_empty_count > max_count:
-                        max_count = non_empty_count
-                        best_sheet_name = sheet_name
-                        best_rows = sheet_rows
+            # Use only the FIRST sheet — if the user wants a specific sheet they should select it
+            ws = workbook[sheets[0]]
+            best_rows = list(ws.iter_rows(values_only=True))
 
         if not best_rows:
             return {
