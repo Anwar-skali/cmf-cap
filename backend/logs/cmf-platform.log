@@ -46506,3 +46506,29 @@ mapped_data={'indice': 2, 'module': 'Chassis', 'designation_commodity': 'Bracket
 2026-08-31 14:51:23,191 - app.main - INFO - Starting CMF Platform API
 2026-08-31 14:51:23,204 - app.main - INFO - Database tables verified/created successfully
 2026-08-31 14:51:23,419 - app.infrastructure.persistence.seeds.auto_seed - INFO - Database already contains 443 projects — skipping auto-seed
+2026-09-01 10:12:46,350 - app.main - INFO - Starting CMF Platform API
+2026-09-01 10:12:46,385 - app.main - INFO - Database tables verified/created successfully
+2026-09-01 10:12:46,638 - app.infrastructure.persistence.seeds.auto_seed - INFO - Database already contains 445 projects — skipping auto-seed
+2026-09-01 10:14:05,473 - app.main - INFO - POST /api/v1/auth/login
+2026-09-01 10:14:07,155 - app.main - INFO - POST /api/v1/auth/login -> 200
+2026-09-01 10:14:07,199 - app.main - INFO - GET /api/v1/auth/me
+2026-09-01 10:14:07,406 - app.main - INFO - GET /api/v1/auth/me -> 200
+2026-09-01 10:14:07,689 - app.main - INFO - GET /api/v1/notifications/unread-count
+2026-09-01 10:14:07,741 - app.main - INFO - GET /api/v1/notifications
+2026-09-01 10:14:07,754 - app.main - INFO - GET /api/v1/parts
+2026-09-01 10:14:07,757 - app.main - INFO - GET /api/v1/templates
+2026-09-01 10:14:07,759 - app.main - INFO - GET /api/v1/projects
+2026-09-01 10:14:07,764 - app.main - INFO - GET /api/v1/dashboard/stats
+2026-09-01 10:14:08,220 - app.main - INFO - GET /api/v1/notifications/unread-count -> 200
+2026-09-01 10:14:09,007 - app.main - INFO - GET /api/v1/templates -> 200
+2026-09-01 10:14:09,057 - app.main - INFO - GET /api/v1/templates
+2026-09-01 10:14:09,832 - app.main - INFO - GET /api/v1/notifications -> 200
+2026-09-01 10:14:10,423 - app.main - INFO - GET /api/v1/templates -> 200
+2026-09-01 10:14:10,787 - app.main - INFO - GET /api/v1/parts -> 200
+2026-09-01 10:14:11,333 - app.main - INFO - GET /api/v1/projects -> 200
+2026-09-01 10:14:12,573 - app.main - INFO - GET /api/v1/dashboard/stats -> 200
+2026-09-01 10:14:13,343 - app.main - INFO - GET /api/v1/parts
+2026-09-01 10:14:13,540 - app.main - INFO - GET /api/v1/parts -> 200
+2026-09-01 10:14:23,427 - app.main - INFO - GET /api/v1/suppliers
+2026-09-01 10:14:23,443 - app.main - INFO - GET /api/v1/projects
+2026-09-01 10:14:24,134 - app.main - INFO - GET /api/v1/suppliers -> 200
