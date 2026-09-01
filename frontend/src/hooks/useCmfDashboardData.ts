@@ -43,6 +43,7 @@ export interface CmfDashboardData {
   openQualityIssues: number;
   criticalQualityIssues: number;
   openActions: number;
+  mitigatedRisks: number;
   supplierQualityStatus: string;
 
   // ── Buyer / Project Overview ──────────────────────────────────────────────
@@ -141,6 +142,7 @@ export function useCmfDashboardData(): CmfDashboardData {
   const openQualityIssues = stats?.openQualityIssues ?? 0;
   const criticalQualityIssues = stats?.criticalQualityIssues ?? stats?.criticalRisks ?? 0;
   const openActions = stats?.openActions ?? stats?.openRisks ?? 0;
+  const mitigatedRisks = stats?.mitigatedRisks ?? (stats as any)?.mitigated_risks ?? 0;
   const supplierQualityStatus = stats?.supplierQualityStatus ?? 'GREEN';
   const upcomingMilestones = stats?.upcomingMilestones ?? 0;
 
@@ -228,6 +230,7 @@ export function useCmfDashboardData(): CmfDashboardData {
     openQualityIssues,
     criticalQualityIssues,
     openActions,
+    mitigatedRisks,
     supplierQualityStatus,
 
     projectsByCustomer,

@@ -476,15 +476,15 @@ export default function DashboardPage() {
 
           <KPICard
             variant="ltos"
-            title="Open Actions"
-            value={cmf.openActions}
-            icon={AlertTriangle}
-            subtitle="Corrective actions pending resolution"
+            title="Resolved Risks"
+            value={cmf.mitigatedRisks}
+            icon={CheckCircle2}
+            subtitle="Risks successfully mitigated or closed"
             trend={{
-              value: cmf.openActions > 0 ? `${cmf.openActions} pending actions` : 'All resolved',
-              isPositive: cmf.openActions === 0,
+              value: cmf.mitigatedRisks > 0 ? `${cmf.mitigatedRisks} resolved` : 'None resolved yet',
+              isPositive: cmf.mitigatedRisks > 0,
             }}
-            actionText="View"
+            actionText="View Risks"
             onClickAction={() => navigate('/risks')}
           />
 
