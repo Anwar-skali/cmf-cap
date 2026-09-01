@@ -394,10 +394,10 @@ export default function DashboardPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
               <div className="grid grid-cols-2 gap-3">
                 {[
-                  { label: 'Open Quality Issues',    value: cmf.openQualityIssues,    icon: AlertTriangle, color: 'text-amber-600' },
-                  { label: 'Critical Issues',        value: cmf.criticalQualityIssues, icon: AlertTriangle, color: 'text-rose-600' },
-                  { label: 'Open Actions',           value: cmf.openActions,           icon: CheckCircle2,  color: 'text-blue-600' },
-                  { label: 'Supplier Quality Status',value: cmf.supplierQualityStatus, icon: ShieldCheck,   color: cmf.supplierQualityStatus === 'GREEN' ? 'text-emerald-600' : cmf.supplierQualityStatus === 'YELLOW' ? 'text-amber-600' : 'text-rose-600' },
+                  { label: 'Open Quality Issues',    value: cmf.openQualityIssues,    icon: AlertTriangle, color: 'text-slate-700 dark:text-slate-200' },
+                  { label: 'Critical Issues',        value: cmf.criticalQualityIssues, icon: AlertTriangle, color: 'text-slate-700 dark:text-slate-200' },
+                  { label: 'Open Actions',           value: cmf.openActions,           icon: CheckCircle2,  color: 'text-slate-700 dark:text-slate-200' },
+                  { label: 'Supplier Quality Status',value: cmf.supplierQualityStatus, icon: ShieldCheck,   color: 'text-slate-700 dark:text-slate-200' },
                 ].map(({ label, value, icon: RowIcon, color }) => (
                   <div key={label} className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-3 space-y-1 flex flex-col">
                     <div className={`flex items-center gap-1.5 ${color}`}>
