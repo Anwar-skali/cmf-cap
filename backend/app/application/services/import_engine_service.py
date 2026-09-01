@@ -1895,6 +1895,11 @@ class ImportEngineService:
                     merged_data["workflow_step"] = calculate_workflow_step(merged_data, tmpl_code)
                     existing_obj.data = merged_data
                     flag_modified(existing_obj, "data")
+                    # Auto-set project status based on workflow completion
+                    if merged_data["workflow_step"] == 4:
+                        existing_obj.status = "completed"
+                    elif existing_obj.status in (None, "draft"):
+                        existing_obj.status = "active"
 
                 # Explicitly restore soft-deleted record and update timestamp
                 existing_obj.deleted_at = None
@@ -1928,6 +1933,11 @@ class ImportEngineService:
                 return True, True  # success=True, is_update=True
             else:
                 # New project: CREATE
+                # Auto-set status based on workflow step
+                if workflow_step == 4:
+                    project_payload["status"] = "completed"
+                else:
+                    project_payload["status"] = "active"
                 new_proj = await uow.projects.create(project_payload)
                 logger.info(
                     "[IMPORT DEBUG] Project execution decision:\nproject_code=%s\ndecision=CREATED\nreason=New project created\nexisting_project_id=None\nexisting_project_code=None\ndeleted/active=NONE\nmapped_data=%r",

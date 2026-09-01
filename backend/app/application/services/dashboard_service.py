@@ -80,14 +80,13 @@ class DashboardService:
         project_use_cases = total_projects
         delayed_project_use_cases = delayed_projects
 
-        # Completed project use cases: all 3 modules filled (Buyer + Capacity + SQD = step >= 3)
-        # across all templates globally — K0, K9, and any future custom structures
+        # Completed project use cases: count any project whose status is a completion variant
+        # Works across all templates (K0, K9, and any future custom structures) globally
         _completion_statuses = {'completed', 'closed', 'validated', 'done', 'complete'}
         completed_project_use_cases = sum(
             1 for p in projects
             if (
-                (isinstance(p.data, dict) and int(p.data.get('workflow_step') or 0) >= 3)
-                or str(getattr(p, 'status', '') or '').lower().strip() in _completion_statuses
+                str(getattr(p, 'status', '') or '').lower().strip() in _completion_statuses
                 or str((p.data or {}).get('status', '')).lower().strip() in _completion_statuses
             )
         )
