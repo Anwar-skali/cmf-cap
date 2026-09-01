@@ -464,9 +464,9 @@ export default function DashboardPage() {
             title="Project Use Cases"
             value={cmf.projectUseCases}
             icon={Layers}
-            subtitle="Total project use cases defined across CMF structures"
+            subtitle="Total project use cases defined across all CMF structures"
             trend={{
-              value: cmf.totalProjects > 0 ? `${Math.round((cmf.projectUseCases / cmf.totalProjects) * 100)}% of projects` : `${cmf.projectUseCases} active`,
+              value: `${cmf.projectUseCases} total use cases`,
               isPositive: true,
             }}
             actionText="View Projects"

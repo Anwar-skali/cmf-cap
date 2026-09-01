@@ -76,16 +76,8 @@ class DashboardService:
             or (is_status(p, 'active', 'draft', 'on_hold') and is_past(p.end_date))
         )
 
-        use_case_projects = [
-            p for p in projects
-            if isinstance(p.data, dict) and p.data.get("use_case")
-        ]
-        project_use_cases = len(use_case_projects) if use_case_projects else total_projects
-        delayed_project_use_cases = sum(
-            1 for p in (use_case_projects if use_case_projects else projects)
-            if is_status(p, 'delayed', 'on_hold')
-            or (is_past(p.end_date) and not is_status(p, 'completed', 'closed', 'validated'))
-        )
+        # Project use cases spans all project line items/cases across all CMF templates (K0, K9, and custom structures)
+        project_use_cases = total_projects
 
         total_suppliers = len(suppliers)
         active_suppliers = sum(1 for s in suppliers if getattr(s, 'status', None) == 'active') or total_suppliers

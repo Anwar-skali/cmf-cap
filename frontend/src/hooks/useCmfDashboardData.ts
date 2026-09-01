@@ -110,22 +110,21 @@ export function useCmfDashboardData(): CmfDashboardData {
     (stats as any)?.completed_projects ??
     rawProjects.filter(isCompleted).length ??
     0;
-  const useCaseProjects = rawProjects.filter((p: any) => p.data?.use_case);
   const projectUseCases =
     stats?.projectUseCases ??
     (stats as any)?.project_use_cases ??
-    (useCaseProjects.length > 0 ? useCaseProjects.length : totalProjects);
+    totalProjects;
   const delayedProjectUseCases =
     stats?.delayedProjectUseCases ??
     (stats as any)?.delayed_project_use_cases ??
-    (rawProjects.filter((p: any) => (p.status === 'on_hold' || p.data?.status === 'delayed' || p.status === 'delayed') && p.data?.use_case).length || projectsDelayed);
+    projectsDelayed;
 
   const { data: partsData } = usePartsQuery({ pageSize: 1000 });
   const rawParts = partsData?.items ?? [];
   const totalParts =
     stats?.totalParts ??
     (stats as any)?.total_parts ??
-    (rawParts.length > 0 ? (partsData?.total ?? rawParts.length) : (useCaseProjects.length > 0 ? useCaseProjects.length : totalProjects));
+    (rawParts.length > 0 ? (partsData?.total ?? rawParts.length) : totalProjects);
   const activeParts =
     stats?.activeParts ??
     (stats as any)?.active_parts ??
