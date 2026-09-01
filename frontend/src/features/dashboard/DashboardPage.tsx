@@ -431,7 +431,7 @@ export default function DashboardPage() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
           <KPICard
             variant="ltos"
             title="Project Use Cases"
@@ -440,20 +440,6 @@ export default function DashboardPage() {
             subtitle="Total project use cases defined across all CMF structures"
             trend={{
               value: `${cmf.projectUseCases} total use cases`,
-              isPositive: true,
-            }}
-            actionText="View Projects"
-            onClickAction={() => navigate('/projects')}
-          />
-
-          <KPICard
-            variant="ltos"
-            title="Completed Use Cases"
-            value={cmf.completedProjectUseCases}
-            icon={CheckCircle2}
-            subtitle="Projects with all 3 modules filled (Buyer + Capacity + SQD) across all structures"
-            trend={{
-              value: cmf.totalProjects > 0 ? `${Math.round((cmf.completedProjectUseCases / cmf.totalProjects) * 100)}% completion rate` : 'No projects yet',
               isPositive: true,
             }}
             actionText="View Projects"
