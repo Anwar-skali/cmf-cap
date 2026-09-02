@@ -22,20 +22,17 @@ import {
   Search,
   ChevronRight,
   Filter,
-  ShieldCheck,
   Building2,
   Users,
   MapPin,
   Mail,
   Phone,
-  Globe,
   Download,
   FileSpreadsheet,
   FileCode,
   Printer,
   Table as TableIcon,
   LayoutGrid,
-  Gauge,
   RefreshCw,
   MoreHorizontal,
   Eye,
@@ -45,7 +42,6 @@ import {
   Sparkles,
   TrendingUp,
   PieChart as PieChartIcon,
-  BarChart3,
   X,
   ArrowUpDown,
   CheckCircle2,
@@ -545,15 +541,20 @@ export default function SuppliersPage() {
         </div>
       </div>
 
-      {/* ── Analytics & Visualizations ───────────────────────────────────── */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left Col: Status Distribution Chart */}
-        <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-card p-5 shadow-sm space-y-4">
-          <div className="flex items-center gap-2 border-b border-border pb-3">
+      {/* ── Status Distribution & Fleet Breakdown ───────────────────────── */}
+      <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-card p-5 shadow-sm space-y-4">
+        <div className="flex items-center justify-between border-b border-border pb-3">
+          <div className="flex items-center gap-2">
             <PieChartIcon className="h-4 w-4 text-blue-600" />
-            <h3 className="text-base font-extrabold text-foreground">Supplier Status Distribution</h3>
+            <h3 className="text-base font-extrabold text-foreground">Supplier Status Breakdown</h3>
           </div>
-          <div className="h-44 w-full">
+          <Badge variant="outline" className="text-xs font-semibold text-muted-foreground">
+            {totalSuppliers} Total Suppliers
+          </Badge>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-center">
+          <div className="h-44 w-full md:col-span-1">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -574,66 +575,28 @@ export default function SuppliersPage() {
               </PieChart>
             </ResponsiveContainer>
           </div>
-          <div className="grid grid-cols-3 gap-2 pt-1 border-t border-border text-center text-xs font-semibold">
-            <div className="space-y-0.5">
-              <span className="text-[11px] text-muted-foreground">Active</span>
-              <p className="text-sm font-extrabold text-emerald-600">{activeCount}</p>
-            </div>
-            <div className="space-y-0.5">
-              <span className="text-[11px] text-muted-foreground">Inactive</span>
-              <p className="text-sm font-extrabold text-slate-500">{inactiveCount}</p>
-            </div>
-            <div className="space-y-0.5">
-              <span className="text-[11px] text-muted-foreground">Blacklisted</span>
-              <p className="text-sm font-extrabold text-rose-600">{blacklistedCount}</p>
-            </div>
-          </div>
-        </div>
 
-        {/* Right 2 Cols: Vendor Quick Summary & Sourcing Capabilities */}
-        <div className="lg:col-span-2 rounded-2xl border border-slate-200 dark:border-slate-800 bg-card p-5 shadow-sm space-y-4">
-          <div className="flex items-center justify-between border-b border-border pb-3">
-            <div className="flex items-center gap-2">
-              <BarChart3 className="h-4 w-4 text-indigo-600" />
-              <h3 className="text-base font-extrabold text-foreground">Supplier Quality & Compliance Standards</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 md:col-span-1 lg:col-span-3 gap-3">
+            <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4 text-center space-y-1">
+              <span className="text-xs font-semibold text-emerald-700 dark:text-emerald-400">Active Production</span>
+              <p className="text-2xl font-extrabold text-emerald-600">{activeCount}</p>
+              <span className="text-[11px] text-muted-foreground">
+                {totalSuppliers > 0 ? Math.round((activeCount / totalSuppliers) * 100) : 0}% of supplier base
+              </span>
             </div>
-            <Badge variant="outline" className="text-xs font-bold text-blue-600 border-blue-500/20 bg-blue-500/5">
-              Stellantis Quality Standard
-            </Badge>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
-            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-4 space-y-2">
-              <div className="flex items-center gap-2 text-xs font-bold text-blue-600">
-                <ShieldCheck className="h-4 w-4" />
-                <span>IATF 16949 Standard</span>
-              </div>
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                Automotive quality management system compliance required for Tier-1 parts.
-              </p>
-              <div className="text-base font-black text-foreground">{activeCount} Verified</div>
+            <div className="rounded-xl border border-slate-500/20 bg-slate-500/5 p-4 text-center space-y-1">
+              <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">Inactive</span>
+              <p className="text-2xl font-extrabold text-slate-500">{inactiveCount}</p>
+              <span className="text-[11px] text-muted-foreground">
+                {totalSuppliers > 0 ? Math.round((inactiveCount / totalSuppliers) * 100) : 0}% of supplier base
+              </span>
             </div>
-
-            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-4 space-y-2">
-              <div className="flex items-center gap-2 text-xs font-bold text-emerald-600">
-                <Gauge className="h-4 w-4" />
-                <span>Capacity Commitment</span>
-              </div>
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                Weekly & monthly volume capability verified against program run rates.
-              </p>
-              <div className="text-base font-black text-foreground">100% Tracked</div>
-            </div>
-
-            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-4 space-y-2">
-              <div className="flex items-center gap-2 text-xs font-bold text-indigo-600">
-                <Globe className="h-4 w-4" />
-                <span>Direct Material Sourcing</span>
-              </div>
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                Commodities mapped across European, North American, and Asian plants.
-              </p>
-              <div className="text-base font-black text-foreground">Global Reach</div>
+            <div className="rounded-xl border border-rose-500/20 bg-rose-500/5 p-4 text-center space-y-1">
+              <span className="text-xs font-semibold text-rose-700 dark:text-rose-400">Blacklisted</span>
+              <p className="text-2xl font-extrabold text-rose-600">{blacklistedCount}</p>
+              <span className="text-[11px] text-muted-foreground">
+                {totalSuppliers > 0 ? Math.round((blacklistedCount / totalSuppliers) * 100) : 0}% of supplier base
+              </span>
             </div>
           </div>
         </div>
