@@ -24,6 +24,13 @@ import {
   Eye,
   Plus,
 } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { useUpdateRiskMutation } from '@/hooks/mutations/useRiskMutations';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -156,11 +163,27 @@ export function RiskKanbanBoard({
                               {risk.utilizationRate}% Load
                             </span>
                           )}
-                          {risk.gate && (
-                            <span className="text-[10px] font-mono rounded bg-secondary px-1.5 py-0.2 text-secondary-foreground border">
-                              {risk.gate}
-                            </span>
-                          )}
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <button className="cursor-pointer group flex items-center">
+                                <span className="text-[10px] font-mono rounded bg-secondary px-1.5 py-0.2 text-secondary-foreground border group-hover:bg-primary/20 transition-colors">
+                                  {risk.gate || 'CATE 1'} ▾
+                                </span>
+                              </button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="start" className="w-32 rounded-xl">
+                              <DropdownMenuLabel className="text-[10px] uppercase text-muted-foreground">Switch CAT Gate</DropdownMenuLabel>
+                              {['CATE 1', 'CATE 2', 'CATE 3', 'Gate 1 (M1)', 'Gate 2 (M2)', 'Gate 3 (M3)'].map((g) => (
+                                <DropdownMenuItem
+                                  key={g}
+                                  onClick={() => updateMutation.mutate({ id: risk.id, data: { gate: g } })}
+                                  className="text-xs font-mono"
+                                >
+                                  {g}
+                                </DropdownMenuItem>
+                              ))}
+                            </DropdownMenuContent>
+                          </DropdownMenu>
                         </div>
                         <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-full border ${scoreLevel.badgeClass}`}>
                           {score} pts

@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useCapacityAssessmentsQuery } from '@/hooks/queries/useCapacityQuery';
-import { useDeleteCapacityMutation } from '@/hooks/mutations/useCapacityMutations';
+import { useDeleteCapacityMutation, useUpdateCapacityMutation } from '@/hooks/mutations/useCapacityMutations';
 import { usePermissions } from '@/hooks/usePermissions';
 import { DataTable } from '@/components/ui/data-table';
 import { Button } from '@/components/ui/button';
@@ -10,6 +10,13 @@ import { Badge } from '@/components/ui/badge';
 import { PageHeader } from '@/components/ui/page-header';
 import { Card, CardContent } from '@/components/ui/card';
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import {
   Dialog,
   DialogContent,
@@ -67,6 +74,7 @@ export default function CapacityPage() {
   const { canCreateCapacityAssessment } = usePermissions();
   const { data: assessments, isLoading, error, refetch } = useCapacityAssessmentsQuery();
   const deleteMutation = useDeleteCapacityMutation();
+  const updateMutation = useUpdateCapacityMutation();
 
   const items = assessments?.items ?? [];
 
@@ -306,15 +314,44 @@ export default function CapacityPage() {
     },
     {
       accessorKey: 'cate',
-      header: 'CAT',
+      header: 'CAT Gate',
       cell: ({ row }) => {
-        const rawCate = row.original.cate || row.original.gate || 'CAT 1';
+        const item = row.original;
+        const rawCate = item.cate || item.gate || 'CATE 1';
         const displayCat = rawCate.replace(/CATE/gi, 'CAT');
+
+        if (!canCreateCapacityAssessment) {
+          return (
+            <Badge variant="outline" className={`gap-1 px-2.5 py-0.5 text-xs font-semibold border ${getCateBadgeStyle(rawCate)}`}>
+              <Layers className="h-3 w-3" />
+              {displayCat}
+            </Badge>
+          );
+        }
+
         return (
-          <Badge variant="outline" className={`gap-1 px-2.5 py-0.5 text-xs font-semibold border ${getCateBadgeStyle(rawCate)}`}>
-            <Layers className="h-3 w-3" />
-            {displayCat}
-          </Badge>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="cursor-pointer group flex items-center">
+                <Badge variant="outline" className={`gap-1 px-2.5 py-0.5 text-xs font-semibold border group-hover:opacity-80 transition-opacity ${getCateBadgeStyle(rawCate)}`}>
+                  <Layers className="h-3 w-3" />
+                  {displayCat} ▾
+                </Badge>
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-36 rounded-xl">
+              <DropdownMenuLabel className="text-[10px] uppercase text-muted-foreground">Switch CAT Gate</DropdownMenuLabel>
+              {['CATE 1', 'CATE 2', 'CATE 3', 'Gate 1 (M1)', 'Gate 2 (M2)', 'Gate 3 (M3)'].map((g) => (
+                <DropdownMenuItem
+                  key={g}
+                  onClick={() => updateMutation.mutate({ id: item.id, data: { cate: g, gate: g } })}
+                  className="text-xs font-mono"
+                >
+                  {g}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         );
       },
     },
@@ -322,8 +359,10 @@ export default function CapacityPage() {
       accessorKey: 'status',
       header: 'Status',
       cell: ({ row }) => {
-        const status = row.original.status;
-        return (
+        const item = row.original;
+        const status = item.status;
+
+        const statusBadge = (
           <div className="flex items-center gap-1.5">
             <span
               className={`h-2 w-2 rounded-full ${
@@ -337,9 +376,33 @@ export default function CapacityPage() {
               }`}
             />
             <Badge variant={getStatusVariant(status)} className="capitalize text-xs font-medium">
-              {status}
+              {status} {canCreateCapacityAssessment && '▾'}
             </Badge>
           </div>
+        );
+
+        if (!canCreateCapacityAssessment) return statusBadge;
+
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="cursor-pointer group">
+                {statusBadge}
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-36 rounded-xl">
+              <DropdownMenuLabel className="text-[10px] uppercase text-muted-foreground">Update Status</DropdownMenuLabel>
+              {(['pending', 'assessed', 'confirmed', 'rejected'] as const).map((s) => (
+                <DropdownMenuItem
+                  key={s}
+                  onClick={() => updateMutation.mutate({ id: item.id, data: { status: s } })}
+                  className="text-xs capitalize"
+                >
+                  {s}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         );
       },
     },

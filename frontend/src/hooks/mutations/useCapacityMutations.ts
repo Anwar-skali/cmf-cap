@@ -14,6 +14,8 @@ export function useCreateCapacityMutation() {
       queryClient.invalidateQueries({ queryKey: queryKeys.capacity.lists() });
       queryClient.invalidateQueries({ queryKey: queryKeys.capacity.coverage() });
       queryClient.invalidateQueries({ queryKey: queryKeys.capacity.monthly() });
+      queryClient.invalidateQueries({ queryKey: queryKeys.risks.lists() });
+      queryClient.invalidateQueries({ queryKey: queryKeys.risks.distribution() });
       toast.success('Capacity assessment created successfully');
     },
     onError: (error: Error) => {
@@ -34,6 +36,8 @@ export function useUpdateCapacityMutation() {
       queryClient.invalidateQueries({ queryKey: queryKeys.capacity.detail(variables.id) });
       queryClient.invalidateQueries({ queryKey: queryKeys.capacity.coverage() });
       queryClient.invalidateQueries({ queryKey: queryKeys.capacity.monthly() });
+      queryClient.invalidateQueries({ queryKey: queryKeys.risks.lists() });
+      queryClient.invalidateQueries({ queryKey: queryKeys.risks.distribution() });
       toast.success('Capacity assessment updated successfully');
     },
     onError: (error: Error) => {
@@ -52,6 +56,8 @@ export function useDeleteCapacityMutation() {
       queryClient.invalidateQueries({ queryKey: queryKeys.capacity.lists() });
       queryClient.invalidateQueries({ queryKey: queryKeys.capacity.coverage() });
       queryClient.invalidateQueries({ queryKey: queryKeys.capacity.monthly() });
+      queryClient.invalidateQueries({ queryKey: queryKeys.risks.lists() });
+      queryClient.invalidateQueries({ queryKey: queryKeys.risks.distribution() });
       toast.success('Capacity assessment deleted successfully');
     },
     onError: (error: Error) => {

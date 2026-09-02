@@ -269,11 +269,31 @@ export default function RisksPage() {
                     {risk.utilizationRate}% Load
                   </Badge>
                 )}
-                {risk.gate && (
-                  <Badge variant="secondary" className="text-[10px] font-mono px-1.5 py-0">
-                    {risk.gate}
-                  </Badge>
-                )}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button className="cursor-pointer group flex items-center">
+                      <Badge
+                        variant="secondary"
+                        className="text-[10px] font-mono px-1.5 py-0 group-hover:bg-primary/20 transition-colors cursor-pointer"
+                        title="Click to switch CAT milestone gate"
+                      >
+                        {risk.gate || 'CATE 1'} ▾
+                      </Badge>
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start" className="w-32 rounded-xl">
+                    <DropdownMenuLabel className="text-[10px] uppercase text-muted-foreground">Switch CAT Gate</DropdownMenuLabel>
+                    {['CATE 1', 'CATE 2', 'CATE 3', 'Gate 1 (M1)', 'Gate 2 (M2)', 'Gate 3 (M3)'].map((g) => (
+                      <DropdownMenuItem
+                        key={g}
+                        onClick={() => updateMutation.mutate({ id: risk.id, data: { gate: g } })}
+                        className="text-xs font-mono"
+                      >
+                        {g}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
               {risk.description && (
                 <p className="text-[11px] text-muted-foreground line-clamp-1">

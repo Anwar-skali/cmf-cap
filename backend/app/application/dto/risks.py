@@ -49,6 +49,8 @@ class UpdateRiskRequest(BaseModel):
     status: str | None = None
     due_date: datetime | None = None
     assigned_to: Any | None = None
+    gate: str | None = None
+    cate: str | None = None
 
 
 class RiskResponse(BaseModel):

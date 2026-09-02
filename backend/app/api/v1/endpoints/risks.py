@@ -40,12 +40,6 @@ async def list_risks(
     uow: UnitOfWork = Depends(get_unit_of_work),
     risk_service: RiskService = Depends(get_risk_service),
 ) -> Any:
-    # Auto-synchronize capacity-driven risks
-    try:
-        await risk_service.sync_capacity_risks()
-    except Exception:
-        pass
-
     filters: dict[str, Any] = {}
     if severity is not None:
         filters["severity"] = severity

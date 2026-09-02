@@ -61,7 +61,8 @@ class CapacityAssessmentService:
         # Automatically sync risk register with latest capacity evaluation
         try:
             from app.application.services.risk_service import RiskService
-            await RiskService(self._uow).sync_capacity_risks()
+            await RiskService(self._uow).sync_single_capacity_risk(assessment)
+            await self._uow.commit()
         except Exception:
             pass
 
@@ -96,7 +97,8 @@ class CapacityAssessmentService:
         # Automatically sync risk register with latest capacity evaluation
         try:
             from app.application.services.risk_service import RiskService
-            await RiskService(self._uow).sync_capacity_risks()
+            await RiskService(self._uow).sync_single_capacity_risk(assessment)
+            await self._uow.commit()
         except Exception:
             pass
 
@@ -106,6 +108,16 @@ class CapacityAssessmentService:
         assessment = await self._uow.capacity_assessments.get(id)
         if assessment is None:
             raise NotFoundException("Capacity assessment not found")
+
+        part_id = assessment.project_part_id
+
+        # Bidirectional delete: delete linked risks for this part
+        if part_id:
+            risks = await self._uow.risks.get_multi(
+                filters={"project_part_id": part_id}, limit=10
+            )
+            for r in risks:
+                await self._uow.risks.delete(r.id)
 
         result = await self._uow.capacity_assessments.delete(id)
 

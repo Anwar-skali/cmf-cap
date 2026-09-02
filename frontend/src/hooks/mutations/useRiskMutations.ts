@@ -26,12 +26,13 @@ export function useUpdateRiskMutation() {
   const toast = useToast();
 
   return useMutation({
-    mutationFn: ({ id, data }: { id: string; data: Partial<CreateRiskRequest> }) =>
+    mutationFn: ({ id, data }: { id: string; data: Partial<CreateRiskRequest> & { gate?: string; cate?: string } }) =>
       risksApi.updateRisk(id, data),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.risks.lists() });
       queryClient.invalidateQueries({ queryKey: queryKeys.risks.detail(variables.id) });
       queryClient.invalidateQueries({ queryKey: queryKeys.risks.distribution() });
+      queryClient.invalidateQueries({ queryKey: queryKeys.capacity.lists() });
       toast.success('Risk updated successfully');
     },
     onError: (error: Error) => {
@@ -49,6 +50,7 @@ export function useDeleteRiskMutation() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.risks.lists() });
       queryClient.invalidateQueries({ queryKey: queryKeys.risks.distribution() });
+      queryClient.invalidateQueries({ queryKey: queryKeys.capacity.lists() });
       toast.success('Risk deleted successfully');
     },
     onError: (error: Error) => {
