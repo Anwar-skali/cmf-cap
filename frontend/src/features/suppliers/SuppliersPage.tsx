@@ -34,6 +34,7 @@ import {
   Table as TableIcon,
   LayoutGrid,
   RefreshCw,
+  Gauge,
   MoreHorizontal,
   Eye,
   Trash2,
