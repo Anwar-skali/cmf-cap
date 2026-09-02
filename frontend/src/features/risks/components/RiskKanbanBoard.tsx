@@ -167,16 +167,16 @@ export function RiskKanbanBoard({
                             <DropdownMenuTrigger asChild>
                               <button className="cursor-pointer group flex items-center">
                                 <span className="text-[10px] font-mono rounded bg-secondary px-1.5 py-0.2 text-secondary-foreground border group-hover:bg-primary/20 transition-colors">
-                                  {risk.gate || 'CATE 1'} ▾
+                                  {(risk.gate || 'CAT 1').replace(/CATE/gi, 'CAT').replace(/Gate\s*(\d)/gi, 'CAT $1')} ▾
                                 </span>
                               </button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="start" className="w-32 rounded-xl">
-                              <DropdownMenuLabel className="text-[10px] uppercase text-muted-foreground">Switch CAT Gate</DropdownMenuLabel>
-                              {['CATE 1', 'CATE 2', 'CATE 3', 'Gate 1 (M1)', 'Gate 2 (M2)', 'Gate 3 (M3)'].map((g) => (
+                              <DropdownMenuLabel className="text-[10px] uppercase text-muted-foreground">Switch CAT</DropdownMenuLabel>
+                              {['CAT 1', 'CAT 2', 'CAT 3', 'CAT 4'].map((g) => (
                                 <DropdownMenuItem
                                   key={g}
-                                  onClick={() => updateMutation.mutate({ id: risk.id, data: { gate: g } })}
+                                  onClick={() => updateMutation.mutate({ id: risk.id, data: { gate: g, cate: g } })}
                                   className="text-xs font-mono"
                                 >
                                   {g}

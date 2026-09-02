@@ -55,13 +55,11 @@ const RISK_CATEGORIES = [
   { value: 'Other Operational Risk', label: 'Other Operational / Project Risk' },
 ];
 
-const CAT_GATES = [
-  'CATE 1',
-  'CATE 2',
-  'CATE 3',
-  'Gate 1 (M1)',
-  'Gate 2 (M2)',
-  'Gate 3 (M3)',
+const CAT_TIERS = [
+  'CAT 1',
+  'CAT 2',
+  'CAT 3',
+  'CAT 4',
 ];
 
 export default function RiskNewPage() {
@@ -85,8 +83,8 @@ export default function RiskNewPage() {
       contingency: '',
       status: 'open',
       dueDate: '',
-      gate: 'CATE 1',
-      cate: 'CATE 1',
+      gate: 'CAT 1',
+      cate: 'CAT 1',
     },
   });
 
@@ -244,29 +242,29 @@ export default function RiskNewPage() {
                       )}
                     />
 
-                    {/* CAT Gate Milestone */}
+                    {/* CAT Milestone */}
                     <FormField
                       control={form.control}
                       name="gate"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="text-xs font-semibold flex items-center gap-1.5">
-                            <Layers className="h-3.5 w-3.5 text-indigo-500" /> Milestone CAT Gate *
+                            <Layers className="h-3.5 w-3.5 text-indigo-500" /> CAT Milestone *
                           </FormLabel>
                           <Select
                             onValueChange={(val) => {
                               field.onChange(val);
                               form.setValue('cate', val);
                             }}
-                            value={field.value ?? 'CATE 1'}
+                            value={field.value ?? 'CAT 1'}
                           >
                             <FormControl>
                               <SelectTrigger className="h-10 bg-background/80 font-mono">
-                                <SelectValue placeholder="Select milestone" />
+                                <SelectValue placeholder="Select CAT" />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              {CAT_GATES.map((g) => (
+                              {CAT_TIERS.map((g) => (
                                 <SelectItem key={g} value={g} className="font-mono text-xs">
                                   {g}
                                 </SelectItem>
@@ -686,9 +684,9 @@ export default function RiskNewPage() {
                     </span>
                   </div>
                   <div className="flex justify-between text-muted-foreground">
-                    <span>Milestone Gate:</span>
+                    <span>CAT Milestone:</span>
                     <Badge variant="outline" className="font-mono text-[10px] py-0">
-                      {selectedGate || 'CATE 1'}
+                      {(selectedGate || 'CAT 1').replace(/CATE/gi, 'CAT').replace(/Gate\s*(\d)/gi, 'CAT $1')}
                     </Badge>
                   </div>
                 </div>

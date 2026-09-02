@@ -237,7 +237,8 @@ class RiskService:
         deficit = max(0.0, cur - max_cap)
         headroom = max(0.0, max_cap - cur)
         bottleneck_str = (a.bottleneck or "").strip() or "Production Line Bottleneck"
-        gate_str = (a.cate or a.gate or "CAT Gate").replace("CATE", "CAT").strip()
+        raw_g = str(a.cate or a.gate or "CAT 1").strip()
+        gate_str = raw_g.replace("CATE", "CAT").replace("CAT Gate", "CAT 1").replace("Gate", "CAT").strip()
 
         has_week_delay = False
         delay_weeks = 0

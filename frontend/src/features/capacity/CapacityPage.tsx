@@ -314,11 +314,11 @@ export default function CapacityPage() {
     },
     {
       accessorKey: 'cate',
-      header: 'CAT Gate',
+      header: 'CAT',
       cell: ({ row }) => {
         const item = row.original;
-        const rawCate = item.cate || item.gate || 'CATE 1';
-        const displayCat = rawCate.replace(/CATE/gi, 'CAT');
+        const rawCate = item.cate || item.gate || 'CAT 1';
+        const displayCat = rawCate.replace(/CATE/gi, 'CAT').replace(/Gate\s*(\d)/gi, 'CAT $1');
 
         if (!canCreateCapacityAssessment) {
           return (
@@ -340,8 +340,8 @@ export default function CapacityPage() {
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="w-36 rounded-xl">
-              <DropdownMenuLabel className="text-[10px] uppercase text-muted-foreground">Switch CAT Gate</DropdownMenuLabel>
-              {['CATE 1', 'CATE 2', 'CATE 3', 'Gate 1 (M1)', 'Gate 2 (M2)', 'Gate 3 (M3)'].map((g) => (
+              <DropdownMenuLabel className="text-[10px] uppercase text-muted-foreground">Switch CAT</DropdownMenuLabel>
+              {['CAT 1', 'CAT 2', 'CAT 3', 'CAT 4'].map((g) => (
                 <DropdownMenuItem
                   key={g}
                   onClick={() => updateMutation.mutate({ id: item.id, data: { cate: g, gate: g } })}
