@@ -262,6 +262,19 @@ export default function PartNewPage() {
               )}
             />
 
+            {/* Row 8: Procurement / Engineering Notes */}
+            <FormField
+              control={form.control}
+              name="notes"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Procurement / Engineering Notes</FormLabel>
+                  <FormControl><Textarea placeholder="Enter procurement, sourcing, tooling, or engineering notes..." {...field} /></FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             {/* Bottom Action Bar */}
             <div className="flex items-center justify-end gap-4 pt-6 border-t border-slate-200 dark:border-slate-800">
               <button
