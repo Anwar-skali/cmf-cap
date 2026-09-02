@@ -100,7 +100,7 @@ export default function CapacityDetailPage() {
             <div className="flex items-center gap-2.5 flex-wrap">
               <Badge variant="outline" className={`gap-1 px-2.5 py-0.5 text-xs font-semibold border ${getCateBadgeStyle(assessment.cate || assessment.gate)}`}>
                 <Layers className="h-3.5 w-3.5" />
-                {(assessment.cate || assessment.gate || 'CAT 1').replace(/CATE/gi, 'CAT')}
+                {(assessment.cate || assessment.gate || 'CAT 1').replace(/CATE/gi, 'CAT').replace(/Gate\s*(\d)/gi, 'CAT $1')}
               </Badge>
               <Badge variant={getStatusVariant(assessment.status)} className="capitalize text-xs font-medium">
                 {assessment.status}
@@ -306,7 +306,7 @@ export default function CapacityDetailPage() {
             <div className="flex justify-between py-1.5">
               <span className="text-muted-foreground">CAT:</span>
               <Badge variant="outline" className={`text-xs font-semibold ${getCateBadgeStyle(assessment.cate || assessment.gate)}`}>
-                {(assessment.cate || assessment.gate || 'CAT 1').replace(/CATE/gi, 'CAT')}
+                {(assessment.cate || assessment.gate || 'CAT 1').replace(/CATE/gi, 'CAT').replace(/Gate\s*(\d)/gi, 'CAT $1')}
               </Badge>
             </div>
           </CardContent>

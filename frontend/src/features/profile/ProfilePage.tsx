@@ -473,7 +473,7 @@ export default function ProfilePage() {
 
                 <div className="p-3.5 rounded-xl border bg-muted/20 space-y-1">
                   <div className="flex items-center justify-between text-xs font-bold">
-                    <span>Capacity Audits & CAT Gates</span>
+                    <span>Capacity Audits & CAT Milestones</span>
                     {permissions.canCreateCapacityAssessment ? (
                       <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200 text-[10px]">
                         <Check className="h-3 w-3 mr-1" /> Granted

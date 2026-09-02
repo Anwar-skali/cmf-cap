@@ -782,7 +782,7 @@ export default function CapacityPage() {
           <DialogHeader>
             <div className="flex items-center gap-2 mb-1">
               <Badge variant="outline" className={`px-2.5 py-0.5 text-xs font-semibold ${getCateBadgeStyle(selectedAssessment?.cate || selectedAssessment?.gate)}`}>
-                {(selectedAssessment?.cate || selectedAssessment?.gate || 'CAT 1').replace(/CATE/gi, 'CAT')}
+                {(selectedAssessment?.cate || selectedAssessment?.gate || 'CAT 1').replace(/CATE/gi, 'CAT').replace(/Gate\s*(\d)/gi, 'CAT $1')}
               </Badge>
               <Badge variant={getStatusVariant(selectedAssessment?.status || 'pending')} className="capitalize">
                 {selectedAssessment?.status}

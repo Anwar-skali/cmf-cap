@@ -178,7 +178,7 @@ export const en = {
   // Notifications Page
   notifications_page: {
     title: 'Platform Notifications & Alerts',
-    description: 'Real-time alert dispatch for capacity overloads, milestone gates, and risk assignments',
+    description: 'Real-time alert dispatch for capacity overloads, CAT milestones, and risk assignments',
     mark_all_read: 'Mark All as Read',
     all: 'All Notifications',
     unread: 'Unread',
