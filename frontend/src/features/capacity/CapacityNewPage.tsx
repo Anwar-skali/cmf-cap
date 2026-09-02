@@ -57,8 +57,8 @@ export default function CapacityNewPage() {
     defaultValues: {
       month: prefillData?.month ?? currentDate.getMonth() + 1,
       year: prefillData?.year ?? currentDate.getFullYear(),
-      currentCapacity: prefillData?.currentCapacity ?? 1000,
-      maximumCapacity: prefillData?.maximumCapacity ?? 1250,
+      currentCapacity: prefillData?.currentCapacity != null ? parseFloat(String(prefillData.currentCapacity)) : 1000,
+      maximumCapacity: prefillData?.maximumCapacity != null ? parseFloat(String(prefillData.maximumCapacity)) : 1250,
       projectPartId: prefillData?.projectPartId ?? '',
       supplierId: prefillData?.supplierId ?? '',
       cate: prefillData?.cate ?? 'CATE 1',
@@ -66,11 +66,10 @@ export default function CapacityNewPage() {
       targetWeek: prefillData?.targetWeek ?? '202624',
       forecastWeek: prefillData?.forecastWeek ?? '202624',
       completedWeek: prefillData?.completedWeek ?? '',
-      riskLevel: prefillData?.riskLevel ?? 'low',
       assessmentDate: prefillData?.assessmentDate
         ? prefillData.assessmentDate.split('T')[0]
         : currentDate.toISOString().split('T')[0],
-      leadTimeDays: prefillData?.leadTimeDays ?? 7,
+      leadTimeDays: prefillData?.leadTimeDays != null ? parseFloat(String(prefillData.leadTimeDays)) : 7,
       bottleneck: prefillData?.bottleneck ?? '',
       notes: prefillData?.notes ?? '',
       status: prefillData?.status ?? 'pending',
@@ -82,7 +81,6 @@ export default function CapacityNewPage() {
   const maxCap = form.watch('maximumCapacity');
   const selectedPartId = form.watch('projectPartId');
   const selectedSupplierId = form.watch('supplierId');
-  const selectedRisk = form.watch('riskLevel');
   const selectedStatus = form.watch('status');
 
   // Compute live utilization percentage & headroom
@@ -98,6 +96,14 @@ export default function CapacityNewPage() {
     const max = Number(maxCap) || 0;
     return Math.max(0, max - cur);
   }, [currentCap, maxCap]);
+
+  // Auto-compute risk level from utilization (replaces the removed manual field)
+  const autoRiskLevel = useMemo(() => {
+    if (liveUtilization >= 100) return { label: 'Critical Risk — Line Stoppage', color: 'bg-rose-500/10 text-rose-600 border-rose-500/30' };
+    if (liveUtilization >= 85) return { label: 'High Risk — Bottleneck', color: 'bg-amber-500/10 text-amber-600 border-amber-500/30' };
+    if (liveUtilization >= 70) return { label: 'Medium Risk — Watchlist', color: 'bg-yellow-500/10 text-yellow-600 border-yellow-500/30' };
+    return { label: 'Low Risk — Compliant', color: 'bg-emerald-500/10 text-emerald-600 border-emerald-500/30' };
+  }, [liveUtilization]);
 
   // Selected part & supplier info
   const selectedPart = useMemo(
@@ -353,34 +359,22 @@ export default function CapacityNewPage() {
                       )}
                     />
 
-                    <FormField
-                      control={form.control}
-                      name="riskLevel"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-xs font-semibold flex items-center gap-1.5">
-                            <AlertTriangle className="h-3.5 w-3.5 text-amber-600" /> Capacity Risk Level
-                          </FormLabel>
-                          <Select onValueChange={field.onChange} value={field.value ?? 'low'}>
-                            <FormControl>
-                              <SelectTrigger className="h-10 bg-background/80">
-                                <SelectValue placeholder="Select risk level" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="low">Low Risk (Compliant)</SelectItem>
-                              <SelectItem value="medium">Medium Risk (Watchlist)</SelectItem>
-                              <SelectItem value="high">High Risk (Bottleneck)</SelectItem>
-                              <SelectItem value="critical">Critical Risk (Line Stoppage)</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                    {/* Auto-computed Risk Level — replaces the manual dropdown */}
+                    <div className="flex flex-col gap-1.5">
+                      <span className="text-xs font-semibold flex items-center gap-1.5">
+                        <AlertTriangle className="h-3.5 w-3.5 text-amber-600" /> Computed Risk Level
+                      </span>
+                      <div className={`h-10 flex items-center gap-2 px-3 rounded-md border text-xs font-semibold ${autoRiskLevel.color}`}>
+                        <AlertTriangle className="h-3.5 w-3.5 shrink-0" />
+                        {autoRiskLevel.label}
+                        <span className="ml-auto font-mono font-bold">{liveUtilization}%</span>
+                      </div>
+                      <p className="text-[11px] text-muted-foreground">Auto-calculated from capacity values</p>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
+
 
               {/* Step 3: Capacity Volumes & Target Period */}
               <Card className="border-border/60 shadow-soft overflow-hidden">
