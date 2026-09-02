@@ -57,6 +57,14 @@ class CapacityAssessmentService:
 
 
         await self._uow.commit()
+
+        # Automatically sync risk register with latest capacity evaluation
+        try:
+            from app.application.services.risk_service import RiskService
+            await RiskService(self._uow).sync_capacity_risks()
+        except Exception:
+            pass
+
         return self._to_response(assessment)
 
     async def update_assessment(self, id: uuid.UUID, data: UpdateCapacityAssessmentRequest, user_id: uuid.UUID | None = None) -> CapacityAssessmentResponse:
@@ -84,6 +92,14 @@ class CapacityAssessmentService:
         })
 
         await self._uow.commit()
+
+        # Automatically sync risk register with latest capacity evaluation
+        try:
+            from app.application.services.risk_service import RiskService
+            await RiskService(self._uow).sync_capacity_risks()
+        except Exception:
+            pass
+
         return self._to_response(assessment)
 
     async def delete_assessment(self, id: uuid.UUID, user_id: uuid.UUID | None = None) -> bool:

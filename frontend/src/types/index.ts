@@ -271,6 +271,13 @@ export interface Risk {
   identifiedBy?: string;
   projectName?: string;
   projectId?: string;
+  partNumber?: string;
+  partName?: string;
+  supplierName?: string;
+  capacityAssessmentId?: string;
+  utilizationRate?: number;
+  bottleneck?: string;
+  gate?: string;
   createdAt: string;
   updatedAt: string;
 }

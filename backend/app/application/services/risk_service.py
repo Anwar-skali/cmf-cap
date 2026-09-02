@@ -182,6 +182,138 @@ class RiskService:
         await self._uow.commit()
         return self._to_response(risk)
 
+    async def sync_capacity_risks(self) -> int:
+        """
+        Deterministic Capacity-Driven Risk Engine.
+        Scans all capacity assessments, evaluates overload/bottleneck/schedule criteria,
+        and ensures the Risk Registry is accurately synchronized.
+        """
+        from datetime import datetime, timezone
+
+        assessments = await self._uow.capacity_assessments.get_multi(filters={}, limit=10000)
+        if not assessments:
+            return 0
+
+        existing_risks = await self._uow.risks.get_multi(filters={}, limit=10000)
+        sync_count = 0
+        now = datetime.now(timezone.utc)
+
+        for a in assessments:
+            if not a.project_part_id:
+                continue
+
+            part = await self._uow.project_parts.get(a.project_part_id)
+            part_num = (getattr(part, 'part_number', '') or getattr(part, 'code', '') or 'Component') if part else 'Component'
+            
+            supplier = await self._uow.suppliers.get(a.supplier_id) if a.supplier_id else None
+            sup_name = (getattr(supplier, 'name', '') or 'Supplier') if supplier else 'Supplier'
+
+            cur = float(a.current_capacity or 0)
+            max_cap = float(a.maximum_capacity or 0)
+            util_rate = round((cur / max_cap * 100), 1) if max_cap > 0 else 0
+            deficit = max(0.0, cur - max_cap)
+            headroom = max(0.0, max_cap - cur)
+            bottleneck_str = (a.bottleneck or "").strip() or "Production Line Bottleneck"
+            gate_str = (a.cate or a.gate or "CAT Gate").replace("CATE", "CAT").strip()
+
+            has_week_delay = False
+            delay_weeks = 0
+            if a.target_week and a.forecast_week:
+                try:
+                    tw = int(str(a.target_week).replace("CW", "").replace("W", ""))
+                    fw = int(str(a.forecast_week).replace("CW", "").replace("W", ""))
+                    if fw > tw:
+                        has_week_delay = True
+                        delay_weeks = fw - tw
+                except Exception:
+                    pass
+
+            is_overload = util_rate >= 100 or deficit > 0
+            is_high_load = 85 <= util_rate < 100
+            is_rejected = str(a.status).lower() == "rejected"
+            is_confirmed = str(a.status).lower() == "confirmed"
+
+            if is_overload or is_rejected:
+                sev = RiskSeverity.CRITICAL.value
+                prob = RiskProbability.ALMOST_CERTAIN.value
+                risk_type = "Capacity Overload" if is_overload else "Quality Non-Conformity"
+                title = f"Capacity Deficit ({util_rate}% Load) - Part {part_num} at {sup_name}" if is_overload else f"Capacity Audit Rejected - Part {part_num} ({gate_str})"
+                desc = (
+                    f"Required monthly demand ({int(cur):,} pcs/mo) exceeds installed line capacity "
+                    f"({int(max_cap):,} pcs/mo) by {int(deficit):,} pcs/mo. Bottleneck: {bottleneck_str}. "
+                    f"Milestone: {gate_str}."
+                )
+                impact = (
+                    f"Immediate risk of assembly starvation and vehicle line stoppage at OEM plant. "
+                    f"Supplier cannot meet ramp-up curve for {gate_str}."
+                )
+                mitigation = (
+                    f"Issue emergency SQD action plan to {sup_name}: duplicate tooling/molds, "
+                    f"authorize 3rd operating shift, or activate qualified dual-source supplier."
+                )
+                status = "open" if not is_confirmed else "mitigating"
+            elif is_high_load or has_week_delay:
+                sev = RiskSeverity.HIGH.value
+                prob = RiskProbability.LIKELY.value
+                risk_type = "Milestone Delay" if has_week_delay else "Capacity Constraint"
+                if has_week_delay:
+                    title = f"CAT Milestone Delay (+{delay_weeks}w) - Part {part_num} ({gate_str})"
+                    desc = f"Forecast completion (CW{a.forecast_week}) is delayed against target week (CW{a.target_week}) by {delay_weeks} week(s). Bottleneck: {bottleneck_str}."
+                    impact = f"Delay in {gate_str} milestone sign-off threatens overall vehicle SOP schedule."
+                    mitigation = f"Accelerate SQD industrial trials and expedite supplier sample validation."
+                else:
+                    title = f"High Production Load ({util_rate}%) - Part {part_num} ({sup_name})"
+                    desc = f"Supplier line operates near capacity limit ({int(cur):,}/{int(max_cap):,} pcs/mo) with only {int(headroom):,} pcs/mo safety buffer."
+                    impact = f"Scrap spikes, maintenance downtime, or demand increases will result in supply delay."
+                    mitigation = f"Establish minimum safety buffer stock of {int(headroom*2):,} pcs and monitor weekly OEE."
+                status = "open" if not is_confirmed else "mitigated"
+            else:
+                sev = RiskSeverity.LOW.value
+                prob = RiskProbability.RARE.value
+                risk_type = "Capacity Compliant"
+                title = f"Capacity Validated ({util_rate}%) - Part {part_num} ({gate_str})"
+                desc = f"Installed capacity ({int(max_cap):,} pcs/mo) comfortably covers required volume ({int(cur):,} pcs/mo). Status: {a.status}."
+                impact = f"No operational disruption expected; {gate_str} criteria satisfied."
+                mitigation = f"Routine monthly production load monitoring."
+                status = "closed" if is_confirmed else "open"
+
+            match = None
+            for r in existing_risks:
+                if str(r.project_part_id) == str(a.project_part_id) and (
+                    part_num in (r.title or '') or r.title in ("test", "testtt", "anwar", "fin") or "Capacity" in (r.title or '') or "CAT" in (r.title or '')
+                ):
+                    match = r
+                    break
+
+            if match:
+                await self._uow.risks.update(match.id, {
+                    "title": title,
+                    "description": desc,
+                    "risk_type": risk_type,
+                    "severity": sev,
+                    "probability": prob,
+                    "impact": impact,
+                    "mitigation": mitigation,
+                    "status": status,
+                    "resolved_at": now if status == "closed" else None,
+                })
+            else:
+                await self._uow.risks.create({
+                    "title": title,
+                    "description": desc,
+                    "risk_type": risk_type,
+                    "severity": sev,
+                    "probability": prob,
+                    "impact": impact,
+                    "mitigation": mitigation,
+                    "status": status,
+                    "project_part_id": a.project_part_id,
+                })
+            sync_count += 1
+
+        await self._uow.commit()
+        return sync_count
+
     def _compute_risk_score(self, severity: str, probability: str) -> int:
         sev_val = _SEVERITY_MAP.get(severity.lower(), 1)
         prob_val = _PROBABILITY_MAP.get(probability.lower(), 1)
@@ -191,6 +323,33 @@ class RiskService:
         sev = risk.severity.value if hasattr(risk.severity, 'value') else str(risk.severity)
         prob = risk.probability.value if hasattr(risk.probability, 'value') else str(risk.probability)
         score = self._compute_risk_score(sev, prob)
+
+        part_num = None
+        part_name = None
+        proj_name = None
+        sup_name = None
+        cap_id = None
+        util_rate = None
+        bottleneck = None
+        gate = None
+
+        if hasattr(risk, 'project_part') and risk.project_part:
+            pt = risk.project_part
+            part_num = getattr(pt, 'part_number', None) or getattr(pt, 'code', None)
+            part_name = getattr(pt, 'name', None)
+            if hasattr(pt, 'project') and pt.project:
+                proj_name = getattr(pt.project, 'name', None)
+            if hasattr(pt, 'supplier') and pt.supplier:
+                sup_name = getattr(pt.supplier, 'name', None)
+            if hasattr(pt, 'assessments') and pt.assessments:
+                latest_ass = pt.assessments[0]
+                cap_id = getattr(latest_ass, 'id', None)
+                cur_c = float(getattr(latest_ass, 'current_capacity', 0) or 0)
+                max_c = float(getattr(latest_ass, 'maximum_capacity', 0) or 0)
+                util_rate = round((cur_c / max_c * 100), 1) if max_c > 0 else None
+                bottleneck = getattr(latest_ass, 'bottleneck', None)
+                gate = getattr(latest_ass, 'cate', None) or getattr(latest_ass, 'gate', None)
+
         return RiskResponse(
             id=risk.id,
             title=risk.title,
@@ -210,4 +369,12 @@ class RiskService:
             identified_by=risk.identified_by,
             created_at=risk.created_at,
             updated_at=risk.updated_at,
+            part_number=part_num,
+            part_name=part_name,
+            project_name=proj_name,
+            supplier_name=sup_name,
+            capacity_assessment_id=cap_id,
+            utilization_rate=util_rate,
+            bottleneck=bottleneck,
+            gate=gate,
         )

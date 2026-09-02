@@ -71,6 +71,16 @@ class RiskResponse(BaseModel):
     created_at: datetime | None = None
     updated_at: datetime | None = None
 
+    # Capacity-linked contextual metadata
+    part_number: str | None = None
+    part_name: str | None = None
+    project_name: str | None = None
+    supplier_name: str | None = None
+    capacity_assessment_id: Any | None = None
+    utilization_rate: float | None = None
+    bottleneck: str | None = None
+    gate: str | None = None
+
     model_config = {"from_attributes": True}
 
 

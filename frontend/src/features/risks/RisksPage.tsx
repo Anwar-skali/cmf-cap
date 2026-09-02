@@ -164,7 +164,13 @@ export default function RisksPage() {
       }
 
       // 6. Quick filters
-      if (quickFilter === 'critical') {
+      if (quickFilter === 'capacity') {
+        if (!r.riskType?.toLowerCase().includes('capacity') && (r.utilizationRate == null || r.utilizationRate < 95)) return false;
+      } else if (quickFilter === 'milestone') {
+        if (!r.riskType?.toLowerCase().includes('milestone') && !r.riskType?.toLowerCase().includes('delay')) return false;
+      } else if (quickFilter === 'quality') {
+        if (!r.riskType?.toLowerCase().includes('quality') && !r.riskType?.toLowerCase().includes('non-conformity') && !r.riskType?.toLowerCase().includes('sqd')) return false;
+      } else if (quickFilter === 'critical') {
         if (r.severity !== 'critical') return false;
       } else if (quickFilter === 'high') {
         if (r.severity !== 'critical' && r.severity !== 'high') return false;
@@ -174,7 +180,7 @@ export default function RisksPage() {
         const isOverdue = r.dueDate && new Date(r.dueDate) < new Date() && r.status !== 'closed' && r.status !== 'mitigated';
         if (!isOverdue) return false;
       } else if (quickFilter === 'sqd') {
-        if (!r.riskType?.toLowerCase().includes('quality') && !r.riskType?.toLowerCase().includes('sqd')) return false;
+        if (!r.riskType?.toLowerCase().includes('quality') && !r.riskType?.toLowerCase().includes('sqd') && !r.riskType?.toLowerCase().includes('capacity')) return false;
       }
 
       return true;
@@ -232,7 +238,7 @@ export default function RisksPage() {
       cell: ({ row }) => {
         const risk = row.original;
         return (
-          <div className="flex items-start gap-3 py-1 min-w-[240px] max-w-[360px]">
+          <div className="flex items-start gap-3 py-1 min-w-[260px] max-w-[400px]">
             <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 mt-0.5">
               <AlertTriangle className="h-4 w-4" />
             </div>
@@ -248,6 +254,25 @@ export default function RisksPage() {
                   <span className="text-[10px] font-semibold px-1.5 py-0.2 rounded bg-muted/60 text-muted-foreground border border-border">
                     {risk.riskType}
                   </span>
+                )}
+                {risk.utilizationRate != null && (
+                  <Badge
+                    variant="outline"
+                    className={`text-[10px] font-mono font-bold px-1.5 py-0 ${
+                      risk.utilizationRate >= 100
+                        ? 'bg-rose-500/10 text-rose-600 border-rose-500/30'
+                        : risk.utilizationRate >= 85
+                        ? 'bg-amber-500/10 text-amber-600 border-amber-500/30'
+                        : 'bg-emerald-500/10 text-emerald-600 border-emerald-500/30'
+                    }`}
+                  >
+                    {risk.utilizationRate}% Load
+                  </Badge>
+                )}
+                {risk.gate && (
+                  <Badge variant="secondary" className="text-[10px] font-mono px-1.5 py-0">
+                    {risk.gate}
+                  </Badge>
                 )}
               </div>
               {risk.description && (
@@ -335,7 +360,7 @@ export default function RisksPage() {
     },
     {
       accessorKey: 'projectName',
-      header: 'Project',
+      header: 'Project / Part / Supplier',
       cell: ({ row }) => {
         const risk = row.original;
         return (
@@ -344,10 +369,19 @@ export default function RisksPage() {
               <Building2 className="h-3.5 w-3.5 text-blue-500 shrink-0" />
               <span className="truncate max-w-[150px]">{risk.projectName || 'Universal Platform'}</span>
             </div>
-            {risk.projectPartId && (
-              <span className="text-[10px] font-mono text-muted-foreground">
-                Part: {risk.projectPartId.slice(0, 8)}
-              </span>
+            {(risk.partNumber || risk.supplierName) && (
+              <div className="flex items-center gap-1 text-[10px] font-mono text-muted-foreground truncate max-w-[180px]">
+                {risk.partNumber && <span>Part {risk.partNumber}</span>}
+                {risk.supplierName && <span>• {risk.supplierName}</span>}
+              </div>
+            )}
+            {risk.capacityAssessmentId && (
+              <Link
+                to={`/capacity/${risk.capacityAssessmentId}`}
+                className="text-[10px] text-primary hover:underline font-semibold inline-flex items-center gap-1 mt-0.5"
+              >
+                <Layers className="h-3 w-3" /> View Capacity Audit
+              </Link>
             )}
           </div>
         );
@@ -362,22 +396,22 @@ export default function RisksPage() {
 
         return (
           <div className="space-y-1">
-            <div className="flex items-center gap-1 text-xs font-semibold text-foreground">
+            <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
               <User className="h-3.5 w-3.5 text-indigo-500 shrink-0" />
-              <span className="truncate max-w-[120px]">{risk.assignedTo || 'SQD Auditor'}</span>
+              <span className="font-semibold text-foreground truncate max-w-[110px]">{risk.assignedTo || 'SQD Auditor'}</span>
             </div>
             {risk.dueDate ? (
-              <span
-                className={`flex items-center gap-1 text-[11px] font-bold ${
-                  isOverdue ? 'text-rose-500' : 'text-muted-foreground'
+              <div
+                className={`flex items-center gap-1 text-[11px] font-medium ${
+                  isOverdue ? 'text-rose-600 font-bold' : 'text-muted-foreground'
                 }`}
               >
                 <Calendar className="h-3 w-3" />
-                {new Date(risk.dueDate).toLocaleDateString()}
-                {isOverdue && <span className="text-[10px] uppercase font-black tracking-tight ml-0.5">(Overdue)</span>}
-              </span>
+                <span>{new Date(risk.dueDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                {isOverdue && <span className="text-[10px] px-1 py-0.2 rounded bg-rose-500/10 text-rose-600 border border-rose-500/20">Overdue</span>}
+              </div>
             ) : (
-              <span className="text-[11px] text-muted-foreground/60">—</span>
+              <span className="text-[11px] text-muted-foreground/60 italic">No deadline</span>
             )}
           </div>
         );
@@ -385,17 +419,17 @@ export default function RisksPage() {
     },
     {
       id: 'actions',
-      header: '',
+      header: 'Actions',
       cell: ({ row }) => {
         const risk = row.original;
         return (
-          <div className="flex items-center justify-end gap-1">
+          <div className="flex items-center gap-1 justify-end">
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setActiveQuickViewRisk(risk)}
               className="h-8 w-8 rounded-lg text-muted-foreground hover:text-foreground"
-              title="Quick View"
+              title="Quick Modal View"
             >
               <Eye className="h-4 w-4" />
             </Button>
@@ -718,11 +752,12 @@ export default function RisksPage() {
             <span className="text-[11px] font-bold text-muted-foreground mr-1">Quick Presets:</span>
             {[
               { id: 'all', label: 'All Risks' },
+              { id: 'capacity', label: '🔥 Capacity Overload' },
+              { id: 'milestone', label: '⏳ CAT Milestone Delays' },
+              { id: 'quality', label: '🛡️ Quality Non-Conformities' },
               { id: 'critical', label: 'Critical Only' },
-              { id: 'high', label: 'High & Critical' },
               { id: 'open', label: 'Open & Unmitigated' },
               { id: 'overdue', label: 'Overdue' },
-              { id: 'sqd', label: 'SQD Audits' },
             ].map((chip) => (
               <button
                 key={chip.id}

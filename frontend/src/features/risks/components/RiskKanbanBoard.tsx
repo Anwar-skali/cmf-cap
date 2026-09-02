@@ -145,6 +145,22 @@ export function RiskKanbanBoard({
                               {risk.riskType}
                             </span>
                           )}
+                          {risk.utilizationRate != null && (
+                            <span className={`text-[10px] font-mono font-bold px-1.5 py-0.2 rounded border ${
+                              risk.utilizationRate >= 100
+                                ? 'bg-rose-500/10 text-rose-600 border-rose-500/30'
+                                : risk.utilizationRate >= 85
+                                ? 'bg-amber-500/10 text-amber-600 border-amber-500/30'
+                                : 'bg-emerald-500/10 text-emerald-600 border-emerald-500/30'
+                            }`}>
+                              {risk.utilizationRate}% Load
+                            </span>
+                          )}
+                          {risk.gate && (
+                            <span className="text-[10px] font-mono rounded bg-secondary px-1.5 py-0.2 text-secondary-foreground border">
+                              {risk.gate}
+                            </span>
+                          )}
                         </div>
                         <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-full border ${scoreLevel.badgeClass}`}>
                           {score} pts
@@ -160,9 +176,16 @@ export function RiskKanbanBoard({
                       </Link>
 
                       {/* Project / Part Info */}
-                      <div className="flex items-center gap-1 text-[11px] text-muted-foreground truncate">
-                        <Building2 className="h-3 w-3 shrink-0 text-blue-500" />
-                        <span className="truncate">{risk.projectName || 'Universal Platform'}</span>
+                      <div className="flex items-center justify-between text-[11px] text-muted-foreground">
+                        <div className="flex items-center gap-1 truncate">
+                          <Building2 className="h-3 w-3 shrink-0 text-blue-500" />
+                          <span className="truncate">{risk.projectName || 'Universal Platform'}</span>
+                        </div>
+                        {risk.partNumber && (
+                          <span className="text-[10px] font-mono text-muted-foreground shrink-0">
+                            Part {risk.partNumber}
+                          </span>
+                        )}
                       </div>
 
                       {/* Due Date & Assignee */}

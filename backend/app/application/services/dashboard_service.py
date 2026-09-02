@@ -95,30 +95,25 @@ class DashboardService:
         active_suppliers = sum(1 for s in suppliers if getattr(s, 'status', None) == 'active') or total_suppliers
 
         total_risks = len(risks)
-        open_risks = sum(1 for r in risks if r.status == 'open')
+        open_risks = sum(1 for r in risks if str(r.status).lower() in ('open', 'mitigating'))
         critical_risks = sum(
             1 for r in risks
-            if r.status == 'open'
+            if str(r.status).lower() in ('open', 'mitigating')
             and (r.severity == RiskSeverity.CRITICAL or str(r.severity).lower() == 'critical')
         )
-        mitigated_risks = sum(1 for r in risks if r.status in ('mitigated', 'closed'))
+        mitigated_risks = sum(1 for r in risks if str(r.status).lower() in ('mitigated', 'closed'))
 
+        # Open quality issues: specific quality & non-conformity risk items
         open_quality_issues = sum(
             1 for r in risks
-            if r.status == 'open'
-            and (
-                not r.risk_type
-                or str(r.risk_type).lower() in ('quality', 'technical', 'sqd', 'sqe', 'supplier', 'process')
-            )
+            if str(r.status).lower() in ('open', 'mitigating')
+            and any(k in str(r.risk_type or '').lower() for k in ('quality', 'non-conformity', 'non_conformity', 'sqd', 'defect'))
         )
         critical_quality_issues = sum(
             1 for r in risks
-            if r.status == 'open'
+            if str(r.status).lower() in ('open', 'mitigating')
             and (r.severity == RiskSeverity.CRITICAL or str(r.severity).lower() == 'critical')
-            and (
-                not r.risk_type
-                or str(r.risk_type).lower() in ('quality', 'technical', 'sqd', 'sqe', 'supplier', 'process')
-            )
+            and any(k in str(r.risk_type or '').lower() for k in ('quality', 'non-conformity', 'non_conformity', 'sqd', 'defect'))
         )
         open_actions = open_risks
 

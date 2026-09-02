@@ -213,6 +213,56 @@ export default function RiskDetailPage() {
         </Card>
       </div>
 
+      {/* Linked Industrial Capacity Assessment Card (if capacity linked) */}
+      {(risk.capacityAssessmentId || risk.utilizationRate != null || risk.partNumber) && (
+        <Card className="rounded-2xl border-border/80 bg-card/60 shadow-sm overflow-hidden">
+          <CardHeader className="bg-muted/30 border-b border-border/40 pb-3">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-base font-bold flex items-center gap-2">
+                <Layers className="h-4 w-4 text-primary" />
+                Linked Industrial Capacity Assessment
+              </CardTitle>
+              {risk.capacityAssessmentId && (
+                <Button variant="outline" size="sm" asChild className="h-7 text-xs rounded-lg gap-1">
+                  <Link to={`/capacity/${risk.capacityAssessmentId}`}>
+                    Open Capacity Audit <ExternalLink className="h-3 w-3" />
+                  </Link>
+                </Button>
+              )}
+            </div>
+          </CardHeader>
+          <CardContent className="pt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="space-y-0.5">
+              <p className="text-xs text-muted-foreground font-medium">Automotive Part</p>
+              <p className="text-sm font-bold font-mono text-foreground">{risk.partNumber ? `Part ${risk.partNumber}` : risk.partName || 'Component'}</p>
+            </div>
+            <div className="space-y-0.5">
+              <p className="text-xs text-muted-foreground font-medium">Supplier Site</p>
+              <p className="text-sm font-bold text-foreground">{risk.supplierName || 'Manufacturing Supplier'}</p>
+            </div>
+            <div className="space-y-0.5">
+              <p className="text-xs text-muted-foreground font-medium">Production Load Rate</p>
+              <div className="flex items-center gap-2">
+                <span className={`text-sm font-extrabold font-mono ${
+                  (risk.utilizationRate ?? 0) >= 100
+                    ? 'text-rose-600'
+                    : (risk.utilizationRate ?? 0) >= 85
+                    ? 'text-amber-600'
+                    : 'text-emerald-600'
+                }`}>
+                  {risk.utilizationRate != null ? `${risk.utilizationRate}%` : 'Audited'}
+                </span>
+                {risk.gate && <Badge variant="secondary" className="text-[10px] font-mono">{risk.gate}</Badge>}
+              </div>
+            </div>
+            <div className="space-y-0.5">
+              <p className="text-xs text-muted-foreground font-medium">Audited Bottleneck</p>
+              <p className="text-xs font-semibold text-foreground truncate">{risk.bottleneck || 'Production tooling / Line throughput'}</p>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Impact & Mitigation Plan Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card className="rounded-2xl border-border shadow-xs">
