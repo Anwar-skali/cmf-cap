@@ -414,13 +414,23 @@ class RiskService:
             if hasattr(pt, 'supplier') and pt.supplier:
                 sup_name = getattr(pt.supplier, 'name', None)
             if hasattr(pt, 'assessments') and pt.assessments:
-                latest_ass = pt.assessments[0]
-                cap_id = getattr(latest_ass, 'id', None)
-                cur_c = float(getattr(latest_ass, 'current_capacity', 0) or 0)
-                max_c = float(getattr(latest_ass, 'maximum_capacity', 0) or 0)
-                util_rate = round((cur_c / max_c * 100), 1) if max_c > 0 else None
-                bottleneck = getattr(latest_ass, 'bottleneck', None)
-                gate = getattr(latest_ass, 'cate', None) or getattr(latest_ass, 'gate', None)
+                active_assessments = [a for a in pt.assessments if getattr(a, 'deleted_at', None) is None]
+                if active_assessments:
+                    active_assessments.sort(
+                        key=lambda a: (
+                            getattr(a, 'year', 0) or 0,
+                            getattr(a, 'month', 0) or 0,
+                            str(getattr(a, 'created_at', '')) or '',
+                        ),
+                        reverse=True,
+                    )
+                    latest_ass = active_assessments[0]
+                    cap_id = getattr(latest_ass, 'id', None)
+                    cur_c = float(getattr(latest_ass, 'current_capacity', 0) or 0)
+                    max_c = float(getattr(latest_ass, 'maximum_capacity', 0) or 0)
+                    util_rate = round((cur_c / max_c * 100), 1) if max_c > 0 else None
+                    bottleneck = getattr(latest_ass, 'bottleneck', None)
+                    gate = getattr(latest_ass, 'cate', None) or getattr(latest_ass, 'gate', None)
 
         return RiskResponse(
             id=risk.id,

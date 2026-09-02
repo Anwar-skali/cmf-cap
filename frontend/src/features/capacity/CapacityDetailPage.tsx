@@ -55,8 +55,25 @@ export default function CapacityDetailPage() {
     );
   }
 
-  if (error) return <ErrorState title="Failed to load assessment" message={error?.message} onRetry={refetch} />;
-  if (!assessment) return <EmptyState title="Assessment not found" description="The capacity assessment you are looking for does not exist." />;
+  if (error || !assessment) {
+    return (
+      <div className="max-w-2xl mx-auto py-12 space-y-4">
+        <EmptyState
+          title="Capacity Assessment Not Found"
+          description="The requested capacity assessment record either has been removed, deleted, or does not exist."
+          action={{
+            label: "Return to Capacity Management",
+            onClick: () => navigate('/capacity'),
+          }}
+        />
+        <div className="flex justify-center gap-3">
+          <Button variant="outline" size="sm" onClick={() => navigate('/risks')}>
+            Back to Risk Registry
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   const handleDelete = () => {
     deleteMutation.mutate(assessmentId!, {
