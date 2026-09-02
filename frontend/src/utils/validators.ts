@@ -150,6 +150,8 @@ export const createRiskSchema = z.object({
   contingency: z.string().optional(),
   status: z.enum(['open', 'mitigating', 'mitigated', 'closed']).default('open'),
   dueDate: z.string().optional(),
+  gate: z.string().optional(),
+  cate: z.string().optional(),
 });
 
 export type LoginFormData = z.infer<typeof loginSchema>;

@@ -296,6 +296,8 @@ export interface CreateRiskRequest {
   dueDate?: string;
   assignedTo?: string;
   identifiedBy?: string;
+  gate?: string;
+  cate?: string;
 }
 
 export type DocumentType = 'contract' | 'specification' | 'drawing' | 'report' | 'certificate' | 'other';
