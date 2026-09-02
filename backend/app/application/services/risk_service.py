@@ -301,6 +301,30 @@ class RiskService:
             mitigation = f"Routine monthly production load monitoring."
             status = "closed" if is_confirmed else "open"
 
+        due_date = None
+        target_week_raw = getattr(a, 'target_week', None) or getattr(a, 'forecast_week', None)
+        if target_week_raw:
+            try:
+                tw_str = str(target_week_raw).replace("CW", "").replace("W", "").strip()
+                if len(tw_str) == 6 and tw_str.isdigit():
+                    yr = int(tw_str[:4])
+                    wk = int(tw_str[4:])
+                    due_date = datetime.fromisocalendar(yr, min(wk, 52), 5).replace(tzinfo=timezone.utc)
+                elif len(tw_str) <= 2 and tw_str.isdigit():
+                    due_date = datetime.fromisocalendar(2026, min(int(tw_str), 52), 5).replace(tzinfo=timezone.utc)
+            except Exception:
+                pass
+
+        if not due_date and getattr(a, 'month', None) and getattr(a, 'year', None):
+            try:
+                import calendar
+                y = int(a.year)
+                m = int(a.month)
+                last_d = calendar.monthrange(y, m)[1]
+                due_date = datetime(y, m, last_d, 18, 0, 0, tzinfo=timezone.utc)
+            except Exception:
+                pass
+
         existing_risks = await self._uow.risks.get_multi(
             filters={"project_part_id": a.project_part_id}, limit=10
         )
@@ -313,7 +337,7 @@ class RiskService:
             elif is_confirmed and r.status == "open":
                 new_status = "closed"
 
-            await self._uow.risks.update(r.id, {
+            update_dict: dict[str, Any] = {
                 "title": title,
                 "description": desc,
                 "risk_type": risk_type,
@@ -323,7 +347,13 @@ class RiskService:
                 "mitigation": mitigation,
                 "status": new_status,
                 "resolved_at": now if new_status == "closed" else None,
-            })
+            }
+            if due_date:
+                update_dict["due_date"] = due_date
+            if getattr(a, 'assessed_by', None):
+                update_dict["identified_by"] = a.assessed_by
+
+            await self._uow.risks.update(r.id, update_dict)
         else:
             await self._uow.risks.create({
                 "title": title,
@@ -334,6 +364,8 @@ class RiskService:
                 "impact": impact,
                 "mitigation": mitigation,
                 "status": status,
+                "due_date": due_date,
+                "identified_by": getattr(a, 'assessed_by', None),
                 "project_part_id": a.project_part_id,
             })
 
