@@ -313,10 +313,10 @@ export default function DashboardPage() {
           <SectionCard title="Capacity Overview" subtitle="Production capacity breakdown (units/week)" icon={Gauge}>
             <div className="grid grid-cols-2 gap-3 mb-4">
               {[
-                { label: 'Available Capacity', value: cmf.availableCapacity.toLocaleString(), color: 'text-slate-700 dark:text-slate-200' },
-                { label: 'Allocated Capacity', value: cmf.allocatedCapacity.toLocaleString(), color: 'text-slate-700 dark:text-slate-200' },
-                { label: 'Used Capacity',      value: cmf.usedCapacity.toLocaleString(),      color: 'text-slate-700 dark:text-slate-200' },
-                { label: 'Remaining Capacity', value: cmf.remainingCapacity.toLocaleString(), color: 'text-slate-700 dark:text-slate-200' },
+                { label: 'Installed Max Capacity', value: cmf.availableCapacity.toLocaleString(), color: 'text-slate-700 dark:text-slate-200' },
+                { label: 'Required Demand',        value: cmf.allocatedCapacity.toLocaleString(), color: 'text-amber-600 dark:text-amber-400' },
+                { label: 'Secured (Confirmed)',    value: cmf.usedCapacity.toLocaleString(),      color: 'text-emerald-600 dark:text-emerald-400' },
+                { label: 'Capacity Headroom',      value: cmf.remainingCapacity.toLocaleString(), color: 'text-blue-600 dark:text-blue-400' },
               ].map(({ label, value, color }) => (
                 <div key={label} className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-3 space-y-0.5">
                   <p className="text-[11px] text-muted-foreground font-medium">{label}</p>
@@ -351,9 +351,9 @@ export default function DashboardPage() {
                     <YAxis stroke="#888888" fontSize={10} tickFormatter={(v) => `${(v / 1000).toFixed(0)}K`} />
                     <Tooltip formatter={(v: number) => v.toLocaleString()} />
                     <Legend fontSize={11} />
-                    <Line type="monotone" dataKey="available" stroke="#94a3b8" strokeWidth={1.5} dot={false} name="Available" strokeDasharray="4 2" />
-                    <Line type="monotone" dataKey="allocated" stroke="#f59e0b" strokeWidth={2} dot={false} name="Allocated" />
-                    <Line type="monotone" dataKey="used"      stroke="#0066CC" strokeWidth={2.5} dot={false} name="Used" />
+                    <Line type="monotone" dataKey="available" stroke="#94a3b8" strokeWidth={1.5} dot={false} name="Installed Max" strokeDasharray="4 2" />
+                    <Line type="monotone" dataKey="allocated" stroke="#f59e0b" strokeWidth={2} dot={false} name="Required Demand" />
+                    <Line type="monotone" dataKey="used"      stroke="#0066CC" strokeWidth={2.5} dot={false} name="Secured (Confirmed)" />
                   </LineChart>
                 </ResponsiveContainer>
               </div>

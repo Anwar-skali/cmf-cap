@@ -132,8 +132,9 @@ class DashboardService:
         # Capacity metrics
         total_cap = sum(float(a.maximum_capacity) for a in assessments if a.maximum_capacity)
         allocated_cap = sum(float(a.current_capacity) for a in assessments if a.current_capacity)
-        used_cap = allocated_cap
-        remaining_cap = max(0.0, total_cap - used_cap)
+        secured_cap = sum(float(a.current_capacity) for a in assessments if a.current_capacity and str(a.status).lower() == "confirmed")
+        used_cap = secured_cap
+        remaining_cap = max(0.0, total_cap - allocated_cap)
         capacity_gap = max(0.0, total_cap - allocated_cap)
         avg_util_pct = round((allocated_cap / total_cap * 100), 2) if total_cap > 0 else 0.0
 
