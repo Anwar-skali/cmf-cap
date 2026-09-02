@@ -141,17 +141,17 @@ export function PartCardGrid({
 
                 <div className="rounded-xl border border-border/60 bg-muted/30 p-2.5 space-y-0.5">
                   <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1">
-                    <Layers className="h-3 w-3 text-indigo-500" /> Material
+                    <Layers className="h-3 w-3 text-indigo-500" /> Commodity
                   </span>
                   <p className="text-xs font-extrabold truncate">
                     <span className={`inline-block px-1.5 py-0.5 rounded-md border text-[11px] ${materialStyle.bg} ${materialStyle.text} ${materialStyle.border}`}>
-                      {part.material || 'Standard'}
+                      {part.material || 'Direct Material'}
                     </span>
                   </p>
                 </div>
               </div>
 
-              {/* Supplier & Weight Info */}
+              {/* Supplier & COFOR Info */}
               <div className="space-y-1.5 pt-1 text-xs">
                 <div className="flex items-center justify-between text-muted-foreground">
                   <span className="flex items-center gap-1.5">
@@ -160,18 +160,18 @@ export function PartCardGrid({
                       {part.supplier?.name || 'No supplier assigned'}
                     </span>
                   </span>
-                  {part.weight !== undefined && part.weight !== null && (
-                    <span className="flex items-center gap-1 font-mono text-[11px] text-muted-foreground">
-                      <Scale className="h-3 w-3 text-amber-500" /> {part.weight} kg
+                  {(part.manufacturingCofor || part.supplier?.code) && (
+                    <span className="flex items-center gap-1 font-mono text-[11px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">
+                      COFOR: {part.manufacturingCofor || part.supplier?.code}
                     </span>
                   )}
                 </div>
 
-                {part.projectId && (
+                {part.useCase && (
                   <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-                    <FolderKanban className="h-3 w-3 text-blue-500 shrink-0" />
-                    <span className="font-mono text-muted-foreground truncate">
-                      Project: {part.projectId.slice(0, 10)}
+                    <span className="text-muted-foreground font-medium">Use Case:</span>
+                    <span className="text-foreground font-semibold truncate">
+                      {part.useCase}
                     </span>
                   </div>
                 )}
