@@ -1,17 +1,16 @@
 import { useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { usePartQuery } from '@/hooks/queries/usePartsQuery';
 import { useUpdatePartMutation } from '@/hooks/mutations/usePartMutations';
 import { useProjectsQuery } from '@/hooks/queries/useProjectsQuery';
 import { useSuppliersQuery } from '@/hooks/queries/useSuppliersQuery';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { CrudFormHeader } from '@/components/layout/CrudFormHeader';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import { ErrorState } from '@/components/ui/error-state';
-import { ArrowLeft, Save } from 'lucide-react';
+import { Save } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
@@ -35,13 +34,15 @@ export default function PartEditPage() {
       name: '',
       partNumber: '',
       projectId: '',
+      apqp: '',
       supplierId: '',
+      manufacturingCofor: '',
+      useCase: '',
       quantity: 1,
       unit: 'pcs',
-      material: '',
-      weight: undefined,
       status: 'active',
       description: '',
+      comments: '',
       notes: '',
     },
   });
@@ -52,13 +53,15 @@ export default function PartEditPage() {
         name: part.name || '',
         partNumber: part.partNumber || '',
         projectId: part.projectId || '',
+        apqp: (part as any).apqp || '',
         supplierId: part.supplierId || '',
+        manufacturingCofor: part.manufacturingCofor || '',
+        useCase: part.useCase || '',
         quantity: part.quantity || 1,
         unit: part.unit || 'pcs',
-        material: part.material || '',
-        weight: part.weight || undefined,
         status: part.status || 'active',
         description: part.description || '',
+        comments: (part as any).comments || '',
         notes: part.notes || '',
       });
     }
@@ -89,165 +92,172 @@ export default function PartEditPage() {
   }
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="sm" asChild>
-          <Link to={`/parts/${id}`}><ArrowLeft className="h-4 w-4" /></Link>
-        </Button>
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Edit Part</h1>
-          <p className="text-muted-foreground">Update details for {part.name}</p>
-        </div>
-      </div>
+    <div className="space-y-6 animate-fade-in pb-20">
+      {/* LTOS Dark Hero Header Banner */}
+      <CrudFormHeader
+        breadcrumbs={[
+          { label: 'Home', href: '/' },
+          { label: 'Parts & Components', href: '/parts' },
+          { label: part.name, href: `/parts/${id}` },
+          { label: 'Edit' },
+        ]}
+        title={`Edit: ${part.name}`}
+        subtitle="Update component specifications, sourcing details, and procurement notes."
+        versionBadge="Part Catalog V2026_V1"
+      />
 
-      <Card>
-        <CardHeader><CardTitle>Part Details</CardTitle></CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Part Name *</FormLabel>
-                      <FormControl><Input placeholder="Enter part name" {...field} /></FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+      {/* White Floating Container Card */}
+      <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-card p-6 sm:p-8 shadow-xl">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <div className="border-b border-slate-200 dark:border-slate-800 pb-3">
+              <h2 className="text-xl font-bold tracking-tight text-foreground">Component Specification</h2>
+              <p className="text-xs text-muted-foreground">Update the part details below according to CMF standards.</p>
+            </div>
 
-                <FormField
-                  control={form.control}
-                  name="partNumber"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Part Number *</FormLabel>
-                      <FormControl><Input placeholder="e.g. PN-1002" {...field} /></FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+            {/* Row 1: Part Name & Part Number */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Part Name *</FormLabel>
+                    <FormControl><Input placeholder="e.g. Front Bumper LH" {...field} /></FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <FormField
-                  control={form.control}
-                  name="projectId"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Project</FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value ?? ''}>
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder={isLoadingProjects ? 'Loading projects...' : 'Select project (optional)'} />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {projectsData?.items?.map((p) => (
-                            <SelectItem key={p.id} value={p.id}>
-                              {p.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+              <FormField
+                control={form.control}
+                name="partNumber"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Part Number *</FormLabel>
+                    <FormControl><Input placeholder="e.g. PN-994821" {...field} /></FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
-                <FormField
-                  control={form.control}
-                  name="supplierId"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Supplier</FormLabel>
-                      <Select onValueChange={field.onChange} value={field.value ?? ''}>
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder={isLoadingSuppliers ? 'Loading suppliers...' : 'Select supplier (optional)'} />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {suppliersData?.items?.map((s) => (
-                            <SelectItem key={s.id} value={s.id}>
-                              {s.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <FormField
-                  control={form.control}
-                  name="quantity"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Quantity *</FormLabel>
+            {/* Row 2: Project & APQP */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="projectId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Project *</FormLabel>
+                    <Select onValueChange={field.onChange} value={field.value ?? ''}>
                       <FormControl>
-                        <Input
-                          type="number"
-                          min={1}
-                          {...field}
-                          onChange={(e) => field.onChange(Number(e.target.value))}
-                        />
+                        <SelectTrigger>
+                          <SelectValue placeholder={isLoadingProjects ? 'Loading projects...' : 'Select project'} />
+                        </SelectTrigger>
                       </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                      <SelectContent>
+                        {projectsData?.items?.map((p) => (
+                          <SelectItem key={p.id} value={p.id}>
+                            {p.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-                <FormField
-                  control={form.control}
-                  name="unit"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Unit *</FormLabel>
-                      <FormControl><Input placeholder="e.g. pcs, kg, m" {...field} /></FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+              <FormField
+                control={form.control}
+                name="apqp"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>APQP</FormLabel>
+                    <FormControl><Input placeholder="e.g. APQP-Phase-2" {...field} /></FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
-                <FormField
-                  control={form.control}
-                  name="material"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Material</FormLabel>
-                      <FormControl><Input placeholder="e.g. Aluminum, Steel" {...field} /></FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="weight"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Weight (kg)</FormLabel>
+            {/* Row 3: Supplier & Manufacturing COFOR */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="supplierId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Supplier</FormLabel>
+                    <Select onValueChange={field.onChange} value={field.value ?? ''}>
                       <FormControl>
-                        <Input
-                          type="number"
-                          step="0.01"
-                          placeholder="e.g. 1.25"
-                          {...field}
-                          onChange={(e) => field.onChange(e.target.value ? Number(e.target.value) : undefined)}
-                        />
+                        <SelectTrigger>
+                          <SelectValue placeholder={isLoadingSuppliers ? 'Loading suppliers...' : 'Select supplier (optional)'} />
+                        </SelectTrigger>
                       </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+                      <SelectContent>
+                        {suppliersData?.items?.map((s) => (
+                          <SelectItem key={s.id} value={s.id}>
+                            {s.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
+              <FormField
+                control={form.control}
+                name="manufacturingCofor"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Manufacturing COFOR</FormLabel>
+                    <FormControl><Input placeholder="e.g. COFOR-12948" {...field} /></FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            {/* Row 4: Use Case & Quantity */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="useCase"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Use Case</FormLabel>
+                    <FormControl><Input placeholder="e.g. Mass Production EV Line" {...field} /></FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="quantity"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Quantity *</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        min={1}
+                        {...field}
+                        onChange={(e) => field.onChange(Number(e.target.value) || 1)}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            {/* Row 5: Status */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
                 name="status"
@@ -268,41 +278,69 @@ export default function PartEditPage() {
                   </FormItem>
                 )}
               />
+            </div>
 
-              <FormField
-                control={form.control}
-                name="description"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Description</FormLabel>
-                    <FormControl><Textarea placeholder="Part description" {...field} /></FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+            {/* Row 6: Description */}
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl><Textarea placeholder="Technical specifications and part notes..." {...field} /></FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-              <FormField
-                control={form.control}
-                name="notes"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Notes</FormLabel>
-                    <FormControl><Textarea placeholder="Internal notes or specifications" {...field} /></FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+            {/* Row 7: Comments & Commercial Notes */}
+            <FormField
+              control={form.control}
+              name="comments"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Comments & Commercial Notes</FormLabel>
+                  <FormControl><Textarea placeholder="Commercial reference, commitment dates, or purchasing observations..." {...field} /></FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-              <div className="flex justify-end gap-4">
-                <Button variant="outline" asChild><Link to={`/parts/${id}`}>Cancel</Link></Button>
-                <Button type="submit" disabled={updateMutation.isPending}>
-                  <Save className="mr-2 h-4 w-4" /> {updateMutation.isPending ? 'Saving...' : 'Save Changes'}
-                </Button>
-              </div>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
+            {/* Row 8: Procurement / Engineering Notes */}
+            <FormField
+              control={form.control}
+              name="notes"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Procurement / Engineering Notes</FormLabel>
+                  <FormControl><Textarea placeholder="Enter procurement, sourcing, tooling, or engineering notes..." {...field} /></FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Bottom Action Bar */}
+            <div className="flex items-center justify-end gap-4 pt-6 border-t border-slate-200 dark:border-slate-800">
+              <button
+                type="button"
+                onClick={() => navigate(`/parts/${id}`)}
+                className="text-sm font-bold text-blue-600 dark:text-blue-400 hover:underline cursor-pointer"
+              >
+                Cancel
+              </button>
+
+              <button
+                type="submit"
+                disabled={updateMutation.isPending}
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0066CC] hover:bg-[#0052A3] text-white text-xs font-bold px-8 py-2.5 transition-all shadow-md shadow-blue-500/20 active:scale-95 cursor-pointer disabled:opacity-50"
+              >
+                <Save className="h-4 w-4" />
+                <span>{updateMutation.isPending ? 'Saving...' : 'Save Changes'}</span>
+              </button>
+            </div>
+          </form>
+        </Form>
+      </div>
     </div>
   );
 }

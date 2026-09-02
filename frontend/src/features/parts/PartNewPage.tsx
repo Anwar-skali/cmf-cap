@@ -178,8 +178,8 @@ export default function PartNewPage() {
               />
             </div>
 
-            {/* Row 4: Use Case, Quantity & Material */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Row 4: Use Case & Quantity */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
                 name="useCase"
@@ -206,18 +206,6 @@ export default function PartNewPage() {
                         onChange={(e) => field.onChange(Number(e.target.value) || 1)}
                       />
                     </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="material"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Material</FormLabel>
-                    <FormControl><Input placeholder="e.g. Plastic, Aluminum, Steel" {...field} /></FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
