@@ -314,9 +314,9 @@ export default function DashboardPage() {
             <div className="grid grid-cols-2 gap-3 mb-4">
               {[
                 { label: 'Installed Max Capacity', value: cmf.availableCapacity.toLocaleString(), color: 'text-slate-700 dark:text-slate-200' },
-                { label: 'Required Demand',        value: cmf.allocatedCapacity.toLocaleString(), color: 'text-amber-600 dark:text-amber-400' },
-                { label: 'Secured (Confirmed)',    value: cmf.usedCapacity.toLocaleString(),      color: 'text-emerald-600 dark:text-emerald-400' },
-                { label: 'Capacity Headroom',      value: cmf.remainingCapacity.toLocaleString(), color: 'text-blue-600 dark:text-blue-400' },
+                { label: 'Required Demand',        value: cmf.allocatedCapacity.toLocaleString(), color: 'text-slate-700 dark:text-slate-200' },
+                { label: 'Secured (Confirmed)',    value: cmf.usedCapacity.toLocaleString(),      color: 'text-slate-700 dark:text-slate-200' },
+                { label: 'Capacity Headroom',      value: cmf.remainingCapacity.toLocaleString(), color: 'text-slate-700 dark:text-slate-200' },
               ].map(({ label, value, color }) => (
                 <div key={label} className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-3 space-y-0.5">
                   <p className="text-[11px] text-muted-foreground font-medium">{label}</p>
