@@ -22,6 +22,8 @@ from app.api.deps import (
     get_current_active_user,
     get_unit_of_work,
 )
+from app.core.exceptions import ForbiddenException
+from app.domain.enums import UserRole
 from app.infrastructure.persistence.models.user import User
 from app.infrastructure.persistence.unit_of_work import UnitOfWork
 
@@ -117,6 +119,8 @@ async def create_capacity(
     current_user: User = Depends(get_current_active_user),
     capacity_service: CapacityAssessmentService = Depends(get_capacity_assessment_service),
 ) -> Any:
+    if current_user.role not in (UserRole.ADMIN.value, UserRole.SQD.value) and not current_user.is_superuser:
+        raise ForbiddenException("Only SQD and Administrators can create capacity assessments")
     return await capacity_service.create_assessment(data, user_id=current_user.id)
 
 
@@ -150,6 +154,8 @@ async def update_capacity(
     current_user: User = Depends(get_current_active_user),
     capacity_service: CapacityAssessmentService = Depends(get_capacity_assessment_service),
 ) -> Any:
+    if current_user.role not in (UserRole.ADMIN.value, UserRole.SQD.value) and not current_user.is_superuser:
+        raise ForbiddenException("Only SQD and Administrators can update capacity assessments")
     return await capacity_service.update_assessment(id, data, user_id=current_user.id)
 
 
@@ -162,5 +168,7 @@ async def delete_capacity(
     current_user: User = Depends(get_current_active_user),
     capacity_service: CapacityAssessmentService = Depends(get_capacity_assessment_service),
 ) -> dict[str, bool]:
+    if current_user.role not in (UserRole.ADMIN.value, UserRole.SQD.value) and not current_user.is_superuser:
+        raise ForbiddenException("Only SQD and Administrators can delete capacity assessments")
     result = await capacity_service.delete_assessment(id, user_id=current_user.id)
     return {"success": result}

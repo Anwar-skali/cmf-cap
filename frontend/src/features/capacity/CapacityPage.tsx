@@ -501,7 +501,7 @@ export default function CapacityPage() {
             </Button>
           ) : (
             <Badge variant="outline" className="px-3 py-1.5 text-xs text-muted-foreground bg-muted/50 border gap-1.5">
-              <Lock className="h-3.5 w-3.5" /> Capacity Managers only
+              <Lock className="h-3.5 w-3.5" /> SQD only
             </Badge>
           )}
         </div>

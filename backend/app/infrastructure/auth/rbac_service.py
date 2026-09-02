@@ -82,7 +82,7 @@ PERMISSION_DEFINITIONS: dict[str, dict[str, list[UserRole]]] = {
     "capacity_assessments": {
         PermissionAction.CREATE: [
             UserRole.ADMIN,
-            UserRole.CAPACITY_MANAGER,
+            UserRole.SQD,
         ],
         PermissionAction.READ: [
             UserRole.ADMIN,
@@ -93,10 +93,10 @@ PERMISSION_DEFINITIONS: dict[str, dict[str, list[UserRole]]] = {
         ],
         PermissionAction.UPDATE: [
             UserRole.ADMIN,
-            UserRole.CAPACITY_MANAGER,
+            UserRole.SQD,
         ],
-        PermissionAction.DELETE: [UserRole.ADMIN],
-        PermissionAction.APPROVE: [UserRole.ADMIN, UserRole.CAPACITY_MANAGER],
+        PermissionAction.DELETE: [UserRole.ADMIN, UserRole.SQD],
+        PermissionAction.APPROVE: [UserRole.ADMIN, UserRole.SQD],
     },
     "risks": {
         PermissionAction.CREATE: [

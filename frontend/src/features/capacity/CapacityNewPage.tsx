@@ -25,7 +25,9 @@ import {
   HelpCircle,
   FileCheck,
   TrendingUp,
+  Lock,
 } from 'lucide-react';
+import { usePermissions } from '@/hooks/usePermissions';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage, FormDescription } from '@/components/ui/form';
@@ -37,6 +39,7 @@ export default function CapacityNewPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const toast = useToast();
+  const { canCreateCapacityAssessment } = usePermissions();
 
   const prefillData = (location.state as { prefill?: CapacityAssessment })?.prefill;
   const isEditing = !!prefillData?.id;
@@ -126,6 +129,34 @@ export default function CapacityNewPage() {
       });
     }
   };
+
+  if (!canCreateCapacityAssessment) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center p-4 animate-fade-in">
+        <Card className="max-w-md w-full border-border/60 shadow-lg text-center p-6 space-y-5">
+          <div className="mx-auto w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500">
+            <Lock className="h-7 w-7" />
+          </div>
+          <div className="space-y-2">
+            <Badge variant="outline" className="bg-amber-500/10 text-amber-600 border-amber-500/20 text-xs font-semibold px-2.5 py-0.5">
+              Access Restricted
+            </Badge>
+            <h2 className="text-xl font-bold tracking-tight text-foreground">SQD Role Required</h2>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Capacity assessments and CAT milestone evaluations can only be created or modified by users with the <span className="font-semibold text-foreground">SQD (Supplier Quality Development)</span> role or Administrators.
+            </p>
+          </div>
+          <div className="pt-2 flex flex-col gap-2">
+            <Button asChild className="w-full bg-primary hover:bg-primary/90 text-primary-foreground gap-2">
+              <Link to="/capacity">
+                <ArrowLeft className="h-4 w-4" /> Return to Capacity Dashboard
+              </Link>
+            </Button>
+          </div>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8 animate-fade-in max-w-6xl mx-auto pb-16">

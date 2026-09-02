@@ -28,11 +28,13 @@ import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { ErrorState } from '@/components/ui/error-state';
 import { EmptyState } from '@/components/ui/empty-state';
 import { useToast } from '@/hooks/useToast';
+import { usePermissions } from '@/hooks/usePermissions';
 
 export default function CapacityDetailPage() {
   const { assessmentId } = useParams<{ assessmentId: string }>();
   const navigate = useNavigate();
   const toast = useToast();
+  const { canCreateCapacityAssessment } = usePermissions();
   const [showDelete, setShowDelete] = useState(false);
   const deleteMutation = useDeleteCapacityMutation();
 
@@ -115,16 +117,22 @@ export default function CapacityDetailPage() {
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" asChild className="gap-1.5">
-            <Link to={`/capacity/new`} state={{ prefill: assessment }}>
-              <Pencil className="h-4 w-4" /> Edit
-            </Link>
-          </Button>
-          <Button variant="destructive" size="sm" onClick={() => setShowDelete(true)} disabled={deleteMutation.isPending} className="gap-1.5">
-            <Trash2 className="h-4 w-4" /> Delete Assessment
-          </Button>
-        </div>
+        {canCreateCapacityAssessment ? (
+          <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm" asChild className="gap-1.5">
+              <Link to={`/capacity/new`} state={{ prefill: assessment }}>
+                <Pencil className="h-4 w-4" /> Edit
+              </Link>
+            </Button>
+            <Button variant="destructive" size="sm" onClick={() => setShowDelete(true)} disabled={deleteMutation.isPending} className="gap-1.5">
+              <Trash2 className="h-4 w-4" /> Delete Assessment
+            </Button>
+          </div>
+        ) : (
+          <Badge variant="outline" className="px-3 py-1.5 text-xs text-muted-foreground bg-muted/50 border gap-1.5">
+            SQD only
+          </Badge>
+        )}
       </div>
 
       {/* 4 Metric Cards */}
