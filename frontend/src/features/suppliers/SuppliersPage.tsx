@@ -550,7 +550,7 @@ export default function SuppliersPage() {
             <h3 className="text-base font-extrabold text-foreground">Supplier Status Breakdown</h3>
           </div>
           <Badge variant="outline" className="text-xs font-semibold text-muted-foreground">
-            {totalSuppliers} Total Suppliers
+            {totalCount} Total Suppliers
           </Badge>
         </div>
 
@@ -582,21 +582,21 @@ export default function SuppliersPage() {
               <span className="text-xs font-semibold text-emerald-700 dark:text-emerald-400">Active Production</span>
               <p className="text-2xl font-extrabold text-emerald-600">{activeCount}</p>
               <span className="text-[11px] text-muted-foreground">
-                {totalSuppliers > 0 ? Math.round((activeCount / totalSuppliers) * 100) : 0}% of supplier base
+                {totalCount > 0 ? Math.round((activeCount / totalCount) * 100) : 0}% of supplier base
               </span>
             </div>
             <div className="rounded-xl border border-slate-500/20 bg-slate-500/5 p-4 text-center space-y-1">
               <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">Inactive</span>
               <p className="text-2xl font-extrabold text-slate-500">{inactiveCount}</p>
               <span className="text-[11px] text-muted-foreground">
-                {totalSuppliers > 0 ? Math.round((inactiveCount / totalSuppliers) * 100) : 0}% of supplier base
+                {totalCount > 0 ? Math.round((inactiveCount / totalCount) * 100) : 0}% of supplier base
               </span>
             </div>
             <div className="rounded-xl border border-rose-500/20 bg-rose-500/5 p-4 text-center space-y-1">
               <span className="text-xs font-semibold text-rose-700 dark:text-rose-400">Blacklisted</span>
               <p className="text-2xl font-extrabold text-rose-600">{blacklistedCount}</p>
               <span className="text-[11px] text-muted-foreground">
-                {totalSuppliers > 0 ? Math.round((blacklistedCount / totalSuppliers) * 100) : 0}% of supplier base
+                {totalCount > 0 ? Math.round((blacklistedCount / totalCount) * 100) : 0}% of supplier base
               </span>
             </div>
           </div>
