@@ -763,8 +763,8 @@ export default function CapacityNewPage() {
                 </div>
                 <div className="flex justify-between text-muted-foreground">
                   <span>Evaluated Risk:</span>
-                  <Badge variant="outline" className="capitalize text-[10px] py-0 px-2">
-                    {selectedRisk || 'low'}
+                  <Badge variant="outline" className={`capitalize text-[10px] py-0 px-2 border ${autoRiskLevel.color}`}>
+                    {autoRiskLevel.label.split('—')[0].trim()}
                   </Badge>
                 </div>
                 <div className="flex justify-between text-muted-foreground">
