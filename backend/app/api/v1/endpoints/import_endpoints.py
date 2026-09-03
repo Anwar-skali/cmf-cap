@@ -17,6 +17,7 @@ from pydantic import BaseModel
 from app.api.deps import get_current_active_user, get_unit_of_work
 from app.application.services.import_engine_service import (
     ImportEngineService,
+    K0_SHEET_NAME,
     K0_SOURCE_COLUMNS,
     K0_SOURCE_COLUMN_COUNT,
     _K0_CODES,
@@ -274,9 +275,10 @@ async def ollama_semantic_map(
     # The K0 workbook has empty cells after column AU (index 47+) that must
     # not be sent to Ollama as potential source columns.
     is_k0_template = template_identifier.upper() in _K0_CODES
-    if is_k0_template and len(excel_headers) > K0_SOURCE_COLUMN_COUNT:
+    is_suivi_k0 = is_k0_template and (sheet_used == K0_SHEET_NAME or len(excel_headers) >= K0_SOURCE_COLUMN_COUNT)
+    if is_suivi_k0 and len(excel_headers) > K0_SOURCE_COLUMN_COUNT:
         logger.info(
-            "[OLLAMA MAP] K0 template: capping %d headers to %d real source columns",
+            "[OLLAMA MAP] K0 Suivi template: capping %d headers to %d real source columns",
             len(excel_headers), K0_SOURCE_COLUMN_COUNT,
         )
         excel_headers = excel_headers[:K0_SOURCE_COLUMN_COUNT]
@@ -312,9 +314,10 @@ async def ollama_semantic_map(
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Mapping service error: {e}")
 
-    # For K0 templates: assign positional matches for any remaining unmapped fields
+    # For legacy K0 Suivi templates: assign positional matches for any remaining unmapped fields
     # (e.g. duplicate headers like "Week Project Target" milestones 2 & 3, "Make Battery (LP)" 2nd occurrence, etc.)
-    if is_k0_template:
+    # Positional fallback MUST only apply when the sheet matches the 47-column Suivi structure.
+    if is_suivi_k0:
         for col_idx, f_key in enumerate(K0_SOURCE_COLUMNS):
             if f_key and col_idx < len(excel_headers):
                 curr = result["mapping"].get(f_key)

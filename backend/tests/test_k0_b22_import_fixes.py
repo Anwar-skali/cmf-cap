@@ -249,3 +249,53 @@ async def test_legacy_k0_suivi_path_unaffected():
 
     # The legacy file has 1 real data row
     assert result["total_rows"] >= 1, f"Expected >= 1 row, got {result}"
+
+
+@pytest.mark.asyncio
+async def test_execute_import_with_string_user_id():
+    """
+    execute_import should safely handle string user_id without throwing
+    AttributeError ('str' object has no attribute 'hex') when recording audit logs,
+    import history, or notifications.
+    """
+    headers = ["Part Number", "Part Name", "Nominated Supplier"]
+    rows = [["9861318980", "JEU ETRIER FREIN AR", "Astemo France"]]
+    content = _make_file_bytes(headers, rows)
+
+    from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
+    from app.infrastructure.persistence.models.base import Base
+    from app.infrastructure.persistence.unit_of_work import UnitOfWork
+    from app.application.services.template_service import TemplateService
+
+    engine = create_async_engine("sqlite+aiosqlite:///:memory:", echo=False)
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+    async_session = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
+
+    async with async_session() as session:
+        uow = UnitOfWork(session)
+        tmpl_svc = TemplateService(uow)
+        await tmpl_svc.seed_template_by_code("K0", "k0_template.json")
+        await uow.commit()
+
+        svc = ImportEngineService(uow)
+        custom_mapping = {
+            "Part Number": "part_number",
+            "Part Name": "description",
+            "Nominated Supplier": "supplier_name",
+        }
+        res = await svc.execute_import(
+            file_bytes=content,
+            file_name="b22.xlsx",
+            entity_type="K0",
+            column_mapping=custom_mapping,
+            sheet_name="Feuil1",
+            header_row=1,
+            user_id="string-user-not-uuid",
+            user_email="test@example.com",
+        )
+        assert res.get("status") == "completed"
+        assert res.get("imported_count") == 1
+
+    await engine.dispose()
+

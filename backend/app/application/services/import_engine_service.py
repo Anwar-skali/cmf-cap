@@ -1544,9 +1544,18 @@ class ImportEngineService:
             logger.info("[IMPORT DEBUG] Serializer errors count: %d", len(serializer_errors))
 
             # Record Audit Log
+            audit_user_id = None
+            if isinstance(user_id, uuid.UUID):
+                audit_user_id = user_id
+            elif isinstance(user_id, str):
+                try:
+                    audit_user_id = uuid.UUID(user_id)
+                except (ValueError, AttributeError):
+                    audit_user_id = None
+
             await uow.activity_logs.create(
                 {
-                    "user_id": user_id,
+                    "user_id": audit_user_id,
                     "action": ActivityAction.CREATE.value,
                     "resource_type": f"import_{entity_type}",
                     "resource_id": str(uuid.uuid4()),
@@ -1567,7 +1576,7 @@ class ImportEngineService:
             # Record Import History
             history_entry = await uow.import_history.create(
                 {
-                    "user_id": user_id,
+                    "user_id": audit_user_id,
                     "user_email": user_email,
                     "entity_type": entity_type,
                     "file_name": file_name,
@@ -1586,11 +1595,11 @@ class ImportEngineService:
             )
 
             # Dispatch Notification to User
-            if user_id:
+            if audit_user_id:
                 try:
                     await uow.notifications.create(
                         {
-                            "user_id": user_id,
+                            "user_id": audit_user_id,
                             "title": f"Import Completed: {entity_type}",
                             "message": f"Processed '{file_name}': {imported_count} imported, {updated_count} updated, {skipped_count} skipped.",
                             "type": "success" if failed_count == 0 else "warning",
