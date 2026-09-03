@@ -28,7 +28,7 @@ async def test_k9_project_creation_permissions(unit_of_work):
 
     prj_service = ProjectService(unit_of_work)
 
-    # Non-buyer role should fail to create K9 project
+    # Non-capacity_manager roles should fail to create K9 project
     with pytest.raises(ForbiddenException):
         await prj_service.create_project(
             CreateProjectRequest(
@@ -36,20 +36,20 @@ async def test_k9_project_creation_permissions(unit_of_work):
                 template_id=k9.id,
                 data={"unique_id": "K9-TEST-001", "part_name": "Door Panel"},
             ),
-            user_role="capacity_manager",
+            user_role="buyer",
         )
 
-    # Buyer role should succeed
+    # Capacity Manager role should succeed
     prj = await prj_service.create_project(
         CreateProjectRequest(
             name="K9 Test Vehicle",
             template_id=k9.id,
-            data={"unique_id": "K9-TEST-001", "part_name": "Door Panel"},
+            data={"unique_id": "K9-TEST-001", "gst_no": "GST-001"},
         ),
-        user_role="buyer",
+        user_role="capacity_manager",
     )
     assert prj is not None
-    assert prj.data.get("workflow_step") == 1
+    assert prj.data.get("workflow_step") == 2
 
 
 @pytest.mark.asyncio
@@ -58,14 +58,14 @@ async def test_k9_role_field_update_restrictions(unit_of_work):
     k9 = await tmpl_service.seed_k9_if_missing()
     prj_service = ProjectService(unit_of_work)
 
-    # 1. Buyer creates project
+    # 1. Capacity Manager creates project
     prj = await prj_service.create_project(
         CreateProjectRequest(
             name="K9 Component Project",
             template_id=k9.id,
-            data={"unique_id": "K9-COMP-001", "part_name": "Bumper Assembly"},
+            data={"gst_no": "K9-COMP-001", "capacity": 3000},
         ),
-        user_role="buyer",
+        user_role="capacity_manager",
     )
 
     # 2. Capacity Manager tries editing SQD field -> should be forbidden

@@ -16,9 +16,9 @@ export default function ProjectNewPage() {
   const createMutation = useCreateProjectMutation();
   const { state: authState } = useAuthStore();
   const currentUser = authState.user;
-  const userRole = (currentUser?.role || 'buyer').toLowerCase();
+  const userRole = (currentUser?.role || 'capacity_manager').toLowerCase();
   const isAdmin = userRole === 'admin';
-  const isBuyer = userRole === 'buyer';
+  const isCapacityManager = userRole === 'capacity_manager';
 
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>(activeTemplate?.id || '');
   const [inputSource, setInputSource] = useState<InputSourceType>('manual');
@@ -28,14 +28,14 @@ export default function ProjectNewPage() {
 
   const templateCode = currentTemplate?.code?.toUpperCase();
   const isCMFTemplate = templateCode === 'K9' || templateCode === 'K0';
-  const canCreateCMF = isBuyer || isAdmin;
+  const canCreateCMF = isCapacityManager || isAdmin;
 
-  // For CMF templates, only show Buyer section during creation
+  // For CMF templates, show Capacity Manager section during creation
   const creationTemplate = isCMFTemplate && currentTemplate
     ? {
         ...currentTemplate,
         sections: currentTemplate.sections?.filter(
-          (s) => s.id === 'sec_buyer' || s.name.toLowerCase().includes('buyer')
+          (s) => s.id === 'sec_capacity_manager' || s.name.toLowerCase().includes('capacity')
         ) || [],
       }
     : currentTemplate;
@@ -43,7 +43,7 @@ export default function ProjectNewPage() {
   const handleSave = async (formValues: Record<string, any>) => {
     try {
       if (isCMFTemplate && !canCreateCMF) {
-        toast.error(`Only Buyers or Administrators can create CMF ${templateCode} projects`);
+        toast.error(`Only Capacity Managers or Administrators can create CMF ${templateCode} projects`);
         return;
       }
 
@@ -51,13 +51,17 @@ export default function ProjectNewPage() {
         formValues.part_name ||
         formValues.project_name ||
         formValues.name ||
-        'New CMF Project';
+        formValues.fld_part_name ||
+        (formValues.gst_no ? `CMF ${templateCode} - ${formValues.gst_no}` : '') ||
+        (formValues.capacity ? `CMF ${templateCode} (Cap: ${formValues.capacity})` : '') ||
+        `New CMF ${templateCode || ''} Project`.trim();
       const code =
         formValues.unique_id ||
         formValues.part_number ||
         formValues.line_item ||
         formValues.project_code ||
-        formValues.code;
+        formValues.code ||
+        formValues.gst_no;
 
       const payload = {
         name,
@@ -142,7 +146,7 @@ export default function ProjectNewPage() {
           <div>
             <p className="font-bold">Restricted Operation</p>
             <p className="text-xs font-normal opacity-90">
-              Only users with the <strong>Buyer</strong> role or <strong>Administrator</strong> privileges can create CMF {templateCode} projects.
+              Only users with the <strong>Capacity Manager</strong> role or <strong>Administrator</strong> privileges can create CMF {templateCode} projects.
             </p>
           </div>
         </div>

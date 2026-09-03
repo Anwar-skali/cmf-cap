@@ -136,8 +136,8 @@ class ProjectService:
         user_id: uuid.UUID | None = None,
         user_role: str | None = None,
     ) -> ProjectResponse:
-        if user_role and str(user_role).lower() not in ("buyer", "admin"):
-            raise ForbiddenException("Only Buyers or Administrators can create CMF projects.")
+        if user_role and str(user_role).lower() not in ("capacity_manager", "admin"):
+            raise ForbiddenException("Only Capacity Managers or Administrators can create CMF projects.")
 
         if data.code:
             existing = await self._uow.projects.get_by_code(data.code)
@@ -155,6 +155,10 @@ class ProjectService:
             val = project_data.get(uuid_field)
             if isinstance(val, str):
                 project_data[uuid_field] = uuid.UUID(val)
+
+        # Auto-assign capacity_manager_id if created by a capacity manager
+        if user_id and str(user_role).lower() == "capacity_manager" and not project_data.get("capacity_manager_id"):
+            project_data["capacity_manager_id"] = user_id
 
         if not project_data.get("template_id"):
             k9 = await self._uow.templates.get_by_code("K9")

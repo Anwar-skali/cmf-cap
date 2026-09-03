@@ -41,8 +41,8 @@ async def test_k0_template_seeded(unit_of_work):
 # ---------------------------------------------------------------------------
 
 @pytest.mark.asyncio
-async def test_k0_creation_forbidden_for_non_buyer(unit_of_work):
-    """Capacity Manager and SQD roles must NOT be able to create K0 projects."""
+async def test_k0_creation_forbidden_for_non_capacity_manager(unit_of_work):
+    """Buyer, SQD, and Viewer roles must NOT be able to create K0 projects."""
     svc = TemplateService(unit_of_work)
     await svc.seed_template_by_code("K0", "k0_template.json")
     tmpl = await unit_of_work.templates.get_by_code("K0")
@@ -54,21 +54,21 @@ async def test_k0_creation_forbidden_for_non_buyer(unit_of_work):
         template_version=tmpl.version,
     )
 
-    for forbidden_role in ("capacity_manager", "sqd", "viewer"):
+    for forbidden_role in ("buyer", "sqd", "viewer"):
         with pytest.raises(ForbiddenException):
             await proj_svc.create_project(payload, user_role=forbidden_role)
 
 
 @pytest.mark.asyncio
-async def test_k0_creation_allowed_for_buyer_and_admin(unit_of_work):
-    """Buyer and Admin roles must be able to create K0 projects."""
+async def test_k0_creation_allowed_for_capacity_manager_and_admin(unit_of_work):
+    """Capacity Manager and Admin roles must be able to create K0 projects."""
     svc = TemplateService(unit_of_work)
     await svc.seed_template_by_code("K0", "k0_template.json")
     tmpl = await unit_of_work.templates.get_by_code("K0")
 
     proj_svc = ProjectService(unit_of_work)
 
-    for allowed_role in ("buyer", "admin"):
+    for allowed_role in ("capacity_manager", "admin"):
         payload = CreateProjectRequest(
             name=f"K0 Project by {allowed_role}",
             template_id=str(tmpl.id),
@@ -97,7 +97,7 @@ async def test_k0_buyer_cannot_edit_capacity_or_sqd_fields(unit_of_work):
             template_id=str(tmpl.id),
             template_version=tmpl.version,
         ),
-        user_role="buyer",
+        user_role="capacity_manager",
     )
 
     # Buyer must NOT be able to edit Capacity Manager or SQD fields
@@ -124,7 +124,7 @@ async def test_k0_capacity_manager_cannot_edit_buyer_or_sqd_fields(unit_of_work)
             template_id=str(tmpl.id),
             template_version=tmpl.version,
         ),
-        user_role="buyer",
+        user_role="capacity_manager",
     )
 
     # Capacity Manager must NOT be able to edit Buyer or SQD fields
@@ -151,7 +151,7 @@ async def test_k0_sqd_cannot_edit_buyer_or_capacity_fields(unit_of_work):
             template_id=str(tmpl.id),
             template_version=tmpl.version,
         ),
-        user_role="buyer",
+        user_role="capacity_manager",
     )
 
     # SQD must NOT be able to edit Buyer or Capacity fields
