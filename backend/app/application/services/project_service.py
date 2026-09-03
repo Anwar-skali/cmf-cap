@@ -93,10 +93,15 @@ def _is_green_evaluation(val: Any) -> bool:
 
 
 def calculate_workflow_step(data_dict: dict[str, Any], template_code: str | None = None) -> int:
-    """Calculate the current workflow step for any CMF template."""
+    """Calculate the current workflow step for any CMF template.
+    Step 1: Capacity Manager (Project Creation & SCR)
+    Step 2: Buyer (Commercial & Purchasing Baseline)
+    Step 3: SQD (Quality & CAT Evaluation)
+    Step 4: Complete (Validated & GREEN)
+    """
     code = (template_code or "K9").upper()
     if code in ("K0", "K0_MAKE_BATTERY", "CMF_K0"):
-        has_capacity = _has_any_field(data_dict, K0_CAPACITY_FIELDS)
+        has_buyer = _has_any_field(data_dict, K0_BUYER_FIELDS - {"project_name", "project_code"})
         has_sqd = _has_any_field(data_dict, K0_SQD_FIELDS)
         quality_val = data_dict.get("quality")
         acted_val = data_dict.get("minimum_quality_status_acted")
@@ -105,18 +110,18 @@ def calculate_workflow_step(data_dict: dict[str, Any], template_code: str | None
             return 4
         if has_sqd:
             return 3
-        if has_capacity:
+        if has_buyer:
             return 2
         return 1
     # Default K9 logic
-    has_capacity = _has_any_field(data_dict, K9_CAPACITY_FIELDS)
+    has_buyer = _has_any_field(data_dict, K9_BUYER_FIELDS - {"project_name", "project_code"})
     has_sqd = _has_any_field(data_dict, K9_SQD_FIELDS)
     cat_eval = data_dict.get("cat_evaluation")
     if has_sqd and _is_green_evaluation(cat_eval):
         return 4
     if has_sqd:
         return 3
-    if has_capacity:
+    if has_buyer:
         return 2
     return 1
 

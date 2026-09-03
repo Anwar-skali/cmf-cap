@@ -169,17 +169,21 @@ async def test_k0_sqd_cannot_edit_buyer_or_capacity_fields(unit_of_work):
 # ---------------------------------------------------------------------------
 
 def test_k0_workflow_step_logic():
-    """Verify K0 workflow step calculation independent of the database."""
+    """Verify K0 workflow step calculation independent of the database.
+    Step 1: Capacity Manager (Project Creation & Weekly Tracking Milestones)
+    Step 2: Buyer (Commercial & Purchasing Baseline)
+    Step 3: SQD (Quality & CAT Evaluation)
+    Step 4: Complete (Validated & GREEN)
+    """
     # Step 1: no data at all
     assert calculate_workflow_step({}, "K0") == 1
 
-    # Step 1: only buyer fields (no Capacity Manager fields filled)
-    assert calculate_workflow_step({"part_number": "9876895380", "supplier_name": "LIGOO"}, "K0") == 1
+    # Step 1: only capacity manager fields filled (no Buyer fields filled)
+    assert calculate_workflow_step({"week_project_target_1": "202624", "forecast_week_1": "202548"}, "K0") == 1
 
-    # Step 2: a Capacity Manager field is filled
-    assert calculate_workflow_step({"week_project_target_1": 202624}, "K0") == 2
-    assert calculate_workflow_step({"forecast_week_1": "202548"}, "K0") == 2
-    assert calculate_workflow_step({"completed_week_2": "202548"}, "K0") == 2
+    # Step 2: Buyer fields filled
+    assert calculate_workflow_step({"supplier_name": "LIGOO", "serial_piece_price": 51.46}, "K0") == 2
+    assert calculate_workflow_step({"week_project_target_1": "202624", "supplier_name": "LIGOO"}, "K0") == 2
 
     # Step 3: SQD field present but quality is not GREEN
     assert calculate_workflow_step({"quality": "ORANGE", "minimum_quality_status_acted": "NOT ACTED"}, "K0") == 3

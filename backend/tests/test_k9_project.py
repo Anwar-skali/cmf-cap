@@ -44,12 +44,12 @@ async def test_k9_project_creation_permissions(unit_of_work):
         CreateProjectRequest(
             name="K9 Test Vehicle",
             template_id=k9.id,
-            data={"unique_id": "K9-TEST-001", "gst_no": "GST-001"},
+            data={"gst_no": "GST-001", "capacity": 2500},
         ),
         user_role="capacity_manager",
     )
     assert prj is not None
-    assert prj.data.get("workflow_step") == 2
+    assert prj.data.get("workflow_step") == 1
 
 
 @pytest.mark.asyncio
@@ -58,7 +58,7 @@ async def test_k9_role_field_update_restrictions(unit_of_work):
     k9 = await tmpl_service.seed_k9_if_missing()
     prj_service = ProjectService(unit_of_work)
 
-    # 1. Capacity Manager creates project
+    # 1. Capacity Manager creates project (Step 1)
     prj = await prj_service.create_project(
         CreateProjectRequest(
             name="K9 Component Project",
@@ -67,6 +67,7 @@ async def test_k9_role_field_update_restrictions(unit_of_work):
         ),
         user_role="capacity_manager",
     )
+    assert prj.data.get("workflow_step") == 1
 
     # 2. Capacity Manager tries editing SQD field -> should be forbidden
     with pytest.raises(ForbiddenException):
@@ -76,14 +77,23 @@ async def test_k9_role_field_update_restrictions(unit_of_work):
             user_role="capacity_manager",
         )
 
-    # 3. Capacity Manager updates Capacity field -> allowed, workflow step becomes 2
+    # 3. Capacity Manager updates Capacity field -> allowed, workflow step remains 1
     updated_cap = await prj_service.update_project(
         prj.id,
         UpdateProjectRequest(data={"capacity": 5000, "contracted_capacity": 4800}),
         user_role="capacity_manager",
     )
     assert updated_cap.data.get("capacity") == 5000
-    assert updated_cap.data.get("workflow_step") == 2
+    assert updated_cap.data.get("workflow_step") == 1
+
+    # 3b. Buyer updates Buyer field -> allowed, workflow step becomes 2
+    updated_buyer = await prj_service.update_project(
+        prj.id,
+        UpdateProjectRequest(data={"supplier_name": "Tier-1 Auto Corp"}),
+        user_role="buyer",
+    )
+    assert updated_buyer.data.get("supplier_name") == "Tier-1 Auto Corp"
+    assert updated_buyer.data.get("workflow_step") == 2
 
     # 4. SQD tries editing Buyer field -> forbidden
     with pytest.raises(ForbiddenException):

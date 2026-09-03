@@ -62,16 +62,16 @@ export default function ProjectDetailPage() {
         'um_logistic_flow_validated', 'manufacturing_process_validated',
       ].some((f) => isValSet(data[f]));
 
-      const hasCap = [
-        'week_project_target_1', 'forecast_week_1', 'completed_week_1',
-        'week_project_target_2', 'forecast_week_2', 'completed_week_2',
-        'week_project_target_3', 'forecast_week_3', 'completed_week_3',
+      const hasBuyer = [
+        'supplier_name', 'vendor_cofor', 'manufacturer_cofor', 'combined_cofor',
+        'tango_order', 'ei_status', 'comments', 'coef', 'serial_piece_price',
+        'mass_purchase', 'ru', 'noa', 'make_battery_lp_1', 'make_battery_lp_2'
       ].some((f) => isValSet(data[f]));
 
       const isGreen = isGreenEval(data.quality) && isGreenEval(data.minimum_quality_status_acted);
       if (hasSqd && isGreen && [data.quality, data.minimum_quality_status_acted, data.manufacturing_process_validated].some(isValSet)) return 4;
       if (hasSqd) return 3;
-      if (hasCap) return 2;
+      if (hasBuyer) return 2;
       return 1;
     }
 
@@ -82,14 +82,14 @@ export default function ProjectDetailPage() {
       'sqe', 'sqm', 'team', 'family_multiplier',
     ].some((f) => isValSet(data[f]));
 
-    const hasCap = [
-      'capacity', 'scr_link_docinfo', 'gst_no', 'contracted_capacity',
-      'fete', 'tko_fete_link_sharepoint', 'capacity_standard', 'fete_tko_letter_doc',
+    const hasBuyer = [
+      'supplier_info', 'supplier_name', 'manufacturing_cofor', 'production_location',
+      'stakeholder', 'buyer', 'apqp', 'use_case', 'part_info'
     ].some((f) => isValSet(data[f]));
 
     if (hasSqd && isGreenEval(data.cat_evaluation)) return 4;
     if (hasSqd) return 3;
-    if (hasCap) return 2;
+    if (hasBuyer) return 2;
     return 1;
   };
 
@@ -150,7 +150,7 @@ export default function ProjectDetailPage() {
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Project baseline created by Buyer, capacity planned by Capacity Manager, evaluated by SQD.
+                  Project created by Capacity Manager, commercial baseline completed by Buyer, evaluated by SQD.
                 </p>
               </div>
             </div>
@@ -173,8 +173,8 @@ export default function ProjectDetailPage() {
                   {currentStep > 1 ? '✓' : '1'}
                 </div>
                 <div>
-                  <p className="text-xs font-bold leading-tight">{t('workflow.step1_buyer', 'Step 1: Buyer')}</p>
-                  <p className="text-[11px] opacity-80 mt-0.5">{t('workflow.step1_desc', 'Project Creation')}</p>
+                  <p className="text-xs font-bold leading-tight">{t('workflow.step1_capacity', 'Step 1: Capacity')}</p>
+                  <p className="text-[11px] opacity-80 mt-0.5">{t('workflow.step1_desc', 'Project Creation & SCR')}</p>
                 </div>
               </div>
 
@@ -194,8 +194,8 @@ export default function ProjectDetailPage() {
                   {currentStep > 2 ? '✓' : '2'}
                 </div>
                 <div>
-                  <p className="text-xs font-bold leading-tight">{t('workflow.step2_capacity', 'Step 2: Capacity')}</p>
-                  <p className="text-[11px] opacity-80 mt-0.5">{t('workflow.step2_desc', 'Planning & SCR')}</p>
+                  <p className="text-xs font-bold leading-tight">{t('workflow.step2_buyer', 'Step 2: Buyer')}</p>
+                  <p className="text-[11px] opacity-80 mt-0.5">{t('workflow.step2_desc', 'Commercial & Purchasing')}</p>
                 </div>
               </div>
 

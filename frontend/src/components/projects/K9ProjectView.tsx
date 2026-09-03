@@ -62,22 +62,22 @@ export const K9ProjectView: React.FC<K9ProjectViewProps> = ({
     };
   };
 
-  const getInitialTab = (): 'buyer' | 'capacity_manager' | 'sqd' => {
-    if (userRole === 'capacity_manager') return 'capacity_manager';
+  const getInitialTab = (): 'capacity_manager' | 'buyer' | 'sqd' => {
+    if (userRole === 'buyer') return 'buyer';
     if (userRole === 'sqd') return 'sqd';
-    return 'buyer';
+    return 'capacity_manager';
   };
 
   const [mainMode, setMainMode] = useState<'master_table' | 'role_forms'>(initialMode);
   const [formValues, setFormValues] = useState<Record<string, any>>(getInitialValues);
-  const [activeTab, setActiveTab] = useState<'buyer' | 'capacity_manager' | 'sqd'>(getInitialTab);
+  const [activeTab, setActiveTab] = useState<'capacity_manager' | 'buyer' | 'sqd'>(getInitialTab);
   const [isDirty, setIsDirty] = useState<boolean>(false);
   const [lastSaved, setLastSaved] = useState<string | null>(null);
 
   useEffect(() => {
-    if (userRole === 'capacity_manager') setActiveTab('capacity_manager');
+    if (userRole === 'buyer') setActiveTab('buyer');
     else if (userRole === 'sqd') setActiveTab('sqd');
-    else setActiveTab('buyer');
+    else setActiveTab('capacity_manager');
   }, [userRole]);
 
   // Sync formValues whenever project.data is refreshed (e.g. after a successful save + refetch).
@@ -108,16 +108,16 @@ export const K9ProjectView: React.FC<K9ProjectViewProps> = ({
         'um_logistic_flow_validated', 'manufacturing_process_validated'
       ].some(f => isValSet(data[f]));
 
-      const hasCap = [
-        'week_project_target_1', 'forecast_week_1', 'completed_week_1',
-        'week_project_target_2', 'forecast_week_2', 'completed_week_2',
-        'week_project_target_3', 'forecast_week_3', 'completed_week_3'
+      const hasBuyer = [
+        'supplier_name', 'vendor_cofor', 'manufacturer_cofor', 'combined_cofor',
+        'tango_order', 'ei_status', 'comments', 'coef', 'serial_piece_price',
+        'mass_purchase', 'ru', 'noa', 'make_battery_lp_1', 'make_battery_lp_2'
       ].some(f => isValSet(data[f]));
 
       const isGreen = isGreenEval(data.quality) && isGreenEval(data.minimum_quality_status_acted);
       if (hasSqd && isGreen && [data.quality, data.minimum_quality_status_acted, data.manufacturing_process_validated].some(isValSet)) return 4;
       if (hasSqd) return 3;
-      if (hasCap) return 2;
+      if (hasBuyer) return 2;
       return 1;
     }
 
@@ -128,14 +128,14 @@ export const K9ProjectView: React.FC<K9ProjectViewProps> = ({
       'sqe', 'sqm', 'team', 'family_multiplier'
     ].some(f => isValSet(data[f]));
 
-    const hasCap = [
-      'capacity', 'scr_link_docinfo', 'gst_no', 'contracted_capacity',
-      'fete', 'tko_fete_link_sharepoint', 'capacity_standard', 'fete_tko_letter_doc'
+    const hasBuyer = [
+      'supplier_info', 'supplier_name', 'manufacturing_cofor', 'production_location',
+      'stakeholder', 'buyer', 'apqp', 'use_case', 'part_info'
     ].some(f => isValSet(data[f]));
 
     if (hasSqd && isGreenEval(data.cat_evaluation)) return 4;
     if (hasSqd) return 3;
-    if (hasCap) return 2;
+    if (hasBuyer) return 2;
     return 1;
   };
 
@@ -251,7 +251,7 @@ export const K9ProjectView: React.FC<K9ProjectViewProps> = ({
               </span>
             </div>
             <p className="text-xs text-muted-foreground mt-1">
-              Project baseline created by Buyer, capacity planned by Capacity Manager, evaluated by SQD.
+              Project created by Capacity Manager, commercial baseline completed by Buyer, evaluated by SQD.
             </p>
           </div>
 
@@ -283,8 +283,8 @@ export const K9ProjectView: React.FC<K9ProjectViewProps> = ({
               {currentStep > 1 ? '✓' : '1'}
             </div>
             <div>
-              <p className="text-xs font-bold leading-tight">{t('workflow.step1_buyer', 'Step 1: Buyer')}</p>
-              <p className="text-[11px] opacity-80 mt-0.5">{t('workflow.step1_desc', 'Project Creation')}</p>
+              <p className="text-xs font-bold leading-tight">{t('workflow.step1_capacity', 'Step 1: Capacity')}</p>
+              <p className="text-[11px] opacity-80 mt-0.5">{t('workflow.step1_desc', 'Project Creation & SCR')}</p>
             </div>
           </div>
 
@@ -304,8 +304,8 @@ export const K9ProjectView: React.FC<K9ProjectViewProps> = ({
               {currentStep > 2 ? '✓' : '2'}
             </div>
             <div>
-              <p className="text-xs font-bold leading-tight">{t('workflow.step2_capacity', 'Step 2: Capacity')}</p>
-              <p className="text-[11px] opacity-80 mt-0.5">{t('workflow.step2_desc', 'Planning & SCR')}</p>
+              <p className="text-xs font-bold leading-tight">{t('workflow.step2_buyer', 'Step 2: Buyer')}</p>
+              <p className="text-[11px] opacity-80 mt-0.5">{t('workflow.step2_desc', 'Commercial & Purchasing')}</p>
             </div>
           </div>
 
@@ -366,21 +366,6 @@ export const K9ProjectView: React.FC<K9ProjectViewProps> = ({
       ) : (
       <div className="space-y-4">
         <div className="flex border-b border-border space-x-2">
-          {/* Buyer Tab */}
-          <button
-            type="button"
-            onClick={() => setActiveTab('buyer')}
-            className={`flex items-center gap-2 px-5 py-3 text-sm font-bold border-b-2 transition-all cursor-pointer ${
-              activeTab === 'buyer'
-                ? 'border-primary text-primary bg-primary/10 rounded-t-xl'
-                : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-card rounded-t-xl'
-            }`}
-          >
-            <UserCheck className="h-4 w-4" />
-            <span>{t('workflow.tab_buyer', '1. Buyer')}</span>
-            {!canEditBuyer && <Lock className="h-3.5 w-3.5 text-amber-500 ml-1" />}
-          </button>
-
           {/* Capacity Manager Tab */}
           <button
             type="button"
@@ -392,8 +377,23 @@ export const K9ProjectView: React.FC<K9ProjectViewProps> = ({
             }`}
           >
             <Building2 className="h-4 w-4" />
-            <span>{t('workflow.tab_capacity', '2. Capacity Manager')}</span>
+            <span>{t('workflow.tab_capacity', '1. Capacity Manager')}</span>
             {!canEditCapacity && <Lock className="h-3.5 w-3.5 text-amber-500 ml-1" />}
+          </button>
+
+          {/* Buyer Tab */}
+          <button
+            type="button"
+            onClick={() => setActiveTab('buyer')}
+            className={`flex items-center gap-2 px-5 py-3 text-sm font-bold border-b-2 transition-all cursor-pointer ${
+              activeTab === 'buyer'
+                ? 'border-primary text-primary bg-primary/10 rounded-t-xl'
+                : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-card rounded-t-xl'
+            }`}
+          >
+            <UserCheck className="h-4 w-4" />
+            <span>{t('workflow.tab_buyer', '2. Buyer')}</span>
+            {!canEditBuyer && <Lock className="h-3.5 w-3.5 text-amber-500 ml-1" />}
           </button>
 
           {/* SQD Tab */}
@@ -414,26 +414,6 @@ export const K9ProjectView: React.FC<K9ProjectViewProps> = ({
 
         {/* Tab Content Container */}
         <AnimatePresence mode="wait">
-          {activeTab === 'buyer' && (
-            <motion.div
-              key="tab-buyer"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.15 }}
-              className="space-y-4"
-            >
-              {!canEditBuyer && (
-                <div className="flex items-center gap-2 p-3.5 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400 text-xs font-semibold">
-                  <Lock className="h-4 w-4 shrink-0" />
-                  <span>{t('workflow.readonly_buyer', 'Read-Only Section. Only users with the Buyer role or Administrators can edit Buyer fields.')}</span>
-                </div>
-              )}
-
-              {renderSectionGroups(buyerSection, canEditBuyer)}
-            </motion.div>
-          )}
-
           {activeTab === 'capacity_manager' && (
             <motion.div
               key="tab-capacity"
@@ -451,6 +431,26 @@ export const K9ProjectView: React.FC<K9ProjectViewProps> = ({
               )}
 
               {renderSectionGroups(capacitySection, canEditCapacity)}
+            </motion.div>
+          )}
+
+          {activeTab === 'buyer' && (
+            <motion.div
+              key="tab-buyer"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.15 }}
+              className="space-y-4"
+            >
+              {!canEditBuyer && (
+                <div className="flex items-center gap-2 p-3.5 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400 text-xs font-semibold">
+                  <Lock className="h-4 w-4 shrink-0" />
+                  <span>{t('workflow.readonly_buyer', 'Read-Only Section. Only users with the Buyer role or Administrators can edit Buyer fields.')}</span>
+                </div>
+              )}
+
+              {renderSectionGroups(buyerSection, canEditBuyer)}
             </motion.div>
           )}
 

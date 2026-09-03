@@ -30,12 +30,14 @@ export default function ProjectEditPage() {
 
   const roleTitle =
     userRole === 'capacity_manager'
-      ? 'Step 2: Capacity Manager'
+      ? 'Step 1: Capacity Manager'
+      : userRole === 'buyer'
+      ? 'Step 2: Buyer Baseline'
       : userRole === 'sqd'
       ? 'Step 3: SQD Team'
       : userRole === 'admin'
       ? 'Administrator (Full Access)'
-      : 'Step 1: Buyer Baseline';
+      : 'Step 1: Capacity Manager';
 
   if (isLoading) {
     return (
