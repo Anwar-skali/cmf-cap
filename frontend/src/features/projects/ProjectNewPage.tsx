@@ -48,20 +48,27 @@ export default function ProjectNewPage() {
       }
 
       const name =
-        formValues.part_name ||
+        formValues.gst_no ? `CMF ${templateCode} - ${formValues.gst_no}` :
+        formValues.capacity ? `CMF ${templateCode} (Cap: ${formValues.capacity})` :
         formValues.project_name ||
         formValues.name ||
         formValues.fld_part_name ||
-        (formValues.gst_no ? `CMF ${templateCode} - ${formValues.gst_no}` : '') ||
-        (formValues.capacity ? `CMF ${templateCode} (Cap: ${formValues.capacity})` : '') ||
         `New CMF ${templateCode || ''} Project`.trim();
+
       const code =
+        formValues.gst_no ||
         formValues.unique_id ||
-        formValues.part_number ||
         formValues.line_item ||
         formValues.project_code ||
-        formValues.code ||
-        formValues.gst_no;
+        formValues.code;
+
+      // Only inject buyer-owned fields (part_name, part_number) when the
+      // creator IS a buyer. Injecting them for capacity_manager would
+      // prematurely trigger Step 2 in the workflow calculation.
+      const isBuyerCreator = userRole === 'buyer';
+      const extraBuyerData = isBuyerCreator
+        ? { part_name: name, part_number: code }
+        : {};
 
       const payload = {
         name,
@@ -72,8 +79,7 @@ export default function ProjectNewPage() {
           ...formValues,
           project_name: name,
           project_code: code,
-          part_name: name,
-          part_number: code,
+          ...extraBuyerData,
           template_code: currentTemplate?.code,
           creation_source: inputSource,
         },

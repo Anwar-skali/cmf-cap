@@ -178,6 +178,16 @@ class ProjectService:
         if project_data.get("template_id"):
             _tmpl_obj = await self._uow.templates.get(project_data["template_id"])
         _tmpl_code = _tmpl_obj.code if _tmpl_obj else None
+
+        # Strip buyer-owned fields when the creator is a Capacity Manager to
+        # prevent them from prematurely advancing the workflow to Step 2.
+        # (project_name / project_code are metadata-only, not workflow-triggering.)
+        role_str_for_strip = str(user_role).lower() if user_role else ""
+        if role_str_for_strip == "capacity_manager":
+            buyer_fields_to_strip = _get_role_fields(_tmpl_code, "buyer") - {"project_name", "project_code"}
+            for bf in buyer_fields_to_strip:
+                inner_data.pop(bf, None)
+
         inner_data["workflow_step"] = calculate_workflow_step(inner_data, _tmpl_code)
         project_data["data"] = inner_data
 
