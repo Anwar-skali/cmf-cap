@@ -136,9 +136,9 @@ def create_application() -> FastAPI:
     )
 
     _configure_strip_trailing_slash(app)
-    _configure_cors(app)
     _configure_exception_handlers(app)
     _configure_middleware(app)
+    _configure_cors(app)
     _include_routers(app)
 
     return app
@@ -154,10 +154,17 @@ def _configure_strip_trailing_slash(app: FastAPI) -> None:
 
 
 def _configure_cors(app: FastAPI) -> None:
+    known_origins = [
+        "https://cmf-anan.vercel.app",
+        "http://localhost:5173",
+        "http://localhost:3000",
+    ]
+    merged_origins = list(dict.fromkeys(known_origins + settings.CORS_ORIGINS))
+
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=settings.CORS_ORIGINS,
-        allow_origin_regex=r"^https:\/\/.*\.vercel\.app$",
+        allow_origins=merged_origins,
+        allow_origin_regex=r"^https:\/\/cmf-anan(-[a-zA-Z0-9-]+)?\.vercel\.app$",
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
