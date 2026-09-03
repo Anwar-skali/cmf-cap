@@ -93,8 +93,8 @@ export const DynamicTable: React.FC<DynamicTableProps> = ({
   const renderWorkflowBadge = (project: Project) => {
     const step = getWorkflowStep(project);
     const configs = [
-      { step: 1, label: 'Step 1 · Buyer', cls: 'bg-slate-500/10 text-slate-600 dark:text-slate-400 border-slate-500/20', icon: <Clock className="h-3 w-3" /> },
-      { step: 2, label: 'Step 2 · Capacity', cls: 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20', icon: <Clock className="h-3 w-3" /> },
+      { step: 1, label: 'Step 1 · Capacity', cls: 'bg-slate-500/10 text-slate-600 dark:text-slate-400 border-slate-500/20', icon: <Clock className="h-3 w-3" /> },
+      { step: 2, label: 'Step 2 · Buyer', cls: 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20', icon: <Clock className="h-3 w-3" /> },
       { step: 3, label: 'Step 3 · SQD', cls: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20', icon: <AlertCircle className="h-3 w-3" /> },
       { step: 4, label: 'Complete', cls: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20', icon: <CheckCircle2 className="h-3 w-3" /> },
     ];
