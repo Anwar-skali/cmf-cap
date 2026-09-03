@@ -60,7 +60,7 @@
               "order": 3,
               "visible": true,
               "editable": true,
-              "aliases": ["Description", "description", "Désignation", "Designation", "part name", "part_name"],
+              "aliases": ["Part Name", "part name", "part_name", "Description", "description", "Désignation", "Designation"],
               "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
             },
             {
@@ -130,7 +130,7 @@
               "order": 8,
               "visible": true,
               "editable": true,
-              "aliases": ["NOA", "noa", "buyer", "Buyer"],
+              "aliases": ["Commodity Buyer", "Commodity Buyer\n(sourcing -> nomination)", "NOA", "noa", "buyer", "Buyer", "Acheteur"],
               "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
             },
             {
@@ -180,7 +180,7 @@
               "order": 1,
               "visible": true,
               "editable": true,
-              "aliases": ["Supplier Name", "Supplier name", "supplier_name", "supplier", "Fournisseur"],
+              "aliases": ["Nominated Supplier", "Supplier Name", "Supplier name", "supplier_name", "supplier", "Fournisseur"],
               "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
             },
             {
@@ -208,7 +208,7 @@
               "order": 3,
               "visible": true,
               "editable": true,
-              "aliases": ["Manufacturer COFOR", "Manufacturer Cofor", "manufacturer_cofor", "COFOR Fabricant"],
+              "aliases": ["Manufacturing Cofor", "Manufacturing COFOR", "Manufacturer COFOR", "Manufacturer Cofor", "manufacturer_cofor", "COFOR Fabricant"],
               "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
             },
             {
@@ -264,7 +264,7 @@
               "order": 7,
               "visible": true,
               "editable": true,
-              "aliases": ["Comments", "comments", "Commentaires", "Notes"],
+              "aliases": ["Capacity comments", "Capacity workshop comment", "CAT comment", "Comments", "comments", "Commentaires", "Notes"],
               "permissions": { "rolesAllowedToEdit": ["buyer", "admin"] }
             }
           ]
@@ -298,7 +298,7 @@
               "order": 1,
               "visible": true,
               "editable": true,
-              "aliases": ["Week Project Target 1", "week_project_target_1", "Week\nProject Target"],
+              "aliases": ["Contracted Capacity", "Requested to Supplier \nWeekly Capacity\n(last commitment between \nGPSQ & Supplier)", "Week Project Target 1", "week_project_target_1", "Week\nProject Target"],
               "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
             },
             {
@@ -312,7 +312,7 @@
               "order": 2,
               "visible": true,
               "editable": true,
-              "aliases": ["Forecast Week 1", "forecast_week_1", "Forecast\nWeek"],
+              "aliases": ["CAT forecast date", "CAT forecast date \n(format DD.MM.YYYY)", "Forecast Week 1", "forecast_week_1", "Forecast\nWeek"],
               "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
             },
             {
@@ -326,7 +326,7 @@
               "order": 3,
               "visible": true,
               "editable": true,
-              "aliases": ["Completed Week 1", "completed_week_1", "Completed\nWeek"],
+              "aliases": ["CAT real date", "CAT real date \n(format DD.MM.YYYY)", "Completed Week 1", "completed_week_1", "Completed\nWeek"],
               "permissions": { "rolesAllowedToEdit": ["capacity_manager", "admin"] }
             },
             {
@@ -444,7 +444,7 @@
               "order": 1,
               "visible": true,
               "editable": true,
-              "aliases": ["Quality", "quality", "Qualité"],
+              "aliases": ["Quality", "quality", "Qualité", "CAT rating", "CAT Rating", "APQP-Grid", "APQP Grid", "SQVL"],
               "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
             },
             {
@@ -514,7 +514,7 @@
               "order": 6,
               "visible": true,
               "editable": true,
-              "aliases": ["Minimum Quality Status Acted", "Minimum Quality status acted", "minimum_quality_status_acted"],
+              "aliases": ["Minimum Quality Status Acted", "Minimum Quality status acted", "minimum_quality_status_acted", "APQP-Grid", "APQP Grid", "SQVL"],
               "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
             },
             {
@@ -570,7 +570,7 @@
               "order": 10,
               "visible": true,
               "editable": true,
-              "aliases": ["Supplier Capability Confirmed", "Supplier capability confirmed", "supplier_capability_confirmed"],
+              "aliases": ["Supplier Capability Confirmed", "Supplier capability confirmed", "supplier_capability_confirmed", "Run Assessment: Asked / Not Asked", "Run Assessment", "Capacity Sizing OK"],
               "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
             },
             {
@@ -584,7 +584,7 @@
               "order": 11,
               "visible": true,
               "editable": true,
-              "aliases": ["IT CPL Corail Setting", "IT CPL (CORAIL,) setting", "IT CPL (CORAIL) Setting", "it_cpl_corail_setting"],
+              "aliases": ["IT CPL Corail Setting", "IT CPL (CORAIL,) setting", "IT CPL (CORAIL) Setting", "it_cpl_corail_setting", "CAT link"],
               "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
             },
             {
@@ -654,7 +654,7 @@
               "order": 16,
               "visible": true,
               "editable": true,
-              "aliases": ["Manufacturing Process Validated", "Manufacturing process validated", "manufacturing_process_validated"],
+              "aliases": ["Manufacturing Process Validated", "Manufacturing process validated", "manufacturing_process_validated", "SQME manufactuing", "SQME manufacturing"],
               "permissions": { "rolesAllowedToEdit": ["sqd", "admin"] }
             }
           ]

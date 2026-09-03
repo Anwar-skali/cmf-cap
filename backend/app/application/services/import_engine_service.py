@@ -416,15 +416,42 @@ class ImportEngineService:
             s = str(val).strip()
             return s != "" and s.lower() not in _FORMULA_SENTINELS
 
+        # Dynamically detect unique_key_col_index if None or if the specified column is completely blank
+        if headers:
+            from app.application.services.header_normalizer import normalize_header
+            has_uk_data = False
+            if unique_key_col_index is not None and 0 <= unique_key_col_index < len(headers):
+                has_uk_data = any(
+                    _cell_is_meaningful(r[unique_key_col_index])
+                    for r in best_rows[header_idx + 1: header_idx + 10]
+                    if unique_key_col_index < len(r)
+                )
+            if not has_uk_data:
+                for idx, h in enumerate(headers):
+                    if not h:
+                        continue
+                    norm = normalize_header(str(h))
+                    if norm in ("partnumber", "part_number", "partno", "reference", "ref", "referenceproduit", "uniqueid", "uid"):
+                        if any(
+                            _cell_is_meaningful(r[idx])
+                            for r in best_rows[header_idx + 1: header_idx + 10]
+                            if idx < len(r)
+                        ):
+                            unique_key_col_index = idx
+                            logger.info("[PARSE] Dynamically selected unique_key_col_index=%d ('%s')", idx, h)
+                            break
+
         def _row_is_empty(row_vals: list[Any], uk_col_idx: int | None) -> bool:
             """
             A row is EMPTY when:
             - All cells are None / "" / formula sentinels, OR
             - A unique-key column index is given and that cell is not meaningful
-              (even if other formula cells look non-empty).
+              (and no other meaningful cells exist in the row).
             """
             if uk_col_idx is not None and 0 <= uk_col_idx < len(row_vals):
-                return not _cell_is_meaningful(row_vals[uk_col_idx])
+                if _cell_is_meaningful(row_vals[uk_col_idx]):
+                    return False
+                return not any(_cell_is_meaningful(c) for i, c in enumerate(row_vals) if i != uk_col_idx)
             return not any(_cell_is_meaningful(c) for c in row_vals)
 
         data_rows: list[list[Any]] = []
@@ -826,11 +853,16 @@ class ImportEngineService:
         is_k0 = entity_type.upper() in _K0_CODES
         start_perf = time.perf_counter()
 
-        # K0 fast-path: use known sheet/header/key settings
+        # Legacy K0 fast-path: only use default sheet/header if no custom mapping and sheet matches
+        is_legacy_k0 = (
+            is_k0
+            and not custom_mapping
+            and (sheet_name == K0_SHEET_NAME or (not sheet_name and not header_row))
+        )
         effective_header_row = header_row
         effective_sheet = sheet_name
         effective_uk_col: int | None = None
-        if is_k0:
+        if is_legacy_k0:
             effective_header_row = effective_header_row or K0_HEADER_ROW
             effective_sheet = effective_sheet or K0_SHEET_NAME
             effective_uk_col = K0_UNIQUE_KEY_COL
@@ -842,20 +874,19 @@ class ImportEngineService:
             specified_sheet_name=effective_sheet,
             specified_header_row=effective_header_row,
             unique_key_col_index=effective_uk_col,
-            max_source_columns=K0_SOURCE_COLUMN_COUNT if is_k0 else None,
+            max_source_columns=K0_SOURCE_COLUMN_COUNT if is_legacy_k0 else None,
         )
         headers = parsed["headers"]
         data_rows = parsed["rows"]
         parsed_orientation = parsed.get("orientation", "HORIZONTAL")
         parsed_orientation_info = parsed.get("orientation_info", {})
 
+        use_positional_k0 = is_legacy_k0 and len(headers) >= K0_SOURCE_COLUMN_COUNT
+
         # Step 1: Mapping setup
-        if is_k0:
+        if use_positional_k0:
             k0_index_map = _build_k0_index_mapping(headers)
-            if custom_mapping:
-                column_mapping = self._normalize_column_mapping(custom_mapping, schema, headers)
-            else:
-                column_mapping = _build_k0_column_mapping(headers)
+            column_mapping = _build_k0_column_mapping(headers)
 
             elapsed_ms = round((time.perf_counter() - start_perf) * 1000, 2)
             mapped_count = len([v for v in k0_index_map.values() if v])
@@ -872,21 +903,22 @@ class ImportEngineService:
                 "[K0 MAPPING]\nmapped_columns=%d\nunmapped_columns=%d",
                 mapped_count, unmapped_count,
             )
-        elif custom_mapping:
-            column_mapping = self._normalize_column_mapping(custom_mapping, schema, headers)
-        else:
-            column_mapping = self.auto_map_columns(headers, schema)
-
-        # Invert mapping to map db_field_key -> excel_header
-        if is_k0:
-            mapped_fields: dict[str, str] = {
+            mapped_fields = {
                 field_key: headers[col_idx] if col_idx < len(headers) else field_key
                 for col_idx, field_key in k0_index_map.items() if field_key
             }
-        else:
+        elif custom_mapping:
+            column_mapping = self._normalize_column_mapping(custom_mapping, schema, headers)
             mapped_fields = {
                 v: k for k, v in column_mapping.items() if v is not None
             }
+            k0_index_map = {}
+        else:
+            column_mapping = self.auto_map_columns(headers, schema)
+            mapped_fields = {
+                v: k for k, v in column_mapping.items() if v is not None
+            }
+            k0_index_map = {}
 
         validation_errors: list[dict[str, Any]] = []
 
@@ -944,7 +976,7 @@ class ImportEngineService:
             # (e.g. "Week\nProject Target" on cols W, Z, AC) can never overwrite each other.
             # Rows are already bounded to K0_SOURCE_COLUMN_COUNT by parse_excel_file.
             # For all other templates: use the standard header-string mapping.
-            if is_k0:
+            if use_positional_k0:
                 for col_idx, val in enumerate(row_vals):
                     db_key = k0_index_map.get(col_idx)
                     if db_key:
@@ -1217,24 +1249,27 @@ class ImportEngineService:
         logger.info("[IMPORT DEBUG] Mapped fields: %r", column_mapping)
         logger.info("[IMPORT DEBUG] Import mode: '%s', strategy: '%s'", mode, strategy)
 
-        # K0 fast-path settings
+        # Legacy K0 fast-path settings: only apply if no custom mapping and sheet matches
+        is_legacy_k0 = (
+            is_k0
+            and not column_mapping
+            and (sheet_name == K0_SHEET_NAME or (not sheet_name and not header_row))
+        )
         effective_header_row = header_row
         effective_sheet = sheet_name
         effective_uk_col: int | None = None
-        if is_k0:
+        if is_legacy_k0:
             effective_header_row = effective_header_row or K0_HEADER_ROW
             effective_sheet = effective_sheet or K0_SHEET_NAME
             effective_uk_col = K0_UNIQUE_KEY_COL
-            # For K0, always use the deterministic positional mapping
-            effective_column_mapping: dict[str, str] = {}
-        else:
-            effective_column_mapping = column_mapping
+
+        effective_column_mapping = column_mapping
 
         preview = await self.preview_and_validate(
             file_bytes=file_bytes,
             file_name=file_name,
             entity_type=entity_type,
-            custom_mapping=effective_column_mapping if not is_k0 else None,
+            custom_mapping=effective_column_mapping,
             orientation=orientation,
             sheet_name=effective_sheet,
             header_row=effective_header_row,
@@ -1261,15 +1296,17 @@ class ImportEngineService:
             specified_sheet_name=effective_sheet,
             specified_header_row=effective_header_row,
             unique_key_col_index=effective_uk_col,
-            max_source_columns=K0_SOURCE_COLUMN_COUNT if is_k0 else None,
+            max_source_columns=K0_SOURCE_COLUMN_COUNT if is_legacy_k0 else None,
         )
         data_rows = parsed["rows"]
         headers = parsed["headers"]
         schema = await self._get_schema(entity_type)
         unique_key_spec = next((c for c in schema.columns if c.unique_key), None)
 
+        use_positional_k0 = is_legacy_k0 and len(headers) >= K0_SOURCE_COLUMN_COUNT
+
         # Build column_mapping for the execution loop
-        if is_k0:
+        if use_positional_k0:
             # Use index-based mapping (immune to duplicate header collisions)
             k0_execute_index_map = _build_k0_index_mapping(headers)
             column_mapping = _build_k0_column_mapping(headers)  # shim for any non-loop callers
@@ -1335,7 +1372,7 @@ class ImportEngineService:
                 # For K0: use index-based mapping so duplicate header strings can't collide.
                 # Rows are already bounded to K0_SOURCE_COLUMN_COUNT by parse_excel_file.
                 row_dict: dict[str, Any] = {}
-                if is_k0:
+                if use_positional_k0:
                     for col_idx, val in enumerate(row_vals):
                         db_key = k0_execute_index_map.get(col_idx)
                         if db_key:
