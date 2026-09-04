@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import io
+import re
 import time
 import uuid
 from datetime import datetime, date
@@ -836,6 +837,50 @@ class ImportEngineService:
             for k in unique_key_keys
         )
 
+    @staticmethod
+    def _auto_fill_missing_unique_id(
+        row_dict: dict[str, Any],
+        schema: EntityImportSchema,
+        row_idx: int,
+    ) -> None:
+        """Auto-generate a stable unique_id when the schema declares it but the row
+        doesn't supply one.
+
+        This handles K9-style Excel files where the ``Unique_ID`` column is
+        intentionally left blank.  The generated value is deterministic: it is
+        derived from the first non-empty identifying field found in the row
+        (``part_name``, ``part_number``, ``commodity``) combined with the row
+        index, so re-imports of the same file will match existing records.
+
+        The method mutates *row_dict* in-place and returns nothing.
+        """
+        # Only act when the schema has a unique_id field
+        has_uid_field = any(
+            c.key == "unique_id" for c in schema.columns
+        )
+        if not has_uid_field:
+            return
+
+        # If already filled, leave it untouched
+        existing = row_dict.get("unique_id")
+        if existing is not None and str(existing).strip():
+            return
+
+        # Build a stable slug from whichever identifier is available
+        slug_parts: list[str] = []
+        for key in ("part_number", "part_name", "commodity", "description"):
+            val = row_dict.get(key)
+            if val is not None:
+                clean = str(val).strip()
+                if clean:
+                    slug_parts.append(clean[:40])
+                    break  # one anchor is enough
+
+        slug = slug_parts[0] if slug_parts else "ROW"
+        # Normalise: replace spaces/special chars with hyphens, uppercase
+        slug = re.sub(r"[^A-Za-z0-9]+", "-", slug).strip("-").upper()
+        row_dict["unique_id"] = f"K9-{slug}-{row_idx}"
+
     async def preview_and_validate(
         self,
         file_bytes: bytes,
@@ -992,6 +1037,10 @@ class ImportEngineService:
                                 break
                     if db_key:
                         row_raw_dict[db_key] = val
+
+            # Auto-generate unique_id when the schema declares it but the Excel
+            # doesn't supply a value (e.g. K9 files with blank Unique_ID column).
+            self._auto_fill_missing_unique_id(row_raw_dict, schema, row_idx)
 
             is_record = self._row_has_record_key(row_raw_dict, schema)
             if is_record:
@@ -1385,6 +1434,10 @@ class ImportEngineService:
                             db_key = norm_column_mapping.get(norm_h)
                         if db_key:
                             row_dict[db_key] = val
+
+                # Auto-generate unique_id when the schema declares it but the Excel
+                # doesn't supply a value (e.g. K9 files with blank Unique_ID column).
+                self._auto_fill_missing_unique_id(row_dict, schema, row_idx)
 
                 # 0. Skip non-record rows (no value in any unique-key column).
                 if not self._row_has_record_key(row_dict, schema):
